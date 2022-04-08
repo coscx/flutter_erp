@@ -48,12 +48,25 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        multiDexEnabled true
+        ndk {
+            //选择要添加的对应 cpu 类型的 .so 库。
+            abiFilters "arm64-v8a", "armeabi-v7a"//, "x86", "x86_64"
+            // 还可以添加
+        }
+
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
+            //关闭混淆
+            minifyEnabled false //删除无用代码
+            useProguard true    //代码压缩设置
+            shrinkResources false //删除无用资源
+            signingConfig signingConfigs.debug
+        }
+        debug {
             signingConfig signingConfigs.debug
         }
     }
@@ -65,4 +78,5 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.android.support:multidex:1.0.3'
 }
