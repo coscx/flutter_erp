@@ -139,6 +139,8 @@ dependencies:
   # webView
   webview_flutter: ^3.0.2
 
+#  export PUB_HOSTED_URL=https://dart-pub.mirrors.sjtug.sjtu.edu.cn/
+#  export FLUTTER_STORAGE_BASE_URL=https://mirrors.sjtug.sjtu.edu.cn/
 
 dev_dependencies:
   flutter_test:
