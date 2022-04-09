@@ -57,14 +57,27 @@ android {
 
     }
 
+    signingConfigs{
+        debug{
+            storeFile file("que.jks")
+            storePassword "123456"
+            keyAlias "key"
+            keyPassword "123456"
+        }
+        release{
+            storeFile file("que.jks")
+            storePassword "123456"
+            keyAlias "key"
+            keyPassword "123456"
+        }
+    }
     buildTypes {
         release {
             // Signing with the debug keys for now, so `flutter run --release` works.
             //关闭混淆
             minifyEnabled false //删除无用代码
-            useProguard true    //代码压缩设置
             shrinkResources false //删除无用资源
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
         debug {
             signingConfig signingConfigs.debug

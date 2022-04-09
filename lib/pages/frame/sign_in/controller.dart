@@ -35,7 +35,7 @@ class SignInController extends GetxController {
   // 执行登录操作
   handleSignIn() async {
     // if (!duIsEmail(_emailController.value.text)) {
-    //   toastInfo(msg: '请正确输入邮件');
+      toastInfo(msg: '请正确输入邮件');
     //   return;
     // }
     // if (!duCheckStringLength(_passController.value.text, 6)) {
@@ -51,7 +51,7 @@ class SignInController extends GetxController {
     UserLoginResponseEntity userProfile = await UserAPI.login(
       params: params,
     );
-    UserStore.to.saveProfile(userProfile);
+
 
     Get.offAndToNamed(AppRoutes.Application);
   }

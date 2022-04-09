@@ -4,6 +4,7 @@ import 'package:flutter_erp/common/values/values.dart';
 import 'package:flutter_erp/common/widgets/unit_bottom_bar.dart';
 import 'package:flutter_erp/common/widgets/widgets.dart';
 import 'package:flutter_erp/pages/category/index.dart';
+import 'package:flutter_erp/pages/flow_page/view.dart';
 import 'package:flutter_erp/pages/main/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -25,7 +26,7 @@ class ApplicationPage extends GetView<ApplicationController> {
             )),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               color: AppColors.primaryText,
             ),
@@ -37,10 +38,10 @@ class ApplicationPage extends GetView<ApplicationController> {
   // 内容页
   Widget _buildPageView() {
     return PageView(
-      physics: NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
         MainPage(),
-        CategoryPage(),
+        FlowPage(),
         Text('BookmarksPage'),
         Text('AccountPage'),
       ],

@@ -55,7 +55,13 @@ class CategoryController extends GetxController {
         pageSize: pageSize,
       ),
     );
+    result.items = result.items?.map((e) {
+      e.url = e.url?.replaceAll("https", "http");
+      e.thumbnail = e.thumbnail?.replaceAll("https", "http");
 
+
+      return e;
+    } ).toList();
     if (isRefresh == true) {
       curPage = 1;
       total = result.counts!;

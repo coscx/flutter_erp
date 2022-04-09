@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812),
+      designSize: const Size(750, 1334),
       builder: () => RefreshConfiguration(
-        headerBuilder: () => ClassicHeader(),
-        footerBuilder: () => ClassicFooter(),
+        headerBuilder: () => const ClassicHeader(),
+        footerBuilder: () => const ClassicFooter(),
         hideFooterWhenNotFull: true,
         headerTriggerDistance: 80,
         maxOverScrollExtent: 100,

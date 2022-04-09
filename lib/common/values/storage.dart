@@ -12,3 +12,11 @@ const String STORAGE_INDEX_NEWS_CACHE_KEY = 'cache_index_news';
 
 /// 多语言
 const String STORAGE_LANGUAGE_CODE = 'language_code';
+
+/// im token
+const String STORAGE_IM_TOKEN = 'im_token';
+
+/// im sender
+const String STORAGE_IM_SENDER = 'im_sender';
+
+

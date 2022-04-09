@@ -3,7 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:flutter_erp/common/store/store.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
+import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
+
+import 'common/values/key.dart';
 
 /// 全局静态数据
 class Global {
@@ -14,7 +17,7 @@ class Global {
 
     setSystemUi();
     Loading();
-
+    otherInit();
     await Get.putAsync<StorageService>(() => StorageService().init());
 
     Get.put<ConfigStore>(ConfigStore());
@@ -34,4 +37,14 @@ class Global {
       SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
     }
   }
+  static void otherInit() async{
+    registerWxApi(
+        appId: wxKey,
+        doOnAndroid: true,
+        doOnIOS: true,
+        universalLink: universalLink);
+    var result = await isWeChatInstalled;
+    print("wx is installed $result");
+  }
+
 }

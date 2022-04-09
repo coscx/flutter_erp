@@ -67,7 +67,7 @@ class MainController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    asyncLoadAllData();
+    //asyncLoadAllData();
   }
 
   /// 关闭页面

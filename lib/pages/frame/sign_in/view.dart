@@ -30,7 +30,7 @@ class SignInPage extends GetView<SignInController> {
                     height: 76.w,
                     decoration: BoxDecoration(
                       color: AppColors.primaryBackground,
-                      boxShadow: [
+                      boxShadow: const [
                         Shadows.primaryShadow,
                       ],
                       borderRadius: BorderRadius.all(

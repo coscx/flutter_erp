@@ -1,10 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter_erp/common/apis/apis.dart';
-import 'package:flutter_erp/common/entities/entities.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:flutter_erp/common/values/values.dart';
 import 'package:get/get.dart';
+
+import '../entities/login/login_model.dart';
 
 class UserStore extends GetxController {
   static UserStore get to => Get.find();
@@ -14,10 +14,10 @@ class UserStore extends GetxController {
   // 令牌 token
   String token = '';
   // 用户 profile
-  final _profile = UserLoginResponseEntity().obs;
+  final _profile = LoginEntity().obs;
 
   bool get isLogin => _isLogin.value;
-  UserLoginResponseEntity get profile => _profile.value;
+  LoginEntity get profile => _profile.value;
   bool get hasToken => token.isNotEmpty;
 
   @override
@@ -26,7 +26,7 @@ class UserStore extends GetxController {
     token = StorageService.to.getString(STORAGE_USER_TOKEN_KEY);
     var profileOffline = StorageService.to.getString(STORAGE_USER_PROFILE_KEY);
     if (profileOffline.isNotEmpty) {
-      _profile(UserLoginResponseEntity.fromJson(jsonDecode(profileOffline)));
+      _profile(LoginEntity.fromJson(jsonDecode(profileOffline)));
     }
   }
 
@@ -37,16 +37,16 @@ class UserStore extends GetxController {
   }
 
   // 获取 profile
-  Future<void> getProfile() async {
-    if (token.isEmpty) return;
-    var result = await UserAPI.profile();
-    _profile(result);
-    _isLogin.value = true;
-    StorageService.to.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(result));
-  }
+  // Future<void> getProfile() async {
+  //   if (token.isEmpty) return;
+  //   var result = await UserAPI.profile();
+  //   _profile(result);
+  //   _isLogin.value = true;
+  //   StorageService.to.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(result));
+  // }
 
   // 保存 profile
-  Future<void> saveProfile(UserLoginResponseEntity profile) async {
+  Future<void> saveProfile(LoginEntity profile) async {
     _isLogin.value = true;
     StorageService.to.setString(STORAGE_USER_PROFILE_KEY, jsonEncode(profile));
   }

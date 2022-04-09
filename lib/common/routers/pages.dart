@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/middlewares/middlewares.dart';
 import 'package:flutter_erp/pages/application/index.dart';
 import 'package:flutter_erp/pages/category/index.dart';
+import 'package:flutter_erp/pages/frame/login/binding.dart';
+import 'package:flutter_erp/pages/frame/login/view.dart';
 import 'package:flutter_erp/pages/frame/sign_in/index.dart';
 import 'package:flutter_erp/pages/frame/sign_up/index.dart';
 import 'package:flutter_erp/pages/frame/welcome/index.dart';
@@ -29,6 +31,12 @@ class AppPages {
       page: () => SignInPage(),
       binding: SignInBinding(),
     ),
+    GetPage(
+      name: AppRoutes.LOGIN,
+      page: () => LoginPage(),
+      binding: LoginBinding(),
+    ),
+
     GetPage(
       name: AppRoutes.SIGN_UP,
       page: () => SignUpPage(),
