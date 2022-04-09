@@ -167,7 +167,7 @@ class IssuesApi {
     var dd = e.response?.data;
 
     if (dd is String) {
-      var dds = Map<String, dynamic>();
+      var dds = <String, dynamic>{};
       dds['code'] = 400;
       dds['message'] = dd;
       dds['data'] = {};
