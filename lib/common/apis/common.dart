@@ -1,9 +1,12 @@
+import 'package:dio/dio.dart';
 import 'package:flutter_erp/common/entities/entities.dart';
+import 'package:flutter_erp/common/entities/flow/wx_article.dart';
 import 'package:flutter_erp/common/entities/login/login_model.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 
 import '../entities/app_version.dart';
 import '../entities/erp_user.dart';
+import '../entities/home/common.dart';
 import '../entities/home/search_erp.dart';
 import '../utils/common_http.dart';
 import '../utils/new_common_http.dart';
@@ -34,7 +37,32 @@ class CommonAPI {
     );
     return LoginEntity.fromJson(response);
   }
+  static Future<WxArticleEntity> wxArticle(  int page, final List<SelectItem> selectItems) async {
+    Map<String, dynamic> searchParm = {};
+    searchParm['currentPage'] = page;
 
+    selectItems.map((e) {
+      if (e.type == 300) {
+        searchParm['start_age'] = e.id;
+      }
+      if (e.type == 301) {
+        searchParm['end_age'] = e.id;
+      }
+      if (e.type == 600) {
+        if (e.id != "0") {
+          searchParm['store_id'] = e.id;
+        }
+      }
+      if (e.type == 1000) {
+        searchParm['gender'] = e.id;
+      }
+    }).toList();
+    Map<String, dynamic> response = await NewERPHttpUtil().post(
+      '/api/IPadCommonArticle',
+      data: searchParm,
+    );
+    return WxArticleEntity.fromJson(response);
+  }
   /// 登录
   static Future<HomeEntity> searchErpUser(
       String page,
@@ -74,19 +102,19 @@ class CommonAPI {
         searchParam['connect'] = e.id;
       }
       if (e.type == 0) {
-        channel.add(e.id);
+        channel.add(e.id!);
       }
       if (e.type == 1) {
-        education.add(e.id);
+        education.add(e.id!);
       }
       if (e.type == 2) {
-        income.add(e.id);
+        income.add(e.id!);
       }
       if (e.type == 3) {
-        house.add(e.id);
+        house.add(e.id!);
       }
       if (e.type == 4) {
-        marriage.add(e.id);
+        marriage.add(e.id!);
       }
 
       if (e.type == 5) {
@@ -96,10 +124,10 @@ class CommonAPI {
         endBirthday = e.id.toString();
       }
       if (e.type == 7) {
-        storeId = e.id;
+        storeId = e.id!;
       }
       if (e.type == 8) {
-        userId = e.id;
+        userId = e.id!;
       }
     }).toList();
     if (channel.isNotEmpty) {

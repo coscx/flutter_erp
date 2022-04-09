@@ -7,8 +7,10 @@ import 'package:flutter_erp/pages/frame/login/view.dart';
 import 'package:flutter_erp/pages/frame/sign_in/index.dart';
 import 'package:flutter_erp/pages/frame/sign_up/index.dart';
 import 'package:flutter_erp/pages/frame/welcome/index.dart';
+import 'package:flutter_erp/pages/home/view.dart';
 import 'package:get/get.dart';
 
+import '../../pages/home/binding.dart';
 import 'routes.dart';
 
 class AppPages {
@@ -59,6 +61,12 @@ class AppPages {
       page: () => CategoryPage(),
       binding: CategoryBinding(),
     ),
+    GetPage(
+      name: AppRoutes.Home,
+      page: () => HomePage(),
+      binding: HomeBinding(),
+    ),
+
   ];
 
   // static final unknownRoute = GetPage(

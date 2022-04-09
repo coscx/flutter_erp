@@ -17,8 +17,6 @@ class FlowPage extends StatelessWidget {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   String title = "微信推文";
 
-
-
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -89,9 +87,7 @@ class FlowPage extends StatelessWidget {
   }
 
   Widget _buildContent() {
-    List<dynamic> photos = [];
-
-    return photos.isNotEmpty
+    return logic.state.wxUser.isNotEmpty
         ? SliverToBoxAdapter(
             child: Center(
             child: Container(
@@ -101,7 +97,7 @@ class FlowPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   MyFlow(
-                    liveData: photos,
+                    liveData: logic.state.wxUser,
                   )
                 ],
               ),

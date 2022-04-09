@@ -3,7 +3,6 @@ import 'package:flutter_erp/common/apis/common.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../common/apis/issues_api.dart';
 import 'state.dart';
 
 class FlowPageLogic extends GetxController {
@@ -27,20 +26,28 @@ class FlowPageLogic extends GetxController {
   // 下拉刷新
   void _loadData() async {
     var result =
-        await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
+        await CommonAPI.wxArticle(curPage,  []);
+    state.wxUser.addAll(result.data.data) ;
     debugPrint(result.toJson().toString());
   }
 
   // 下拉刷新
   void onRefresh() async {
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
+    await CommonAPI.wxArticle(curPage,  []);
+    state.wxUser.clear();
+    curPage=1;
+    state.wxUser.addAll(result.data.data) ;
     debugPrint(result.toString());
     refreshController.refreshCompleted();
   }
 
   // 上拉加载
   void onLoading() async {
+    curPage++;
+    var result =
+    await CommonAPI.wxArticle(curPage,  []);
+    state.wxUser.addAll(result.data.data) ;
     refreshController.loadComplete();
   }
 }

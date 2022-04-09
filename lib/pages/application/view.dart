@@ -5,6 +5,7 @@ import 'package:flutter_erp/common/widgets/unit_bottom_bar.dart';
 import 'package:flutter_erp/common/widgets/widgets.dart';
 import 'package:flutter_erp/pages/category/index.dart';
 import 'package:flutter_erp/pages/flow_page/view.dart';
+import 'package:flutter_erp/pages/home/view.dart';
 import 'package:flutter_erp/pages/main/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class ApplicationPage extends GetView<ApplicationController> {
     return PageView(
       physics: const NeverScrollableScrollPhysics(),
       children: <Widget>[
-        MainPage(),
+        HomePage(),
         FlowPage(),
         Text('BookmarksPage'),
         Text('AccountPage'),

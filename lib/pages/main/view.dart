@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'index.dart';
@@ -7,7 +8,13 @@ import 'widgets/widgets.dart';
 class MainPage extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return Theme(
+        data: ThemeData(
+        appBarTheme: AppBarTheme.of(context).copyWith(
+      systemOverlayStyle: SystemUiOverlayStyle.dark,
+    ),
+    ),
+    child:SingleChildScrollView(
       child: Column(
         children: <Widget>[
           NewsCategoriesWidget(),
@@ -21,6 +28,6 @@ class MainPage extends GetView<MainController> {
           NewsletterWidget(),
         ],
       ),
-    );
+    ));
   }
 }

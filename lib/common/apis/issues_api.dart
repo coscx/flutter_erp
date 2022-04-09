@@ -9,6 +9,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http_parser/http_parser.dart';
 
 import '../entities/erp_user.dart';
+import '../entities/home/common.dart';
 import '../entities/home/search_erp.dart';
 import '../store/user.dart';
 
@@ -64,19 +65,19 @@ class IssuesApi {
         searchParam['connect'] = e.id;
       }
       if (e.type == 0) {
-        channel.add(e.id);
+        channel.add(e.id!);
       }
       if (e.type == 1) {
-        education.add(e.id);
+        education.add(e.id!);
       }
       if (e.type == 2) {
-        income.add(e.id);
+        income.add(e.id!);
       }
       if (e.type == 3) {
-        house.add(e.id);
+        house.add(e.id!);
       }
       if (e.type == 4) {
-        marriage.add(e.id);
+        marriage.add(e.id!);
       }
 
       if (e.type == 5) {
@@ -86,10 +87,10 @@ class IssuesApi {
         endBirthday = e.id.toString();
       }
       if (e.type == 7) {
-        storeId = e.id;
+        storeId = e.id!;
       }
       if (e.type == 8) {
-        userId = e.id;
+        userId = e.id!;
       }
     }).toList();
     if (channel.isNotEmpty) {

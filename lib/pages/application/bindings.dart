@@ -1,6 +1,7 @@
 import 'package:flutter_erp/pages/category/index.dart';
 import 'package:flutter_erp/pages/flow_page/logic.dart';
 import 'package:flutter_erp/pages/frame/login/logic.dart';
+import 'package:flutter_erp/pages/home/logic.dart';
 import 'package:flutter_erp/pages/main/index.dart';
 import 'package:get/get.dart';
 
@@ -14,5 +15,6 @@ class ApplicationBinding implements Bindings {
     Get.lazyPut<CategoryController>(() => CategoryController());
     Get.lazyPut<FlowPageLogic>(() => FlowPageLogic());
     Get.lazyPut<LoginLogic>(() => LoginLogic());
+    Get.lazyPut<HomeLogic>(() => HomeLogic());
   }
 }

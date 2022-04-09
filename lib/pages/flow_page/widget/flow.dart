@@ -8,6 +8,11 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
+import '../../../common/entities/flow/wx_article.dart';
+
+
 
 final String defaultImg =
     'https://img.bosszhipin.com/beijin/mcs/useravatar/20171211/4d147d8bb3e2a3478e20b50ad614f4d02062e3aec7ce2519b427d24a3f300d68_s.jpg';
@@ -16,9 +21,9 @@ final _random = Random();
 int next(int min, int max) => min + _random.nextInt(max - min);
 
 class MyFlow extends StatelessWidget {
-  final List<dynamic>? liveData;
+  final RxList<Datas> liveData;
 
-  MyFlow({this.liveData});
+  MyFlow({required this.liveData});
 
   // 跳转直播间
   void _goToLiveRoom(context, item) {
@@ -34,7 +39,7 @@ class MyFlow extends StatelessWidget {
       color: Colors.white,
       child: Column(children: <Widget>[
         //_listTableHeader(),
-        _listTableInfo(context, liveData!),
+        _listTableInfo(context, liveData),
       ]),
     );
   }
@@ -50,7 +55,7 @@ class MyFlow extends StatelessWidget {
   }
 
   // 直播列表详情
-  Widget _listTableInfo(context, List<dynamic> liveData) {
+  Widget _listTableInfo(context, RxList<Datas> liveData) {
     final liveList = <Widget>[];
 
     var boxWidth = ScreenUtil().screenWidth / 2 - 40.w;
@@ -65,7 +70,7 @@ class MyFlow extends StatelessWidget {
             _goToLiveRoom(context, item);
           },
           child: Padding(
-            key: ObjectKey(item['id']),
+            key: ObjectKey(item.id),
             padding:
                 EdgeInsets.only(left: 20.w, right: 20.w, bottom: boxMargin * 2),
             child: Column(
@@ -80,9 +85,9 @@ class MyFlow extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
                         CachedNetworkImage(
-                          imageUrl: item['img'] != ""
-                              ? (getExt(item['img']) != "mp4"
-                                  ? item['img']
+                          imageUrl: item.img != ""
+                              ? (getExt(item.img) != "mp4"
+                                  ? item.img
                                   : defaultImg)
                               : defaultImg,
                           imageBuilder: (context, imageProvider) => Container(
@@ -111,7 +116,7 @@ class MyFlow extends StatelessWidget {
                                           width: ScreenUtil().screenWidth / 2 -
                                               70.w,
                                           //height: 200.h,
-                                          child: Text(item['title'],
+                                          child: Text(item.title,
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
@@ -150,7 +155,7 @@ class MyFlow extends StatelessWidget {
                             padding: EdgeInsets.only(left: 0.w, right: 0.w),
                             //width: 200.w,
                             child: Text(
-                              item['customer_name'],
+                              item.customerName,
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -162,7 +167,7 @@ class MyFlow extends StatelessWidget {
                             padding: EdgeInsets.only(left: 0.w, right: 5.w),
                             //width: 200.w,
                             child: Text(
-                              item['gender'] == 1 ? "男" : "女",
+                              item.gender== 1 ? "男" : "女",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -174,7 +179,7 @@ class MyFlow extends StatelessWidget {
                             padding: EdgeInsets.only(left: 0.w, right: 5.w),
                             //width: 200.w,
                             child: Text(
-                              item['age'].toString(),
+                              item.age.toString(),
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -186,7 +191,7 @@ class MyFlow extends StatelessWidget {
                             padding: EdgeInsets.only(left: 0.w, right: 0.w),
                             //width: 200.w,
                             child: Text(
-                              "来源:" + item['store'],
+                              "来源:" + item.store,
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(

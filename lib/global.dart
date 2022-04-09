@@ -14,12 +14,10 @@ class Global {
   static Future init() async {
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
     setSystemUi();
     Loading();
     otherInit();
     await Get.putAsync<StorageService>(() => StorageService().init());
-
     Get.put<ConfigStore>(ConfigStore());
     Get.put<UserStore>(UserStore());
   }
@@ -28,7 +26,7 @@ class Global {
     if (GetPlatform.isAndroid) {
       SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
         statusBarIconBrightness: Brightness.dark,
         systemNavigationBarDividerColor: Colors.transparent,
         systemNavigationBarColor: Colors.white,
