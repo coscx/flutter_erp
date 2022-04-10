@@ -33,10 +33,11 @@ class FlowPageLogic extends GetxController {
 
   // 下拉刷新
   void onRefresh() async {
+
+    curPage=1;
     var result =
     await CommonAPI.wxArticle(curPage,  []);
     state.wxUser.clear();
-    curPage=1;
     state.wxUser.addAll(result.data.data) ;
     debugPrint(result.toString());
     refreshController.refreshCompleted();

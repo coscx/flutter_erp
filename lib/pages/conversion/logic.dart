@@ -1,5 +1,6 @@
 import 'package:flt_im_plugin/conversion.dart';
 import 'package:flt_im_plugin/flt_im_plugin.dart';
+import 'package:flt_im_plugin/value_util.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -15,7 +16,22 @@ class ConversionLogic extends GetxController {
   int limit = 10; //一次加载10条数据,不建议加载太多。
    String memberId="82";
   void onRefresh() async {
+    FltImPlugin im = FltImPlugin();
+    Map response = await im.getConversations();
+    var  conversions = ValueUtil.toArr(response["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
+    conversions.map((e) {
+      e.detail= (e.detail);
+      return e;
+    }).toList();
+    state.conversion.clear();
+    state.conversion.addAll(conversions);
     offset = 0;
+    refreshController.refreshCompleted();
+  }
+  @override
+  void onInit() {
+   init();
+    super.onInit();
   }
   void onTapDeleteConversion(String cid){
     FltImPlugin im = FltImPlugin();
@@ -28,7 +44,7 @@ class ConversionLogic extends GetxController {
     List<Conversion> messages;
     if (msg.type == ConversionType.CONVERSATION_GROUP) {
       im.clearGroupReadCount(cid: msg.cid);
-    var   message = state.message.map((e) {
+    var   message = state.conversion.map((e) {
         if (e.type == ConversionType.CONVERSATION_GROUP) {
           e.newMsgCount = 0;
           return e;
@@ -36,12 +52,12 @@ class ConversionLogic extends GetxController {
           return e;
         }
       }).toList();
-    state.message.addAll(message);
+    state.conversion.addAll(message);
     }
 
     if (msg.type == ConversionType.CONVERSATION_PEER) {
       im.clearGroupReadCount(cid: msg.cid);
-      var   message = state.message.map((e) {
+      var   message = state.conversion.map((e) {
         if (e.type == ConversionType.CONVERSATION_PEER) {
           e.newMsgCount = 0;
           return e;
@@ -49,11 +65,11 @@ class ConversionLogic extends GetxController {
           return e;
         }
       }).toList();
-      state.message.addAll(message);
+      state.conversion.addAll(message);
     }
 
     var count = 0;
-    state.message.map((e) {
+    state.conversion.map((e) {
       count += e.newMsgCount;
     }).toList();
     if (count == 0) {
@@ -77,5 +93,17 @@ class ConversionLogic extends GetxController {
         ConversionType.CONVERSATION_PEER) {
 
     }
+  }
+
+  Future<void> init() async {
+
+    FltImPlugin im = FltImPlugin();
+    Map response = await im.getConversations();
+    var  conversions = ValueUtil.toArr(response["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
+    conversions.map((e) {
+      e.detail= (e.detail);
+      return e;
+    }).toList();
+    state.conversion.addAll(conversions);
   }
 }

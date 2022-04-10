@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
               actions: <Widget>[
                 Container(
                   child: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.search,
                       color: Colors.black87,
                     ),
@@ -77,9 +77,9 @@ class HomePage extends StatelessWidget {
               //bottom: bar(),
             ),
             body:  Container(
-                  decoration: new BoxDecoration(
+                  decoration:  BoxDecoration(
                     //背景
-                    color: Color.fromRGBO(247, 247, 247, 100),
+                    color: const Color.fromRGBO(247, 247, 247, 100),
                     //设置四周圆角 角度
                     borderRadius: BorderRadius.all(Radius.circular(0.h)),
                     //设置四周边框
@@ -103,9 +103,9 @@ class HomePage extends StatelessWidget {
                                 onLoading: logic.onLoading,
                                 child: CustomScrollView(
                                   controller: logic.scrollController,
-                                  physics: BouncingScrollPhysics(),
+                                  physics: const BouncingScrollPhysics(),
                                   slivers: <Widget>[
-                                    _buildContent(context),
+                                    Obx(()=>_buildContent(context)),
                                   ],
                                 ),
                               )),

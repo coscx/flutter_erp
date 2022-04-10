@@ -22,7 +22,7 @@ class FlowPage extends StatelessWidget {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            systemOverlayStyle: SystemUiOverlayStyle.light,
+            brightness: Brightness.light,
           ),
         ),
         child: Scaffold(
@@ -46,7 +46,7 @@ class FlowPage extends StatelessWidget {
                         child: CustomScrollView(
                           physics: const BouncingScrollPhysics(),
                           slivers: <Widget>[
-                            _buildContent(),
+                            Obx(()=>_buildContent()),
                           ],
                         ),
                       )),

@@ -32,17 +32,18 @@ class HomeLogic extends GetxController {
   void _loadData() async {
     var result =
     await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
-    //state.homeUser.addAll(result.data.data) ;
+    state.homeUser.addAll(result.data.data) ;
     debugPrint(result.toJson().toString());
   }
 
   // 下拉刷新
   void onRefresh() async {
+
+    curPage=1;
     var result =
     await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
-    //state.homeUser.clear();
-    curPage=1;
-    //state.homeUser .addAll(result.data.data) ;
+    state.homeUser.clear();
+    state.homeUser .addAll(result.data.data) ;
     debugPrint(result.toString());
     refreshController.refreshCompleted();
   }
@@ -52,7 +53,7 @@ class HomeLogic extends GetxController {
     curPage++;
     var result =
     await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
-    //state.homeUser.addAll(result.data.data) ;
+    state.homeUser.addAll(result.data.data) ;
     refreshController.loadComplete();
   }
 }

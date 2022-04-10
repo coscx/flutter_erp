@@ -1,4 +1,6 @@
 import 'package:flutter_erp/pages/category/index.dart';
+import 'package:flutter_erp/pages/conversion/logic.dart';
+import 'package:flutter_erp/pages/conversion/view.dart';
 import 'package:flutter_erp/pages/flow_page/logic.dart';
 import 'package:flutter_erp/pages/frame/login/logic.dart';
 import 'package:flutter_erp/pages/home/logic.dart';
@@ -18,5 +20,6 @@ class ApplicationBinding implements Bindings {
     Get.lazyPut<LoginLogic>(() => LoginLogic());
     Get.lazyPut<HomeLogic>(() => HomeLogic());
     Get.lazyPut<MineLogic>(() => MineLogic());
+    Get.lazyPut<ConversionLogic>(() => ConversionLogic());
   }
 }

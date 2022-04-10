@@ -4,6 +4,7 @@ import 'package:flutter_erp/common/values/values.dart';
 import 'package:flutter_erp/common/widgets/unit_bottom_bar.dart';
 import 'package:flutter_erp/common/widgets/widgets.dart';
 import 'package:flutter_erp/pages/category/index.dart';
+import 'package:flutter_erp/pages/conversion/view.dart';
 import 'package:flutter_erp/pages/flow_page/view.dart';
 import 'package:flutter_erp/pages/home/view.dart';
 import 'package:flutter_erp/pages/main/index.dart';
@@ -44,7 +45,7 @@ class ApplicationPage extends GetView<ApplicationController> {
       children: <Widget>[
         HomePage(),
         FlowPage(),
-        Text('BookmarksPage'),
+        ConversionPage(),
         MinePage(),
       ],
       controller: controller.pageController,

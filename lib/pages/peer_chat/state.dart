@@ -1,5 +1,7 @@
+import 'package:flt_im_plugin/message.dart';
+import 'package:get/get.dart';
+
 class PeerChatState {
-  PeerChatState() {
-    ///Initialize variables
-  }
+
+  final RxList<Message> messageList = <Message>[].obs;
 }

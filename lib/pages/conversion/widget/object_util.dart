@@ -19,7 +19,6 @@ class ObjectUtil {
     }
     return false;
   }
-
   /*
   * 随机取一个颜色
   */
@@ -27,8 +26,18 @@ class ObjectUtil {
     return themeColorMap.values.toList()[Random.secure().nextInt(themeColorMap.length)];
   }
 
-
-
+  /*
+  *  获取app的AppBar、ToolBar颜色
+  */
+  static Color getThemeColor({String color: "red"}) {
+    return Colors.blue;
+  }
+  /*
+  *  获取app的主题颜色
+  */
+  static Color getThemeSwatchColor({String color: "red"}) {
+    return Colors.blue;
+  }
   /*
   *  生成与app主题相近的亮颜色
   */

@@ -188,7 +188,7 @@ class ConversionPage extends StatelessWidget {
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Container(
                       color: Colors.white,
-                      child: _buildContent(context),
+                      child: Obx(()=>_buildContent(context)),
                     )),
               ),
             ],
@@ -210,14 +210,14 @@ class ConversionPage extends StatelessWidget {
       behavior: DyBehaviorNull(),
       child: ListView.builder(
           scrollDirection: Axis.vertical,
-          itemCount: state.message.length,
+          itemCount: state.conversion.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
                 onTap: () async {
-                 logic.onTap(logic.state.message[index]);
+                 logic.onTap(logic.state.conversion[index]);
                 },
                 child: _buildListItem(
-                    context, state.message[index], state.message[index].cid));
+                    context, state.conversion[index], state.conversion[index].cid));
           }),
     );
   }
