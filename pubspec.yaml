@@ -210,4 +210,7 @@ flutter:
           weight: 600
     - family: Iconfont
       fonts:
+        - asset: assets/fonts/iconfonterp.ttf
+    - family: TolyIcon
+      fonts:
         - asset: assets/fonts/iconfont.ttf

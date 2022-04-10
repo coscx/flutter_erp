@@ -37,6 +37,13 @@ class CommonAPI {
     );
     return LoginEntity.fromJson(response);
   }
+  static Future<LoginEntity> bindAppWeChat(String code) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/auth/version',
+      queryParameters: {"code":code},
+    );
+    return LoginEntity.fromJson(response);
+  }
   static Future<WxArticleEntity> wxArticle(  int page, final List<SelectItem> selectItems) async {
     Map<String, dynamic> searchParm = {};
     searchParm['currentPage'] = page;

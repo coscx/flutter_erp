@@ -7,6 +7,7 @@ import 'package:flutter_erp/pages/category/index.dart';
 import 'package:flutter_erp/pages/flow_page/view.dart';
 import 'package:flutter_erp/pages/home/view.dart';
 import 'package:flutter_erp/pages/main/index.dart';
+import 'package:flutter_erp/pages/mine/view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -44,7 +45,7 @@ class ApplicationPage extends GetView<ApplicationController> {
         HomePage(),
         FlowPage(),
         Text('BookmarksPage'),
-        Text('AccountPage'),
+        MinePage(),
       ],
       controller: controller.pageController,
       onPageChanged: controller.handlePageChanged,
@@ -68,7 +69,7 @@ class ApplicationPage extends GetView<ApplicationController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(),
+      //appBar: _buildAppBar(),
       body: _buildPageView(),
       bottomNavigationBar: _buildBottomNavigationBar(),
     );
