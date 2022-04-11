@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_erp/common/apis/common.dart';
+import 'package:flutter_erp/common/entities/home/tree_store.dart';
+import 'package:flutter_erp/common/services/services.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../common/entities/home/common.dart';
 import '../../../common/widgets/DyBehaviorNull.dart';
-
-
-
+import '../logic.dart';
 
 class AppBarComponent extends StatefulWidget {
   final List<SelectItem> selectItems;
@@ -21,105 +24,102 @@ class AppBarComponent extends StatefulWidget {
 }
 
 class _AppBarComponentState extends State<AppBarComponent> {
+
+  final logic = Get.find<HomeLogic>();
   List<CitySelect> firstLevels = <CitySelect>[];
   List<StoreSelect> all = <StoreSelect>[];
   final String title = "";
   final Color bgColor = Colors.black;
   final Color textColor = Colors.redAccent;
-  List<String> _dropDownHeaderItemStrings = ['全部门店', '客户状态', '沟通状态', '筛选'];
+  final List<String> _dropDownHeaderItemStrings = ['全部门店', '客户状态', '沟通状态', '筛选'];
   List<SortCondition> _brandSortConditions = [];
   List<SortCondition> _distanceSortConditions = [];
   late SortCondition _selectBrandSortCondition;
   late SortCondition _selectDistanceSortCondition;
-  GZXDropdownMenuController _dropdownMenuController =
+  final GZXDropdownMenuController _dropdownMenuController =
   GZXDropdownMenuController();
   List<StoreSelect> secondtLevels = <StoreSelect>[];
-  GlobalKey _stackKey = GlobalKey();
+  final GlobalKey _stackKey = GlobalKey();
   int roleId =0;
   @override
   void initState() {
-    // TODO: implement initState
-    // Future.delayed(Duration(milliseconds: 1)).then((e) async {
-    //   int ccMode =0;
-    //
-    //     final sp = AppStorage().sp;
-    //     var mode = await sp;
-    //     ccMode =mode.getInt("currentPhotoMode");
-    //
-    //   if (widget.mode >0){
-    //     ccMode = widget.mode;
-    //   }
-    //   var roleIds = await LocalStorage.get("roleId");
-    //
-    //   if (roleIds != "" && roleIds != null) {
-    //
-    //     setState(() {
-    //       roleId = int.parse(roleIds);
-    //       //print(roleId);
-    //       //print(widget.mode);
-    //       //print((widget.mode==2 && (roleId == 7 || roleId == 9)));
-    //       if (ccMode==2 && (roleId == 7 || roleId == 9)){
-    //           //print("88888888");
-    //         _distanceSortConditions.clear();
-    //         _distanceSortConditions
-    //             .add(SortCondition(name: '沟通状态', id: 0, isSelected: true, all: true));
-    //         _distanceSortConditions
-    //             .add(SortCondition(name: '20.已入库资料不全', id: 20, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '21.新分VIP', id: 21, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '22.无对象,待推荐', id: 22, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '23.推动见面指导', id: 23, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '24.撮合再见面', id: 24, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '25.深入交往,推动恋爱', id: 25, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '26.确认恋爱', id: 26, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '27.结婚', id: 27, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '28.暂停', id: 28, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '29.放弃', id: 29, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '30.已共识退费', id: 30, isSelected: false, all: true));
-    //
-    //       }else{
-    //         _distanceSortConditions.clear();
-    //         _distanceSortConditions
-    //             .add(SortCondition(name: '沟通状态', id: 0, isSelected: true, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '1.新分未联系', id: 1, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '2.号码无效', id: 2, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '3.号码未接通', id: 3, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '4.可继续沟通', id: 4, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '5.有意向面谈', id: 5, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '6.确定到店时间', id: 6, isSelected: false, all: true));
-    //         _distanceSortConditions.add(SortCondition(
-    //             name: '7.已到店，意愿需跟进', id: 7, isSelected: false, all: true));
-    //         _distanceSortConditions.add(SortCondition(
-    //             name: '8.已到店，考虑7天付款', id: 8, isSelected: false, all: true));
-    //         _distanceSortConditions.add(SortCondition(
-    //             name: '9.高级会员，支付预付款', id: 9, isSelected: false, all: true));
-    //         _distanceSortConditions.add(SortCondition(
-    //             name: '10.高级会员，费用已结清', id: 10, isSelected: false, all: true));
-    //         _distanceSortConditions.add(
-    //             SortCondition(name: '11.毁单', id: 11, isSelected: false, all: true));
-    //         _distanceSortConditions.add(SortCondition(
-    //             name: '12.放弃并放入公海', id: 12, isSelected: false, all: true));
-    //         _distanceSortConditions.add(SortCondition(
-    //             name: '13.放弃并放入D级', id: 13, isSelected: false, all: true));
-    //       }
-    //     });
-    //   }
-    // });
+
+    Future.delayed(const Duration(milliseconds: 1)).then((e) async {
+      int ccMode =0;
+      ccMode =StorageService.to.getInt("currentPhotoMode");
+      if (widget.mode >0){
+        ccMode = widget.mode;
+      }
+      var roleIds = StorageService.to.getString("roleId");
+      if (roleIds != "" ) {
+
+        setState(() {
+          roleId = int.parse(roleIds);
+          //print(roleId);
+          //print(widget.mode);
+          //print((widget.mode==2 && (roleId == 7 || roleId == 9)));
+          if (ccMode==2 && (roleId == 7 || roleId == 9)){
+              //print("88888888");
+            _distanceSortConditions.clear();
+            _distanceSortConditions
+                .add(SortCondition(name: '沟通状态', id: 0, isSelected: true, all: true));
+            _distanceSortConditions
+                .add(SortCondition(name: '20.已入库资料不全', id: 20, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '21.新分VIP', id: 21, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '22.无对象,待推荐', id: 22, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '23.推动见面指导', id: 23, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '24.撮合再见面', id: 24, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '25.深入交往,推动恋爱', id: 25, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '26.确认恋爱', id: 26, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '27.结婚', id: 27, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '28.暂停', id: 28, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '29.放弃', id: 29, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '30.已共识退费', id: 30, isSelected: false, all: true));
+
+          }else{
+            _distanceSortConditions.clear();
+            _distanceSortConditions
+                .add(SortCondition(name: '沟通状态', id: 0, isSelected: true, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '1.新分未联系', id: 1, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '2.号码无效', id: 2, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '3.号码未接通', id: 3, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '4.可继续沟通', id: 4, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '5.有意向面谈', id: 5, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '6.确定到店时间', id: 6, isSelected: false, all: true));
+            _distanceSortConditions.add(SortCondition(
+                name: '7.已到店，意愿需跟进', id: 7, isSelected: false, all: true));
+            _distanceSortConditions.add(SortCondition(
+                name: '8.已到店，考虑7天付款', id: 8, isSelected: false, all: true));
+            _distanceSortConditions.add(SortCondition(
+                name: '9.高级会员，支付预付款', id: 9, isSelected: false, all: true));
+            _distanceSortConditions.add(SortCondition(
+                name: '10.高级会员，费用已结清', id: 10, isSelected: false, all: true));
+            _distanceSortConditions.add(
+                SortCondition(name: '11.毁单', id: 11, isSelected: false, all: true));
+            _distanceSortConditions.add(SortCondition(
+                name: '12.放弃并放入公海', id: 12, isSelected: false, all: true));
+            _distanceSortConditions.add(SortCondition(
+                name: '13.放弃并放入D级', id: 13, isSelected: false, all: true));
+          }
+        });
+      }
+    });
     _brandSortConditions
         .add(SortCondition(name: '客户状态', id: 0, isSelected: true, all: true));
     _brandSortConditions
@@ -169,34 +169,32 @@ class _AppBarComponentState extends State<AppBarComponent> {
     ta.id = 0;
     firstLevels.add(ta);
 
-    // Future.delayed(Duration(microseconds: 1)).then((e) async {
-    //   var result = await IssuesApi.getStoreList("1");
-    //   if (result['code'] == 200) {
-    //     all.clear();
-    //
-    //     List<dynamic> da = result['data'];
-    //     da.forEach((value) {
-    //       CitySelect cc1 = CitySelect();
-    //       cc1.name = value['name'];
-    //       cc1.id = value['city_code'] ==null?0 :int.parse(value['city_code']);
-    //       firstLevels.add(cc1);
-    //
-    //       List<dynamic> stores = value['data'];
-    //       stores.forEach((value) {
-    //         StoreSelect ddd1 = StoreSelect();
-    //         ddd1.id = value['id'];
-    //         ddd1.name = value['name'];
-    //         ddd1.city = cc1.id;
-    //         all.add(ddd1);
-    //       });
-    //     });
-    //     setState(() {
-    //
-    //     });
-    //   } else {
-    //
-    //   }
-    // });
+    Future.delayed(const Duration(microseconds: 1)).then((e) async {
+      var result = await CommonAPI.getTreeStoreList();
+      if (result.code == 200) {
+        all.clear();
+        List<TreeStore> da = result.data;
+        for (var value in da) {
+          CitySelect cc1 = CitySelect();
+          cc1.name = value.name;
+          cc1.id = int.parse(value.cityCode);
+          firstLevels.add(cc1);
+          List<Data> stores = value.data;
+          for (var value in stores) {
+            StoreSelect ddd1 = StoreSelect();
+            ddd1.id = value.id;
+            ddd1.name = value.name;
+            ddd1.city = cc1.id;
+            all.add(ddd1);
+          }
+        }
+        setState(() {
+
+        });
+      } else {
+
+      }
+    });
 
     super.initState();
   }
@@ -208,7 +206,7 @@ bool getSelect(){
     }
 
   }
-  return f.length > 0;
+  return f.isNotEmpty;
 }
   @override
   Widget build(BuildContext context) {
@@ -220,7 +218,7 @@ bool getSelect(){
           Column(
             children: <Widget>[
               Container(
-                decoration: new BoxDecoration(),
+                decoration:  const BoxDecoration(),
                 child: GZXDropDownHeader(
                   items: [
                     GZXDropDownHeaderItem(_dropDownHeaderItemStrings[0],
@@ -228,13 +226,13 @@ bool getSelect(){
                     GZXDropDownHeaderItem(_dropDownHeaderItemStrings[1], style: TextStyle(color: (_dropDownHeaderItemStrings[1] =="客户状态" )?Colors.black:Colors.redAccent)),
                     GZXDropDownHeaderItem(_dropDownHeaderItemStrings[2], style: TextStyle(color: (_dropDownHeaderItemStrings[2] =="沟通状态" )?Colors.black:Colors.redAccent)),
                     GZXDropDownHeaderItem(_dropDownHeaderItemStrings[3], style: TextStyle(color: (getSelect() == false )?Colors.black:Colors.redAccent),
-                        iconSize: 18),
+                        iconSize: 30.sp),
                   ],
                   stackKey: _stackKey,
                   controller: _dropdownMenuController,
                   onItemTap: (index) {
                     if (index == 3) {
-                      widget.state.currentState?.openDrawer();
+                      widget.state.currentState?.openEndDrawer();
                       _dropdownMenuController.hide();
                     }
                   },
@@ -274,7 +272,7 @@ bool getSelect(){
                       s.id = selectValue.id.toString();
                       widget.selectItems.add(s);
                     }
-
+                    logic.onRefresh();
                   })),
               GZXDropdownMenuBuilder(
                   dropDownHeight: 40.0 * _brandSortConditions.length,
@@ -300,7 +298,7 @@ bool getSelect(){
                       s.id = value.id.toString();
                       widget.selectItems.add(s);
                     }
-
+                    logic.onRefresh();
                   })),
               GZXDropdownMenuBuilder(
                   dropDownHeight: 40.0 * _distanceSortConditions.length,
@@ -326,7 +324,7 @@ bool getSelect(){
                       s.id = value.id.toString();
                       widget.selectItems.add(s);
                     }
-
+                    logic.onRefresh();
                   })),
             ],
           ),
@@ -341,8 +339,8 @@ bool getSelect(){
 
   int _selectSecondLevelIndex = -1;
 
-  _buildQuanChengWidget(void itemOnTap(SelectItem selectValue)) {
-//    List firstLevels = new List<int>.filled(15, 0);
+  _buildQuanChengWidget(void Function(SelectItem selectValue) itemOnTap) {
+//    List firstLevels =  List<int>.filled(15, 0);
 
     return Row(
       children: <Widget>[
@@ -386,7 +384,7 @@ bool getSelect(){
                     child: _selectTempFirstLevelIndex == index
                         ? Text(
                       '${item.name}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.red,
                       ),
                     )
@@ -433,7 +431,7 @@ bool getSelect(){
                             _selectSecondLevelIndex == index
                             ? Text(
                           '${item.name}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.red,
                           ),
                         )
@@ -458,7 +456,7 @@ bool getSelect(){
         itemCount: items.length,
         // item 的个数
         separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 1.0),
+            Divider(height: 2.h),
         // 添加分割线
         itemBuilder: (BuildContext context, int index) {
           SortCondition goodsSortCondition = items[index];
@@ -474,11 +472,11 @@ bool getSelect(){
             },
             child: Container(
 //            color: Colors.blue,
-              height: 40,
+              height: 80.h,
               child: Row(
                 children: <Widget>[
                   SizedBox(
-                    width: 16,
+                    width: 32.w,
                   ),
                   Expanded(
                     child: Text(
@@ -494,11 +492,11 @@ bool getSelect(){
                       ? Icon(
                     Icons.check,
                     color: Theme.of(context).primaryColor,
-                    size: 16,
+                    size: 32.sp,
                   )
-                      : SizedBox(),
+                      : const SizedBox(),
                   SizedBox(
-                    width: 16,
+                    width: 32.w,
                   ),
                 ],
               ),

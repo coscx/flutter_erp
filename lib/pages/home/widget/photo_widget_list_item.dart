@@ -1,9 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_erp/common/routers/pages.dart';
+import 'package:flutter_erp/pages/user_detail/view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../common/entities/home/search_erp.dart';
+import '../../../common/routers/names.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/values/cons.dart';
 import '../../../common/widgets/circle_text.dart';
@@ -32,24 +37,24 @@ class PhotoWidgetListItem extends StatelessWidget {
               Container(
                   //color: Theme.of(context).primaryColor.withAlpha(33),
                   //shape: true ? TechnoShapeBorder(color: Theme.of(context).primaryColor.withAlpha(100)) : null,
-                  decoration: new BoxDecoration(
+                  decoration:  BoxDecoration(
 //背景
-                    color: Color.fromRGBO(255, 255, 255, 100),
+                    color: const Color.fromRGBO(255, 255, 255, 100),
                     //设置四周圆角 角度
                     borderRadius: BorderRadius.all(Radius.circular(20.h)),
                     //设置四周边框
-                    //border: new Border.all(width: 1, color: Colors.red),
+                    //border:  Border.all(width: 1, color: Colors.red),
                   ),
                   child: Container(
                       padding: EdgeInsets.only(
                           top: 10.h, bottom: 10.h, left: 10.w, right: 10.w),
-                      decoration: new BoxDecoration(
+                      decoration:  BoxDecoration(
 //背景
-                        color: Color.fromRGBO(255, 255, 255, 100),
+                        color: const Color.fromRGBO(255, 255, 255, 100),
                         //设置四周圆角 角度
                         borderRadius: BorderRadius.all(Radius.circular(20.h)),
                         //设置四周边框
-                        //border: new Border.all(width: 1, color: Colors.red),
+                        //border:  Border.all(width: 1, color: Colors.red),
                       ),
                       child: Column(
                         children: [
@@ -59,6 +64,7 @@ class PhotoWidgetListItem extends StatelessWidget {
                               //     .add(FetchWidgetDetail(photo));
                               // Navigator.pushNamed(
                               //     context, UnitRouter.widget_detail);
+                              Get.toNamed(AppRoutes.Detail,arguments: photo.uuid);
                             },
                             child: buildContent(context),
                           ),

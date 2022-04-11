@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/message.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_erp/pages/peer_chat/widget/popupwindow_widget.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/time_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../common/widgets/DyBehaviorNull.dart';
 import '../../common/widgets/delete_category_dialog.dart';
 import '../conversion/widget/colors.dart';
@@ -42,75 +44,85 @@ class PeerChatPage extends StatelessWidget {
         },
       )),
       Divider(height: 1.h),
-      Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-        ),
-        child: Container(
-          height: 88.h,
-          child: Row(
-            children: <Widget>[
-              IconButton(
-                  icon: logic.isShowVoice
-                      ? const Icon(Icons.keyboard)
-                      : const Icon(Icons.play_circle_outline),
-                  iconSize: 55.sp,
-                  onPressed: () {
-                    logic.hideKeyBoard();
-                    logic.inputLeftOnTap();
-                  }),
-              Flexible(child: _enterWidget()),
-              IconButton(
-                  icon: logic.isShowFace
-                      ? const Icon(Icons.keyboard)
-                      : const Icon(Icons.sentiment_very_satisfied),
-                  iconSize: 55.sp,
-                  onPressed: () {
-                    logic.hideKeyBoard();
-                    logic.inputRightFaceOnTap();
-                  }),
-              logic.isShowSend
-                  ? GestureDetector(
-                      onTap: () {
-                        if (logic.controller.text.isEmpty) {
-                          return;
-                        }
-                        _buildTextMessage(logic.controller.text);
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 90.w,
-                        height: 32.h,
-                        margin: EdgeInsets.only(right: 8.w),
-                        child: Text(
-                          '发送',
-                          style: TextStyle(fontSize: 28.sp, color: Colors.red),
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(8.w)),
-                        ),
-                      ),
-                    )
-                  : IconButton(
-                      icon: const Icon(Icons.add_circle_outline),
-                      iconSize: 55.sp,
-                      onPressed: () {
-                        logic.hideKeyBoard();
-                        logic.inputRightSendOnTap();
-                      }),
-            ],
-          ),
-        ),
-      ),
-      (logic.isShowTools || logic.isShowFace || logic.isShowVoice)
-          ? Container(
-              height: 418.h,
-              child: _bottomWidget(context),
-            )
-          : const SizedBox(
-              height: 0,
-            )
+      GetBuilder<PeerChatLogic>(
+          id: "input",
+          builder: (logic) {
+            return Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
+                  ),
+                  child: Container(
+                    height: 88.h,
+                    child: Row(
+                      children: <Widget>[
+                        IconButton(
+                            icon: logic.isShowVoice
+                                ? const Icon(Icons.keyboard)
+                                : const Icon(Icons.play_circle_outline),
+                            iconSize: 55.sp,
+                            onPressed: () {
+                              logic.hideKeyBoard();
+                              logic.inputLeftOnTap();
+                            }),
+                        Flexible(child: _enterWidget()),
+                        IconButton(
+                            icon: logic.isShowFace
+                                ? const Icon(Icons.keyboard)
+                                : const Icon(Icons.sentiment_very_satisfied),
+                            iconSize: 55.sp,
+                            onPressed: () {
+                              logic.hideKeyBoard();
+                              logic.inputRightFaceOnTap();
+                            }),
+                        logic.isShowSend
+                            ? GestureDetector(
+                                onTap: () {
+                                  if (logic.controller.text.isEmpty) {
+                                    return;
+                                  }
+                                  _buildTextMessage(logic.controller.text);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width: 90.w,
+                                  height: 32.h,
+                                  margin: EdgeInsets.only(right: 8.w),
+                                  child: Text(
+                                    '发送',
+                                    style: TextStyle(
+                                        fontSize: 28.sp, color: Colors.red),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.w)),
+                                  ),
+                                ),
+                              )
+                            : IconButton(
+                                icon: const Icon(Icons.add_circle_outline),
+                                iconSize: 55.sp,
+                                onPressed: () {
+                                  logic.hideKeyBoard();
+                                  logic.inputRightSendOnTap();
+                                }),
+                      ],
+                    ),
+                  ),
+                ),
+                (logic.isShowTools || logic.isShowFace || logic.isShowVoice)
+                    ? Container(
+                        height: 418.h,
+                        child: _bottomWidget(context),
+                      )
+                    : const SizedBox(
+                        height: 0,
+                      )
+              ],
+            );
+          }),
     ]);
   }
 
@@ -205,17 +217,16 @@ class PeerChatPage extends StatelessWidget {
   Widget _messageListViewItem(
       Key key, List<Message> messageList, int index, String tfSender) {
     //list最后一条消息（时间上是最老的），是没有下一条了
-    Message _nextEntity =
-        (index == messageList.length - 1) ? messageList[0] : messageList[index + 1];
+    Message _nextEntity = (index == messageList.length - 1)
+        ? messageList[0]
+        : messageList[index + 1];
     Message _entity = messageList[index];
     return buildChatListItem(key, _nextEntity, _entity, tfSender,
         onResend: (reSendEntity) {
-              _onResend(reSendEntity as Message);
-         },
-
-        onItemLongClick: (entity) {
+      _onResend(reSendEntity as Message);
+    }, onItemLongClick: (entity) {
       DialogUtil.buildToast('长按了消息');
-     // _deletePeerMessage(context, entity);
+      // _deletePeerMessage(context, entity);
     }, onItemClick: (onClickEntity) async {
       Message entity = onClickEntity as Message;
       if (entity.type == MessageType.MESSAGE_AUDIO) {
@@ -225,18 +236,17 @@ class PeerChatPage extends StatelessWidget {
           await logic.stopPlayer();
           _entity.playing = 0;
         } else {
-            for (Message other in messageList) {
-              other.playing = 0;
-              //停止其他正在播放的
-            }
+          for (Message other in messageList) {
+            other.playing = 0;
+            //停止其他正在播放的
+          }
           _entity.playing = 1;
           await logic.startPlayer(_entity.content['url']);
           Future.delayed(
               Duration(milliseconds: _entity.content['duration'] * 1000),
               () async {
             if (logic.alive) {
-
-                _entity.playing = 0;
+              _entity.playing = 0;
 
               await logic.stopPlayer();
             }
@@ -277,8 +287,8 @@ class PeerChatPage extends StatelessWidget {
   Widget buildChatListItem(
       Key key, Message nextEntity, Message entity, String tfSender,
       {OnItemClick? onResend,
-        OnItemClick? onItemClick,
-        OnItemClick? onItemLongClick}) {
+      OnItemClick? onItemClick,
+      OnItemClick? onItemLongClick}) {
     bool _isShowTime = true;
     var showTime; //最终显示的时间
     if (null == nextEntity) {
@@ -299,11 +309,11 @@ class PeerChatPage extends StatelessWidget {
         children: <Widget>[
           _isShowTime
               ? Center(
-              heightFactor: 2,
-              child: Text(
-                showTime,
-                style: TextStyle(color: ColorT.transparent_80),
-              ))
+                  heightFactor: 2,
+                  child: Text(
+                    showTime,
+                    style: TextStyle(color: ColorT.transparent_80),
+                  ))
               : SizedBox(height: 0),
           PeerChatItemWidget(
               entity: entity,
@@ -315,6 +325,7 @@ class PeerChatPage extends StatelessWidget {
       ),
     );
   }
+
 /*输入框*/
   _enterWidget() {
     return Material(
@@ -344,13 +355,11 @@ class PeerChatPage extends StatelessWidget {
                 fillColor: Colors.transparent,
               ),
               onChanged: (str) {
-
-                  if (str.isNotEmpty) {
-                    logic.isShowSend = true;
-                  } else {
-                    logic.isShowSend = false;
-                  }
-
+                if (str.isNotEmpty) {
+                  logic.isShowSend = true;
+                } else {
+                  logic.isShowSend = false;
+                }
               },
               onEditingComplete: () {
                 if (logic.controller.text.isEmpty) {
@@ -360,11 +369,12 @@ class PeerChatPage extends StatelessWidget {
               })),
     );
   }
-  _buildTextMessage(String content) {
 
+  _buildTextMessage(String content) {
     logic.controller.clear();
     logic.isShowSend = false;
   }
+
   _bottomWidget(BuildContext context) {
     late Widget widget;
     if (logic.isShowTools) {
@@ -376,24 +386,28 @@ class PeerChatPage extends StatelessWidget {
     }
     return widget;
   }
+
   _toolsWidget(BuildContext context) {
     if (logic.guideToolsList.isNotEmpty) {
       logic.guideToolsList.clear();
     }
-    List<Widget> _widgets =[];
-    _widgets.add(MoreWidgets.buildIcon(Icons.insert_photo, '相册', o: (res) => ImageUtil.getGalleryImage().then((imageFile) {
-      //相册取图片
-      _willBuildImageMessage(imageFile);
-    })));
-    _widgets.add(MoreWidgets.buildIcon(Icons.camera_alt, '拍摄', o: (res) => PopupWindowUtil.showCameraChosen(context, onCallBack: (type, file) async {
-      if (type == 1) {
-        //相机取图片
-        _willBuildImageMessage(file as File);
-      } else if (type == 2) {
-        //相机拍视频
-        _buildVideoMessage(file as Map<String,dynamic>);
-      }
-    })));
+    List<Widget> _widgets = [];
+    _widgets.add(MoreWidgets.buildIcon(Icons.insert_photo, '相册',
+        o: (res) => ImageUtil.getGalleryImage().then((imageFile) {
+              //相册取图片
+              _willBuildImageMessage(imageFile);
+            })));
+    _widgets.add(MoreWidgets.buildIcon(Icons.camera_alt, '拍摄',
+        o: (res) => PopupWindowUtil.showCameraChosen(context,
+                onCallBack: (type, file) async {
+              if (type == 1) {
+                //相机取图片
+                _willBuildImageMessage(file as File);
+              } else if (type == 2) {
+                //相机拍视频
+                _buildVideoMessage(file as Map<String, dynamic>);
+              }
+            })));
     // _widgets.add(MoreWidgets.buildIcon(Icons.videocam, '在线通话',
     //     o: (res) => showDialog(
     //         barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
@@ -428,7 +442,9 @@ class PeerChatPage extends StatelessWidget {
     // _widgets1.add(MoreWidgets.buildIcon(Icons.person, '名片'));
     // _widgets1.add(MoreWidgets.buildIcon(Icons.folder, '文件'));
     logic.guideToolsList.add(GridView.count(
-        crossAxisCount: 4, padding: const EdgeInsets.all(0.0), children: _widgets1));
+        crossAxisCount: 4,
+        padding: const EdgeInsets.all(0.0),
+        children: _widgets1));
     // return Swiper(
     //     autoStart: false,
     //     circular: false,
@@ -439,55 +455,56 @@ class PeerChatPage extends StatelessWidget {
     //         itemActiveColor: ObjectUtil.getThemeSwatchColor()),
     //     children: logic.guideToolsList);
   }
+
   _faceWidget() {
     _initFaceList();
     return Column(
       children: <Widget>[
         Flexible(
             child: Stack(
-              children: <Widget>[
-                // Offstage(
-                //   offstage: logic.isFaceFirstList,
-                //   child: Swiper(
-                //       autoStart: false,
-                //       circular: false,
-                //       indicator: CircleSwiperIndicator(
-                //           radius: 3.0,
-                //           padding: EdgeInsets.only(top: 10.w),
-                //           itemColor: ColorT.gray_99,
-                //           itemActiveColor: ObjectUtil.getThemeSwatchColor()),
-                //       children: logic.guideFigureList),
-                // ),
-                // Offstage(
-                //   offstage: !logic.isFaceFirstList,
-                //   child: EmojiPicker(
-                //     rows: 3,
-                //     columns: 7,
-                //     //recommendKeywords: ["racing", "horse"],
-                //     numRecommended: 10,
-                //     onEmojiSelected: (emoji, category) {
-                //       logic.controller.text =logic.controller.text + emoji.emoji;
-                //       logic.controller.selection = TextSelection.fromPosition(
-                //           TextPosition(offset: logic.controller.text.length));
-                //
-                //       if (logic.isShowSend == false) {
-                //
-                //           if (logic.controller.text.isNotEmpty) {
-                //             logic.isShowSend = true;
-                //           } else {
-                //             logic.isShowSend = false;
-                //           }
-                //
-                //       }
-                //     },
-                //   ),
-                // )
-              ],
-            )),
+          children: <Widget>[
+            // Offstage(
+            //   offstage: logic.isFaceFirstList,
+            //   child: Swiper(
+            //       autoStart: false,
+            //       circular: false,
+            //       indicator: CircleSwiperIndicator(
+            //           radius: 3.0,
+            //           padding: EdgeInsets.only(top: 10.w),
+            //           itemColor: ColorT.gray_99,
+            //           itemActiveColor: ObjectUtil.getThemeSwatchColor()),
+            //       children: logic.guideFigureList),
+            // ),
+            // Offstage(
+            //   offstage: !logic.isFaceFirstList,
+            //   child: EmojiPicker(
+            //     rows: 3,
+            //     columns: 7,
+            //     //recommendKeywords: ["racing", "horse"],
+            //     numRecommended: 10,
+            //     onEmojiSelected: (emoji, category) {
+            //       logic.controller.text =logic.controller.text + emoji.emoji;
+            //       logic.controller.selection = TextSelection.fromPosition(
+            //           TextPosition(offset: logic.controller.text.length));
+            //
+            //       if (logic.isShowSend == false) {
+            //
+            //           if (logic.controller.text.isNotEmpty) {
+            //             logic.isShowSend = true;
+            //           } else {
+            //             logic.isShowSend = false;
+            //           }
+            //
+            //       }
+            //     },
+            //   ),
+            // )
+          ],
+        )),
         SizedBox(
           height: 4.h,
         ),
-        new Divider(height: 2.h),
+        Divider(height: 2.h),
         Container(
           height: 48.h,
           child: Row(
@@ -501,13 +518,11 @@ class PeerChatPage extends StatelessWidget {
                           Icons.sentiment_very_satisfied,
                           color: logic.isFaceFirstList
                               ? ObjectUtil.getThemeSwatchColor()
-                              :logic.headsetColor,
+                              : logic.headsetColor,
                           size: 48.sp,
                         ),
                         onTap: () {
-
-                            logic.isFaceFirstList = true;
-
+                          logic.isFaceFirstList = true;
                         },
                       ))),
               Align(
@@ -523,9 +538,7 @@ class PeerChatPage extends StatelessWidget {
                           size: 48.sp,
                         ),
                         onTap: () {
-
-                            logic.isFaceFirstList = false;
-
+                          logic.isFaceFirstList = false;
                         },
                       ))),
             ],
@@ -534,6 +547,7 @@ class PeerChatPage extends StatelessWidget {
       ],
     );
   }
+
   _voiceWidget() {
     return Stack(
       children: <Widget>[
@@ -543,7 +557,7 @@ class PeerChatPage extends StatelessWidget {
                 padding: EdgeInsets.all(20.w),
                 child: Icon(
                   Icons.headset,
-                  color:logic.headsetColor,
+                  color: logic.headsetColor,
                   size: 80.sp,
                 ))),
         Align(
@@ -557,16 +571,16 @@ class PeerChatPage extends StatelessWidget {
                         padding: EdgeInsets.only(top: 10.h),
                         child: logic.audioIconPath == ''
                             ? SizedBox(
-                          width: 60.w,
-                          height: 60.h,
-                        )
+                                width: 60.w,
+                                height: 60.h,
+                              )
                             : Image.asset(
-                          FileUtil.getImagePath(logic.audioIconPath,
-                              dir: 'icon', format: 'png'),
-                          width: 60.w,
-                          height: 60.h,
-                          color: ObjectUtil.getThemeSwatchColor(),
-                        )),
+                                FileUtil.getImagePath(logic.audioIconPath,
+                                    dir: 'icon', format: 'png'),
+                                width: 60.w,
+                                height: 60.h,
+                                color: ObjectUtil.getThemeSwatchColor(),
+                              )),
                     Text(logic.voiceCount.toString() + "S")
                   ],
                 ),
@@ -578,19 +592,17 @@ class PeerChatPage extends StatelessWidget {
                           logic.timer.cancel();
                           logic.timer =
                               Timer.periodic(Duration(milliseconds: 1000), (t) {
-                                //print(voiceCount);
+                            //print(voiceCount);
 
-                                  logic.voiceCount = logic.voiceCount + 1;
-
-                              });
+                            logic.voiceCount = logic.voiceCount + 1;
+                          });
                         } else {
-                          logic.timer =
-                              Timer.periodic(Duration(milliseconds: 1000), (t) {
-                                //print(voiceCount);
+                          logic.timer = Timer.periodic(
+                              const Duration(milliseconds: 1000), (t) {
+                            //print(voiceCount);
 
-                                  logic.voiceCount = logic.voiceCount + 1;
-
-                              });
+                            logic.voiceCount = logic.voiceCount + 1;
+                          });
                         }
 
                         if (logic.recorderModule.isRecording) {
@@ -599,7 +611,8 @@ class PeerChatPage extends StatelessWidget {
                         logic.startRecord();
                       },
                       onScaleEnd: (res) async {
-                        if (logic.headsetColor == ObjectUtil.getThemeLightColor()) {
+                        if (logic.headsetColor ==
+                            ObjectUtil.getThemeLightColor()) {
                           DialogUtil.buildToast('试听功能暂未实现');
                           if (logic.recorderModule.isRecording) {
                             logic.stopRecorder();
@@ -614,8 +627,8 @@ class PeerChatPage extends StatelessWidget {
                         } else {
                           if (logic.recorderModule.isRecording) {
                             logic.stopRecorder();
-                            var length =
-                            await CommonUtil.getDuration(logic.voiceFilePath);
+                            var length = await CommonUtil.getDuration(
+                                logic.voiceFilePath);
                             File file = File(logic.voiceFilePath);
                             if (length * 1000 < 1000) {
                               //小于1s不发送
@@ -623,58 +636,51 @@ class PeerChatPage extends StatelessWidget {
                               DialogUtil.buildToast('你说话时间太短啦~');
                             } else {
                               Future.delayed(const Duration(milliseconds: 500),
-                                      () {
-                                    //发送语音
-                                    _buildVoiceMessage(file, length.floor());
-                                  });
+                                  () {
+                                //发送语音
+                                _buildVoiceMessage(file, length.floor());
+                              });
                             }
                             logic.voiceCount = 0;
                             logic.timer.cancel();
                           }
                         }
 
-                          logic.audioIconPath = '';
-                          logic.voiceText = '按住 说话';
-                          logic.voiceBackground = ObjectUtil.getThemeLightColor();
-                          logic.headsetColor = ColorT.gray_99;
-                          logic.highlightColor = ColorT.gray_99;
-
+                        logic.audioIconPath = '';
+                        logic.voiceText = '按住 说话';
+                        logic.voiceBackground = ObjectUtil.getThemeLightColor();
+                        logic.headsetColor = ColorT.gray_99;
+                        logic.highlightColor = ColorT.gray_99;
                       },
                       onScaleUpdate: (res) {
                         if (res.focalPoint.dy > 550.h &&
                             res.focalPoint.dy < 620.h) {
                           if (res.focalPoint.dx > 10.w &&
                               res.focalPoint.dx < 80.w) {
-
-                              logic.voiceText = '松开 试听';
-                              logic.headsetColor = ObjectUtil.getThemeLightColor();
-
+                            logic.voiceText = '松开 试听';
+                            logic.headsetColor =
+                                ObjectUtil.getThemeLightColor();
                           } else if (res.focalPoint.dx > 330.w &&
                               res.focalPoint.dx < 400.w) {
-
-                              logic.voiceText = '松开 删除';
-                              logic.highlightColor = ObjectUtil.getThemeLightColor();
-
+                            logic.voiceText = '松开 删除';
+                            logic.highlightColor =
+                                ObjectUtil.getThemeLightColor();
                           } else {
-
                             logic.voiceText = '松开 结束';
                             logic.headsetColor = ColorT.gray_99;
                             logic.highlightColor = ColorT.gray_99;
-
                           }
                         } else {
-
-                            logic.voiceText = '松开 结束';
-                            logic.headsetColor = ColorT.gray_99;
-                            logic.highlightColor = ColorT.gray_99;
-
+                          logic.voiceText = '松开 结束';
+                          logic.headsetColor = ColorT.gray_99;
+                          logic.highlightColor = ColorT.gray_99;
                         }
                       },
-                      child: new CircleAvatar(
-                        child: new Text(
+                      child: CircleAvatar(
+                        child: Text(
                           logic.voiceText,
-                          style: new TextStyle(
-                              fontSize: 30.sp, color: ColorT.gray_33),
+                          style:
+                              TextStyle(fontSize: 30.sp, color: ColorT.gray_33),
                         ),
                         radius: 120.w,
                         backgroundColor: logic.voiceBackground,
@@ -694,6 +700,7 @@ class PeerChatPage extends StatelessWidget {
       ],
     );
   }
+
   _gridView(int crossAxisCount, List<String> list) {
     return GridView.count(
         crossAxisCount: crossAxisCount,
@@ -716,6 +723,7 @@ class PeerChatPage extends StatelessWidget {
 
   //重发
   _onResend(Message entity) {}
+
   _willBuildImageMessage(File imageFile) {
     if (imageFile.path.isEmpty) {
       return;
@@ -731,19 +739,15 @@ class PeerChatPage extends StatelessWidget {
   }
 
   _buildVoiceMessage(File file, int length) {
-
     logic.controller.clear();
   }
 
   _buildVideoMessage(Map file) {
-
     logic.controller.clear();
-
   }
 
-  void updateData(Message entity) {
+  void updateData(Message entity) {}
 
-  }
   _initFaceList() {
     if (logic.guideFaceList.isNotEmpty) {
       logic.guideFaceList.clear();
@@ -754,7 +758,7 @@ class PeerChatPage extends StatelessWidget {
     //添加表情图
     List<String> _faceList = [];
     String faceDeletePath =
-    FileUtil.getImagePath('face_delete', dir: 'face', format: 'png');
+        FileUtil.getImagePath('face_delete', dir: 'face', format: 'png');
     String facePath;
     for (int i = 0; i < 100; i++) {
       if (i < 90) {
@@ -776,11 +780,11 @@ class PeerChatPage extends StatelessWidget {
     for (int i = 0; i < 96; i++) {
       if (i == 70 || i == 74) {
         String facePath =
-        FileUtil.getImagePath(i.toString(), dir: 'figure', format: 'png');
+            FileUtil.getImagePath(i.toString(), dir: 'figure', format: 'png');
         _figureList.add(facePath);
       } else {
         String facePath =
-        FileUtil.getImagePath(i.toString(), dir: 'figure', format: 'gif');
+            FileUtil.getImagePath(i.toString(), dir: 'figure', format: 'gif');
         _figureList.add(facePath);
       }
       if (i == 9 ||
@@ -798,5 +802,4 @@ class PeerChatPage extends StatelessWidget {
       }
     }
   }
-
 }

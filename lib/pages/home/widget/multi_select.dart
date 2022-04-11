@@ -24,9 +24,7 @@ class _MultiChipFilterState extends State<MultiChipFilters> {
 
   @override
   Widget build(BuildContext context) {
-    if(widget.childAspectRatio==null){
-      widget.childAspectRatio =2.0;
-    }
+    widget.childAspectRatio;
     return Container(
       padding: EdgeInsets.only(left: 30.w,right: 20.w),
       alignment: Alignment.centerLeft,
@@ -54,13 +52,13 @@ class _MultiChipFilterState extends State<MultiChipFilters> {
       selectedColor: Theme
           .of(context)
           .primaryColor,
-      padding: EdgeInsets.only(left: 20.w,right: 20.w),
+      padding: EdgeInsets.only(left: 25.w,right: 25.w,top: 15.h,bottom: 15.h),
       labelPadding: EdgeInsets.only(left: 0.w,right: 0.w),
       selectedShadowColor: Colors.black,
-     shadowColor: Colors.transparent,
+      shadowColor: Colors.transparent,
       pressElevation: 5,
       elevation: 3,
-      avatar: widget.avatarBuilder==null?null:widget.avatarBuilder(context,index),
+      //avatar: widget.avatarBuilder(context,index),
       label: widget.labelBuilder(context,selected,t.name!),
       selected: selected,
       onSelected: (bool value) {
@@ -73,7 +71,7 @@ class _MultiChipFilterState extends State<MultiChipFilters> {
             widget.selectedS.removeWhere((i) => (i.id == t.id && i.type == t.type));
           }
           t.isSelect = value;
-          if(widget.onChange!=null) widget.onChange(widget.selectedS);
+          widget.onChange(widget.selectedS);
         });
       },
     );

@@ -11,12 +11,12 @@ class PopupWindowUtil {
     return showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return new Column(
+          return  Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              new ListTile(
-                leading: new Icon(Icons.photo_camera),
-                title: new Text("拍照"),
+               ListTile(
+                leading:  const Icon(Icons.photo_camera),
+                title:  const Text("拍照"),
                 onTap: () async {
                   Navigator.pop(context);
                   ImageUtil.getCameraImage().then((image) {
@@ -27,9 +27,9 @@ class PopupWindowUtil {
                 },
               ),
               MoreWidgets.buildDivider(height: 0),
-              new ListTile(
-                leading: new Icon(Icons.photo_library),
-                title: new Text("相册"),
+               ListTile(
+                leading:  const Icon(Icons.photo_library),
+                title:  const Text("相册"),
                 onTap: () async {
                   Navigator.pop(context);
                   ImageUtil.getGalleryImage().then((image) {
@@ -51,12 +51,12 @@ class PopupWindowUtil {
     return showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return new Column(
+          return Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              new ListTile(
-                leading: new Icon(Icons.photo_camera),
-                title: new Text("拍照片"),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text("拍照片"),
                 onTap: () async {
                   Navigator.pop(context);
                   ImageUtil.getCameraImage().then((image) {
@@ -67,9 +67,9 @@ class PopupWindowUtil {
                 },
               ),
               MoreWidgets.buildDivider(height: 0),
-              new ListTile(
-                leading: new Icon(Icons.photo_library),
-                title: new Text("拍视频"),
+               ListTile(
+                leading:  const Icon(Icons.photo_library),
+                title:  const Text("拍视频"),
                 onTap: () async {
                   Navigator.pop(context);
 

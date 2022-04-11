@@ -8,4 +8,5 @@ class AppRoutes {
   static const Application = '/application';
   static const Category = '/category';
   static const Home = '/home';
+  static const Detail = '/detail';
 }

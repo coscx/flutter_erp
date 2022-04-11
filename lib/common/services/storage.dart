@@ -25,7 +25,9 @@ class StorageService extends GetxService {
   String getString(String key) {
     return _prefs.getString(key) ?? '';
   }
-
+  int getInt(String key) {
+    return _prefs.getInt(key) ?? 0;
+  }
   bool getBool(String key) {
     return _prefs.getBool(key) ?? false;
   }

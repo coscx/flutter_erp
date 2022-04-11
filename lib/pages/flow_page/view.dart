@@ -57,7 +57,7 @@ class FlowPage extends StatelessWidget {
 
   AppBar? _buildAppBar(BuildContext context) {
     return AppBar(
-      titleSpacing: 40.w,
+      titleSpacing: 20.w,
       leadingWidth: 0,
       title: Row(
         children: [

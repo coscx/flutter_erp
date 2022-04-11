@@ -1,13 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_erp/common/apis/common.dart';
+import 'package:flutter_erp/common/entities/home/erp_user.dart';
 
 import 'package:flutter_my_picker/flutter_my_picker.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import '../../../common/entities/home/common.dart';
+import '../../../common/entities/home/only_store.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/utils/gzx_style.dart';
+import '../logic.dart';
 import 'multi_select.dart';
 
 
@@ -27,6 +33,8 @@ class GZXFilterGoodsPage extends StatefulWidget {
 }
 
 class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
+
+  final logic = Get.find<HomeLogic>();
   int minValue=18;
   int maxValue=80;
   List<SelectItem> _value = [];
@@ -40,8 +48,6 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
   List<String> pickerUserData = [];
   List<UserItem> pickerUserItem = [];
 
-  List _value3 = ['65-5130', '5130-1.1万', '1.1万-1.5万'];
-  List _value4 = ['10%的选择', '52%的选择', '23%的选择'];
   bool _isHideValue1 = true;
   DateTime startBirthDay = DateTime.parse("1995-01-01 00:00:00");
   DateTime endBirthDay = DateTime.parse("2004-01-01 00:00:00");
@@ -105,40 +111,40 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
       _valueMarriage.add(ff);
     }
 
-    // var result = await IssuesApi.getOnlyStoreList();
-    // if (result['code'] == 200) {
-    //   List<dynamic> da = result['data'];
-    //   da.forEach((value) {
-    //     StoreItem ff = StoreItem();
-    //     ff.id = value['id'].toString();
-    //     ff.type = 7;
-    //     ff.name = value['name'];
-    //     ff.index = 0;
-    //     ff.isSelect = false;
-    //     pickerStoreItem.add(ff);
-    //     pickerStoreData.add(value['name']);
-    //   });
-    // } else {}
-    // String storeId = "";
-    // for (int j = 0; j < widget.selectItems.length; j++) {
-    //   if (widget.selectItems[j].type == 100) {
-    //     storeId = widget.selectItems[j].id!;
-    //   }
-    // }
-    // var results = await IssuesApi.getErpUsers(storeId);
-    // if (results['code'] == 200) {
-    //   List<dynamic> da = results['data'];
-    //   da.forEach((value) {
-    //     UserItem ff = UserItem();
-    //     ff.id = value['id'].toString();
-    //     ff.type = 8;
-    //     ff.name = value['relname'];
-    //     ff.index = 0;
-    //     ff.isSelect = false;
-    //     pickerUserItem.add(ff);
-    //     pickerUserData.add(value['relname']);
-    //   });
-    // } else {}
+    var result = await CommonAPI.getOnlyStoreList();
+    if (result.code == 200) {
+      List<StoreData> da = result.Data;
+      for (var value in da) {
+        StoreItem ff = StoreItem();
+        ff.id = value.id.toString();
+        ff.type = 7;
+        ff.name = value.name;
+        ff.index = 0;
+        ff.isSelect = false;
+        pickerStoreItem.add(ff);
+        pickerStoreData.add(value.name);
+      }
+    } else {}
+    String storeId = "";
+    for (int j = 0; j < widget.selectItems.length; j++) {
+      if (widget.selectItems[j].type == 100) {
+        storeId = widget.selectItems[j].id!;
+      }
+    }
+    var results = await CommonAPI.getErpUsers(storeId);
+    if (results.code == 200) {
+      List<ErpUser> da = results.data;
+      for (var value in da) {
+        UserItem ff = UserItem();
+        ff.id = value.id.toString();
+        ff.type = 8;
+        ff.name = value.relname;
+        ff.index = 0;
+        ff.isSelect = false;
+        pickerUserItem.add(ff);
+        pickerUserData.add(value.relname);
+      }
+    } else {}
     setState(() {});
   }
 
@@ -148,7 +154,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
       data: items,
       avatarBuilder: (_, index) {return Container();},
       labelBuilder: (_, selected, name) {
-        return name == null
+        return name == ""
             ? Container()
             : Text(
                 name,
@@ -156,7 +162,8 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                     color: selected ? Colors.white : Colors.black,
                     fontSize: 30.sp,
                     fontWeight: FontWeight.normal),
-                overflow: TextOverflow.ellipsis,
+                    overflow: TextOverflow.ellipsis,
+                   textAlign: TextAlign.center,
               );
       },
       onChange: _doSelectStart,
@@ -166,11 +173,11 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
   }
 
   _doSelectStart(List<SelectItem> s) {
-    print("-----------");
+    debugPrint("-----------");
     for (int i = 0; i < s.length; i++) {
-      print(s[i].id! + "/" + s[i].type.toString());
+      debugPrint(s[i].id! + "/" + s[i].type.toString());
     }
-    print("-----------");
+    debugPrint("-----------");
   }
 
   Widget _buildGroup(List<SelectItem> sel) {
@@ -187,11 +194,11 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
         Row(
           children: <Widget>[
             SizedBox(
-              width: 6,
+              width: 12.w,
             ),
             Expanded(
               child: Text('来源渠道',
-                  style: TextStyle(fontSize: 12, color: Color(0xFF6a6a6a))),
+                  style: TextStyle(fontSize: 26.sp, color: const Color(0xFF6a6a6a))),
             ),
             GestureDetector(
               onTap: () {
@@ -207,17 +214,17 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
               ),
             ),
             SizedBox(
-              width: 6,
+              width: 12.w,
             ),
           ],
         ),
         _typeGridWidget(_value, 0),
         Container(
-            margin: EdgeInsets.only(top: 6),
+            margin: EdgeInsets.only(top: 12.h),
             decoration: BoxDecoration(
                 border: Border(
                     bottom: BorderSide(
-                        width: 1, color: GZXColors.mainBackgroundColor)))),
+                        width: 2.w, color: GZXColors.mainBackgroundColor)))),
       ],
     );
   }
@@ -241,7 +248,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
               EdgeInsets.only(left: 10.w, top: 0.h, right: 0.w, bottom: 0.h),
           alignment: Alignment.centerLeft,
           child: Text(title,
-              style: TextStyle(fontSize: 12, color: Color(0xFF6a6a6a))),
+              style: TextStyle(fontSize: 24.sp, color: const Color(0xFF6a6a6a))),
         ),
         Container(
           child: Row(
@@ -262,7 +269,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                         mode: MyPickerMode.date,
                         onConfirm: (v) {
                           //_change('yyyy-MM-dd HH:mm'),
-                          print(v);
+                          debugPrint(v.toString());
                           setState(() {
                             startBirthDay = v;
                             startBirthDayTitle = startBirthDay.year.toString() +
@@ -325,7 +332,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                         mode: MyPickerMode.date,
                         onConfirm: (v) {
                           //_change('yyyy-MM-dd HH:mm'),
-                          print(v);
+                          debugPrint(v.toString());
                           setState(() {
                             endBirthDay = v;
                             endBirthDayTitle = endBirthDay.year.toString() +
@@ -413,11 +420,11 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                     left: 10.w, top: 0.h, right: 0.w, bottom: 0.h),
                 child: ElevatedButton(
                   onPressed: () {
-                    new Picker(
+                     Picker(
                             selecteds: [storeId],
                             itemExtent: 40,
                             selectionOverlay:
-                                CupertinoPickerDefaultSelectionOverlay(
+                                const CupertinoPickerDefaultSelectionOverlay(
                               background: Colors.transparent,
                             ),
                             cancelText: "取消",
@@ -431,8 +438,8 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                             changeToFirst: true,
                             hideHeader: false,
                             onConfirm: (Picker picker, List value) {
-                              print(value.toString());
-                              print(picker.adapter.text);
+                              debugPrint(value.toString());
+                              debugPrint(picker.adapter.text);
                               setState(() {
                                 store = pickerStoreItem[value[0]].id!;
                                 storeName = pickerStoreItem[value[0]].name!;
@@ -532,7 +539,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                             selecteds: [userId],
                             itemExtent: 40,
                             selectionOverlay:
-                                CupertinoPickerDefaultSelectionOverlay(
+                                const CupertinoPickerDefaultSelectionOverlay(
                               background: Colors.transparent,
                             ),
                             cancelText: "取消",
@@ -546,8 +553,8 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                             changeToFirst: true,
                             hideHeader: false,
                             onConfirm: (Picker picker, List value) {
-                              print(value.toString());
-                              print(picker.adapter.text);
+                              debugPrint(value.toString());
+                              debugPrint(picker.adapter.text);
                               setState(() {
                                 store = pickerUserItem[value[0]].id!;
                                 storeName = pickerUserItem[value[0]].name!;
@@ -574,7 +581,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                                 }
                               });
                             })
-                        .showModal(this.context); //_scaffoldKey.currentState);
+                        .showModal(context); //_scaffoldKey.currentState);
                   },
                   child: Text(
                     userName == "" ? " " : userName,
@@ -589,7 +596,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                           ? Colors.grey.withAlpha(33)
                           : Colors.blue,
                       shadowColor: Colors.black12,
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       padding: EdgeInsets.symmetric(
                           horizontal: 35.w, vertical: 10.h)),
                 ),
@@ -612,19 +619,19 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
     }
     return Column(children: [
       SizedBox(
-        height: 6,
+        height: 12.h,
       ),
       Row(
         children: <Widget>[
           SizedBox(
-            width: 6,
+            width: 12.w,
           ),
           Expanded(
             child: Text(title,
-                style: TextStyle(fontSize: 12, color: Color(0xFF6a6a6a))),
+                style: TextStyle(fontSize: 24.sp, color: const Color(0xFF6a6a6a))),
           ),
           !isShowExpansionIcon
-              ? SizedBox()
+              ? const SizedBox()
               : GestureDetector(
                   onTap: () {
                     setState(() {
@@ -639,126 +646,27 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                   ),
                 ),
           SizedBox(
-            width: 6,
+            width: 12.w,
           ),
         ],
       ),
       _typeGridWidget(items, 1),
       Container(
-          margin: EdgeInsets.only(top: 6),
+          margin: EdgeInsets.only(top: 12.h),
           decoration: BoxDecoration(
 //      color: Colors.red,
               border: Border(
                   bottom: BorderSide(
-                      width: 1, color: GZXColors.mainBackgroundColor))))
+                      width: 2.w, color: GZXColors.mainBackgroundColor))))
     ]);
   }
 
-  Widget _buildGroup2() {
-    return Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 6,
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 6),
-            child: Text('价格区间(元)',
-                style: TextStyle(fontSize: 12, color: Color(0xFF6a6a6a))),
-          ),
-          SizedBox(
-            height: 6,
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 6, right: 6),
-                  height: 25,
-                  decoration: BoxDecoration(
-                    color: GZXColors.mainBackgroundColor,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Text('最低价',
-                      style: TextStyle(fontSize: 11, color: Colors.grey)),
-                  alignment: Alignment.center,
-                ),
-              ),
-              Container(
-                width: 20,
-                height: 1,
-                color: Colors.grey[5],
-              ),
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.only(left: 6, right: 6),
-                  height: 25,
-                  decoration: BoxDecoration(
-                    color: GZXColors.mainBackgroundColor,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Text('最低价',
-                      style: TextStyle(fontSize: 11, color: Colors.grey)),
-                  alignment: Alignment.center,
-                ),
-              )
-            ],
-          ),
-          GridView.count(
-            primary: false,
-            shrinkWrap: true,
-            crossAxisCount: 3,
-            mainAxisSpacing: 6.0,
-            crossAxisSpacing: 6.0,
-            childAspectRatio: 2,
-            padding: EdgeInsets.only(left: 6, right: 6, top: 6),
-            children: List.generate(
-              3,
-              (index) {
-                return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: GZXColors.mainBackgroundColor,
-                        borderRadius: BorderRadius.circular(3.0)),
-                    child: Center(
-                        child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(_value3[index],
-                            style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 12.0)),
-                        Text(_value4[index],
-                            style: TextStyle(
-                                color: Color(0xFF333333), fontSize: 11.0))
-                      ],
-                    )));
-              },
-            ),
-          ),
-          Container(
-              margin: EdgeInsets.only(top: 6),
-              decoration: BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                          width: 1, color: GZXColors.mainBackgroundColor))))
-        ]);
-  }
-
-  doi(i) {
-    i++;
-  }
-
+  
   @override
   Widget build(BuildContext context) {
-    var i = 0;
-    doi(i);
-    print('doi${i}');
     return Container(
-      margin: EdgeInsets.only(left: 0, top: 0),
       color: Colors.white,
       height: ScreenUtil().screenHeight,
-//      padding: EdgeInsets.only(top: ScreenUtil.statusBarHeight),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -768,7 +676,6 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                   primary: false,
                   shrinkWrap: true,
                   children: <Widget>[
-                    //
                     // _buildGroup1('来源渠道', false, _valueFrom, widget.selectItems),
                     _buildGroup1(
                         '客户学历', false, _valueEducation, widget.selectItems),
@@ -780,27 +687,8 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                         '客户婚姻状况', false, _valueMarriage, widget.selectItems),
                     buildBirthday("生日选择"),
                     buildUser("红娘选择")
-
                     //buildStore("门店选择")
                     //buildRangerSlider("年龄选择")
-                    // _buildGroup2(),
-                    // _buildGroup3(),
-                    // _buildGroup4(),
-                    // _buildGroup5('尺寸', _value8, _isHideValue8, () {
-                    //   setState(() {
-                    //     _isHideValue8 = !_isHideValue8;
-                    //   });
-                    // }),
-                    // _buildGroup5('硬盘容量', _value9, _isHideValue9, () {
-                    //   setState(() {
-                    //     _isHideValue9 = !_isHideValue9;
-                    //   });
-                    // }),
-                    // _buildGroup5('内存容量', _value10, _isHideValue10, () {
-                    //   setState(() {
-                    //     _isHideValue10 = !_isHideValue10;
-                    //   });
-                    //}),
                   ]),
             ),
           ),
@@ -847,7 +735,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                         storeName = "选择门店";
                         userName = "选择用户";
                         //showToastBottom(context, "重置成功", true);
-                        setState(() {});
+                        logic.onRefresh();
                       },
                       child: Container(
 //            margin: EdgeInsets.only(left: 6, right: 6),
@@ -856,7 +744,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                         height: 68.h,
 //                  width: 44,
                         decoration: BoxDecoration(
-                          color: Color(0xFFfea000),
+                          color: const Color(0xFFfea000),
                           borderRadius: BorderRadius.horizontal(
                               left: Radius.circular(34.w)),
                         ),
@@ -873,25 +761,17 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        // BlocProvider.of<GlobalBloc>(context)
-                        //     .add(EventResetIndexPhotoPage());
-                        // var sex =
-                        //     BlocProvider.of<GlobalBloc>(context).state.sex;
-                        // var mode = BlocProvider.of<GlobalBloc>(context)
-                        //     .state
-                        //     .currentPhotoMode;
-                        // BlocProvider.of<HomeBloc>(context).add(
-                        //     EventSearchErpUser(null, widget.selectItems, sex,
-                        //         mode, false, 0, 0, ""));
+         
+                        logic.onRefresh();
                         Navigator.pop(context);
                       },
                       child: Container(
-//            margin: EdgeInsets.only(left: 6, right: 6),
+
                         padding: EdgeInsets.only(
                             left: 100.w, top: 6.h, right: 100.w, bottom: 6.h),
                         height: 68.h,
                         decoration: BoxDecoration(
-                          color: Color(0xFFfe7201),
+                          color: const Color(0xFFfe7201),
                           borderRadius: BorderRadius.horizontal(
                               right: Radius.circular(34.w)),
                         ),

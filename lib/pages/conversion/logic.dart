@@ -52,7 +52,7 @@ class ConversionLogic extends GetxController {
           return e;
         }
       }).toList();
-    state.conversion.addAll(message);
+    //state.conversion.addAll(message);
     }
 
     if (msg.type == ConversionType.CONVERSATION_PEER) {
@@ -65,7 +65,7 @@ class ConversionLogic extends GetxController {
           return e;
         }
       }).toList();
-      state.conversion.addAll(message);
+     // state.conversion.addAll(message);
     }
 
     var count = 0;
@@ -104,6 +104,7 @@ class ConversionLogic extends GetxController {
       e.detail= (e.detail);
       return e;
     }).toList();
+    state.conversion.clear();
     state.conversion.addAll(conversions);
   }
 }

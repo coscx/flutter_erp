@@ -27,13 +27,19 @@ class ConversionPage extends StatelessWidget {
         ),
         child: Scaffold(
           appBar: AppBar(
-            titleSpacing: 40.w,
-            //leadingWidth: 830.w,
-            title: Text('消息',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 50.sp,
-                    fontWeight: FontWeight.bold)),
+            titleSpacing: 20.w,
+            leadingWidth: 0,
+            title: Row(
+              children: [
+                Text("消息",
+                    style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 48.sp,
+                        fontWeight: FontWeight.bold)),
+
+
+              ],
+            ),
             //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
             backgroundColor: Colors.white,
             elevation: 0,

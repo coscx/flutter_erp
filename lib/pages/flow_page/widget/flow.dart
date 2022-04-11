@@ -26,9 +26,9 @@ class MyFlow extends StatelessWidget {
   MyFlow({required this.liveData});
 
   // 跳转直播间
-  void _goToLiveRoom(context, item) {
+  void _goToLiveRoom(context, Datas item) {
     Map<String, dynamic>? photo = <String, dynamic>{};
-    photo['uuid'] = item['uuid'];
+    photo['uuid'] = item.uuid;
     //BlocProvider.of<DetailBloc>(context).add(FetchWidgetDetail(photo));
     //Navigator.pushNamed(context, UnitRouter.widget_detail);
   }
@@ -63,7 +63,7 @@ class MyFlow extends StatelessWidget {
     var boxMargin = 10.w;
 
     liveData.asMap().keys.forEach((index) {
-      var item = liveData[index];
+      Datas item = liveData[index];
       liveList.add(
         GestureDetector(
           onTap: () {

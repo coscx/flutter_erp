@@ -1,12 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_erp/common/entities/detail/calllog.dart';
+import 'package:flutter_erp/common/entities/detail/connect.dart';
+import 'package:flutter_erp/common/entities/detail/user_detail.dart';
 import 'package:flutter_erp/common/entities/entities.dart';
 import 'package:flutter_erp/common/entities/flow/wx_article.dart';
+import 'package:flutter_erp/common/entities/home/erp_user.dart';
+import 'package:flutter_erp/common/entities/home/tree_store.dart';
 import 'package:flutter_erp/common/entities/login/login_model.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 
 import '../entities/app_version.dart';
+import '../entities/detail/action.dart';
+import '../entities/detail/appoint.dart';
 import '../entities/erp_user.dart';
 import '../entities/home/common.dart';
+import '../entities/home/only_store.dart';
 import '../entities/home/search_erp.dart';
 import '../utils/common_http.dart';
 import '../utils/new_common_http.dart';
@@ -44,6 +52,64 @@ class CommonAPI {
     );
     return LoginEntity.fromJson(response);
   }
+  static Future<Stores> getOnlyStoreList() async {
+    var response = await ERPHttpUtil().get(
+      '/api/v1/store/select',
+      queryParameters: {},
+    );
+    return Stores.fromJson(response);
+  }
+  static Future<ErpUserResult> getErpUsers(String storeId) async {
+    var response = await NewERPHttpUtil().post(
+      '/api/GetErpUserByStoreId',
+      queryParameters: {'store_id': storeId},
+    );
+    return ErpUserResult.fromJson(response);
+  }
+  static Future<TreeStoreResult> getTreeStoreList() async {
+    var response = await ERPHttpUtil().get(
+      '/api/v1/system/user/getTreeStores',
+      queryParameters: {},
+    );
+    return TreeStoreResult.fromJson(response);
+  }
+  static Future<UserDetailResult> getUserDetail(String uuid) async {
+    var response = await NewERPHttpUtil().post(
+      '/api/v1/customer/detail/'+uuid,
+      queryParameters: {},
+    );
+    return UserDetailResult.fromJson(response);
+  }
+  static Future<ConnectDataResult> getConnectList(String uuid, int page) async {
+    var response = await NewERPHttpUtil().get(
+      '/api/v1/customer/connectList',
+      queryParameters: {'customer_uuid': uuid, 'currentPage': page, "pageSize": 20},
+    );
+    return ConnectDataResult.fromJson(response);
+  }
+  static Future<AppointDataResult> getAppointmentList(String uuid, int page) async {
+    var response = await NewERPHttpUtil().get(
+      '/api/v1/customer/appointmentList',
+      queryParameters: {'customer_uuid': uuid, 'currentPage': page, "pageSize": 20},
+    );
+    return AppointDataResult.fromJson(response);
+  }
+
+  static Future<UserActionDataResult> getActionList(String uuid, int page) async {
+    var response = await NewERPHttpUtil().get(
+      '/api/v1/customer/actionList',
+      queryParameters: {'customer_uuid': uuid, 'currentPage': page, "pageSize": 20},
+    );
+    return UserActionDataResult.fromJson(response);
+  }
+  static Future<CallLogDataResult> getCallList(String uuid, int page) async {
+    var response = await NewERPHttpUtil().get(
+      '/api/v1/customer/callLogs',
+      queryParameters: {'customer_uuid': uuid, 'currentPage': page, "pageSize": 20},
+    );
+    return CallLogDataResult.fromJson(response);
+  }
+
   static Future<WxArticleEntity> wxArticle(  int page, final List<SelectItem> selectItems) async {
     Map<String, dynamic> searchParm = {};
     searchParm['currentPage'] = page;
@@ -73,9 +139,9 @@ class CommonAPI {
   /// 登录
   static Future<HomeEntity> searchErpUser(
       String page,
-      String sex,
-      String mode,
-      String serveType,
+      int sex,
+      int mode,
+      int serveType,
       final List<SelectItem> selectItems) async {
     Map<String, dynamic> searchParam = {};
     var channel = <String>[];
@@ -173,20 +239,20 @@ class CommonAPI {
     searchParam['pageSize'] = 20;
     searchParam['currentPage'] = page;
     String url = "/api/v1/customer/system/index";
-    if (mode == "0") {
+    if (mode == 0) {
       //全部
       url = "/api/v1/customer/system/index";
     }
-    if (mode == "1") {
+    if (mode == 1) {
       //良缘
       url = "/api/v1/customer/passive/index";
     }
-    if (mode == "2") {
+    if (mode == 2) {
       //我的
       url = "/api/v1/customer/personal/index";
       searchParam['type'] = serveType;
     }
-    if (mode == "3") {
+    if (mode == 3) {
       //我的
       url = "/api/v1/customer/public/index";
     }

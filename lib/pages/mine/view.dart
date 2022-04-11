@@ -17,7 +17,7 @@ class MinePage extends StatelessWidget {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            systemOverlayStyle: SystemUiOverlayStyle.light,
+            brightness: Brightness.light,
           ),
         ),
         child:Scaffold(

@@ -25,13 +25,13 @@ class HomePage extends StatelessWidget {
             brightness: Brightness.light,
           ),
         ),
-        child: Scaffold(
+        child: Obx(()=>Scaffold(
             key: logic.scaffoldKey,
             endDrawer: GZXFilterGoodsPage(
               selectItems: logic.selectItems,
             ),
             appBar: AppBar(
-              titleSpacing: 40.w,
+              titleSpacing: 20.w,
               leadingWidth: 0,
               title: Row(
                 children: [
@@ -42,16 +42,24 @@ class HomePage extends StatelessWidget {
                           fontWeight: FontWeight.bold)),
                     logic.totalCount == ""
                       ? Container()
-                      : Text('      共:',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.w200)),
-                  Text(logic.totalCount,
-                      style: TextStyle(
-                          color: Colors.redAccent,
-                          fontSize: 30.sp,
-                          fontWeight: FontWeight.normal)),
+                      : Container(
+                      padding: EdgeInsets.only(left: 20.w),
+                        child: Row(
+                          children: [
+                            Text('共:',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 30.sp,
+                                fontWeight: FontWeight.w200)),
+                            Text(logic.totalCount,
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontSize: 30.sp,
+                                    fontWeight: FontWeight.normal))
+                          ],
+                        ),
+                      ),
+
                 ],
               ),
               //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
@@ -105,7 +113,7 @@ class HomePage extends StatelessWidget {
                                   controller: logic.scrollController,
                                   physics: const BouncingScrollPhysics(),
                                   slivers: <Widget>[
-                                    Obx(()=>_buildContent(context)),
+                                    _buildContent(context),
                                   ],
                                 ),
                               )),
@@ -122,7 +130,7 @@ class HomePage extends StatelessWidget {
                       ],
                     )
                 )
-        )
+        ))
     );
   }
   Widget _buildHead(BuildContext context ) {
@@ -154,11 +162,11 @@ class HomePage extends StatelessWidget {
                   //selectedColor: Colors.green,
                   //pressedColor: Colors.blue,
                   //borderColor: Colors.red,
-                  groupValue: logic.sex == 0 ? 1 : logic.sex,
+                  groupValue: logic.sex.value == 0 ? 1 : logic.sex.value ,
                   onValueChanged: _onValueChanged,
                   padding: EdgeInsets.only(right: 0.w),
                   children: {
-                    1: logic.sex == 1
+                    1: logic.sex.value == 1
                         ? Padding(
                       padding: EdgeInsets.only(left: 50.w, right: 40.w),
                       child: Text("男",
@@ -172,7 +180,7 @@ class HomePage extends StatelessWidget {
                           fontSize: 30.sp,
                           color: Colors.blue,
                         )),
-                    2: logic.sex == 2
+                    2: logic.sex.value == 2
                         ? Padding(
                       padding: EdgeInsets.only(left: 50.w, right: 40.w),
                       child: Text("女",
@@ -206,25 +214,25 @@ class HomePage extends StatelessWidget {
                     //print(e);
                     var ccMode = 0;
                     if (e == '全部') {
-
+                      logic.currentPhotoMode.value =0;
                       ccMode = 10;
                     }
                     if (e == '我的') {
-
+                      logic.currentPhotoMode.value =2;
                       ccMode = 2;
                     }
                     if (e == '良缘') {
-
+                      logic.currentPhotoMode.value =1;
                       ccMode = 1;
                     }
                     if (e == '公海') {
-
+                      logic.currentPhotoMode.value =3;
                       ccMode = 3;
                     }
 
 
                       logic.roleId = ccMode;
-
+                      logic.onRefresh();
                   },
                   onCanceled: () => print('onCanceled'),
                 )
@@ -232,7 +240,8 @@ class HomePage extends StatelessWidget {
             )));
   }
   void _onValueChanged(int value) {
-
+    logic.sex.value = value;
+    logic.onSexChange();
   }
   List<PopupMenuItem<String>> buildItems() {
     final map = {
@@ -259,33 +268,48 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildHeadTxt(BuildContext context) {
-    if (logic.currentPhotoMode == 0) {
+    if (logic.currentPhotoMode.value == 0) {
       return SizedBox(
         width: 70.w,
-        child: Text("全部"),
+        child: Text("全部",style: TextStyle(
+          fontSize: 30.sp,
+          color: Colors.black,
+        )),
       );
     }
-    if (logic.currentPhotoMode == 2) {
+    if (logic.currentPhotoMode.value == 2) {
       return SizedBox(
         width: 70.w,
-        child: Text("我的"),
+        child: Text("我的",style: TextStyle(
+          fontSize: 30.sp,
+          color: Colors.black,
+        )),
       );
     }
-    if (logic.currentPhotoMode == 1) {
+    if (logic.currentPhotoMode.value == 1) {
       return SizedBox(
         width: 70.w,
-        child: Text("良缘"),
+        child: Text("良缘",style: TextStyle(
+          fontSize: 30.sp,
+          color: Colors.black,
+        )),
       );
     }
-    if (logic.currentPhotoMode == 3) {
+    if (logic.currentPhotoMode.value == 3) {
       return SizedBox(
         width: 70.w,
-        child: Text("公海"),
+        child: Text("公海",style: TextStyle(
+          fontSize: 30.sp,
+          color: Colors.black,
+        )),
       );
     }
     return SizedBox(
       width: 70.w,
-      child: Text("全部"),
+      child: Text("全部",style: TextStyle(
+        fontSize: 30.sp,
+        color: Colors.black,
+      )),
     );
   }
   Widget _buildContent(BuildContext context) {
@@ -306,9 +330,9 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Icon(Icons.airplay,
-                      color: Colors.orangeAccent, size: 120.0),
+                      color: Colors.orangeAccent, size: 200.sp),
                   Container(
-                    padding: EdgeInsets.only(top: 16.0),
+                    padding: EdgeInsets.only(top: 16.h),
                     child: Text(
                       "暂时没有用户了",
                       style: TextStyle(

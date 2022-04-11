@@ -8,6 +8,8 @@ import 'package:flutter_erp/pages/frame/sign_in/index.dart';
 import 'package:flutter_erp/pages/frame/sign_up/index.dart';
 import 'package:flutter_erp/pages/frame/welcome/index.dart';
 import 'package:flutter_erp/pages/home/view.dart';
+import 'package:flutter_erp/pages/user_detail/binding.dart';
+import 'package:flutter_erp/pages/user_detail/view.dart';
 import 'package:get/get.dart';
 
 import '../../pages/home/binding.dart';
@@ -66,6 +68,14 @@ class AppPages {
       page: () => HomePage(),
       binding: HomeBinding(),
     ),
+    GetPage(
+      name: AppRoutes.Detail,
+      page: () => UserDetailPage(),
+      binding: UserDetailBinding(),
+      transition: Transition.rightToLeft
+    ),
+
+
 
   ];
 

@@ -9,7 +9,7 @@ import 'state.dart';
 
 class HomeLogic extends GetxController {
   final HomeState state = HomeState();
-  final List<SelectItem> selectItems = <SelectItem>[];
+  final List<SelectItem> selectItems = <SelectItem>[].obs;
   var scaffoldKey =  GlobalKey<ScaffoldState>();
   RefreshController refreshController =
   RefreshController(initialRefresh: false);
@@ -21,8 +21,8 @@ class HomeLogic extends GetxController {
   int pageSize = 20;
   int total = 20;
   int roleId = 0;
-  int currentPhotoMode =0;
-  int sex =1;
+  RxInt currentPhotoMode =0.obs;
+  RxInt sex =1.obs;
   @override
   void onInit() {
     _loadData();
@@ -31,29 +31,44 @@ class HomeLogic extends GetxController {
   // 下拉刷新
   void _loadData() async {
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
+    await CommonAPI.searchErpUser(curPage.toString(), sex.value, 0, 1, selectItems);
     state.homeUser.addAll(result.data.data) ;
-    debugPrint(result.toJson().toString());
+    totalCount =result.data.total.toString();
+    //debugPrint(result.toJson().toString());
   }
 
   // 下拉刷新
   void onRefresh() async {
-
     curPage=1;
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
+    await CommonAPI.searchErpUser(curPage.toString(), sex.value, 0, 1, selectItems);
     state.homeUser.clear();
     state.homeUser .addAll(result.data.data) ;
-    debugPrint(result.toString());
+    totalCount =result.data.total.toString();
+    //debugPrint(result.toString());
     refreshController.refreshCompleted();
   }
+  // 下拉刷新
+  void onSexChange() async {
+    curPage=1;
+    var result =
+    await CommonAPI.searchErpUser(curPage.toString(), sex.value, 0, 1, selectItems);
+    state.homeUser.clear();
+    state.homeUser .addAll(result.data.data) ;
+    totalCount =result.data.total.toString();
+    //debugPrint(result.toString());
+    refreshController.refreshCompleted();
+  }
+
+
 
   // 上拉加载
   void onLoading() async {
     curPage++;
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), "1", "0", "1", []);
+    await CommonAPI.searchErpUser(curPage.toString(),sex.value, 0, 1, selectItems);
     state.homeUser.addAll(result.data.data) ;
+    totalCount =result.data.total.toString();
     refreshController.loadComplete();
   }
 }
