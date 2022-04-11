@@ -1,6 +1,3 @@
-/*
- * @discripe: 正在直播列表
- */
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -12,9 +9,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../common/entities/flow/wx_article.dart';
 
-
-
-final String defaultImg =
+const String defaultImg =
     'https://img.bosszhipin.com/beijin/mcs/useravatar/20171211/4d147d8bb3e2a3478e20b50ad614f4d02062e3aec7ce2519b427d24a3f300d68_s.jpg';
 final _random = Random();
 
