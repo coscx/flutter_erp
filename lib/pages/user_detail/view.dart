@@ -1,16 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_erp/common/entities/detail/action.dart';
 import 'package:flutter_erp/common/entities/detail/appoint.dart';
 import 'package:flutter_erp/common/entities/detail/calllog.dart';
 import 'package:flutter_erp/common/entities/detail/connect.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
+import 'package:flutter_erp/pages/user_detail/widget/bottom_dialog.dart';
 import 'package:flutter_erp/pages/user_detail/widget/bottom_sheet.dart';
 import 'package:flutter_erp/pages/user_detail/widget/common_dialog.dart';
 import 'package:flutter_erp/pages/user_detail/widget/detail_dialog.dart';
-import 'package:flutter_erp/pages/user_detail/widget/goods_add_menu.dart';
-import 'package:flutter_erp/pages/user_detail/widget/popup_window.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
@@ -21,12 +21,15 @@ import './widget/detail_common.dart';
 import './widget/detail_item.dart';
 import '../../common/values/cons.dart';
 import '../../common/widgets/DyBehaviorNull.dart';
+import '../../common/widgets/pop_button.dart';
 import '../../common/widgets/refresh.dart';
 import 'logic.dart';
 
 class UserDetailPage extends StatelessWidget {
   final logic = Get.find<UserDetailLogic>();
-  final state = Get.find<UserDetailLogic>().state;
+  final state = Get
+      .find<UserDetailLogic>()
+      .state;
 
   @override
   Widget build(BuildContext context) {
@@ -36,69 +39,102 @@ class UserDetailPage extends StatelessWidget {
             brightness: Brightness.light,
           ),
         ),
-        child: Obx(() => Scaffold(
-            //endDrawer: CategoryEndDrawer(),
-            appBar: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              //去掉Appbar底部阴影
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              title: Text("用户详情",
-                  style: TextStyle(
-                    fontFamily: "Quicksand",
-                    fontWeight: FontWeight.w900,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 38.sp,
-                    decoration: TextDecoration.none,
-                    color: Colors.black,
-                  )),
-              actions: <Widget>[
-                _buildCallButton(),
-                _buildAppointButton(),
-                _buildConnectButton(),
-                _buildRightMenu()
-              ],
-            ),
-            body: logic.load.value == 0
-                ? Container()
-                : _buildContent(context))));
+        child: Obx(() =>
+            Scaffold(
+              //endDrawer: CategoryEndDrawer(),
+                appBar: AppBar(
+                  backgroundColor: Colors.white,
+                  elevation: 0,
+                  titleSpacing: 0.w,
+                  leadingWidth: 80.w,
+                  centerTitle: true,
+                  //去掉Appbar底部阴影
+                  leading: Container(
+                    padding: EdgeInsets.only(top: 0.h),
+                    child: IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Colors.black),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ),
+                  title: Container(
+                    padding: EdgeInsets.only(top: 0.h),
+                    child: Row(
+                      children: [
+                        Text("用户详情",
+                            style: TextStyle(
+                              fontFamily: "Quicksand",
+                              fontWeight: FontWeight.w900,
+                              fontStyle: FontStyle.italic,
+                              fontSize: 38.sp,
+                              decoration: TextDecoration.none,
+                              color: Colors.black,
+                            )),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    Row(
+                      children: [
+                        _buildCallButton(),
+                        _buildAppointButton(),
+                        _buildConnectButton(),
+                        _buildRightMenu()
+                      ],
+                    ),
+                  ],
+                ),
+                body:
+                logic.load.value == 0 ? Container() : _buildContent(context))));
   }
 
   Widget _buildRightMenu() {
     return Container(
-      margin: EdgeInsets.fromLTRB(0.w, 15.h, 20.w, 0.h),
-      child: IconButton(
-        tooltip: '用户操作',
-        key: logic.addKey,
-        onPressed: () {
-          showAddMenu(logic.userDetail!.info);
-        },
-        icon: const Icon(
-          Icons.wifi_tethering,
-          color: Colors.black,
-          key: Key('add'),
+      padding: EdgeInsets.only(right: 10.h, top: 10.h),
+      child: PopButton(
+        popCtrl: logic.popCtrl,
+        menuBgColor: const Color(0xFFFFFFFF),
+        showArrow: false,
+        menuBgShadowColor: const Color(0xFF000000).withOpacity(0.16),
+        menuBgShadowBlurRadius: 6,
+        menuBgShadowSpreadRadius: 2,
+        menuItemTextStyle: TextStyle(
+          fontSize: 28.sp,
+          color: const Color(0xFF333333),
+        ),
+        menuItemHeight: 76.h,
+        // menuItemWidth: 170.w,
+        menuItemPadding: EdgeInsets.only(left: 30.w, right: 30.w),
+        menuBgRadius: 6,
+        menuItemIconSize: 48.h,
+        menus: [
+          PopMenuInfo(
+            text: "认领用户",
+            icon: "assets/images/default/select.png",
+            onTap: () => logic.getUser(),
+          ),
+          PopMenuInfo(
+            text: "划分用户",
+            icon: "assets/images/default/select.png",
+            onTap: () => logic.changeUser(),
+          ),
+          PopMenuInfo(
+            text: "购买会员",
+            icon: "assets/images/default/select.png",
+            onTap: () => logic.addVip(),
+          ),
+        ],
+        child: TitleImageButton(
+          imageStr: "assets/images/default/select.png",
+          imageHeight: 80.h,
+          imageWidth: 80.w,
+          // onTap: (){},
+          // onTap: onClickAddBtn,
+          // height: 50.h,
         ),
       ),
     );
   }
 
-  void showAddMenu(Info args) {
-    final RenderBox button =
-        logic.addKey.currentContext?.findRenderObject() as RenderBox;
-
-    showPopupWindow<void>(
-      context: Get.context!,
-      isShowBg: true,
-      offset: Offset(button.size.width - 7.w, -15.h),
-      anchor: button,
-      child: GoodsAddMenu(
-        args: args,
-      ),
-    );
-  }
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     final Uri launchUri = Uri(
@@ -116,7 +152,8 @@ class UserDetailPage extends StatelessWidget {
     };
     return map.keys
         .toList()
-        .map((e) => PopupMenuItem<String>(
+        .map((e) =>
+        PopupMenuItem<String>(
             value: e,
             child: Wrap(
               spacing: 5.h,
@@ -131,98 +168,107 @@ class UserDetailPage extends StatelessWidget {
         .toList();
   }
 
-  Widget _buildContent(BuildContext context) => WillPopScope(
-      onWillPop: () => _whenPop(context),
-      child: ScrollConfiguration(
-          behavior: DyBehaviorNull(),
-          child: SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: false,
-              header: DYrefreshHeader(),
-              footer: DYrefreshFooter(),
-              controller: logic.refreshController,
-              onRefresh: logic.onRefresh,
-              onLoading: logic.onLoading,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    _buildTitle(context),
-                    _buildDetail(context)
-                  ],
-                ),
-              ))));
+  Widget _buildContent(BuildContext context) =>
+      WillPopScope(
+          onWillPop: () => _whenPop(context),
+          child: ScrollConfiguration(
+              behavior: DyBehaviorNull(),
+              child: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: false,
+                  header: DYrefreshHeader(),
+                  footer: DYrefreshFooter(),
+                  controller: logic.refreshController,
+                  onRefresh: logic.onRefresh,
+                  onLoading: logic.onLoading,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        _buildTitle(context),
+                        _buildDetail(context)
+                      ],
+                    ),
+                  ))));
 
-  Widget _buildAppointButton() => Builder(
-      builder: (ctx) => GestureDetector(
-          onLongPress: () => Scaffold.of(ctx).openEndDrawer(),
-          child: Padding(
-            padding: EdgeInsets.only(top: 10.h),
-            child: Container(
-              width: 60.h,
-              height: 60.h,
-              margin: EdgeInsets.fromLTRB(10.w, 0.h, 5.w, 0.h),
-              child: Lottie.asset(
-                  'assets/packages/lottie_flutter/appointment.json'),
-            ),
-          ),
-          onTap: () async {
-            if (logic.canEdit == 1) {
-              var d = await appointDialog(Get.context!, logic.uuid);
-              if (d == true) {
-                logic.buildAppointButton();
-              }
-            } else {
-              showToastRed(ctx, "权限不足", true);
-            }
-          }));
+  Widget _buildAppointButton() =>
+      Builder(
+          builder: (ctx) =>
+              GestureDetector(
+                  onLongPress: () => Scaffold.of(ctx).openEndDrawer(),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 0.h),
+                    child: Container(
+                      width: 60.h,
+                      height: 60.h,
+                      margin: EdgeInsets.fromLTRB(10.w, 0.h, 5.w, 0.h),
+                      child: Lottie.asset(
+                          'assets/packages/lottie_flutter/appointment.json'),
+                    ),
+                  ),
+                  onTap: () async {
+                    if (logic.canEdit == 1) {
+                      var d = await appointDialog(Get.context!, logic.uuid);
+                      if (d == true) {
+                        logic.buildAppointButton();
+                      }
+                    } else {
+                      showToastRed(ctx, "权限不足", true);
+                    }
+                  }));
 
-  Widget _buildCallButton() => Builder(
-      builder: (ctx) => GestureDetector(
-          onLongPress: () => Scaffold.of(ctx).openEndDrawer(),
-          child: Padding(
-            padding: EdgeInsets.only(top: 15.h),
-            child: Container(
-              width: 60.h,
-              height: 60.h,
-              margin: EdgeInsets.fromLTRB(10.w, 0.h, 0.w, 0.h),
-              child: Lottie.asset(
-                  'assets/packages/lottie_flutter/phone-call.json'),
-            ),
-          ),
-          onTap: () async {
-            if (logic.canEdit == 0) {
-              showToastRed(ctx, "暂无权限", true);
-              return;
-            }
-            // WWDialog.showBottomDialog(Get.context,
-            //     content: '请选择',
-            //     contentColor: colorWithHex9,
-            //     contentFontSize: 30.sp,
-            //     location: DiaLogLocation.bottom,
-            //     arrangeType: buttonArrangeType.column,
-            //     buttons: ['查看号码', '拨打电话'],
-            //     otherButtonFontSize: 30.sp,
-            //     otherButtonFontWeight: FontWeight.w400,
-            //     onTap: (int index, BuildContext context) async {
-            //   if (index == 0) {
-            //     var actionList = await IssuesApi.viewCall(uuid);
-            //     if (actionList['code'] == 200) {
-            //       showCupertinoAlertDialog(actionList['data']);
-            //     } else {
-            //       showToast(ctx, "暂无权限", true);
-            //     }
-            //   }
-            //   if (index == 1) {
-            //     var actionList = await IssuesApi.viewCall(uuid);
-            //     if (actionList['code'] == 200) {
-            //       _makePhoneCall(actionList['data']);
-            //     } else {
-            //       showToast(ctx, "暂无权限", true);
-            //     }
-            //   }
-            // });
-          }));
+  Widget _buildCallButton() =>
+      Builder(
+          builder: (ctx) =>
+              GestureDetector(
+                  onLongPress: () => Scaffold.of(ctx).openEndDrawer(),
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 0.h),
+                    child: Container(
+                      width: 60.h,
+                      height: 60.h,
+                      margin: EdgeInsets.fromLTRB(10.w, 0.h, 0.w, 0.h),
+                      child: Lottie.asset(
+                          'assets/packages/lottie_flutter/phone-call.json'),
+                    ),
+                  ),
+                  onTap: () async {
+                    if (logic.canEdit == 0) {
+                      showToastRed(ctx, "暂无权限", true);
+                      return;
+                    }
+                    showDialog(
+                        barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
+                        context: Get.context!,
+                        builder: (BuildContext context) {
+                          var list = [];
+                          list.add('查看号码');
+                          list.add('拨打电话');
+                          return BottomSheetWidget(
+                            list: list,
+                            onItemClickListener: (index) async {
+                              if (index == 0) {
+                                var actionList = await CommonAPI.viewCall(
+                                    logic.uuid);
+                                if (actionList.code == 200) {
+                                  showCupertinoAlertDialog(actionList.data);
+                                } else {
+                                  showToast(ctx, "暂无权限", true);
+                                }
+                              }
+                              if (index == 1) {
+                                var actionList = await CommonAPI.viewCall(
+                                    logic.uuid);
+                                if (actionList.code == 200) {
+                                  _makePhoneCall(actionList.data);
+                                } else {
+                                  showToast(ctx, "暂无权限", true);
+                                }
+                              }
+                            },
+                          );
+                        });
+                  }));
 
   Widget _buildConnectButton() {
     return GestureDetector(
@@ -238,7 +284,7 @@ class UserDetailPage extends StatelessWidget {
         }
       },
       child: Padding(
-        padding: EdgeInsets.only(right: 20.0, top: 10.h),
+        padding: EdgeInsets.only(right: 20.0, top: 0.h),
         child: Container(
           width: 60.h,
           height: 60.h,
@@ -301,13 +347,13 @@ class UserDetailPage extends StatelessWidget {
   final List<int> colors = Cons.tabColors;
 
   Future<bool> _whenPop(BuildContext context) async {
-    if (Scaffold.of(context).isEndDrawerOpen) return true;
     return true;
   }
 
   List<Widget> _listViewConnectList(List<Connect> connectList) {
     return connectList
-        .map((e) => item_connect(
+        .map((e) =>
+        item_connect(
             Get.context!,
             e.username,
             e.connectTime,
@@ -321,7 +367,8 @@ class UserDetailPage extends StatelessWidget {
 
   List<Widget> _listViewAppointList(List<Appoint> connectList) {
     return connectList
-        .map((e) => item_appoint(
+        .map((e) =>
+        item_appoint(
             Get.context!,
             e.username,
             e.otherName,
@@ -339,14 +386,16 @@ class UserDetailPage extends StatelessWidget {
 
   List<Widget> _listViewActionList(List<UserAction> connectList) {
     return connectList
-        .map((e) => itemAction(Get.context!, e.username, e.title, e.content,
+        .map((e) =>
+        itemAction(Get.context!, e.username, e.title, e.content,
             e.createdAt.toString()))
         .toList();
   }
 
   List<Widget> _listViewCallList(List<CallLog> connectList) {
     return connectList
-        .map((e) => itemCall(Get.context!, e.username, e.count.toString(),
+        .map((e) =>
+        itemCall(Get.context!, e.username, e.count.toString(),
             e.updatedAt.toString()))
         .toList();
   }
@@ -370,8 +419,7 @@ class UserDetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStateDetail(
-      BuildContext context,
+  Widget _buildStateDetail(BuildContext context,
       Data userDetails,
       List<Connect> connectList,
       List<Appoint> appointList,
@@ -381,12 +429,11 @@ class UserDetailPage extends StatelessWidget {
       logic.callSetState(tag, value);
     }
 
-    var info = userDetails.info;
-    var demand = userDetails.demand;
+    var info1 = userDetails.info;
     logic.canEdit = userDetails.canEdit;
-    logic.call = info.mobile;
-    logic.uuid = info.uuid;
-    logic.status = info.status;
+    logic.call = info1.mobile;
+    logic.uuid = info1.uuid;
+    logic.status = info1.status;
 
     if (connectList.isNotEmpty) {
       Connect e = connectList.first;
@@ -402,30 +449,96 @@ class UserDetailPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        buildBase(context, info, logic.canEdit, logic.showBaseControl,
-            callSetState, "base"),
-        buildEdu(context, info, logic.canEdit, logic.showEduControl,
-            callSetState, "education"),
-        buildMarriage(context, info, logic.canEdit, logic.showMarriageControl,
-            callSetState, "marriage"),
-        buildSimilar(context, info, logic.canEdit, logic.showSimilarControl,
-            callSetState, "similar"),
-        buildUserSelect(context, demand, logic.canEdit, logic.showSelectControl,
-            info.uuid, callSetState, "select"),
-        buildPhoto(context, userDetails, logic.canEdit, logic.showPhotoControl,
-            callSetState, "photo"),
+        GetBuilder<UserDetailLogic>(
+          id: "user_detail",
+            builder: (logic) {
+          return Column(
+            children: [
+              buildBase(
+                  context, logic.userDetail!.info, logic.canEdit, logic.showBaseControl.value,
+                  callSetState, "base"),
+              buildEdu(context, logic.userDetail!.info, logic.canEdit, logic.showEduControl.value,
+                  callSetState, "education"),
+              buildMarriage(
+                  context, logic.userDetail!.info, logic.canEdit, logic.showMarriageControl.value,
+                  callSetState, "marriage"),
+              buildSimilar(
+                  context, logic.userDetail!.info, logic.canEdit, logic.showSimilarControl.value,
+                  callSetState, "similar"),
+              buildUserSelect(
+                  context,
+                  logic.userDetail!.demand,
+                  logic.canEdit,
+                  logic.showSelectControl.value,
+                  info1.uuid,
+                  callSetState,
+                  "select"),
+              buildPhoto(context, userDetails, logic.canEdit,
+                  logic.showPhotoControl.value,
+                  callSetState, "photo"),
+            ],
+          );
+        }),
+
         buildConnect(
-            connectListView, logic.showConnectControl, callSetState, "connect"),
+            connectListView, logic.showConnectControl.value, callSetState,
+            "connect"),
         buildAppoint(
-            appointListView, logic.showAppointControl, callSetState, "appoint"),
+            appointListView, logic.showAppointControl.value, callSetState,
+            "appoint"),
         buildAction(
-            actionListView, logic.showActionControl, callSetState, "action"),
-        buildCall(callListView, logic.showCallControl, callSetState, "call"),
+            actionListView, logic.showActionControl.value, callSetState,
+            "action"),
+        buildCall(
+            callListView, logic.showCallControl.value, callSetState, "call"),
       ],
     );
   }
 
   Widget _buildTitle(BuildContext context) {
     return header(context, logic.userDetail!);
+  }
+}
+
+class TitleImageButton extends StatelessWidget {
+  const TitleImageButton({
+    Key? key,
+    required this.imageStr,
+    required this.imageWidth,
+    required this.imageHeight,
+    this.width,
+    this.height,
+    this.onTap,
+    this.padding,
+    this.color,
+  }) : super(key: key);
+  final String imageStr;
+  final double imageWidth;
+  final double imageHeight;
+  final double? width;
+  final double? height;
+  final Function()? onTap;
+  final EdgeInsetsGeometry? padding;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height ?? 44.h,
+        child: Center(
+          child: Image.asset(
+            imageStr,
+            width: imageWidth,
+            height: imageHeight,
+            color: color,
+          ),
+        ),
+        padding: padding ?? EdgeInsets.only(left: 10.w, right: 10.w),
+      ),
+    );
   }
 }

@@ -35,7 +35,6 @@ class PeerChatLogic extends GetxController {
   String audioIconPath = '';
   String voiceFilePath = '';
   String tfSender = "0";
-
   FltImPlugin im = FltImPlugin();
   late FRefreshController controller3;
   bool isLoading = false;
@@ -44,8 +43,6 @@ class PeerChatLogic extends GetxController {
   int voiceCount = 0;
   late StreamSubscription? recorderSubscription;
   late StreamSubscription? playerSubscription;
-
-  // StreamSubscription dbPeakSubscription;
   late FlutterSoundRecorder flutterSound;
   TextEditingController controller =  TextEditingController();
   ScrollController scrollController =  ScrollController();
@@ -54,7 +51,7 @@ class PeerChatLogic extends GetxController {
   FlutterSoundPlayer playerModule = FlutterSoundPlayer();
   double progress = 0;
   Map<String, GlobalKey<PeerChatItemWidgetState>> globalKeyMap = {};
- // StreamSubscription<PeerRecAckEvent> peerAckSubscription;
+
   startRecord() async {
     Vibration.vibrate(duration: 50);
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/middlewares/middlewares.dart';
+import 'package:flutter_erp/pages/add_vip/view.dart';
 import 'package:flutter_erp/pages/application/index.dart';
 import 'package:flutter_erp/pages/category/index.dart';
+import 'package:flutter_erp/pages/distribute/binding.dart';
+import 'package:flutter_erp/pages/distribute/view.dart';
 import 'package:flutter_erp/pages/frame/login/binding.dart';
 import 'package:flutter_erp/pages/frame/login/view.dart';
 import 'package:flutter_erp/pages/frame/sign_in/index.dart';
@@ -12,6 +15,7 @@ import 'package:flutter_erp/pages/user_detail/binding.dart';
 import 'package:flutter_erp/pages/user_detail/view.dart';
 import 'package:get/get.dart';
 
+import '../../pages/add_vip/binding.dart';
 import '../../pages/home/binding.dart';
 import 'routes.dart';
 
@@ -75,7 +79,18 @@ class AppPages {
       transition: Transition.rightToLeft
     ),
 
-
+    GetPage(
+        name: AppRoutes.BuyVip,
+        page: () => AddVipPage(),
+        binding: AddVipBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.Distribute,
+        page: () => DistributePage(),
+        binding: DistributeBinding(),
+        transition: Transition.rightToLeft
+    ),
 
   ];
 

@@ -9,10 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
+import 'package:flutter_erp/pages/user_detail/logic.dart';
 import 'package:flutter_erp/pages/user_detail/widget/tag.dart';
 import 'package:flutter_erp/pages/user_detail/widget/widget_node_panel.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -291,9 +294,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("base", true);
-                          }
+                          callSetState("base", true);
                         },
                         child: _item_detail(
                             context,
@@ -323,9 +324,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               info,
                               "身高(cm)",
                               false);
-                          if (result != null) {
-                            callSetState("base", true);
-                          }
+                          callSetState("base", true);
                         },
                         child: _item_detail(
                             context,
@@ -423,9 +422,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("base", true);
-                          }
+                          callSetState("base", true);
                         },
                         child: _item_detail(
                             context,
@@ -549,9 +546,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -635,9 +630,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -662,9 +655,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -720,9 +711,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -771,9 +760,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -800,9 +787,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -827,9 +812,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -854,9 +837,7 @@ Widget buildEdu(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("education", true);
-                          }
+                          callSetState("education", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -919,9 +900,7 @@ Widget buildMarriage(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("marriage", true);
-                          }
+                          callSetState("marriage", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -948,9 +927,7 @@ Widget buildMarriage(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("marriage", true);
-                          }
+                          callSetState("marriage", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1008,9 +985,7 @@ Widget buildMarriage(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("marriage", true);
-                          }
+                          callSetState("marriage", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1035,9 +1010,7 @@ Widget buildMarriage(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("marriage", true);
-                          }
+                          callSetState("marriage", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1157,9 +1130,7 @@ Widget buildMarriage(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("marriage", true);
-                          }
+                          callSetState("marriage", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1223,9 +1194,7 @@ Widget buildSimilar(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("similar", true);
-                          }
+                          callSetState("similar", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1250,9 +1219,7 @@ Widget buildSimilar(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("similar", true);
-                          }
+                          callSetState("similar", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1279,9 +1246,7 @@ Widget buildSimilar(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("similar", true);
-                          }
+                          callSetState("similar", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1308,9 +1273,7 @@ Widget buildSimilar(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("similar", true);
-                          }
+                          callSetState("similar", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1337,9 +1300,7 @@ Widget buildSimilar(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("similar", true);
-                          }
+                          callSetState("similar", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1366,9 +1327,7 @@ Widget buildSimilar(
                               info,
                               "",
                               true);
-                          if (result != null) {
-                            callSetState("similar", true);
-                          }
+                          callSetState("similar", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1434,9 +1393,7 @@ Widget buildUserSelect(
                           //     true);
                           var result = await showPickerDemandAge(
                               context, demand.wishAges, uuid, canEdit);
-                          if (result != null) {
-                            callSetState("select", true);
-                          }
+                          callSetState("select", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1462,19 +1419,17 @@ Widget buildUserSelect(
                           //     "",
                           //     true);
                           var result = await showPickerDemandWeight(
-                              context, demand.wishHeights, uuid, canEdit);
-                          if (result != null) {
-                            callSetState("select", true);
-                          }
+                              context, demand.wishWeights, uuid, canEdit);
+                          callSetState("select", true);
                         },
                         child: item_detail_gradute(
                             context,
                             Colors.black,
                             Icons.line_weight,
                             "体重",
-                            demand.wishHeights == ""
+                            demand.wishWeights == ""
                                 ? "-"
-                                : getWeightDemand(demand.wishHeights),
+                                : getWeightDemand(demand.wishWeights),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -1493,9 +1448,7 @@ Widget buildUserSelect(
                               "",
                               true,
                               uuid);
-                          if (result != null) {
-                            callSetState("select", true);
-                          }
+                          callSetState("select", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1525,9 +1478,7 @@ Widget buildUserSelect(
                           //     true);
                           var result = await showPickerDemandHeight(
                               context, demand.wishHeights, uuid, canEdit);
-                          if (result != null) {
-                            callSetState("select", true);
-                          }
+                          callSetState("select", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1603,9 +1554,7 @@ Widget buildUserSelect(
                               "",
                               true,
                               uuid);
-                          if (result != null) {
-                            callSetState("select", true);
-                          }
+                          callSetState("select", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1637,9 +1586,7 @@ Widget buildUserSelect(
                               "",
                               true,
                               uuid);
-                          if (result != null) {
-                            callSetState("select", true);
-                          }
+                          callSetState("select", true);
                         },
                         child: item_detail_gradute(
                             context,
@@ -1994,7 +1941,7 @@ showEditDialog(BuildContext context, String title, String hintText, String text,
     String type, int maxLine, Info info) {
   TextEditingController _controller =
       TextEditingController.fromValue(TextEditingValue(
-    text: '${text == null ? "" : text}', //判断keyword是否为空
+    text: text, //判断keyword是否为空
   ));
   showCupertinoDialog(
       context: context,
@@ -2030,15 +1977,8 @@ showEditDialog(BuildContext context, String title, String hintText, String text,
             Container(
               child: CupertinoDialogAction(
                 onPressed: () async {
-                  // var result = await IssuesApi.editCustomerOnceString(
-                  //     info['uuid'], type, _controller.text);
-                  // if (result['code'] == 200) {
-                  //   BlocProvider.of<DetailBloc>(context)
-                  //       .add(EditDetailEventString(type, _controller.text));
-                  //   //showToast(context,"编辑成功",false);
-                  // } else {
-                  //   showToast(context, result['message'], false);
-                  // }
+                  final logic = Get.find<UserDetailLogic>();
+                  logic.editUserOnce(info.uuid, type, _controller.text);
                   Navigator.pop(context);
                 },
                 child: Text('确定'),
@@ -2089,6 +2029,8 @@ showBackDialog(BuildContext context, String title, String hintText, String text,
             Container(
               child: CupertinoDialogAction(
                 onPressed: () async {
+                  final logic = Get.find<UserDetailLogic>();
+                  logic.editUserOnce(uuid, type, _controller.text);
                   // var result = await IssuesApi.addAppointBack(
                   //     id, _controller.text);
                   // if (result['code'] == 200) {
@@ -2149,6 +2091,8 @@ showEditDialogDemand(BuildContext context, String title, String hintText,
             Container(
               child: CupertinoDialogAction(
                 onPressed: () async {
+                  final logic = Get.find<UserDetailLogic>();
+                  logic.editUserDemandOnce(uuid, type, _controller.text);
                   // var result = await IssuesApi.editCustomerDemandOnce(
                   //     uuid, type, _controller.text);
                   // if (result['code'] == 200) {
@@ -2249,6 +2193,8 @@ Future<bool> showPickerDemandAge(
         for (int i = 0; i < fg.length; i++) {
           values.add(fg[i].toString());
         }
+        final logic = Get.find<UserDetailLogic>();
+        logic.editUserDemandOnce(uuid, "wish_ages", values.join(","));
         // var result = await IssuesApi.editCustomerDemandOnce(
         //     uuid, "wish_ages", values.join(","));
         // if (result['code'] == 200) {
@@ -2295,8 +2241,8 @@ Future<bool> showPickerDemandHeight(
       cancelTextStyle: TextStyle(fontSize: 40.sp, color: Colors.grey),
       confirmTextStyle: TextStyle(fontSize: 40.sp, color: Colors.blue),
       adapter: NumberPickerAdapter(data: [
-        NumberPickerColumn(begin: 120, end: 200),
-        NumberPickerColumn(begin: 120, end: 200),
+        const NumberPickerColumn(begin: 120, end: 200),
+        const NumberPickerColumn(begin: 120, end: 200),
       ]),
       selectedTextStyle: TextStyle(
         fontSize: 40.sp,
@@ -2324,6 +2270,8 @@ Future<bool> showPickerDemandHeight(
         for (int i = 0; i < fg.length; i++) {
           values.add(fg[i].toString());
         }
+        final logic = Get.find<UserDetailLogic>();
+        logic.editUserDemandOnce(uuid, "wish_heights", values.join(","));
         // var result = await IssuesApi.editCustomerDemandOnce(
         //     uuid, "wish_heights", values.join(","));
         // if (result['code'] == 200) {
@@ -2397,6 +2345,8 @@ Future<bool> showPickerDemandWeight(
         for (int i = 0; i < fg.length; i++) {
           values.add(fg[i].toString());
         }
+        final logic = Get.find<UserDetailLogic>();
+        logic.editUserDemandOnce(uuid, "wish_weights", values.join(","));
         // var result = await IssuesApi.editCustomerDemandOnce(
         //     uuid, "wish_weights", values.join("-"));
         // if (result['code'] == 200) {
@@ -2453,7 +2403,8 @@ Future<bool> showPickerArray(
         } else {
           values = int.parse(picker.getSelectedValues().first);
         }
-
+        final logic = Get.find<UserDetailLogic>();
+        logic.editUserOnce(info.uuid, type, values.toString());
         // var result =
         //     await IssuesApi.editCustomerOnce(info['uuid'], type, values);
         // if (result['code'] == 200) {
@@ -2511,6 +2462,8 @@ Future<bool> showPickerArrayDemand(
         } else {
           values = (picker.getSelectedValues().first.toString());
         }
+        final logic = Get.find<UserDetailLogic>();
+        logic.editUserDemandOnce(uuid, type, values.toString());
         // var result = await IssuesApi.editCustomerDemandOnce(uuid, type, values);
         // if (result['code'] == 200) {
         //   BlocProvider.of<DetailBloc>(context)
@@ -2578,6 +2531,8 @@ Future<bool> showPickerDateTime(
         child: Text(''),
       ),
       onConfirm: (Picker picker, List value) async {
+        final logic = Get.find<UserDetailLogic>();
+        logic.editUserOnce(info.uuid, type, picker.adapter.text);
         // var result = await IssuesApi.editCustomerOnceString(
         //     info['uuid'], type, picker.adapter.text);
         // if (result['code'] == 200) {

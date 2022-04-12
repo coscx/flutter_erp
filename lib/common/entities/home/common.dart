@@ -19,12 +19,25 @@ class SelectItem {
 
 class StoreItem {
   String? name;
-  String? id;
+  int? id;
+  String? price;
+  String? month;
+  String? count;
+  String? tag;
   bool? isSelect;
   int? index;
   int? type;
 
-  StoreItem({ this.name,  this.id,  this.isSelect,  this.index,  this.type});
+  StoreItem(
+      {this.name,
+        this.id,
+        this.isSelect,
+        this.index,
+        this.type,
+        this.price,
+        this.month,
+        this.count,
+        this.tag});
 }
 
 class UserItem {

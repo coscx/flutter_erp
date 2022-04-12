@@ -472,7 +472,7 @@ bool getSelect(){
             },
             child: Container(
 //            color: Colors.blue,
-              height: 80.h,
+              height: 59.h,
               child: Row(
                 children: <Widget>[
                   SizedBox(

@@ -36,6 +36,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.0"
+  another_xlider:
+    dependency: "direct main"
+    description:
+      name: another_xlider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.1+2"
   archive:
     dependency: transitive
     description:
@@ -332,6 +339,13 @@ packages:
       url: "https://github.com/coscx/lat.git"
     source: git
     version: "1.0.0"
+  flui_nullsafety:
+    dependency: "direct main"
+    description:
+      name: flui_nullsafety
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -543,13 +557,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.8.2+1"
-  font_awesome_flutter:
-    dependency: "direct main"
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "10.1.0"
   frefresh:
     dependency: "direct main"
     description:
@@ -662,6 +669,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.6.3"
+  json_annotation:
+    dependency: transitive
+    description:
+      name: json_annotation
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.4.0"
   left_scroll_actions:
     dependency: "direct main"
     description:

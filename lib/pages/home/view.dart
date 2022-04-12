@@ -200,7 +200,7 @@ class HomePage extends StatelessWidget {
                 PopupMenuButton<String>(
                   itemBuilder: (context) => buildItems(),
                   padding: EdgeInsets.only(right: 0.w),
-                  offset: Offset(-15.w, 20.h),
+                  offset: Offset(-15.w, 70.h),
                   color: Colors.white,
                   elevation: 1,
                   shape: RoundedRectangleBorder(

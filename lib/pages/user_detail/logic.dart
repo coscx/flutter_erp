@@ -4,15 +4,19 @@ import 'package:flutter_erp/common/entities/detail/appoint.dart';
 import 'package:flutter_erp/common/entities/detail/calllog.dart';
 import 'package:flutter_erp/common/entities/detail/connect.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
+import 'package:flutter_erp/common/routers/names.dart';
+import 'package:flutter_erp/pages/user_detail/widget/common_dialog.dart';
 import 'package:flutter_erp/pages/user_detail/widget/share.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../common/apis/common.dart';
+import '../../common/widgets/copy_custom_pop_up_menu.dart';
 import 'state.dart';
 
 class UserDetailLogic extends GetxController {
+  var popCtrl = CustomPopupMenuController();
   final UserDetailState state = UserDetailState();
   String memberId = "80";
   int connectStatus = 4;
@@ -20,18 +24,19 @@ class UserDetailLogic extends GetxController {
   String call = "";
   String uuid = "";
   int status = 10;
-  bool showBaseControl = false;
-  bool showEduControl = false;
-  bool showMarriageControl = false;
-  bool showSimilarControl = false;
-  bool showSelectControl = false;
-  bool showPhotoControl = false;
-  bool showAppointControl = false;
-  bool showConnectControl = false;
-  bool showActionControl = false;
-  bool showCallControl = false;
-  Data? userDetail ;
-  RxInt load =0.obs;
+  var showBaseControl = false.obs;
+  var showEduControl = false.obs;
+  var showMarriageControl = false.obs;
+  var showSimilarControl = false.obs;
+  var showSelectControl = false.obs;
+  var showPhotoControl = false.obs;
+  var showAppointControl = false.obs;
+  var showConnectControl = false.obs;
+  var showActionControl = false.obs;
+  var showCallControl = false.obs;
+  Data? userDetail;
+
+  RxInt load = 0.obs;
   RxList<Connect> connectList = <Connect>[].obs;
   RxList<Appoint> appointList = <Appoint>[].obs;
   RxList<UserAction> actionList = <UserAction>[].obs;
@@ -60,33 +65,37 @@ class UserDetailLogic extends GetxController {
 
   @override
   void onInit() {
-
     _loadData();
   }
 
   void _loadData() async {
-    uuid=Get.arguments;
+    uuid = Get.arguments;
     var result = await CommonAPI.getUserDetail(uuid);
     userDetail = result.data;
-    load.value =1;
-    _loadOtherData();
+    load.value = 1;
+
+    Future.delayed(const Duration(seconds: 2), () {
+      _loadOtherData();
+    });
     //debugPrint(result.toJson().toString());
   }
+
   void _loadOtherData() async {
-    var connect = await CommonAPI.getConnectList(uuid,1);
+    var connect = await CommonAPI.getConnectList(uuid, 1);
     connectList.addAll(connect.data.data);
 
-    var appoint = await CommonAPI.getAppointmentList(uuid,1);
-    appointList.addAll(appoint.data.data) ;
+    var appoint = await CommonAPI.getAppointmentList(uuid, 1);
+    appointList.addAll(appoint.data.data);
 
-    var action = await CommonAPI.getActionList(uuid,1);
-    actionList.addAll(action.data.data)  ;
+    var action = await CommonAPI.getActionList(uuid, 1);
+    actionList.addAll(action.data.data);
 
-    var call = await CommonAPI.getCallList(uuid,1);
-    callList.addAll(call.data.data)  ;
+    var call = await CommonAPI.getCallList(uuid, 1);
+    callList.addAll(call.data.data);
 
     //debugPrint(result.toJson().toString());
   }
+
   // 下拉刷新
   void onRefresh() async {
     //Map<String, dynamic> photo = Map();
@@ -102,150 +111,237 @@ class UserDetailLogic extends GetxController {
 
   void callSetState(String tag, bool value) {
     if (tag == "base") {
-      showBaseControl = value;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = value;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
+      update(["user_detail"]);
     }
     if (tag == "education") {
-      showBaseControl = false;
-      showEduControl = value;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = value;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
+      update(["user_detail"]);
     }
     if (tag == "marriage") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = value;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = value;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
+      update(["user_detail"]);
     }
     if (tag == "similar") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = value;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = value;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
+      update(["user_detail"]);
     }
     if (tag == "select") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = value;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = value;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
+      update(["user_detail"]);
     }
     if (tag == "photo") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = value;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = value;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
+      update(["user_detail"]);
     }
     if (tag == "connect") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = value;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = value;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = false;
     }
     if (tag == "appoint") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = value;
-      showActionControl = false;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = value;
+      showActionControl.value = false;
+      showCallControl.value = false;
     }
     if (tag == "action") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = value;
-      showCallControl = false;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = value;
+      showCallControl.value = false;
     }
     if (tag == "call") {
-      showBaseControl = false;
-      showEduControl = false;
-      showMarriageControl = false;
-      showSimilarControl = false;
-      showSelectControl = false;
-      showPhotoControl = false;
-      showConnectControl = false;
-      showAppointControl = false;
-      showActionControl = false;
-      showCallControl = value;
+      showBaseControl.value = false;
+      showEduControl.value = false;
+      showMarriageControl.value = false;
+      showSimilarControl.value = false;
+      showSelectControl.value = false;
+      showPhotoControl.value = false;
+      showConnectControl.value = false;
+      showAppointControl.value = false;
+      showActionControl.value = false;
+      showCallControl.value = value;
     }
   }
 
   void buildAppointButton() {
-    showBaseControl = false;
-    showEduControl = false;
-    showMarriageControl = false;
-    showSimilarControl = false;
-    showSelectControl = false;
-    showPhotoControl = false;
-    showConnectControl = false;
-    showAppointControl = true;
-    showActionControl = false;
-    showCallControl = false;
+    showBaseControl.value = false;
+    showEduControl.value = false;
+    showMarriageControl.value = false;
+    showSimilarControl.value = false;
+    showSelectControl.value = false;
+    showPhotoControl.value = false;
+    showConnectControl.value = false;
+    showAppointControl.value = true;
+    showActionControl.value = false;
+    showCallControl.value = false;
   }
 
   void buildConnectButton() {
-    showBaseControl = false;
-    showEduControl = false;
-    showMarriageControl = false;
-    showSimilarControl = false;
-    showSelectControl = false;
-    showPhotoControl = false;
-    showConnectControl = true;
-    showAppointControl = false;
-    showActionControl = false;
-    showCallControl = false;
+    showBaseControl.value = false;
+    showEduControl.value = false;
+    showMarriageControl.value = false;
+    showSimilarControl.value = false;
+    showSelectControl.value = false;
+    showPhotoControl.value = false;
+    showConnectControl.value = true;
+    showAppointControl.value = false;
+    showActionControl.value = false;
+    showCallControl.value = false;
+  }
+
+  Future<void> editUserOnce(String uuid, String type, String text) async {
+    var result = await CommonAPI.editCustomerOnceString(uuid, type, text);
+    if (result.code == 200) {
+      userDetail = setObjectKeyValue(userDetail!, type, text);
+      update(["user_detail"]);
+      showToast(Get.context!, "编辑成功", false);
+    } else {
+      showToast(Get.context!, "result", false);
+    }
+  }
+
+  Data setObjectKeyValue(Data detail, String key, String value) {
+    var d = detail.info.toJson();
+    d[key] = value;
+    detail.info = Info.fromJson(d);
+    return detail;
+  }
+  Future<void> editUserDemandOnce(String uuid, String type, String text) async {
+    var result = await CommonAPI.editCustomerDemandOnce(uuid, type, text);
+    if (result.code == 200) {
+      userDetail = setObjectDemandKeyValue(userDetail!, type, text);
+      update(["user_detail"]);
+      showToast(Get.context!, "编辑成功", false);
+    } else {
+      showToast(Get.context!, "result", false);
+    }
+  }
+
+  Data setObjectDemandKeyValue(Data detail, String key, String value) {
+    var d = detail.demand.toJson();
+    d[key] = value;
+    detail.demand = Demand.fromJson(d);
+    return detail;
+  }
+  Future<void> getUser() async {
+    var result = await CommonAPI.claimCustomer(uuid);
+    if (result.code == 200) {
+      showToast(Get.context!, '认领成功', true);
+    } else {
+      showToastRed(Get.context!, result.message!, true);
+    }
+  }
+
+  void changeUser() {
+    int? status = userDetail?.info.status;
+    if (userDetail?.info.roleId == 0) {
+      showToastRed(Get.context!, "暂无权限", true);
+    }
+    if (status! < 0) {
+      showToastRed(Get.context!, "当前用户状态需认领后再划分", true);
+
+      return;
+    }
+    if (status == 5) {
+      if (userDetail?.info.roleId != 1) {
+        showToastRed(Get.context!, "暂无划分权限", true);
+
+        return;
+      }
+    }
+
+    if (status > 3) {
+      showToastRed(Get.context!, "暂无权限", true);
+
+      return;
+    }
+    Get.toNamed(AppRoutes.Distribute, arguments: uuid);
+  }
+
+  void addVip() {
+    if (status != 0 && status != 1 && status != 30) {
+      showToastRed(Get.context!, "当前用户状态不可购买会员套餐", true);
+      return;
+    }
+    debugPrint("addVip");
+    Map<String, dynamic> args = <String, dynamic>{};
+    args['uuid'] = uuid;
+    args['store_id'] = userDetail?.info.storeId;
+    Get.toNamed(AppRoutes.BuyVip, arguments: args);
   }
 }

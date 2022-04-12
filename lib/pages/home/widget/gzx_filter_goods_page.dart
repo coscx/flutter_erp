@@ -116,7 +116,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
       List<StoreData> da = result.Data;
       for (var value in da) {
         StoreItem ff = StoreItem();
-        ff.id = value.id.toString();
+        ff.id = value.id;
         ff.type = 7;
         ff.name = value.name;
         ff.index = 0;
@@ -441,7 +441,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                               debugPrint(value.toString());
                               debugPrint(picker.adapter.text);
                               setState(() {
-                                store = pickerStoreItem[value[0]].id!;
+                                store = pickerStoreItem[value[0]].id.toString();
                                 storeName = pickerStoreItem[value[0]].name!;
                                 int j = 0, k = 0;
                                 for (int i = 0;
@@ -450,7 +450,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                                   if (widget.selectItems[i].type == 7) {
                                     j = 1;
                                     widget.selectItems[i].id =
-                                        pickerStoreItem[value[0]].id;
+                                        pickerStoreItem[value[0]].id.toString();
                                     widget.selectItems[i].name =
                                         pickerStoreItem[value[0]].name;
                                     break;
@@ -461,7 +461,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                                   SelectItem s = SelectItem();
                                   s.type = 7;
                                   s.name = pickerStoreItem[value[0]].name;
-                                  s.id = pickerStoreItem[value[0]].id;
+                                  s.id = pickerStoreItem[value[0]].id.toString();
                                   widget.selectItems.add(s);
                                 }
                               });

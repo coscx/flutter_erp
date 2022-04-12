@@ -1,13 +1,19 @@
-import 'package:dio/dio.dart';
+
+import 'package:flutter_erp/common/entities/common_result.dart';
 import 'package:flutter_erp/common/entities/detail/calllog.dart';
+import 'package:flutter_erp/common/entities/detail/claim_customer.dart';
 import 'package:flutter_erp/common/entities/detail/connect.dart';
+import 'package:flutter_erp/common/entities/detail/edit_customer.dart';
+import 'package:flutter_erp/common/entities/detail/user.dart';
+import 'package:flutter_erp/common/entities/detail/free_vip.dart';
+import 'package:flutter_erp/common/entities/detail/store_vip.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
-import 'package:flutter_erp/common/entities/entities.dart';
+import 'package:flutter_erp/common/entities/detail/viewcall.dart';
+
 import 'package:flutter_erp/common/entities/flow/wx_article.dart';
 import 'package:flutter_erp/common/entities/home/erp_user.dart';
 import 'package:flutter_erp/common/entities/home/tree_store.dart';
 import 'package:flutter_erp/common/entities/login/login_model.dart';
-import 'package:flutter_erp/common/utils/utils.dart';
 
 import '../entities/app_version.dart';
 import '../entities/detail/action.dart';
@@ -109,6 +115,76 @@ class CommonAPI {
     );
     return CallLogDataResult.fromJson(response);
   }
+  static Future<ViewCallResult> viewCall(String uuid) async {
+    var response = await ERPHttpUtil().get(
+      '/api/v1/auth/getCustomerMobile/' + uuid,
+      queryParameters: {'customer_uuid': uuid},
+    );
+    return ViewCallResult.fromJson(response);
+  }
+
+  static Future<ClaimCustomerResult> claimCustomer(String uuid) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/public/claimCustomerApp',
+      queryParameters: {'customer_uuids[0]': uuid},
+    );
+    return ClaimCustomerResult.fromJson(response);
+  }
+  static Future<StoreVipDataResult> getStoreVips() async {
+    var response = await NewERPHttpUtil().post(
+      '/api/GetStoreVips',
+      data: {},
+    );
+    return StoreVipDataResult.fromJson(response);
+  }
+  static Future<FreeVipDataResult> addMealFree( Map<String, dynamic> data) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/store/addMealFree',
+      queryParameters: data,
+    );
+    return FreeVipDataResult.fromJson(response);
+  }
+  static Future<CommonResult> buyVip( Map<String, dynamic> data) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/buyVipApp',
+      queryParameters: data,
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<UserDataResult> getErpUser() async {
+    var response = await NewERPHttpUtil().post(
+      '/api/UserList',
+      data: {},
+    );
+    return UserDataResult.fromJson(response);
+  }
+
+  static Future<CommonResult> distribute(String uuid, int type, String userUuid) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/system/distribute',
+      data: {'customer_uuids[0]': uuid, 'type': type, 'user_uuid': userUuid},
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<CommonResult> editCustomerOnceString(String uuid, String type, String answer) async {
+    Map<String, dynamic> searchParam = {};
+    searchParam[type] = answer;
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/editCustomer/' + uuid,
+      queryParameters: searchParam,
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<CommonResult> editCustomerDemandOnce(String uuid, String type, String answer) async {
+    Map<String, dynamic> searchParam = {};
+    searchParam[type] = answer;
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/editCustomerDemand/' + uuid,
+      queryParameters: searchParam,
+    );
+    return CommonResult.fromJson(response);
+  }
+
 
   static Future<WxArticleEntity> wxArticle(  int page, final List<SelectItem> selectItems) async {
     Map<String, dynamic> searchParm = {};
@@ -239,7 +315,7 @@ class CommonAPI {
     searchParam['pageSize'] = 20;
     searchParam['currentPage'] = page;
     String url = "/api/v1/customer/system/index";
-    if (mode == 0) {
+    if (mode == 10) {
       //全部
       url = "/api/v1/customer/system/index";
     }

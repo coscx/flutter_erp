@@ -9,4 +9,6 @@ class AppRoutes {
   static const Category = '/category';
   static const Home = '/home';
   static const Detail = '/detail';
+  static const BuyVip = '/buy_vip';
+  static const Distribute = '/distribute';
 }

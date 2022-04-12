@@ -5,9 +5,12 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../common/entities/flow/wx_article.dart';
+import '../../../common/routers/names.dart';
 
 const String defaultImg =
     'https://img.bosszhipin.com/beijin/mcs/useravatar/20171211/4d147d8bb3e2a3478e20b50ad614f4d02062e3aec7ce2519b427d24a3f300d68_s.jpg';
@@ -22,10 +25,7 @@ class MyFlow extends StatelessWidget {
 
   // 跳转直播间
   void _goToLiveRoom(context, Datas item) {
-    Map<String, dynamic>? photo = <String, dynamic>{};
-    photo['uuid'] = item.uuid;
-    //BlocProvider.of<DetailBloc>(context).add(FetchWidgetDetail(photo));
-    //Navigator.pushNamed(context, UnitRouter.widget_detail);
+    Get.toNamed(AppRoutes.Detail,arguments: item.uuid);
   }
 
   @override

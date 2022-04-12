@@ -108,7 +108,7 @@ class ERPHttpUtil {
         EasyLoading.showError(eInfo.message);
         break;
       default:
-        EasyLoading.showError('未知错误');
+        //EasyLoading.showError('未知错误');
         break;
     }
   }
@@ -244,16 +244,42 @@ class ERPHttpUtil {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.post(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
-  }
 
+
+    try {
+      var response = await dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      return response.data;
+    } on DioError catch (e) {
+      return resSet(e);
+    }
+
+  }
+  static Map<String, dynamic> resSet(DioError e) {
+    if (e.response == null) {
+      var dds = <String, dynamic>{};
+      dds['code'] = 500;
+      dds['status'] = "server not reach";
+      dds['data'] = {};
+      return dds;
+    }
+    var dd = e.response?.data;
+
+    if (dd is String) {
+      var dds = <String, dynamic>{};
+      dds['code'] = 400;
+      dds['status'] = dd;
+      dds['data'] = {};
+      return dds;
+    }
+
+    return dd;
+  }
   /// restful put 操作
   Future put(
     String path, {

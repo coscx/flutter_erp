@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/langs/translation_service.dart';
 import 'package:flutter_erp/common/routers/pages.dart';
@@ -29,12 +30,12 @@ class MyApp extends StatelessWidget {
         maxOverScrollExtent: 100,
         footerTriggerDistance: 150,
         child: GetMaterialApp(
-          title: 'News',
+          title: '鹊桥缘遇',
           theme: AppTheme.light,
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
           getPages: AppPages.routes,
-          builder: EasyLoading.init(),
+          builder:EasyLoading.init(builder: BotToastInit()),
           translations: TranslationService(),
           navigatorObservers: [AppPages.observer],
           localizationsDelegates: const [
