@@ -348,7 +348,8 @@ class ApplicationController extends GetxController {
     logic.state.newsList.add(NewsItem());
     var conversionLogic = Get.find<ConversionLogic>();
     conversionLogic.receiveMsgFresh();
-    if (Get.isPrepared<PeerChatLogic>()){
+    bool gg =Get.isRegistered<PeerChatLogic>();
+    if (gg){
       var peerChatLogic = Get.find<PeerChatLogic>();
 
         peerChatLogic.receiveMsgFresh();
