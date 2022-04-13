@@ -1,6 +1,7 @@
 import 'package:flt_im_plugin/conversion.dart';
 import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/value_util.dart';
+import 'package:flutter_erp/common/routers/names.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -30,15 +31,30 @@ class ConversionLogic extends GetxController {
   }
   @override
   void onInit() {
-   init();
+
     super.onInit();
+  }
+
+  @override
+  void onReady() {
+    init();
+    super.onReady();
   }
   void onTapDeleteConversion(String cid){
     FltImPlugin im = FltImPlugin();
     im.deleteConversation(cid: cid);
-
   }
-
+  Future<void> receiveMsgFresh() async {
+    FltImPlugin im = FltImPlugin();
+    Map response = await im.getConversations();
+    var  conversions = ValueUtil.toArr(response["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
+    conversions.map((e) {
+      e.detail= (e.detail);
+      return e;
+    }).toList();
+    state.conversion.clear();
+    state.conversion.addAll(conversions);
+  }
   void onTap(Conversion msg){
     FltImPlugin im = FltImPlugin();
     List<Conversion> messages;
@@ -76,7 +92,7 @@ class ConversionLogic extends GetxController {
       //BlocProvider.of<GlobalBloc>(context).add(EventSetBar3(0));
     }
     var memberId = StorageService.to.getString("memberId");
-    if (memberId != "" && memberId != null) {
+    if (memberId != "" ) {
       memberId = memberId.toString();
     }
 
@@ -91,7 +107,7 @@ class ConversionLogic extends GetxController {
     }
     if (msg.type ==
         ConversionType.CONVERSATION_PEER) {
-
+        Get.toNamed(AppRoutes.Peer,arguments: model);
     }
   }
 

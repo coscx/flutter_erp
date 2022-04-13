@@ -1,11 +1,17 @@
-import 'package:flutter_sound/public/util/flutter_sound_helper.dart';
+import 'package:just_audio/just_audio.dart';
 
 class CommonUtil{
 
      /// 获取录音文件秒数
   static  Future<double> getDuration( String _path) async {
-    Duration d = Duration(seconds: 3);
-    if (d ==null) return 0;
+    final player = AudioPlayer();
+    var d;
+    try{
+     d = await player.setFilePath(_path);
+    }catch(e){
+      return 0;
+    }
+    if (d == null) return 0;
     var _duration = d != null ? d.inMilliseconds / 1000.0: 0.00;
     print("_duration == $_duration");
     var minutes = d.inMinutes;
@@ -28,6 +34,7 @@ class CommonUtil{
       _recorderTxt = _recorderTxt + ":0$millSecond";
     }
     print(_recorderTxt);
+    await player.dispose();
     return  d.inMilliseconds / 01000;
   }
 

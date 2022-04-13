@@ -42,6 +42,7 @@ class LoginLogic extends GetxController {
   Future<bool> login(String username, String password) async {
     var result = await CommonAPI.login(username, password);
     if (result.code == 200) {
+      StorageService.to.setString("im_sender", result.data!.user.id.toString());
       StorageService.to.setString("name", result.data!.user.relname);
       StorageService.to.setString("uuid", result.data!.user.uuid);
       StorageService.to.setString("openid", result.data!.user.openid);
@@ -63,6 +64,7 @@ class LoginLogic extends GetxController {
   Future<bool> wxToLogin(String code) async {
     var result = await CommonAPI.wxLogin(code);
     if (result.code == 200) {
+      StorageService.to.setString("im_sender", result.data!.user.id.toString());
       StorageService.to.setString("name", result.data!.user.relname);
       StorageService.to.setString("uuid", result.data!.user.uuid);
       StorageService.to.setString("openid", result.data!.user.openid);

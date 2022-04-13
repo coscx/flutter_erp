@@ -10,6 +10,8 @@ import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_erp/common/routers/routes.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 import 'package:flutter_erp/common/values/values.dart';
+import 'package:flutter_erp/pages/conversion/logic.dart';
+import 'package:flutter_erp/pages/peer_chat/logic.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 import 'package:uni_links/uni_links.dart';
@@ -105,7 +107,7 @@ class ApplicationController extends GetxController {
     im = FltImPlugin();
     FltImPlugin().init(host: IM_SERVER_HOST_URL, apiURL: IM_SERVER_API_URL);
     tfSender = ValueUtil.toStr(82);
-    String imSender = StorageService.to.getString(STORAGE_IM_SENDER);
+    String imSender = StorageService.to.getString("memberId");
     if (imSender != "") {
       tfSender = imSender;
     }
@@ -344,6 +346,16 @@ class ApplicationController extends GetxController {
       content = '聊天消息';
     }
     logic.state.newsList.add(NewsItem());
+    var conversionLogic = Get.find<ConversionLogic>();
+    conversionLogic.receiveMsgFresh();
+    if (Get.isPrepared<PeerChatLogic>()){
+      var peerChatLogic = Get.find<PeerChatLogic>();
+
+        peerChatLogic.receiveMsgFresh();
+
+    }
+
+
     //_showNotification(title,content);
     //BlocProvider.of<PeerBloc>(context).add(EventReceiveNewMessage(message));
   }

@@ -11,6 +11,9 @@ import 'package:flutter_erp/pages/frame/sign_in/index.dart';
 import 'package:flutter_erp/pages/frame/sign_up/index.dart';
 import 'package:flutter_erp/pages/frame/welcome/index.dart';
 import 'package:flutter_erp/pages/home/view.dart';
+import 'package:flutter_erp/pages/peer_chat/binding.dart';
+import 'package:flutter_erp/pages/peer_chat/view.dart';
+import 'package:flutter_erp/pages/peer_chat/widget/chat_input_view.dart';
 import 'package:flutter_erp/pages/user_detail/binding.dart';
 import 'package:flutter_erp/pages/user_detail/view.dart';
 import 'package:get/get.dart';
@@ -91,7 +94,12 @@ class AppPages {
         binding: DistributeBinding(),
         transition: Transition.rightToLeft
     ),
-
+    GetPage(
+        name: AppRoutes.Peer,
+        page: () => PeerChatPage(),
+        binding: PeerChatBinding(),
+        transition: Transition.rightToLeft
+    ),
   ];
 
   // static final unknownRoute = GetPage(

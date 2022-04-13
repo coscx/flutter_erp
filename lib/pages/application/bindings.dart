@@ -5,6 +5,7 @@ import 'package:flutter_erp/pages/flow_page/logic.dart';
 import 'package:flutter_erp/pages/frame/login/logic.dart';
 import 'package:flutter_erp/pages/home/logic.dart';
 import 'package:flutter_erp/pages/main/index.dart';
+import 'package:flutter_erp/pages/peer_chat/logic.dart';
 import 'package:get/get.dart';
 
 import '../mine/logic.dart';

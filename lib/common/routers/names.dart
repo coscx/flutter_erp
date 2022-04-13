@@ -11,4 +11,6 @@ class AppRoutes {
   static const Detail = '/detail';
   static const BuyVip = '/buy_vip';
   static const Distribute = '/distribute';
+  static const Peer = '/peer';
+  static const Group = '/group';
 }

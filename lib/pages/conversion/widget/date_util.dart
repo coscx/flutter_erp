@@ -101,9 +101,11 @@ class DateUtil {
         String? dateSeparate,
         String? timeSeparate,
         bool isUtc: false}) {
+    dateSeparate ??= "";
+    timeSeparate ??= "";
     DateTime dateTime = getDateTimeByMs(milliseconds, isUtc: isUtc);
     return getDateStrByDateTime(dateTime,
-        format: format, dateSeparate: dateSeparate!, timeSeparate: timeSeparate!);
+        format: format, dateSeparate: dateSeparate, timeSeparate: timeSeparate);
   }
 
   ///get DateStr By DateTime.

@@ -7,11 +7,9 @@ import 'package:flutter_erp/pages/conversion/widget/dialog_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import '../../common/widgets/DyBehaviorNull.dart';
 import '../../common/widgets/pop_menu.dart';
 import 'logic.dart';
-import './widget/date_util.dart';
 class ConversionPage extends StatelessWidget {
   final logic = Get.find<ConversionLogic>();
   final state = Get.find<ConversionLogic>().state;
@@ -36,8 +34,6 @@ class ConversionPage extends StatelessWidget {
                         color: Theme.of(context).primaryColor,
                         fontSize: 48.sp,
                         fontWeight: FontWeight.bold)),
-
-
               ],
             ),
             //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
@@ -75,11 +71,11 @@ class ConversionPage extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
-                          color: Color(0x08000000),
-                          offset: Offset(0.5, 0.5),
+                          color: const Color(0x08000000),
+                          offset: const Offset(0.5, 0.5),
                           blurRadius: 1.5.w,
                           spreadRadius: 1.5.w),
-                      BoxShadow(color: Colors.white)
+                      const BoxShadow(color: Colors.white)
                     ],
                   ),
                   margin: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 0.h),

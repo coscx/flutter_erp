@@ -3,5 +3,5 @@ import 'package:get/get.dart';
 
 class PeerChatState {
 
-  final RxList<Message> messageList = <Message>[].obs;
+
 }
