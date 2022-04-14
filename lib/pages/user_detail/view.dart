@@ -109,22 +109,22 @@ class UserDetailPage extends StatelessWidget {
         menus: [
           PopMenuInfo(
             text: "认领用户",
-            icon: "assets/images/default/select.png",
+            icon: "assets/images/get_user.webp",
             onTap: () => logic.getUser(),
           ),
           PopMenuInfo(
             text: "划分用户",
-            icon: "assets/images/default/select.png",
+            icon: "assets/images/change_user.webp",
             onTap: () => logic.changeUser(),
           ),
           PopMenuInfo(
             text: "购买会员",
-            icon: "assets/images/default/select.png",
+            icon: "assets/images/vip.webp",
             onTap: () => logic.addVip(),
           ),
         ],
         child: TitleImageButton(
-          imageStr: "assets/images/default/select.png",
+          imageStr: "assets/images/ic_keyboard.webp",
           imageHeight: 80.h,
           imageWidth: 80.w,
           // onTap: (){},

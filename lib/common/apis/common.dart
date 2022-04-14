@@ -1,4 +1,7 @@
 
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter_erp/common/entities/common_result.dart';
 import 'package:flutter_erp/common/entities/detail/calllog.dart';
 import 'package:flutter_erp/common/entities/detail/claim_customer.dart';
@@ -14,7 +17,7 @@ import 'package:flutter_erp/common/entities/flow/wx_article.dart';
 import 'package:flutter_erp/common/entities/home/erp_user.dart';
 import 'package:flutter_erp/common/entities/home/tree_store.dart';
 import 'package:flutter_erp/common/entities/login/login_model.dart';
-
+import 'package:http_parser/http_parser.dart';
 import '../entities/app_version.dart';
 import '../entities/detail/action.dart';
 import '../entities/detail/appoint.dart';
@@ -175,12 +178,70 @@ class CommonAPI {
     );
     return CommonResult.fromJson(response);
   }
+  static Future<CommonResult> editCustomerOnceStringResource(String uuid, String type, String url) async {
+    var data = {
+      'resources': json.encode([
+        {'type': type, 'file_url': url}
+      ])
+    };
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/editCustomer/' + uuid,
+      queryParameters: data,
+    );
+    return CommonResult.fromJson(response);
+  }
+
+  static Future<CommonResult> editCustomerAddress(String uuid, Map<String, dynamic> searchParam) async {
+
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/editCustomer/' + uuid,
+      queryParameters: searchParam,
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<CommonResult> editCustomerDemndAddress(String uuid, Map<String, dynamic> searchParam) async {
+
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/editCustomerDemand/' + uuid,
+      queryParameters: searchParam,
+    );
+    return CommonResult.fromJson(response);
+  }
   static Future<CommonResult> editCustomerDemandOnce(String uuid, String type, String answer) async {
     Map<String, dynamic> searchParam = {};
     searchParam[type] = answer;
     var response = await ERPHttpUtil().post(
       '/api/v1/customer/editCustomerDemand/' + uuid,
       queryParameters: searchParam,
+    );
+    return CommonResult.fromJson(response);
+  }
+
+  static Future<CommonResult> delPhoto( int imgId,) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/deleteResources' ,
+      queryParameters: {'ids[0]': imgId},
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<CommonResult> uploadPhotoFile( int type, String path) async {
+    MultipartFile multipartFile = MultipartFile.fromFileSync(
+      path,
+      // 文件名
+      filename: 'some-file-name.jpg',
+      // 文件类型
+      contentType: MediaType("image", "jpg"),
+    );
+    FormData formData = FormData.fromMap({
+      // 后端接口的参数名称
+      "resource": multipartFile
+    });
+    Map<String, dynamic> params = Map();
+    params['type'] = type;
+
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/uploadPic' ,
+        data: formData, queryParameters: params,
     );
     return CommonResult.fromJson(response);
   }

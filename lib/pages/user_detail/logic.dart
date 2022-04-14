@@ -1,4 +1,6 @@
+import 'package:city_pickers/city_pickers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_erp/common/entities/detail/action.dart';
 import 'package:flutter_erp/common/entities/detail/appoint.dart';
 import 'package:flutter_erp/common/entities/detail/calllog.dart';
@@ -272,13 +274,128 @@ class UserDetailLogic extends GetxController {
       update(["user_detail"]);
       showToast(Get.context!, "编辑成功", false);
     } else {
-      showToast(Get.context!, "result", false);
+      showToastRed(Get.context!, result.message!, false);
     }
   }
+  Future<void> editCustomerAddress(String uuid,int type, Result result) async {
+
+    Map<String, dynamic> searchParam = {};
+    if (type == 1) {
+      searchParam['np_province_code'] = result.provinceId;
+      searchParam['np_province_name'] = result.provinceName;
+      searchParam['np_city_code'] = result.cityId;
+      searchParam['np_city_name'] = result.cityName;
+      searchParam['np_area_code'] = result.areaId;
+      searchParam['np_area_name'] = result.areaName;
+      searchParam['native_place'] = result.provinceName!+result.cityName!+result.areaName!;
+    } else {
+      searchParam['lp_province_code'] = result.provinceId;
+      searchParam['lp_province_name'] = result.provinceName;
+      searchParam['lp_city_code'] = result.cityId;
+      searchParam['lp_city_name'] = result.cityName;
+      searchParam['lp_area_code'] = result.areaId;
+      searchParam['lp_area_name'] = result.areaName;
+      searchParam['location_place'] = result.provinceName!+result.cityName!+result.areaName!;
+
+    }
+    var returnResult = await CommonAPI.editCustomerAddress(uuid, searchParam);
+    if (returnResult.code == 200) {
+      userDetail = setObjectKeyValueMulti(userDetail!, searchParam);
+      update(["user_detail"]);
+      showToast(Get.context!, "编辑成功", false);
+    } else {
+      showToastRed(Get.context!, returnResult.message!, false);
+    }
+  }
+  Future<void> editCustomerDemandAddress(String uuid, Result result) async {
+
+    Map<String, dynamic> searchParam = {};
+
+      searchParam['wish_lp_province_code'] = result.provinceId;
+      searchParam['wish_lp_province_name'] = result.provinceName;
+      searchParam['wish_lp_city_code'] = result.cityId;
+      searchParam['wish_lp_city_name'] = result.cityName;
+      searchParam['wish_lp_area_code'] = result.areaId;
+      searchParam['wish_lp_area_name'] = result.areaName;
+      searchParam['wish_location_place'] = result.provinceName!+result.cityName!+result.areaName!;
+
+
+    var returnResult = await CommonAPI.editCustomerDemndAddress(uuid, searchParam);
+    if (returnResult.code == 200) {
+      userDetail = setObjectDemandKeyValueMulti(userDetail!, searchParam);
+      update(["user_detail"]);
+      showToast(Get.context!, "编辑成功", false);
+    } else {
+      showToastRed(Get.context!, returnResult.message!, false);
+    }
+  }
+  Future<void> delPhoto(int imgId,) async {
+
+    var returnResult = await CommonAPI.delPhoto(imgId);
+    if (returnResult.code == 200) {
+      userDetail = setObjectPhotoKeyValue(userDetail!, imgId);
+      update(["user_detail"]);
+      showToast(Get.context!, "编辑成功", false);
+    } else {
+      showToastRed(Get.context!, returnResult.message!, false);
+    }
+  }
+  Future<void> uploadPhoto(String path) async {
+
+    EasyLoading.show();
+    try {
+      var resultConnectList =
+          await CommonAPI.uploadPhotoFile(1, path);
+      var url = "https://queqiaoerp.oss-cn-shanghai.aliyuncs.com/" + resultConnectList.data;
+      var result = await CommonAPI.editCustomerOnceStringResource(uuid, "1", url);
+      if (result.code == 200) {
+        Map<String, dynamic> json = {};
+        json['id'] =0;
+        json['customer_id'] =userDetail?.info.id;
+        json['type'] =1;
+        json['file_url'] =url;
+        json['sort'] =1;
+        json['is_approved'] =1;
+        var f =Pics.fromJson(json);
+        userDetail?.pics.add(f);
+        update(["user_detail"]);
+        showToast(Get.context!, "编辑成功", false);
+      } else {
+        showToastRed(Get.context!, result.message!, false);
+      }
+      EasyLoading.dismiss();
+      //
+      // var result = await IssuesApi.editCustomer(
+      //     userdetail['info']['uuid'], "1", resultConnectList['data']);
+      // if (result['code'] == 200) {
+      //   EasyLoading.dismiss();
+      //   showToast(context, "上传成功", false);
+      //   BlocProvider.of<DetailBloc>(context).add(UploadImgSuccessEvent(
+      //       userdetail, resultConnectList['data'], result['data']));
+      //
+      //   callSetState("photo", true);
+      // } else {
+      //   EasyLoading.dismiss();
+      //   showToast(context, result['message'], false);
+      // }
+    } on Error catch (e) {
+      // EasyLoading.dismiss();
+      //var dd = e.response.data;
+      // EasyLoading.showSuccess(dd['message']);
+      //showToast(context,dd['message'],false);
+    }
+  }
+
 
   Data setObjectKeyValue(Data detail, String key, String value) {
     var d = detail.info.toJson();
     d[key] = value;
+    detail.info = Info.fromJson(d);
+    return detail;
+  }
+  Data setObjectKeyValueMulti(Data detail, Map<String, dynamic> value) {
+    var d = detail.info.toJson();
+    d.addAll(value);
     detail.info = Info.fromJson(d);
     return detail;
   }
@@ -299,6 +416,18 @@ class UserDetailLogic extends GetxController {
     detail.demand = Demand.fromJson(d);
     return detail;
   }
+  Data setObjectDemandKeyValueMulti(Data detail, Map<String, dynamic> value) {
+    var d = detail.demand.toJson();
+    d.addAll(value) ;
+    detail.demand = Demand.fromJson(d);
+    return detail;
+  }
+  Data setObjectPhotoKeyValue(Data detail, int id) {
+    detail.pics.removeWhere((e) => e.id == id);
+    return detail;
+  }
+
+
   Future<void> getUser() async {
     var result = await CommonAPI.claimCustomer(uuid);
     if (result.code == 200) {

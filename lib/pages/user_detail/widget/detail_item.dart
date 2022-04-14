@@ -146,7 +146,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             "生日",
                             info.birthday == ""
                                 ? "-"
-                                : info.birthday +
+                                : info.birthday.substring(0, 10) +
                                     "(" +
                                     info.chineseZodiac +
                                     "-" +
@@ -200,6 +200,9 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               ));
                           print(result);
                           if (result != null) {
+                            final logic = Get.find<UserDetailLogic>();
+                            logic.editCustomerAddress(info.uuid,1, result);
+
                             // var results = await IssuesApi.editCustomerAddress(
                             //     info['uuid'], 1, result);
                             // if (results['code'] == 200) {
@@ -216,11 +219,9 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.local_activity_outlined,
                             "籍贯",
-                            info.locationPlace == null
-                                ? "-"
-                                : (info.locationPlace == ""
+                            (info.nativePlace == ""
                                     ? "-"
-                                    : info.locationPlace.toString()),
+                                    : info.nativePlace.toString()),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -251,6 +252,8 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               ));
                           print(result);
                           if (result != null) {
+                            final logic = Get.find<UserDetailLogic>();
+                            logic.editCustomerAddress(info.uuid,2, result);
                             // var results = await IssuesApi.editCustomerAddress(
                             //     info['uuid'], 2, result);
                             // if (results['code'] == 200) {
@@ -718,7 +721,7 @@ Widget buildEdu(
                             Colors.black,
                             Icons.more_outlined,
                             "加班情况",
-                            info.workOvertime  == ""
+                            info.workOvertime  == 0
                                 ? "-"
                                 : getWorkOverTime(info.workOvertime ),
                             true)),
@@ -1514,6 +1517,8 @@ Widget buildUserSelect(
                               ));
                           print(result);
                           if (result != null) {
+                            final logic = Get.find<UserDetailLogic>();
+                            logic.editCustomerDemandAddress(uuid, result);
                             // var results =
                             //     await IssuesApi.editCustomerDemandAddress(
                             //         uuid, 2, result);
@@ -2521,7 +2526,7 @@ Future<bool> showPickerDateTime(
             child: Container(
               width: 16.w,
               alignment: Alignment.center,
-              child: Text('', style: TextStyle(fontWeight: FontWeight.bold)),
+              child: const Text('', style: TextStyle(fontWeight: FontWeight.bold)),
               color: Colors.white,
             ))
       ],
@@ -2769,31 +2774,8 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
               ));
           if (croppedFile != null) {
             imageFile = croppedFile;
-            EasyLoading.show();
-            try {
-              // var resultConnectList =
-              //     await IssuesApi.uploadPhotoFile("1", imageFile.path, _loading);
-              // // print(resultConnectList['data']);
-              //
-              // var result = await IssuesApi.editCustomer(
-              //     userdetail['info']['uuid'], "1", resultConnectList['data']);
-              // if (result['code'] == 200) {
-              //   EasyLoading.dismiss();
-              //   showToast(context, "上传成功", false);
-              //   BlocProvider.of<DetailBloc>(context).add(UploadImgSuccessEvent(
-              //       userdetail, resultConnectList['data'], result['data']));
-              //
-              //   callSetState("photo", true);
-              // } else {
-              //   EasyLoading.dismiss();
-              //   showToast(context, result['message'], false);
-              // }
-            } on DioError catch (e) {
-              // EasyLoading.dismiss();
-              //var dd = e.response.data;
-              // EasyLoading.showSuccess(dd['message']);
-              //showToast(context,dd['message'],false);
-            }
+            final logic = Get.find<UserDetailLogic>();
+            logic.uploadPhoto(imageFile.path);
           }
         }
       }));
@@ -2819,6 +2801,9 @@ _deletePhoto(BuildContext context, Pics img,
                 onSubmit: () {
                   // BlocProvider.of<DetailBloc>(context)
                   //     .add(EventDelDetailImg(img, detail['info']));
+                  final logic = Get.find<UserDetailLogic>();
+                  logic.delPhoto(img.id);
+
                   Navigator.of(context).pop();
                 },
               ),

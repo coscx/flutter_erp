@@ -160,9 +160,9 @@ class _NaviPageState extends State<ErpUserPage> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: <Widget>[
-                                        Icon(Icons.loop, color: Colors.grey, size: 80.0),
+                                        Icon(Icons.loop, color: Colors.grey, size: 160.sp),
                                         Container(
-                                          padding:  EdgeInsets.only(top: 16.0),
+                                          padding:  EdgeInsets.only(top: 32.h),
                                           child:  const Text(
                                             "加载中",
                                             style:  TextStyle(
