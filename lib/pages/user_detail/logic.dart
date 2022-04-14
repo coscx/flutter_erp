@@ -5,6 +5,7 @@ import 'package:flutter_erp/common/entities/detail/calllog.dart';
 import 'package:flutter_erp/common/entities/detail/connect.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
 import 'package:flutter_erp/common/routers/names.dart';
+import 'package:flutter_erp/common/services/services.dart';
 import 'package:flutter_erp/pages/user_detail/widget/common_dialog.dart';
 import 'package:flutter_erp/pages/user_detail/widget/share.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
@@ -343,5 +344,24 @@ class UserDetailLogic extends GetxController {
     args['uuid'] = uuid;
     args['store_id'] = userDetail?.info.storeId;
     Get.toNamed(AppRoutes.BuyVip, arguments: args);
+  }
+  Future<void> addAppoint(String uuid, Map<String, dynamic> data) async {
+    data['username'] =  StorageService.to.getString("name");
+    var result = await CommonAPI.addAppoint( uuid,  data);
+    if (result.code == 200) {
+      showToast(Get.context!, '添加成功', true);
+    } else {
+      showToastRed(Get.context!, result.message!, true);
+    }
+  }
+
+  Future<void> addConnect(String uuid, Map<String, dynamic> data) async {
+    data['username'] =  StorageService.to.getString("name");
+    var result = await CommonAPI.addConnect( uuid,  data);
+    if (result.code == 200) {
+      showToast(Get.context!, '添加成功', true);
+    } else {
+      showToastRed(Get.context!, result.message!, true);
+    }
   }
 }

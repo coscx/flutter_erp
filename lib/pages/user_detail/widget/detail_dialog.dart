@@ -2,13 +2,16 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
-
 import 'package:flutter_my_picker/flutter_my_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:menu_button/menu_button.dart';
 
+import '../../../common/routers/names.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/widgets/DyBehaviorNull.dart';
+import '../logic.dart';
 import 'detail_common.dart';
 
 final _Controller = TextEditingController(text: '');
@@ -22,23 +25,22 @@ final _placeController = TextEditingController(text: '');
 
 String goalValue = '4.可继续沟通';
 String goalValueAppoint = '21.新分VIP';
-DateTime _date =  DateTime.now();
-DateTime _date1 = _date.add( Duration(days: 3));
+DateTime _date = DateTime.now();
+DateTime _date1 = _date.add(Duration(days: 3));
 int connect_type = 1;
 var time1s = _date.toString();
-var time2s = _date.add( Duration(days: 3)).toString();
+var time2s = _date.add(Duration(days: 3)).toString();
 String time1 = time1s.substring(0, 19), time2 = time2s.substring(0, 19);
 
-String other_uuid="";
+String other_uuid = "";
 String appointment_time = _date.toString().substring(0, 19);
-String appointment_address="";
-String remark="";
-String address_lng="";
-String address_lat="";
-String customer_uuid="";
+String appointment_address = "";
+String remark = "";
+String address_lng = "";
+String address_lat = "";
+String customer_uuid = "";
 
-Future<bool> appointDialog(
-    BuildContext context, String uuid) async {
+Future<bool> appointDialog(BuildContext context, String uuid) async {
   var result = await showDialog(
       barrierDismissible: false,
       context: context,
@@ -80,11 +82,11 @@ Future<bool> appointDialog(
                               onTap: () {
                                 goalValue = '1.新分未联系';
                                 goalValueAppoint = '21.新分VIP';
-                                _date =  DateTime.now();
+                                _date = DateTime.now();
                                 connect_type = 1;
                                 var time1s = _date.toString();
                                 var time2s =
-                                    _date.add( Duration(days: 3)).toString();
+                                    _date.add(Duration(days: 3)).toString();
                                 time1 = time1s.substring(0, 19);
                                 time2 = time2s.substring(0, 19);
                                 _Controller.clear();
@@ -197,8 +199,8 @@ Future<bool> appointDialog(
                                                     color: Colors.blue),
                                                 hintText: "请点击右侧选择>>>",
                                                 enabledBorder:
-                                                     OutlineInputBorder(
-                                                  borderSide:  BorderSide(
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
                                                       color: Colors.blue,
                                                       width: 2.w),
                                                 ),
@@ -216,22 +218,26 @@ Future<bool> appointDialog(
                                       padding: EdgeInsets.only(
                                           top: 0.h, left: 15.w, bottom: 0.h),
                                       child: OutlineButton(
-                                        onPressed: () {
-                                          // Navigator.pushNamed(
-                                          //         context,
-                                          //         UnitRouter
-                                          //             .search_page_appoint)
-                                          //     .then((value) {
-                                          //   List<String> data =
-                                          //       value.toString().split("#");
-                                          //   other_uuid = data.elementAt(0);
-                                          //   _usernameController.text =
-                                          //       data.elementAt(1);
-                                          //   _textPlaceFieldNode.unfocus();
-                                          //   _textFieldNode.unfocus();
-                                          // });
+                                        onPressed: () async {
+                                          var value = await Get.toNamed(
+                                              AppRoutes.SearchUser,
+                                              arguments: 1);
+                                          print(value);
+
+                                          List<String> data =
+                                              value.toString().split("#");
+                                          other_uuid = data.elementAt(0);
+                                          _usernameController.text =
+                                              data.elementAt(1);
+                                          _textPlaceFieldNode.unfocus();
+                                          _textFieldNode.unfocus();
                                         },
-                                        child: Text("搜索用户",style: TextStyle(color: Colors.blue,fontSize: 30.sp),),
+                                        child: Text(
+                                          "搜索用户",
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 30.sp),
+                                        ),
                                         textColor: Colors.blue,
                                         splashColor: Colors.green,
                                         highlightColor: Colors.white,
@@ -269,8 +275,8 @@ Future<bool> appointDialog(
                                                     color: Colors.blue),
                                                 hintText: "请点击右侧选择>>>",
                                                 enabledBorder:
-                                                     OutlineInputBorder(
-                                                  borderSide:  BorderSide(
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
                                                       color: Colors.blue,
                                                       width: 2.w),
                                                 ),
@@ -288,22 +294,26 @@ Future<bool> appointDialog(
                                       padding: EdgeInsets.only(
                                           top: 0.h, left: 15.w, bottom: 0.h),
                                       child: OutlineButton(
-                                        onPressed: () {
-                                          // Navigator.pushNamed(
-                                          //         context, UnitRouter.baidu_map)
-                                          //     .then((value) {
-                                          //   List<String> data =
-                                          //       value.toString().split("#");
-                                          //   appointment_address =
-                                          //       data.elementAt(1) + "";
-                                          //   address_lng = data.elementAt(2);
-                                          //   address_lat = data.elementAt(3);
-                                          //
-                                          //   _placeController.text =
-                                          //       appointment_address;
-                                          // });
+                                        onPressed: () async {
+                                          var value =
+                                              await Get.toNamed(AppRoutes.Amap);
+                                          print(value);
+                                          List<String> data =
+                                              value.toString().split("#");
+                                          appointment_address =
+                                              data.elementAt(1) + "";
+                                          address_lng = data.elementAt(2);
+                                          address_lat = data.elementAt(3);
+
+                                          _placeController.text =
+                                              appointment_address;
                                         },
-                                        child: Text("搜索地点",style: TextStyle(color: Colors.blue,fontSize: 30.sp),),
+                                        child: Text(
+                                          "搜索地点",
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 30.sp),
+                                        ),
                                         textColor: Colors.blue,
                                         splashColor: Colors.green,
                                         highlightColor: Colors.white,
@@ -340,7 +350,8 @@ Future<bool> appointDialog(
                                     decoration: InputDecoration(
                                       contentPadding: EdgeInsets.all(10.w),
                                       hintText: "请输入...",
-                                      hintStyle: const TextStyle(color: Colors.blue),
+                                      hintStyle:
+                                          const TextStyle(color: Colors.blue),
                                       border: const OutlineInputBorder(),
                                       enabledBorder: const OutlineInputBorder(
                                           borderSide:
@@ -403,8 +414,25 @@ Future<bool> appointDialog(
                                       }
                                       remark = _appointController.text;
                                       if (other_uuid != "") {
-                                        _usernameController.clear();
+                                        final logic = Get.find<UserDetailLogic>();
+                                        Map<String, dynamic> appoint = {};
+
+                                        appoint['other_name'] =
+                                            _usernameController.text;
+                                        appoint['other_uuid'] = other_uuid;
+                                        appoint['appointment_time'] =
+                                            appointment_time;
+                                        appoint['appointment_address'] =
+                                            appointment_address;
+                                        appoint['remark'] = remark;
+                                        appoint['address_lat'] = address_lat;
+                                        appoint['address_lng'] = address_lng;
+                                        appoint['customer_uuid'] = customer_uuid;
+
+                                        logic.addAppoint(uuid, appoint);
+
                                       }
+                                      _usernameController.clear();
                                       _placeController.clear();
                                       _appointController.clear();
                                       other_uuid = "";
@@ -418,12 +446,16 @@ Future<bool> appointDialog(
                                       address_lat = "";
                                       appointment_time =
                                           _date.toString().substring(0, 19);
+
+
+
                                       //showToast(context, "创建成功", false);
                                       Navigator.of(context).pop(true);
                                     },
                                     child: Text("提交",
                                         style: TextStyle(
-                                            color: Colors.white, fontSize: 36.sp)),
+                                            color: Colors.white,
+                                            fontSize: 36.sp)),
                                   ),
                                 ),
                                 SizedBox(
@@ -473,8 +505,8 @@ Widget normalChildButton(String selectedKey) {
   );
 }
 
-Future<bool> commentDialog(BuildContext context, int connectStatus,
-    Info detail) async {
+Future<bool> commentDialog(
+    BuildContext context, int connectStatus, Info detail) async {
   var roleId = detail.roleId;
   if (roleId == 7 || roleId == 9) {
     goals = goalsAppoint;
@@ -523,11 +555,11 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                 onTap: () {
                                   goalValue = '1.新分未联系';
 
-                                  _date =  DateTime.now();
+                                  _date = DateTime.now();
                                   connect_type = 1;
                                   var time1s = _date.toString();
                                   var time2s =
-                                      _date.add( Duration(days: 3)).toString();
+                                      _date.add(Duration(days: 3)).toString();
                                   time1 = time1s.substring(0, 19);
                                   time2 = time2s.substring(0, 19);
                                   _Controller.clear();
@@ -563,10 +595,13 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                               color: Colors.black)),
                                       Radio(
                                         activeColor: Colors.deepOrangeAccent,
+
                                         ///此单选框绑定的值 必选参数
                                         value: 1,
+
                                         ///当前组中这选定的值  必选参数
                                         groupValue: connect_type,
+
                                         ///点击状态改变时的回调 必选参数
                                         onChanged: (v) {
                                           state(() {
@@ -580,10 +615,13 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                               color: Colors.black)),
                                       Radio(
                                         activeColor: Colors.deepOrangeAccent,
+
                                         ///此单选框绑定的值 必选参数
                                         value: 2,
+
                                         ///当前组中这选定的值  必选参数
                                         groupValue: connect_type,
+
                                         ///点击状态改变时的回调 必选参数
                                         onChanged: (v) {
                                           state(() {
@@ -610,13 +648,14 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                             padding: EdgeInsets.only(
                                                 left: 0.w, bottom: 10.h),
                                             child: Container(
-                                                width: ScreenUtil().screenWidth *
-                                                    0.6,
+                                                width:
+                                                    ScreenUtil().screenWidth *
+                                                        0.6,
                                                 child: MenuButton<String>(
-                                                  popupHeight:
-                                                      ScreenUtil().screenHeight /
-                                                              2 -
-                                                          50.h,
+                                                  popupHeight: ScreenUtil()
+                                                              .screenHeight /
+                                                          2 -
+                                                      50.h,
                                                   scrollPhysics:
                                                       const AlwaysScrollableScrollPhysics(),
                                                   child: normalChildButton(
@@ -637,7 +676,8 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                                     child: normalChildButton(
                                                         goalValue),
                                                   ),
-                                                  onItemSelected: (String value) {
+                                                  onItemSelected:
+                                                      (String value) {
                                                     state(() {
                                                       goalValue = value;
                                                       connectStatus =
@@ -756,7 +796,8 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                                 style: TextStyle(
                                                     fontSize: 28.sp,
                                                     color: Colors.redAccent,
-                                                    fontWeight: FontWeight.w800)),
+                                                    fontWeight:
+                                                        FontWeight.w800)),
                                           ],
                                         ),
                                       ),
@@ -770,7 +811,8 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                     child: TextField(
                                       focusNode: _connectFieldNode,
                                       controller: _Controller,
-                                      style: const TextStyle(color: Colors.black),
+                                      style:
+                                          const TextStyle(color: Colors.black),
                                       minLines: 7,
                                       maxLines: 7,
                                       cursorColor: Colors.green,
@@ -837,17 +879,29 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                           //         time2));
                                           // }
                                         }
+                                        Map<String, dynamic> connect = {};
 
+                                        connect['connect_type'] =
+                                            connect_type;
+                                        connect['connect_status'] = connectStatus;
+                                        connect['connect_time'] =
+                                            time1;
+                                        connect['subscribe_time'] =
+                                            time2;
+                                        connect['connect_message'] = _Controller.text;
+                                        connect['customer_uuid'] = customer_uuid;
+                                        final logic = Get.find<UserDetailLogic>();
+                                        logic.addConnect(customer_uuid, connect);
                                         goalValue = '1.新分未联系';
-                                        _date =  DateTime.now();
+                                        _date = DateTime.now();
                                         connect_type = 1;
                                         time1 = "";
                                         time2 = "";
-                                        _date =  DateTime.now();
+                                        _date = DateTime.now();
                                         connect_type = 1;
                                         var time1s = _date.toString();
                                         var time2s = _date
-                                            .add( const Duration(days: 3))
+                                            .add(const Duration(days: 3))
                                             .toString();
                                         time1 = time1s.substring(0, 19);
                                         time2 = time2s.substring(0, 19);
@@ -856,7 +910,8 @@ Future<bool> commentDialog(BuildContext context, int connectStatus,
                                       },
                                       child: Text("提交",
                                           style: TextStyle(
-                                              color: Colors.white, fontSize: 36.sp)),
+                                              color: Colors.white,
+                                              fontSize: 36.sp)),
                                     ),
                                   ),
                                 ],

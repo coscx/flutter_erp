@@ -184,7 +184,51 @@ class CommonAPI {
     );
     return CommonResult.fromJson(response);
   }
-
+  static Future<CommonResult> addCustomer(String mobile,
+      String name,
+      int gender,
+      String birthday,
+      int marriage,
+      int channel,) async {
+    Map<String, dynamic> data = {};
+    data['mobile'] = mobile;
+    data['name'] = name;
+    data['gender'] = gender;
+    data['birthday'] = birthday;
+    data['marriage'] = marriage;
+    data['channel'] = channel;
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/personal/addCustomer',
+      queryParameters: data,
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<HomeEntity> searchCustomer(   String page,
+      String keyWord,) async {
+    Map<String, dynamic> data = {};
+    data['app'] = keyWord;
+    data['currentPage'] = page;
+    data['pageSize'] = 20;
+    var response = await NewERPHttpUtil().get(
+      '/api/v1/customer/system/index',
+      queryParameters: data,
+    );
+    return HomeEntity.fromJson(response);
+  }
+  static Future<CommonResult> addAppoint(  String uuid, Map<String, dynamic> data) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/addAppointment',
+      queryParameters: data,
+    );
+    return CommonResult.fromJson(response);
+  }
+  static Future<CommonResult> addConnect(  String uuid, Map<String, dynamic> data) async {
+    var response = await ERPHttpUtil().post(
+      '/api/v1/customer/addConnect',
+      queryParameters: data,
+    );
+    return CommonResult.fromJson(response);
+  }
 
   static Future<WxArticleEntity> wxArticle(  int page, final List<SelectItem> selectItems) async {
     Map<String, dynamic> searchParm = {};

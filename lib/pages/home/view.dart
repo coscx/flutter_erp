@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../common/entities/home/common.dart';
+import '../../common/routers/names.dart';
 import '../../common/widgets/DyBehaviorNull.dart';
 import '../../common/widgets/MyScrollPhysics.dart';
 import '../../common/widgets/empty_page.dart';
@@ -74,7 +75,7 @@ class HomePage extends StatelessWidget {
                       color: Colors.black87,
                     ),
                     onPressed: () {
-                      //Navigator.pushNamed(context, UnitRouter.search);
+                      Get.toNamed(AppRoutes.SearchUser,arguments: 0);
                     },
                   ),
                 ),

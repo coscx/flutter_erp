@@ -57,7 +57,7 @@ class HomeLogic extends GetxController {
     state.homeUser .addAll(result.data.data) ;
     totalCount =result.data.total.toString();
     //debugPrint(result.toString());
-    refreshController.refreshCompleted();
+    refreshController.loadComplete();
   }
 
 

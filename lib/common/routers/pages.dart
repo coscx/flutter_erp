@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/middlewares/middlewares.dart';
 import 'package:flutter_erp/pages/add_vip/view.dart';
+import 'package:flutter_erp/pages/amap/binding.dart';
+import 'package:flutter_erp/pages/amap/view.dart';
 import 'package:flutter_erp/pages/application/index.dart';
 import 'package:flutter_erp/pages/category/index.dart';
+import 'package:flutter_erp/pages/create_user/binding.dart';
+import 'package:flutter_erp/pages/create_user/view.dart';
 import 'package:flutter_erp/pages/distribute/binding.dart';
 import 'package:flutter_erp/pages/distribute/view.dart';
 import 'package:flutter_erp/pages/frame/login/binding.dart';
@@ -14,6 +18,11 @@ import 'package:flutter_erp/pages/home/view.dart';
 import 'package:flutter_erp/pages/peer_chat/binding.dart';
 import 'package:flutter_erp/pages/peer_chat/view.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/chat_input_view.dart';
+import 'package:flutter_erp/pages/search/binding.dart';
+import 'package:flutter_erp/pages/search/view.dart';
+import 'package:flutter_erp/pages/setting/binding.dart';
+import 'package:flutter_erp/pages/setting/logic.dart';
+import 'package:flutter_erp/pages/setting/view.dart';
 import 'package:flutter_erp/pages/user_detail/binding.dart';
 import 'package:flutter_erp/pages/user_detail/view.dart';
 import 'package:get/get.dart';
@@ -100,6 +109,32 @@ class AppPages {
         binding: PeerChatBinding(),
         transition: Transition.rightToLeft
     ),
+
+    GetPage(
+        name: AppRoutes.Setting,
+        page: () => SettingPage(),
+        binding: SettingBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.CreateUser,
+        page: () => CreateUserPage(),
+        binding: CreateUserBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.SearchUser,
+        page: () => SearchPage(),
+        binding: SearchBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.Amap,
+        page: () => AmapPage(),
+        binding: AmapBinding(),
+        transition: Transition.rightToLeft
+    ),
+
   ];
 
   // static final unknownRoute = GetPage(

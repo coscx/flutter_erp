@@ -8,6 +8,7 @@ class ConfigStore extends GetxController {
   static ConfigStore get to => Get.find();
 
   bool isFirstOpen = false;
+  bool isAgree = false;
   PackageInfo? _platform;
   String get version => _platform?.version ?? '-';
   bool get isRelease => bool.fromEnvironment("dart.vm.product");
@@ -21,6 +22,7 @@ class ConfigStore extends GetxController {
   void onInit() {
     super.onInit();
     isFirstOpen = StorageService.to.getBool(STORAGE_DEVICE_FIRST_OPEN_KEY);
+    isAgree = StorageService.to.getBool("agree");
   }
 
   Future<void> getPlatform() async {

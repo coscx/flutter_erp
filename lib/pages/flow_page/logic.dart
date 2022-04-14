@@ -28,7 +28,7 @@ class FlowPageLogic extends GetxController {
     var result =
         await CommonAPI.wxArticle(curPage,  []);
     state.wxUser.addAll(result.data.data) ;
-    debugPrint(result.toJson().toString());
+    //debugPrint(result.toJson().toString());
   }
 
   // 下拉刷新
@@ -39,8 +39,8 @@ class FlowPageLogic extends GetxController {
     await CommonAPI.wxArticle(curPage,  []);
     state.wxUser.clear();
     state.wxUser.addAll(result.data.data) ;
-    debugPrint(result.toString());
-    refreshController.refreshCompleted();
+    //debugPrint(result.toString());
+    refreshController.loadComplete();
   }
 
   // 上拉加载

@@ -245,7 +245,7 @@ bool getSelect(){
             animationMilliseconds: 350,
             menus: [
               GZXDropdownMenuBuilder(
-                  dropDownHeight: 40 * 8.0,
+                  dropDownHeight: 62.h * 8.0,
                   dropDownWidget: _buildQuanChengWidget((selectValue) {
                     _dropDownHeaderItemStrings[0] = selectValue.name!;
                     _dropdownMenuController.hide();
@@ -275,7 +275,7 @@ bool getSelect(){
                     logic.onRefresh();
                   })),
               GZXDropdownMenuBuilder(
-                  dropDownHeight: 40.0 * _brandSortConditions.length,
+                  dropDownHeight: 62.h * _brandSortConditions.length,
                   dropDownWidget:
                   _buildConditionListWidget(_brandSortConditions, (value) {
                     _selectBrandSortCondition = value;
@@ -301,7 +301,7 @@ bool getSelect(){
                     logic.onRefresh();
                   })),
               GZXDropdownMenuBuilder(
-                  dropDownHeight: 40.0 * _distanceSortConditions.length,
+                  dropDownHeight: 62.h * _distanceSortConditions.length,
                   dropDownWidget: _buildConditionListWidget(
                       _distanceSortConditions, (value) {
                     _selectDistanceSortCondition = value;
@@ -447,63 +447,61 @@ bool getSelect(){
   }
 
   _buildConditionListWidget(items, void itemOnTap(SortCondition)) {
-    return Container(
-      child: ScrollConfiguration(
-          behavior: DyBehaviorNull(),
-      child: ListView.separated(
-        shrinkWrap: true,
-        scrollDirection: Axis.vertical,
-        itemCount: items.length,
-        // item 的个数
-        separatorBuilder: (BuildContext context, int index) =>
-            Divider(height: 2.h),
-        // 添加分割线
-        itemBuilder: (BuildContext context, int index) {
-          SortCondition goodsSortCondition = items[index];
-          return GestureDetector(
-            onTap: () {
-              for (var value in items) {
-                value.isSelected = false;
-              }
+    return ScrollConfiguration(
+        behavior: DyBehaviorNull(),
+    child: ListView.separated(
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      itemCount: items.length,
+      // item 的个数
+      separatorBuilder: (BuildContext context, int index) =>
+          Divider(height: 2.h),
+      // 添加分割线
+      itemBuilder: (BuildContext context, int index) {
+        SortCondition goodsSortCondition = items[index];
+        return GestureDetector(
+          onTap: () {
+            for (var value in items) {
+              value.isSelected = false;
+            }
 
-              goodsSortCondition.isSelected = true;
+            goodsSortCondition.isSelected = true;
 
-              itemOnTap(goodsSortCondition);
-            },
-            child: Container(
+            itemOnTap(goodsSortCondition);
+          },
+          child: Container(
 //            color: Colors.blue,
-              height: 59.h,
-              child: Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 32.w,
-                  ),
-                  Expanded(
-                    child: Text(
-                      goodsSortCondition.name!,
-                      style: TextStyle(
-                        color: goodsSortCondition.isSelected!
-                            ? Colors.red
-                            : Colors.black,
-                      ),
+            height: 59.h,
+            child: Row(
+              children: <Widget>[
+                SizedBox(
+                  width: 32.w,
+                ),
+                Expanded(
+                  child: Text(
+                    goodsSortCondition.name!,
+                    style: TextStyle(
+                      color: goodsSortCondition.isSelected!
+                          ? Colors.red
+                          : Colors.black,
                     ),
                   ),
-                  goodsSortCondition.isSelected!
-                      ? Icon(
-                    Icons.check,
-                    color: Theme.of(context).primaryColor,
-                    size: 32.sp,
-                  )
-                      : const SizedBox(),
-                  SizedBox(
-                    width: 32.w,
-                  ),
-                ],
-              ),
+                ),
+                goodsSortCondition.isSelected!
+                    ? Icon(
+                  Icons.check,
+                  color: Theme.of(context).primaryColor,
+                  size: 32.sp,
+                )
+                    : const SizedBox(),
+                SizedBox(
+                  width: 32.w,
+                ),
+              ],
             ),
-          );
-        },
-      )),
-    );
+          ),
+        );
+      },
+    ));
   }
 }

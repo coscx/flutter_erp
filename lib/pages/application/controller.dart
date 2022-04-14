@@ -6,6 +6,7 @@ import 'package:flt_im_plugin/value_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_erp/common/routers/routes.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
@@ -19,6 +20,7 @@ import 'package:uni_links/uni_links.dart';
 import '../../common/entities/im/Im_message.dart';
 import '../../common/entities/news.dart';
 import '../../common/services/storage.dart';
+import '../../common/values/key.dart';
 import '../../common/widgets/xupdate.dart';
 import '../category/controller.dart';
 import 'index.dart';
@@ -104,6 +106,11 @@ class ApplicationController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    Flutter2dAMap.updatePrivacy(true);
+    Flutter2dAMap.setApiKey(
+      iOSKey: flutter2dAMapIOSKey,
+      webKey: flutter2dAMapWebKey,
+    );
     im = FltImPlugin();
     FltImPlugin().init(host: IM_SERVER_HOST_URL, apiURL: IM_SERVER_API_URL);
     tfSender = ValueUtil.toStr(82);
