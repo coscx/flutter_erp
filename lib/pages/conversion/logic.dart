@@ -18,8 +18,8 @@ class ConversionLogic extends GetxController {
    String memberId="82";
   void onRefresh() async {
     FltImPlugin im = FltImPlugin();
-    Map response = await im.getConversations();
-    var  conversions = ValueUtil.toArr(response["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
+    Map? response = await im.getConversations();
+    var  conversions = ValueUtil.toArr(response!["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
     conversions.map((e) {
       e.detail= (e.detail);
       return e;
@@ -46,8 +46,8 @@ class ConversionLogic extends GetxController {
   }
   Future<void> receiveMsgFresh() async {
     FltImPlugin im = FltImPlugin();
-    Map response = await im.getConversations();
-    var  conversions = ValueUtil.toArr(response["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
+    Map? response = await im.getConversations();
+    var  conversions = ValueUtil.toArr(response!["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
     conversions.map((e) {
       e.detail= (e.detail);
       return e;
@@ -59,7 +59,7 @@ class ConversionLogic extends GetxController {
     FltImPlugin im = FltImPlugin();
     List<Conversion> messages;
     if (msg.type == ConversionType.CONVERSATION_GROUP) {
-      im.clearGroupReadCount(cid: msg.cid);
+      im.clearGroupReadCount(cid: msg.cid!);
     var   message = state.conversion.map((e) {
         if (e.type == ConversionType.CONVERSATION_GROUP) {
           e.newMsgCount = 0;
@@ -72,7 +72,7 @@ class ConversionLogic extends GetxController {
     }
 
     if (msg.type == ConversionType.CONVERSATION_PEER) {
-      im.clearGroupReadCount(cid: msg.cid);
+      im.clearGroupReadCount(cid: msg.cid!);
       var   message = state.conversion.map((e) {
         if (e.type == ConversionType.CONVERSATION_PEER) {
           e.newMsgCount = 0;
@@ -86,7 +86,7 @@ class ConversionLogic extends GetxController {
 
     var count = 0;
     state.conversion.map((e) {
-      count += e.newMsgCount;
+      count += e.newMsgCount!;
     }).toList();
     if (count == 0) {
       //BlocProvider.of<GlobalBloc>(context).add(EventSetBar3(0));
@@ -114,8 +114,8 @@ class ConversionLogic extends GetxController {
   Future<void> init() async {
 
     FltImPlugin im = FltImPlugin();
-    Map response = await im.getConversations();
-    var  conversions = ValueUtil.toArr(response["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
+    Map? response = await im.getConversations();
+    var  conversions = ValueUtil.toArr(response!["data"]).map((e) => Conversion.fromMap(ValueUtil.toMap(e))).toList();
     conversions.map((e) {
       e.detail= (e.detail);
       return e;

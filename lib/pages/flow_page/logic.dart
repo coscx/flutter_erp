@@ -40,7 +40,7 @@ class FlowPageLogic extends GetxController {
     state.wxUser.clear();
     state.wxUser.addAll(result.data.data) ;
     //debugPrint(result.toString());
-    refreshController.loadComplete();
+    refreshController.refreshCompleted();
   }
 
   // 上拉加载

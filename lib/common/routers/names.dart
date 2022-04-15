@@ -16,5 +16,6 @@ class AppRoutes {
   static const Setting = '/setting';
   static const CreateUser = '/create_user';
   static const SearchUser = '/search_user';
+  static const SearchUserAppoint = '/search_user_appoint';
   static const Amap = '/amap';
 }

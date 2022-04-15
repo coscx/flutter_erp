@@ -165,7 +165,7 @@ class CommonAPI {
   static Future<CommonResult> distribute(String uuid, int type, String userUuid) async {
     var response = await ERPHttpUtil().post(
       '/api/v1/customer/system/distribute',
-      data: {'customer_uuids[0]': uuid, 'type': type, 'user_uuid': userUuid},
+      queryParameters: {'customer_uuids[0]': uuid, 'type': type, 'user_uuid': userUuid},
     );
     return CommonResult.fromJson(response);
   }

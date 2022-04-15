@@ -18,7 +18,7 @@ class MessageListView extends StatefulWidget {
   final VoidCallback bodyClick;
   final String tfSender;
   final ScrollController scrollController;
-
+  final Voice voice;
   const MessageListView(
       {Key? key,
       required this.messageList,
@@ -27,7 +27,7 @@ class MessageListView extends StatefulWidget {
       required this.onItemClick,
       required this.bodyClick,
       required this.tfSender,
-      required this.scrollController})
+      required this.scrollController, required this.voice})
       : super(key: key);
 
   @override
@@ -36,9 +36,7 @@ class MessageListView extends StatefulWidget {
 
 class _MessageListViewState extends State<MessageListView> {
   Map<String, GlobalKey<PeerChatItemWidgetState>> globalKeyMap = {};
-
   bool isLoading = false;
-
   @override
   void initState() {
     widget.scrollController.addListener(() {
@@ -119,7 +117,7 @@ class _MessageListViewState extends State<MessageListView> {
             padding:
                 EdgeInsets.only(left: 10.w, right: 10.w, top: 0, bottom: 0),
             itemBuilder: (BuildContext context, int index) {
-              String uuid = widget.messageList[index].content['uUID'];
+              String uuid = widget.messageList[index].content!['uUID'];
               if (index == widget.messageList.length - 1) {
                 GlobalKey<PeerChatItemWidgetState> key = GlobalKey();
                 globalKeyMap[uuid] = key;
@@ -187,7 +185,7 @@ class _MessageListViewState extends State<MessageListView> {
             //点击了语音
             if (_entity.playing == 1) {
               //正在播放，就停止播放
-              Voice.stopPlayer();
+              widget.voice.stopPlayer();
               _entity.playing = 0;
               setState(() {});
             } else {
@@ -196,13 +194,13 @@ class _MessageListViewState extends State<MessageListView> {
                 //停止其他正在播放的
               }
               _entity.playing = 1;
-              Voice.startPlayer(_entity.content['url']);
+              widget.voice.startPlayer(_entity.content!['url']);
               Future.delayed(
-                  Duration(milliseconds: _entity.content['duration'] * 1000),
+                  Duration(milliseconds: _entity.content!['duration'] * 1000),
                   () async {
                 _entity.playing = 0;
                 setState(() {});
-                await Voice.stopPlayer();
+                await widget.voice.stopPlayer();
               });
               setState(() {});
             }

@@ -1,4 +1,6 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_erp/pages/user_detail/widget/common_dialog.dart';
 import 'package:get/get.dart';
 
 import '../../../common/apis/common.dart';
@@ -40,46 +42,52 @@ class LoginLogic extends GetxController {
   }
 
   Future<bool> login(String username, String password) async {
+    EasyLoading.show();
     var result = await CommonAPI.login(username, password);
     if (result.code == 200) {
-      StorageService.to.setString("im_sender", result.data!.user.id.toString());
-      StorageService.to.setString("name", result.data!.user.relname);
-      StorageService.to.setString("uuid", result.data!.user.uuid);
-      StorageService.to.setString("openid", result.data!.user.openid);
-      StorageService.to.setString("user_token", result.data!.token.accessToken);
-      StorageService.to.setString("fresh_token", result.data!.token.refreshToken);
-      StorageService.to.setString("memberId", result.data!.user.id.toString());
-      StorageService.to.setString("im_token", result.data!.imToken);
-      StorageService.to.setString("avatar", result.data!.user.avatar);
-      StorageService.to.setString("roleId", result.data!.user.idcardVerified.toString());
-      UserStore.to.saveProfile(result);
+      await StorageService.to.setString("im_sender", result.data!.user.id.toString());
+      await StorageService.to.setString("name", result.data!.user.relname);
+      await StorageService.to.setString("uuid", result.data!.user.uuid);
+      await StorageService.to.setString("openid", result.data!.user.openid);
+      await StorageService.to.setString("user_token", result.data!.token.accessToken);
+      await StorageService.to.setString("fresh_token", result.data!.token.refreshToken);
+      await StorageService.to.setString("memberId", result.data!.user.id.toString());
+      await StorageService.to.setString("im_token", result.data!.imToken);
+      await StorageService.to.setString("avatar", result.data!.user.avatar);
+      await StorageService.to.setString("roleId", result.data!.user.idcardVerified.toString());
+      await UserStore.to.saveProfile(result);
+      EasyLoading.dismiss();
       Get.offAndToNamed(AppRoutes.Application);
       return true;
+    }else{
+      showToastRed(Get.context!, result.message!, false);
     }
-
-    debugPrint(result.toJson().toString());
+    EasyLoading.dismiss();
+    //debugPrint(result.toJson().toString());
     return false;
   }
 
   Future<bool> wxToLogin(String code) async {
+    EasyLoading.show();
     var result = await CommonAPI.wxLogin(code);
     if (result.code == 200) {
-      StorageService.to.setString("im_sender", result.data!.user.id.toString());
-      StorageService.to.setString("name", result.data!.user.relname);
-      StorageService.to.setString("uuid", result.data!.user.uuid);
-      StorageService.to.setString("openid", result.data!.user.openid);
-      StorageService.to.setString("user_token", result.data!.token.accessToken);
-      StorageService.to.setString("fresh_token", result.data!.token.refreshToken);
-      StorageService.to.setString("memberId", result.data!.user.id.toString());
-      StorageService.to.setString("im_token", result.data!.imToken);
-      StorageService.to.setString("avatar", result.data!.user.avatar);
-      StorageService.to.setString("roleId", result.data!.user.idcardVerified.toString());
-      UserStore.to.saveProfile(result);
+      await StorageService.to.setString("im_sender", result.data!.user.id.toString());
+      await StorageService.to.setString("name", result.data!.user.relname);
+      await StorageService.to.setString("uuid", result.data!.user.uuid);
+      await StorageService.to.setString("openid", result.data!.user.openid);
+      await StorageService.to.setString("user_token", result.data!.token.accessToken);
+      await StorageService.to.setString("fresh_token", result.data!.token.refreshToken);
+      await StorageService.to.setString("memberId", result.data!.user.id.toString());
+      await StorageService.to.setString("im_token", result.data!.imToken);
+      await StorageService.to.setString("avatar", result.data!.user.avatar);
+      await StorageService.to.setString("roleId", result.data!.user.idcardVerified.toString());
+      await  UserStore.to.saveProfile(result);
+      EasyLoading.dismiss();
       Get.offAndToNamed(AppRoutes.Application);
       return true;
     }
 
-    debugPrint(result.toJson().toString());
+    //debugPrint(result.toJson().toString());
     return false;
   }
 }

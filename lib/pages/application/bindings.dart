@@ -1,4 +1,3 @@
-import 'package:flutter_erp/pages/category/index.dart';
 import 'package:flutter_erp/pages/conversion/logic.dart';
 import 'package:flutter_erp/pages/conversion/view.dart';
 import 'package:flutter_erp/pages/flow_page/logic.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_erp/pages/peer_chat/logic.dart';
 import 'package:get/get.dart';
 
 import '../mine/logic.dart';
+import '../search/logic.dart';
 import 'controller.dart';
 
 class ApplicationBinding implements Bindings {
@@ -16,9 +16,8 @@ class ApplicationBinding implements Bindings {
   void dependencies() {
     Get.lazyPut<ApplicationController>(() => ApplicationController());
     Get.lazyPut<MainController>(() => MainController());
-    Get.lazyPut<CategoryController>(() => CategoryController());
     Get.lazyPut<FlowPageLogic>(() => FlowPageLogic());
-    Get.lazyPut<LoginLogic>(() => LoginLogic());
+
     Get.lazyPut<HomeLogic>(() => HomeLogic());
     Get.lazyPut<MineLogic>(() => MineLogic());
     Get.lazyPut<ConversionLogic>(() => ConversionLogic());

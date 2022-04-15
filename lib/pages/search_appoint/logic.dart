@@ -1,5 +1,3 @@
-import 'package:city_pickers/city_pickers.dart';
-import 'package:flutter_erp/common/entities/home/erp_user.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -7,8 +5,9 @@ import '../../common/apis/common.dart';
 import '../../common/entities/home/search_erp.dart';
 import 'state.dart';
 
-class SearchLogic extends GetxController {
-  final SearchState state = SearchState();
+class SearchAppointLogic extends GetxController {
+  final SearchAppointState state = SearchAppointState();
+
   final RefreshController refreshController =
   RefreshController(initialRefresh: false);
   String serveType = "1";
@@ -19,7 +18,7 @@ class SearchLogic extends GetxController {
   int total = 20;
   String keyWord = "";
   RxList<Data> homeUser = <Data>[].obs;
-  int isAppoint=0;
+  int isAppoint=1;
   @override
   void onInit() {
     super.onInit();

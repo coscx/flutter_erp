@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter/material.dart';
 
 import '../../../common/entities/detail/user.dart';
 import '../../../common/widgets/DyBehaviorNull.dart';
@@ -13,13 +13,17 @@ class ErpUser {
   bool isSelected;
   int city;
 
-  ErpUser({required this.name, required this.id, required this.city, required this.isSelected});
+  ErpUser(
+      {required this.name,
+      required this.id,
+      required this.city,
+      required this.isSelected});
 }
 
 class ErpUserPage extends StatefulWidget {
   final String uuid;
 
-   const ErpUserPage({required this.uuid}) ;
+  const ErpUserPage({required this.uuid});
 
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +40,7 @@ class _NaviPageState extends State<ErpUserPage> {
   int selectId = 0;
   String selectName = "";
   String selectUuid = "";
-  int index=0; //一级分类下标
+  int index = 0; //一级分类下标
   bool select = false;
 
   @override
@@ -48,10 +52,10 @@ class _NaviPageState extends State<ErpUserPage> {
   void getHttp() async {
     try {
       var result = await CommonAPI.getErpUser();
-      if (result.code== 200) {
+      if (result.code == 200) {
       } else {}
       var y = result.data;
-      var users = y.data ;
+      var users = y.data;
       for (int i = 0; i < users.length; i++) {
         var e = users[i];
         if (e.status == 0) {
@@ -67,7 +71,7 @@ class _NaviPageState extends State<ErpUserPage> {
         if (e.departmentId == 6 ||
             e.departmentId == 8 ||
             e.departmentId == 9 ||
-            e.departmentId== 10) {
+            e.departmentId == 10) {
           user1.add(e);
         } else if (e.departmentId == 7 ||
             e.departmentId == 11 ||
@@ -102,7 +106,7 @@ class _NaviPageState extends State<ErpUserPage> {
               titleSpacing: 40.w,
               leadingWidth: 60.w,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               title: Text("请选择",
@@ -135,9 +139,9 @@ class _NaviPageState extends State<ErpUserPage> {
                           child: Container(
                             color: Colors.white,
                             child: ListView.builder(
-
                               itemCount: _datas.length,
-                              itemBuilder: (BuildContext context, int position) {
+                              itemBuilder:
+                                  (BuildContext context, int position) {
                                 return getRow(position);
                               },
                             ),
@@ -146,33 +150,39 @@ class _NaviPageState extends State<ErpUserPage> {
                         Expanded(
                             flex: 5,
                             child: ListView(
-
                               children: <Widget>[
                                 Container(
                                   //height: double.infinity,
                                   alignment: Alignment.topLeft,
                                   padding: EdgeInsets.only(left: 20.w),
                                   color: Colors.white,
-                                  child: user.length ==0? Container(
-                                    height: 300,
-                                    alignment: Alignment.center,
-                                    child:  Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: <Widget>[
-                                        Icon(Icons.loop, color: Colors.grey, size: 160.sp),
-                                        Container(
-                                          padding:  EdgeInsets.only(top: 32.h),
-                                          child:  const Text(
-                                            "加载中",
-                                            style:  TextStyle(
-                                              color: Colors.grey,
-                                            ),
+                                  child: user.length == 0
+                                      ? Container(
+                                          height: 300,
+                                          alignment: Alignment.center,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: <Widget>[
+                                              Icon(Icons.loop,
+                                                  color: Colors.grey,
+                                                  size: 160.sp),
+                                              Container(
+                                                padding:
+                                                    EdgeInsets.only(top: 32.h),
+                                                child: const Text(
+                                                  "加载中",
+                                                  style: TextStyle(
+                                                    color: Colors.grey,
+                                                  ),
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         )
-                                      ],
-                                    ),
-                                  ):getChip(index), //传入一级分类下标
+                                      : getChip(index), //传入一级分类下标
                                 ),
                               ],
                             )),
@@ -200,22 +210,19 @@ class _NaviPageState extends State<ErpUserPage> {
                               return;
                             }
 
-                            var actionList =
-                            await CommonAPI.distribute(widget.uuid,index,selectUuid);
+                            var actionList = await CommonAPI.distribute(
+                                widget.uuid, ++index, selectUuid);
                             if (actionList.code == 200) {
-
                               showToast(context, '划分成功', true);
                               Navigator.pop(context, selectId);
                             } else {
-                              showToastRed(
-                                  context, actionList.message!, true);
+                              showToastRed(context, actionList.message!, true);
                               Navigator.pop(context, selectId);
                             }
-
                           },
                           child: Text("提交",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 40.sp)),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: 40.sp)),
                         ),
                       ),
                     ),
@@ -230,7 +237,7 @@ class _NaviPageState extends State<ErpUserPage> {
     return GestureDetector(
       child: Container(
         alignment: Alignment.center,
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 10.w),
         //Container下的color属性会与decoration下的border属性冲突，所以要用decoration下的color属性
         decoration: BoxDecoration(
           color: index == i ? Colors.grey.withAlpha(33) : Colors.white,
@@ -275,23 +282,21 @@ class _NaviPageState extends State<ErpUserPage> {
               user[index].relname,
               style: TextStyle(
                   fontSize: 32.sp,
-                  color: user[index].id == selectId
-                      ? Colors.white
-                      : Colors.black),
+                  color:
+                      user[index].id == selectId ? Colors.white : Colors.black),
             ),
             //点击事件
             onPressed: () {
               setState(() {
                 selectId = user[index].id;
                 selectName = user[index].relname;
-                selectUuid= user[index].uuid;
+                selectUuid = user[index].uuid;
                 //bindDialog(context,user[index]['store_name'],""+user[index]['depart_name']+":"+user[index]['relname']);
               });
             },
             elevation: 3,
-            backgroundColor: user[index].id == selectId
-                ? Colors.blue
-                : Colors.grey.shade200,
+            backgroundColor:
+                user[index].id == selectId ? Colors.blue : Colors.grey.shade200,
           );
         },
       ).toList(),

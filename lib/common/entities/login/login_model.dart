@@ -64,18 +64,20 @@ class LoginEntity {
      this.status,
      this.code,
      this.data,
+     this.message
   });
 
   factory LoginEntity.fromJson(Map<String, dynamic> json) => LoginEntity(
     status: asT<String>(json['status'])!,
     code: asT<int>(json['code'])!,
-    data: Data.fromJson(asT<Map<String, dynamic>>(json['data'])!),
+    data: json.containsKey('data')? Data.fromJson(asT<Map<String, dynamic>>(json['data'])!):null,
+    message: json.containsKey('message')? asT<String>(json['message'])! :"",
   );
 
   String? status;
   int? code;
   Data? data;
-
+  String? message;
   @override
   String toString() {
     return jsonEncode(this);
@@ -85,6 +87,7 @@ class LoginEntity {
     'status': status,
     'code': code,
     'data': data,
+    'message': message,
   };
 }
 

@@ -4,7 +4,6 @@ import 'package:flutter_erp/pages/add_vip/view.dart';
 import 'package:flutter_erp/pages/amap/binding.dart';
 import 'package:flutter_erp/pages/amap/view.dart';
 import 'package:flutter_erp/pages/application/index.dart';
-import 'package:flutter_erp/pages/category/index.dart';
 import 'package:flutter_erp/pages/create_user/binding.dart';
 import 'package:flutter_erp/pages/create_user/view.dart';
 import 'package:flutter_erp/pages/distribute/binding.dart';
@@ -20,6 +19,7 @@ import 'package:flutter_erp/pages/peer_chat/view.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/chat_input_view.dart';
 import 'package:flutter_erp/pages/search/binding.dart';
 import 'package:flutter_erp/pages/search/view.dart';
+import 'package:flutter_erp/pages/search_appoint/view.dart';
 import 'package:flutter_erp/pages/setting/binding.dart';
 import 'package:flutter_erp/pages/setting/logic.dart';
 import 'package:flutter_erp/pages/setting/view.dart';
@@ -29,6 +29,7 @@ import 'package:get/get.dart';
 
 import '../../pages/add_vip/binding.dart';
 import '../../pages/home/binding.dart';
+import '../../pages/search_appoint/binding.dart';
 import 'routes.dart';
 
 class AppPages {
@@ -73,12 +74,7 @@ class AppPages {
       ],
     ),
 
-    // 分类列表
-    GetPage(
-      name: AppRoutes.Category,
-      page: () => CategoryPage(),
-      binding: CategoryBinding(),
-    ),
+
     GetPage(
       name: AppRoutes.Home,
       page: () => HomePage(),
@@ -134,7 +130,12 @@ class AppPages {
         binding: AmapBinding(),
         transition: Transition.rightToLeft
     ),
-
+    GetPage(
+        name: AppRoutes.SearchUserAppoint,
+        page: () => SearchAppointPage(),
+        binding: SearchAppointBinding(),
+        transition: Transition.rightToLeft
+    ),
   ];
 
   // static final unknownRoute = GetPage(

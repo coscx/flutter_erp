@@ -25,7 +25,7 @@ class UserDetailLogic extends GetxController {
   int connectStatus = 4;
   int canEdit = 0;
   String call = "";
-  String uuid = "";
+  String uuid = Get.arguments;
   int status = 10;
   var showBaseControl = false.obs;
   var showEduControl = false.obs;
@@ -72,7 +72,6 @@ class UserDetailLogic extends GetxController {
   }
 
   void _loadData() async {
-    uuid = Get.arguments;
     var result = await CommonAPI.getUserDetail(uuid);
     userDetail = result.data;
     load.value = 1;
@@ -101,9 +100,10 @@ class UserDetailLogic extends GetxController {
 
   // 下拉刷新
   void onRefresh() async {
-    //Map<String, dynamic> photo = Map();
-    //photo['uuid'] = userDetail.info.uuid;
-    //BlocProvider.of<DetailBloc>(context).add(FetchWidgetDetailNoFresh(photo));
+    var result = await CommonAPI.getUserDetail(uuid);
+    userDetail = result.data;
+    update(["user_detail"]);
+    _loadOtherData();
     refreshController.refreshCompleted();
   }
 
@@ -277,8 +277,8 @@ class UserDetailLogic extends GetxController {
       showToastRed(Get.context!, result.message!, false);
     }
   }
-  Future<void> editCustomerAddress(String uuid,int type, Result result) async {
 
+  Future<void> editCustomerAddress(String uuid, int type, Result result) async {
     Map<String, dynamic> searchParam = {};
     if (type == 1) {
       searchParam['np_province_code'] = result.provinceId;
@@ -287,7 +287,8 @@ class UserDetailLogic extends GetxController {
       searchParam['np_city_name'] = result.cityName;
       searchParam['np_area_code'] = result.areaId;
       searchParam['np_area_name'] = result.areaName;
-      searchParam['native_place'] = result.provinceName!+result.cityName!+result.areaName!;
+      searchParam['native_place'] =
+          result.provinceName! + result.cityName! + result.areaName!;
     } else {
       searchParam['lp_province_code'] = result.provinceId;
       searchParam['lp_province_name'] = result.provinceName;
@@ -295,8 +296,8 @@ class UserDetailLogic extends GetxController {
       searchParam['lp_city_name'] = result.cityName;
       searchParam['lp_area_code'] = result.areaId;
       searchParam['lp_area_name'] = result.areaName;
-      searchParam['location_place'] = result.provinceName!+result.cityName!+result.areaName!;
-
+      searchParam['location_place'] =
+          result.provinceName! + result.cityName! + result.areaName!;
     }
     var returnResult = await CommonAPI.editCustomerAddress(uuid, searchParam);
     if (returnResult.code == 200) {
@@ -307,20 +308,21 @@ class UserDetailLogic extends GetxController {
       showToastRed(Get.context!, returnResult.message!, false);
     }
   }
-  Future<void> editCustomerDemandAddress(String uuid, Result result) async {
 
+  Future<void> editCustomerDemandAddress(String uuid, Result result) async {
     Map<String, dynamic> searchParam = {};
 
-      searchParam['wish_lp_province_code'] = result.provinceId;
-      searchParam['wish_lp_province_name'] = result.provinceName;
-      searchParam['wish_lp_city_code'] = result.cityId;
-      searchParam['wish_lp_city_name'] = result.cityName;
-      searchParam['wish_lp_area_code'] = result.areaId;
-      searchParam['wish_lp_area_name'] = result.areaName;
-      searchParam['wish_location_place'] = result.provinceName!+result.cityName!+result.areaName!;
+    searchParam['wish_lp_province_code'] = result.provinceId;
+    searchParam['wish_lp_province_name'] = result.provinceName;
+    searchParam['wish_lp_city_code'] = result.cityId;
+    searchParam['wish_lp_city_name'] = result.cityName;
+    searchParam['wish_lp_area_code'] = result.areaId;
+    searchParam['wish_lp_area_name'] = result.areaName;
+    searchParam['wish_location_place'] =
+        result.provinceName! + result.cityName! + result.areaName!;
 
-
-    var returnResult = await CommonAPI.editCustomerDemndAddress(uuid, searchParam);
+    var returnResult =
+        await CommonAPI.editCustomerDemndAddress(uuid, searchParam);
     if (returnResult.code == 200) {
       userDetail = setObjectDemandKeyValueMulti(userDetail!, searchParam);
       update(["user_detail"]);
@@ -329,8 +331,10 @@ class UserDetailLogic extends GetxController {
       showToastRed(Get.context!, returnResult.message!, false);
     }
   }
-  Future<void> delPhoto(int imgId,) async {
 
+  Future<void> delPhoto(
+    int imgId,
+  ) async {
     var returnResult = await CommonAPI.delPhoto(imgId);
     if (returnResult.code == 200) {
       userDetail = setObjectPhotoKeyValue(userDetail!, imgId);
@@ -340,23 +344,24 @@ class UserDetailLogic extends GetxController {
       showToastRed(Get.context!, returnResult.message!, false);
     }
   }
-  Future<void> uploadPhoto(String path) async {
 
+  Future<void> uploadPhoto(String path) async {
     EasyLoading.show();
     try {
-      var resultConnectList =
-          await CommonAPI.uploadPhotoFile(1, path);
-      var url = "https://queqiaoerp.oss-cn-shanghai.aliyuncs.com/" + resultConnectList.data;
-      var result = await CommonAPI.editCustomerOnceStringResource(uuid, "1", url);
+      var resultConnectList = await CommonAPI.uploadPhotoFile(1, path);
+      var url = "https://queqiaoerp.oss-cn-shanghai.aliyuncs.com/" +
+          resultConnectList.data;
+      var result =
+          await CommonAPI.editCustomerOnceStringResource(uuid, "1", url);
       if (result.code == 200) {
         Map<String, dynamic> json = {};
-        json['id'] =0;
-        json['customer_id'] =userDetail?.info.id;
-        json['type'] =1;
-        json['file_url'] =url;
-        json['sort'] =1;
-        json['is_approved'] =1;
-        var f =Pics.fromJson(json);
+        json['id'] = 0;
+        json['customer_id'] = userDetail?.info.id;
+        json['type'] = 1;
+        json['file_url'] = url;
+        json['sort'] = 1;
+        json['is_approved'] = 1;
+        var f = Pics.fromJson(json);
         userDetail?.pics.add(f);
         update(["user_detail"]);
         showToast(Get.context!, "编辑成功", false);
@@ -386,19 +391,20 @@ class UserDetailLogic extends GetxController {
     }
   }
 
-
   Data setObjectKeyValue(Data detail, String key, String value) {
     var d = detail.info.toJson();
     d[key] = value;
     detail.info = Info.fromJson(d);
     return detail;
   }
+
   Data setObjectKeyValueMulti(Data detail, Map<String, dynamic> value) {
     var d = detail.info.toJson();
     d.addAll(value);
     detail.info = Info.fromJson(d);
     return detail;
   }
+
   Future<void> editUserDemandOnce(String uuid, String type, String text) async {
     var result = await CommonAPI.editCustomerDemandOnce(uuid, type, text);
     if (result.code == 200) {
@@ -416,17 +422,18 @@ class UserDetailLogic extends GetxController {
     detail.demand = Demand.fromJson(d);
     return detail;
   }
+
   Data setObjectDemandKeyValueMulti(Data detail, Map<String, dynamic> value) {
     var d = detail.demand.toJson();
-    d.addAll(value) ;
+    d.addAll(value);
     detail.demand = Demand.fromJson(d);
     return detail;
   }
+
   Data setObjectPhotoKeyValue(Data detail, int id) {
     detail.pics.removeWhere((e) => e.id == id);
     return detail;
   }
-
 
   Future<void> getUser() async {
     var result = await CommonAPI.claimCustomer(uuid);
@@ -474,10 +481,23 @@ class UserDetailLogic extends GetxController {
     args['store_id'] = userDetail?.info.storeId;
     Get.toNamed(AppRoutes.BuyVip, arguments: args);
   }
+
   Future<void> addAppoint(String uuid, Map<String, dynamic> data) async {
-    data['username'] =  StorageService.to.getString("name");
-    var result = await CommonAPI.addAppoint( uuid,  data);
+    data['username'] = StorageService.to.getString("name");
+    var result = await CommonAPI.addAppoint(uuid, data);
     if (result.code == 200) {
+      data['id'] = 0;
+      data['score1'] = "";
+      data['feedback1'] = "";
+      data['created_at'] = "";
+      data['system'] = 0;
+      data['mark'] = 0;
+      data['type'] = 0;
+      data['is_pay'] = 0;
+      data['can_write'] = 0;
+
+      var f = Appoint.fromJson(data);
+      appointList.insert(0, f);
       showToast(Get.context!, '添加成功', true);
     } else {
       showToastRed(Get.context!, result.message!, true);
@@ -485,9 +505,13 @@ class UserDetailLogic extends GetxController {
   }
 
   Future<void> addConnect(String uuid, Map<String, dynamic> data) async {
-    data['username'] =  StorageService.to.getString("name");
-    var result = await CommonAPI.addConnect( uuid,  data);
+    data['username'] = StorageService.to.getString("name");
+    data['customer_uuid'] = uuid;
+    var result = await CommonAPI.addConnect(uuid, data);
     if (result.code == 200) {
+      data['id'] = 0;
+      var f = Connect.fromJson(data);
+      connectList.insert(0, f);
       showToast(Get.context!, '添加成功', true);
     } else {
       showToastRed(Get.context!, result.message!, true);

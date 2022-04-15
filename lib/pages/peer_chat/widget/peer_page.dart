@@ -29,15 +29,16 @@ class PeerPage extends StatefulWidget {
 
 class _PeerPageState extends State<PeerPage> {
   ScrollController scrollController = ScrollController();
+  var voice = Voice();
   @override
   void initState() {
-    Voice.init();
+    voice.init();
     super.initState();
   }
   @override
   void dispose() {
-   Voice.stopPlayer();
-   Voice.stopRecorder();
+    voice.stopPlayer();
+    voice.stopRecorder();
     super.dispose();
   }
   @override
@@ -54,7 +55,7 @@ class _PeerPageState extends State<PeerPage> {
               leadingWidth: 100.w,
               title: Row(
                 children: [
-                  Text(widget.model.cid,
+                  Text(widget.model.cid!,
                       style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 40.sp,
@@ -94,12 +95,16 @@ class _PeerPageState extends State<PeerPage> {
                     EventBusUtil.fire(PeerRecAckEvent(""));
                   },
                   tfSender: '',
-                  scrollController: scrollController),
+                  scrollController: scrollController,
+                voice: voice,
+
+              ),
               Divider(height: 1.h),
               ChatInputView(
                 model: widget.model,
                 memId: widget.memId,
                 scrollController: scrollController,
+                voice: voice,
               )
             ])));
   }

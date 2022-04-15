@@ -10,17 +10,19 @@ import 'package:vibration/vibration.dart';
 import '../../../common/utils/permission.dart';
 
  class Voice {
-  static StreamSubscription? recorderSubscription;
-  static StreamSubscription? playerSubscription;
-  static  FlutterSoundRecorder? flutterSound;
-  static FlutterSoundRecorder recorderModule = FlutterSoundRecorder();
-  static FlutterSoundPlayer playerModule = FlutterSoundPlayer();
-  static Future<void> init() async {
+   StreamSubscription? recorderSubscription;
+   StreamSubscription? playerSubscription;
+    FlutterSoundRecorder? flutterSound;
+   late  FlutterSoundRecorder recorderModule ;
+   late  FlutterSoundPlayer playerModule ;
+   Future<void> init() async {
     requestPermiss();
-    await recorderModule.openRecorder();
+     recorderModule = FlutterSoundRecorder();
+     playerModule = FlutterSoundPlayer();
     await playerModule.openPlayer();
     await playerModule
         .setSubscriptionDuration(const Duration(milliseconds: 30));
+    await recorderModule.openRecorder();
     await recorderModule
         .setSubscriptionDuration(const Duration(milliseconds: 30));
     if (Platform.isAndroid) {
@@ -28,14 +30,14 @@ import '../../../common/utils/permission.dart';
     }
   }
 
- static void requestPermiss() async {
+  void requestPermiss() async {
     checkPermission();
   }
 
   getPermission() {
     requestPermissions();
   }
-    static  startRecord(Function(String p1,String p2) callBack) async {
+      startRecord(Function(String p1,String p2) callBack) async {
     Vibration.vibrate(duration: 50);
     stopRecorder();
 
@@ -78,7 +80,7 @@ import '../../../common/utils/permission.dart';
   }
   /// 取消录音监听
   /// 结束录音
-  static stopRecorder() async {
+   stopRecorder() async {
     try {
       await recorderModule.stopRecorder();
       print('stopRecorder');
@@ -89,7 +91,7 @@ import '../../../common/utils/permission.dart';
   }
 
   /// 取消录音监听
-  static  void cancelRecorderSubscriptions() {
+    void cancelRecorderSubscriptions() {
     if (recorderSubscription != null) {
       recorderSubscription?.cancel();
       recorderSubscription = null;
@@ -97,7 +99,7 @@ import '../../../common/utils/permission.dart';
   }
 
   /// 取消播放监听
-  static  void cancelPlayerSubscriptions() {
+    void cancelPlayerSubscriptions() {
     if (playerSubscription != null) {
       playerSubscription?.cancel();
       playerSubscription = null;
@@ -105,7 +107,7 @@ import '../../../common/utils/permission.dart';
   }
 
   /// 释放录音和播放
-  static Future<void> releaseFlauto() async {
+   Future<void> releaseFlauto() async {
     try {
       await playerModule.closePlayer();
       await recorderModule.closeRecorder();
@@ -115,7 +117,7 @@ import '../../../common/utils/permission.dart';
     }
   }
   /// 开始播放
-  static Future<void> startPlayer(String path,) async {
+   Future<void> startPlayer(String path,) async {
     try {
       var p = await fileExists(path);
       if (p != "") {
@@ -140,7 +142,7 @@ import '../../../common/utils/permission.dart';
   }
 
   /// 结束播放
-  static Future<void> stopPlayer() async {
+   Future<void> stopPlayer() async {
     try {
       await playerModule.stopPlayer();
       print('===> 结束播放');
@@ -151,7 +153,7 @@ import '../../../common/utils/permission.dart';
   }
 
   /// 暂停/继续播放
-  static void pauseResumePlayer() {
+   void pauseResumePlayer() {
     if (playerModule.isPlaying) {
       playerModule.pausePlayer();
 
@@ -163,7 +165,7 @@ import '../../../common/utils/permission.dart';
     }
   }
   /// 判断文件是否存在
-  static Future<String> fileExists(String paths) async {
+   Future<String> fileExists(String paths) async {
     if (paths.startsWith("http://localhost")) {
       //File f =   await _getLocalFile(path.basename(paths));
       return "";

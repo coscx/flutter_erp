@@ -12,10 +12,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
-import 'package:flutter_sound/public/tau.dart';
-import 'package:frefresh/frefresh.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:vibration/vibration.dart';
 
 import '../../../common/utils/permission.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
@@ -37,7 +33,8 @@ class ChatInputView extends StatefulWidget {
   final Conversion model;
   final String memId;
   final ScrollController scrollController;
-  const ChatInputView({Key? key, required this.model, required this.memId, required this.scrollController}) : super(key: key);
+  final Voice voice;
+  const ChatInputView({Key? key, required this.model, required this.memId, required this.scrollController, required this.voice}) : super(key: key);
   @override
   _ChatInputViewState createState() => _ChatInputViewState();
 }
@@ -64,26 +61,26 @@ class _ChatInputViewState extends State<ChatInputView> {
   String voiceFilePath = '';
   String tfSender = "0";
   FltImPlugin im = FltImPlugin();
-  FRefreshController? controller3;
   Timer? timer;
   int voiceCount = 0;
   TextEditingController controller = TextEditingController();
   FocusNode textFieldNode = FocusNode();
   double progress = 0;
   StreamSubscription<PeerRecAckEvent>? peerAckSubscription;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     alive = true;
-    tfSender = widget.model.memId;
-    controller3 = FRefreshController();
+    tfSender = widget.model.memId!;
+
     textFieldNode.addListener(focusNodeListener); // 初始化一个listener
     getLocalMessage();
     initData();
     checkBlackList();
-    recorderModule = Voice.recorderModule;
-    playerModule = Voice.playerModule;
+    recorderModule = widget.voice.recorderModule;
+    playerModule = widget.voice.playerModule;
     peerAckSubscription = EventBusUtil.listen((event) {
       if (event is PeerRecAckEvent) {
         if (!mounted) return;
@@ -200,7 +197,7 @@ class _ChatInputViewState extends State<ChatInputView> {
                       //im.deletePeerMessage(id:entity.content['uUID']);
 
                     } else {
-                      im.deletePeerMessage(id: entity.content['uuid']);
+                      im.deletePeerMessage(id: entity.content!['uuid']);
                     }
 
                     Navigator.of(context).pop();
@@ -305,12 +302,12 @@ class _ChatInputViewState extends State<ChatInputView> {
                 list: list,
                 onItemClickListener: (index) async {
                   if (index == 0) {
-                    im.voiceCall(widget.model.cid);
+                    im.voiceCall(widget.model.cid!);
                     Navigator.pop(context);
                   }
                   if (index == 1) {
                     FltImPlugin im = FltImPlugin();
-                    im.videoCall(widget.model.cid);
+                    im.videoCall(widget.model.cid!);
                     Navigator.pop(context);
                   }
                 },
@@ -778,14 +775,14 @@ class _ChatInputViewState extends State<ChatInputView> {
   startRecord() async {
     voiceText = '松开 结束';
     voiceBackground = ColorT.divider;
-    Voice.startRecord((p1,p2){
+    widget.voice.startRecord((p1,p2){
        voiceFilePath =p1;
        audioIconPath =p2;
     });
     setState(() {});
   }
   stopRecorder(){
-    Voice.stopRecorder();
+    widget.voice.stopRecorder();
   }
   getLocalMessage() async {}
 

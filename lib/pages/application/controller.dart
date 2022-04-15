@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/value_util.dart';
 import 'package:flutter/foundation.dart';
@@ -16,18 +15,15 @@ import 'package:flutter_erp/pages/peer_chat/logic.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 import 'package:uni_links/uni_links.dart';
-
 import '../../common/entities/im/Im_message.dart';
-import '../../common/entities/news.dart';
 import '../../common/services/storage.dart';
 import '../../common/values/key.dart';
 import '../../common/widgets/xupdate.dart';
-import '../category/controller.dart';
 import 'index.dart';
 
 class ApplicationController extends GetxController {
   ApplicationController();
-  final logic = Get.put(CategoryController());
+
 
   /// 响应式成员变量
 
@@ -104,39 +100,8 @@ class ApplicationController extends GetxController {
   /// 生命周期
 
   @override
-  void onInit() {
-    super.onInit();
-    Flutter2dAMap.updatePrivacy(true);
-    Flutter2dAMap.setApiKey(
-      iOSKey: flutter2dAMapIOSKey,
-      webKey: flutter2dAMapWebKey,
-    );
-    im = FltImPlugin();
-    FltImPlugin().init(host: IM_SERVER_HOST_URL, apiURL: IM_SERVER_API_URL);
-    tfSender = ValueUtil.toStr(82);
-    String imSender = StorageService.to.getString("memberId");
-    if (imSender != "") {
-      tfSender = imSender;
-    }
-
-    String imToken = StorageService.to.getString(STORAGE_IM_TOKEN);
-    if (imToken == "") {
-      login(tfSender, success: () {
-        listenNative();
-        //BlocProvider.of<ChatBloc>(context).add(EventNewMessage());
-      });
-    } else {
-      loginByToken(imToken, tfSender, success: () {
-        listenNative();
-        //BlocProvider.of<ChatBloc>(context).add(EventNewMessage());
-      });
-    }
-    Future.delayed(const Duration(seconds: 1)).then((e) async {
-      _checkUpdateVersion();
-    });
-    // handleInitialUri();
-    // handleIncomingLinks();
-    // 准备一些静态数据
+  Future<void> onInit() async {
+    pageController = PageController(initialPage: state.page);
     tabTitles = ['Welcome', 'Cagegory', 'Bookmarks', 'Account'];
     bottomTabs = <BottomNavigationBarItem>[
       const BottomNavigationBarItem(
@@ -188,7 +153,41 @@ class ApplicationController extends GetxController {
         backgroundColor: AppColors.primaryBackground,
       ),
     ];
-    pageController = PageController(initialPage: state.page);
+     Flutter2dAMap.updatePrivacy(true);
+    await  Flutter2dAMap.setApiKey(
+      iOSKey: flutter2dAMapIOSKey,
+      webKey: flutter2dAMapWebKey,
+    );
+    im = FltImPlugin();
+    await  FltImPlugin().init(host: IM_SERVER_HOST_URL, apiURL: IM_SERVER_API_URL);
+    tfSender = ValueUtil.toStr(82);
+    String imSender = StorageService.to.getString("memberId");
+    if (imSender != "") {
+      tfSender = imSender;
+    }
+
+    String imToken = StorageService.to.getString(STORAGE_IM_TOKEN);
+    if (imToken == "") {
+      login(tfSender, success: () {
+        listenNative();
+        //BlocProvider.of<ChatBloc>(context).add(EventNewMessage());
+      });
+    } else {
+      loginByToken(imToken, tfSender, success: () {
+        listenNative();
+        //BlocProvider.of<ChatBloc>(context).add(EventNewMessage());
+      });
+    }
+    Future.delayed(const Duration(seconds: 1)).then((e) async {
+      _checkUpdateVersion();
+    });
+    // handleInitialUri();
+    // handleIncomingLinks();
+    // 准备一些静态数据
+
+    super.onInit();
+
+
   }
 
   @override
@@ -203,9 +202,9 @@ class ApplicationController extends GetxController {
       debugPrint('发送用户id 必须填写');
       return;
     }
-    final res = await FltImPlugin().login(uid: tfSender);
+    final res = await FltImPlugin().login(uid: tfSender,token: "");
     debugPrint(res.toString());
-    int code = ValueUtil.toInt(res['code']);
+    int code = ValueUtil.toInt(res!['code']);
     if (code == 0) {
       success?.call();
       tfSender = "";
@@ -223,7 +222,7 @@ class ApplicationController extends GetxController {
     }
     final res = await FltImPlugin().login(uid: tfSender, token: token);
     debugPrint(res.toString());
-    int code = ValueUtil.toInt(res['code']);
+    int code = ValueUtil.toInt(res!['code']);
     if (code == 0) {
       success?.call();
       tfSender = "";
@@ -287,7 +286,9 @@ class ApplicationController extends GetxController {
           onVideoUploadSuccess(result, url, thumbnailURL);
         } else if (type == 'onVideoUploadFail') {
           onVideoUploadFail(result);
-        } else {
+        } else if (type =="clearReadCountSuccess") {
+
+        }else {
           debugPrint("onConnect:" + result.toString());
         }
       } else {
@@ -352,7 +353,7 @@ class ApplicationController extends GetxController {
       title = "通知";
       content = '聊天消息';
     }
-    logic.state.newsList.add(NewsItem());
+
     var conversionLogic = Get.find<ConversionLogic>();
     conversionLogic.receiveMsgFresh();
     bool gg =Get.isRegistered<PeerChatLogic>();
@@ -382,7 +383,8 @@ class ApplicationController extends GetxController {
       title = "通知";
       content = '聊天消息';
     }
-
+    var conversionLogic = Get.find<ConversionLogic>();
+    conversionLogic.receiveMsgFresh();
     //_showNotification(title,content);
     //BlocProvider.of<GroupBloc>(context)
     //    .add(EventGroupReceiveNewMessage(message));

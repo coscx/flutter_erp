@@ -275,7 +275,7 @@ class UserDetailPage extends StatelessWidget {
       onTap: () async {
         if (logic.canEdit == 1) {
           var d = await commentDialog(
-              Get.context!, logic.connectStatus, logic.userDetail!.info);
+              Get.context!, logic.connectStatus, logic.userDetail!.info,logic.uuid);
           if (d == true) {
             logic.buildConnectButton();
           }

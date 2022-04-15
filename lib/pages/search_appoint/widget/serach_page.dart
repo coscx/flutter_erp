@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/entities/home/search_erp.dart';
 import 'package:flutter_erp/pages/search/widget/photo_widget_list_item.dart';
+import 'package:flutter_erp/pages/search_appoint/widget/photo_widget_list_item.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,19 +12,19 @@ import '../../../common/widgets/refresh.dart';
 import '../logic.dart';
 import 'app_search_bar.dart';
 
-class SearchPages extends StatefulWidget {
+class SearchPagesAppoint extends StatefulWidget {
   final List<Data> photos;
   final int isAppoint;
-  const SearchPages({Key? key, required this.photos, required this.isAppoint}) : super(key: key);
+  const SearchPagesAppoint({Key? key, required this.photos, required this.isAppoint}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _SearchPageStateAppoint createState() => _SearchPageStateAppoint();
 }
 
-class _SearchPageState extends State<SearchPages> {
+class _SearchPageStateAppoint extends State<SearchPagesAppoint> {
   final _scaffoldkey = GlobalKey<ScaffoldState>();
 
-  final logic = Get.find<SearchLogic>();
+  final logic = Get.find<SearchAppointLogic>();
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -102,7 +103,7 @@ class _SearchPageState extends State<SearchPages> {
 
   Widget _buildSliverAppBar() {
     return Container(
-        padding: EdgeInsets.only(left: 40.w, right: 40.w), child: AppSearchBar(isAppoint: widget.isAppoint,));
+        padding: EdgeInsets.only(left: 40.w, right: 40.w), child: AppSearchBarAppoint(isAppoint: widget.isAppoint,));
   }
 
   Widget _buildBodyByState(BuildContext context) {
@@ -114,7 +115,7 @@ class _SearchPageState extends State<SearchPages> {
       delegate: SliverChildBuilderDelegate(
           (_, int index) => Container(
                   child: GestureDetector(
-                      child: PhotoSearchWidgetListItem(
+                      child: PhotoSearchWidgetListItemAppoint(
                 photo: photos[index],
                         isAppoint: widget.isAppoint,
               ))),

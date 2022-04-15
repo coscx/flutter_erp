@@ -2792,7 +2792,7 @@ _deletePhoto(BuildContext context, Pics img,
       builder: (ctx) => Dialog(
             elevation: 5,
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10))),
+                borderRadius: BorderRadius.all(Radius.circular(20.w))),
             child: Container(
               width: 50,
               child: DeleteCategoryDialog(

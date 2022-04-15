@@ -8,15 +8,15 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../search_appoint/logic.dart';
 import '../logic.dart';
 
-class AppSearchBar extends StatefulWidget {
+class AppSearchBarAppoint extends StatefulWidget {
   final int isAppoint;
 
-  const AppSearchBar({Key? key, required this.isAppoint}) : super(key: key);
+  const AppSearchBarAppoint({Key? key, required this.isAppoint}) : super(key: key);
   @override
-  _AppSearchBarState createState() => _AppSearchBarState();
+  _AppSearchBarStateBarAppoint createState() => _AppSearchBarStateBarAppoint();
 }
 
-class _AppSearchBarState extends State<AppSearchBar> {
+class _AppSearchBarStateBarAppoint extends State<AppSearchBarAppoint> {
   final TextEditingController _controller = TextEditingController(); //文本控制器
   bool showClear = true;
 
@@ -83,7 +83,7 @@ class _AppSearchBarState extends State<AppSearchBar> {
         borderRadius: BorderRadius.all(Radius.circular(35.w)),
         onPressed: () {
           if (widget.isAppoint==0){
-            final logic = Get.find<SearchLogic>();
+            final logic = Get.find<SearchAppointLogic>();
             logic.searchUser(_controller.text);
           }
           if (widget.isAppoint==1){

@@ -105,7 +105,7 @@ class ERPHttpUtil {
     switch (eInfo.code) {
       case 401:
         UserStore.to.onLogout();
-        EasyLoading.showError(eInfo.message);
+        //EasyLoading.showError(eInfo.message);
         break;
       default:
         //EasyLoading.showError('未知错误');

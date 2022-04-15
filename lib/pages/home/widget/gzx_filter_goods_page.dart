@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_erp/common/entities/home/erp_user.dart';
 
-import 'package:flutter_my_picker/flutter_my_picker.dart';
+import 'package:flutter_my_picker_null_safety/flutter_my_picker.dart';
 import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';

@@ -177,7 +177,7 @@ class _AppBarComponentState extends State<AppBarComponent> {
         for (var value in da) {
           CitySelect cc1 = CitySelect();
           cc1.name = value.name;
-          cc1.id = int.parse(value.cityCode);
+          cc1.id = value.cityCode =="" ? 0:int.parse(value.cityCode);
           firstLevels.add(cc1);
           List<Data> stores = value.data;
           for (var value in stores) {
@@ -188,9 +188,8 @@ class _AppBarComponentState extends State<AppBarComponent> {
             all.add(ddd1);
           }
         }
-        setState(() {
-
-        });
+        if (!mounted) return;
+        setState(() {});
       } else {
 
       }

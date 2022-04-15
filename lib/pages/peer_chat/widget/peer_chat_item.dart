@@ -180,12 +180,13 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
     Widget widget;
     if (entity.type == MessageType.MESSAGE_TEXT) {
       //文本
-      if ((entity.content['text'] != null && entity.content['text'].contains('assets/images/face') )||
-          (entity.content['text'] != null && entity.content['text'].contains('assets/images/figure'))) {
+      if ((entity.content!['text'] != null && entity.content!['text'].contains('assets/images/face') )||
+          (entity.content!['text'] != null && entity.content!['text'].contains('assets/images/figure'))) {
         widget = buildImageWidget(entity,tfSender);
       } else {
-        if(entity.content['text'] == null)
-        entity.content['text'] ="err";
+        if(entity.content!['text'] == null) {
+          entity.content!['text'] ="err";
+        }
         widget = buildTextWidget(entity,tfSender);
       }
 
@@ -214,7 +215,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
     return widget;
   }
   Widget buildRevokeWidget(Message entity,String  tfSender) {
-    var type = entity.content['notificationType'];
+    var type = entity.content!['notificationType'];
     //var raw = json.decode(entity.content['raw']);
     String content ="";
 
@@ -242,21 +243,21 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
             ?Color.fromARGB(255, 158, 234, 106)
             : Colors.white,
         child: Text(
-          entity.content['text'],
+          entity.content!['text'],
           style: TextStyle(fontSize: 32.sp, color: Colors.black),
         ),
       ),
     );
   }
   Widget buildGroupNotifitionWidget(Message entity,String  tfSender) {
-    var type = entity.content['notificationType'];
+    var type = entity.content!['notificationType'];
     //var raw = json.decode(entity.content['raw']);
     String content ="";
     if(type==7){
-      if(entity.content['mute']==1){
-        content =entity.content['member'].toString()+ "被管理员禁言";
+      if(entity.content!['mute']==1){
+        content =entity.content!['member'].toString()+ "被管理员禁言";
       }else{
-        content =entity.content['member'].toString()+ "被管理员解除禁言";
+        content =entity.content!['member'].toString()+ "被管理员解除禁言";
       }
 
 
@@ -278,25 +279,25 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
   Widget buildImageWidget(Message message,String  tfSender) {
     int isFace =0;
     //图像
-    double width = ValueUtil.toDouble(message.content['width']);
-    double height = ValueUtil.toDouble(message.content['height']);
-    String imageURL = ValueUtil.toStr(message.content['imageURL']);
+    double width = ValueUtil.toDouble(message.content!['width']);
+    double height = ValueUtil.toDouble(message.content!['height']);
+    String imageURL = ValueUtil.toStr(message.content!['imageURL']);
     if (imageURL == null || imageURL.length == 0) {
-      imageURL = ValueUtil.toStr(message.content['url']);
+      imageURL = ValueUtil.toStr(message.content!['url']);
     }
     double size = 240.w;
     Widget? image;
     if (message.type== MessageType.MESSAGE_TEXT&&
-        message.content['text'].contains('assets/images/face')) {
+        message.content!['text'].contains('assets/images/face')) {
       //assets/images/face中的表情
       size = 50.w;
-      image = Image.asset(message.content['text'], width: size, height: size);
+      image = Image.asset(message.content!['text'], width: size, height: size);
       isFace=1;
     } else if (message.type== MessageType.MESSAGE_TEXT &&
-        message.content['text'].contains('assets/images/figure')) {
+        message.content!['text'].contains('assets/images/figure')) {
       //assets/images/figure中的表情
       size = 120.w;
-      image = Image.asset(message.content['text'], width: size, height: size);
+      image = Image.asset(message.content!['text'], width: size, height: size);
       isFace=1;
     }
     return _buildWrapper(
@@ -307,13 +308,13 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
       ClipRRect(
         borderRadius: BorderRadius.circular(8.w),
         child: Container(
-          padding: EdgeInsets.all((message.content['text'].isNotEmpty &&
-              message.content['text'].contains('assets/images/face'))
+          padding: EdgeInsets.all((message.content!['text'].isNotEmpty &&
+              message.content!['text'].contains('assets/images/face'))
               ? 10.w
               : 0),
           color: message.sender == tfSender
               ? Colors.white
-              : Color.fromARGB(255, 158, 234, 106),
+              : const Color.fromARGB(255, 158, 234, 106),
           child: image,
         ),
       ):
@@ -410,14 +411,14 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
 
   Future<Uint8List> getLocalCacheImage({required String url}) async {
 
-    Map result = await im.getLocalCacheImage(url: url);
-    NativeResponse response = NativeResponse.fromMap(result);
+    Map? result = await im.getLocalCacheImage(url: url);
+    NativeResponse response = NativeResponse.fromMap(result!);
     return response.data;
   }
   Future<Uint8List> getLocalMediaURL({required String url}) async {
 
-    Map result = await im.getLocalMediaURL(url: url);
-    NativeResponse response = NativeResponse.fromMap(result);
+    Map? result = await im.getLocalMediaURL(url: url);
+    NativeResponse response = NativeResponse.fromMap(result!);
     return response.data;
   }
 
@@ -445,11 +446,11 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
   }
   Widget buildVoiceWidget(Message entity,String  tfSender) {
     double width;
-    if (entity.content['duration'] < 5) {
+    if (entity.content!['duration'] < 5) {
       width = 160.w;
-    } else if (entity.content['duration'] < 10) {
+    } else if (entity.content!['duration'] < 10) {
       width = 240.w;
-    } else if (entity.content['duration'] < 20) {
+    } else if (entity.content!['duration'] < 20) {
       width = 280.w;
     } else {
       width = 300.w;
@@ -471,7 +472,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                 children: <Widget>[
                   entity.sender == tfSender
                       ? Text('')
-                      : Text((entity.content['duration']).toString() + 's',
+                      : Text((entity.content!['duration']).toString() + 's',
                       style: TextStyle(fontSize: 18, color: Colors.black)),
                   SizedBox(
                     width: 5,
@@ -498,11 +499,11 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                     color: Colors.black,
                   ),
                   SizedBox(
-                    width: 5,
+                    width: 10.w,
                   ),
                   entity.sender == tfSender
-                      ? Text((entity.content['duration']).toString() + 's',
-                      style: TextStyle(fontSize: 18, color: Colors.black))
+                      ? Text((entity.content!['duration']).toString() + 's',
+                      style: TextStyle(fontSize: 36.sp, color: Colors.black))
                       : Text(''),
                 ],
               )),
@@ -510,7 +511,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
         Container(
           padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 60.h, bottom: 10.h),
           width: width,
-          child: LinearProgressIndicator(
+          child: const LinearProgressIndicator(
             value: 0.3,
             valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
             backgroundColor: Colors.transparent,

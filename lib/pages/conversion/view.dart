@@ -219,7 +219,7 @@ class ConversionPage extends StatelessWidget {
                  logic.onTap(logic.state.conversion[index]);
                 },
                 child: _buildListItem(
-                    context, state.conversion[index], state.conversion[index].cid));
+                    context, state.conversion[index], state.conversion[index].cid!));
           }),
     );
   }
@@ -301,8 +301,8 @@ class ConversionPage extends StatelessWidget {
                           child: Text(
                             conversation.type ==
                                 ConversionType.CONVERSATION_PEER
-                                ? conversation.cid
-                                : conversation.cid + "群",
+                                ? conversation.cid!
+                                : conversation.cid! + "群",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(
@@ -316,19 +316,19 @@ class ConversionPage extends StatelessWidget {
                           constraints: BoxConstraints(maxWidth: 0.6.sw),
                           margin: EdgeInsets.only(top: 8.w),
                           child: Text(
-                              (conversation.message.type ==
+                              (conversation.message?.type ==
                                   MessageType.MESSAGE_REVOKE
-                                  ? (conversation.message.sender ==
+                                  ? (conversation.message!.sender ==
                                   logic.memberId
                                   ? "你撤回了一条消息"
-                                  : conversation.message.sender +
+                                  : conversation.message!.sender+
                                   "撤回了一条消息")
-                                  : (conversation.detail.contains(
+                                  : (conversation.detail!.contains(
                                   'assets/images/face') ||
-                                  conversation.detail.contains(
+                                  conversation.detail!.contains(
                                       'assets/images/figure'))
                                   ? '[表情消息]'
-                                  : conversation.detail),
+                                  : conversation.detail!),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
@@ -338,21 +338,21 @@ class ConversionPage extends StatelessWidget {
                           constraints: BoxConstraints(maxWidth: 0.6.sw),
                           margin: EdgeInsets.only(top: 8.w),
                           child: Text(
-                              (conversation.message.type ==
+                              (conversation.message?.type ==
                                   MessageType.MESSAGE_REVOKE
-                                  ? (conversation.message.sender ==
+                                  ? (conversation.message!.sender ==
                                   logic.memberId
                                   ? "你撤回了一条消息"
-                                  : conversation.message.sender +
+                                  : conversation.message!.sender +
                                   "撤回了一条消息")
-                                  : (conversation.message.sender +
+                                  : (conversation.message!.sender +
                                   ":" +
-                                  ((conversation.detail.contains(
+                                  ((conversation.detail!.contains(
                                       'assets/images/face') ||
-                                      conversation.detail.contains(
+                                      conversation.detail!.contains(
                                           'assets/images/figure'))
                                       ? '[表情消息]'
-                                      : conversation.detail))),
+                                      : conversation.detail!))),
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
@@ -366,7 +366,7 @@ class ConversionPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(right: 14.w, bottom: 18.h, top: 14.h),
                 child: Text(
-                    tranImTime(tranFormatTime(conversation.message.timestamp)),
+                    tranImTime(tranFormatTime(conversation.message!.timestamp)),
                     style: TextStyle(color: Colors.grey, fontSize: 30.sp)),
               )
             ],

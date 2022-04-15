@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
-import 'package:flutter_my_picker/flutter_my_picker.dart';
+import 'package:flutter_my_picker_null_safety/flutter_my_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -220,15 +220,17 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                       child: OutlineButton(
                                         onPressed: () async {
                                           var value = await Get.toNamed(
-                                              AppRoutes.SearchUser,
+                                              AppRoutes.SearchUserAppoint,
                                               arguments: 1);
-                                          print(value);
+                                          //print(value);
+                                          if (value !=null){
+                                            List<String> data =
+                                            value.toString().split("#");
+                                            other_uuid = data.elementAt(0);
+                                            _usernameController.text =
+                                                data.elementAt(1);
+                                          }
 
-                                          List<String> data =
-                                              value.toString().split("#");
-                                          other_uuid = data.elementAt(0);
-                                          _usernameController.text =
-                                              data.elementAt(1);
                                           _textPlaceFieldNode.unfocus();
                                           _textFieldNode.unfocus();
                                         },
@@ -506,7 +508,7 @@ Widget normalChildButton(String selectedKey) {
 }
 
 Future<bool> commentDialog(
-    BuildContext context, int connectStatus, Info detail) async {
+    BuildContext context, int connectStatus, Info detail,String uuid) async {
   var roleId = detail.roleId;
   if (roleId == 7 || roleId == 9) {
     goals = goalsAppoint;
@@ -837,6 +839,7 @@ Future<bool> commentDialog(
                                               Radius.circular(40.w))),
                                       color: Colors.lightBlue,
                                       onPressed: () {
+                                        customer_uuid =uuid;
                                         if (_Controller.text.isEmpty) {
                                           BotToast.showSimpleNotification(
                                               title: "请填写沟通内容");

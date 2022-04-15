@@ -342,7 +342,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "248fd371792d74bcff1691672d334f1299b3c31c"
+      resolved-ref: "78b95b0e0ae0c5d5d6dd4da5764a22590dcfaea0"
       url: "https://github.com/coscx/lat.git"
     source: git
     version: "1.0.0"
@@ -391,10 +391,12 @@ packages:
   flutter_gifimage:
     dependency: "direct main"
     description:
-      name: flutter_gifimage
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "3dc34a11332e62be0e2d32649b3faa47b3bb778b"
+      url: "https://github.com/coscx/flutter_gifimage.git"
+    source: git
+    version: "1.1.0"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -442,13 +444,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.6.9+1"
-  flutter_my_picker:
+  flutter_my_picker_null_safety:
     dependency: "direct main"
     description:
-      name: flutter_my_picker
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.1.2"
+      path: "."
+      ref: HEAD
+      resolved-ref: c8f261db33cb8cde0b3fcb8d9f05e43f97a881b3
+      url: "https://github.com/coscx/flutter_my_picker_null_safety.git"
+    source: git
+    version: "0.0.1"
   flutter_page_indicator:
     dependency: transitive
     description:
@@ -564,13 +568,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.8.2+1"
-  frefresh:
-    dependency: "direct main"
-    description:
-      name: frefresh
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.1.0"
   get:
     dependency: "direct main"
     description:
@@ -1401,14 +1398,14 @@ packages:
       name: vibration
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.7.3"
+    version: "1.7.4-nullsafety.0"
   vibration_web:
     dependency: transitive
     description:
       name: vibration_web
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.6.2"
+    version: "1.6.3-nullsafety.0"
   video_player:
     dependency: "direct main"
     description:
@@ -1510,4 +1507,4 @@ packages:
 sdks:
   dart: ">=2.16.2 <3.0.0"
   flutter: ">=2.10.0"
-  flutter_plugin_android_lifecycle: ">=1.0.2 <2.0.0"
+  flutter_plugin_android_lifecycle: ">=2.0.5 <3.0.0"
