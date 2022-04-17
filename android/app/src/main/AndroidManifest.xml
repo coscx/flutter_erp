@@ -30,7 +30,7 @@
         android:name="android.hardware.nfc" />
    <application
         android:label="flutter_erp"
-        android:name="${applicationName}"
+        android:name="com.coscx.flutter_erp.MyFlutterApplication"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="true"
@@ -81,22 +81,46 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <meta-data
-       android:name="com.vivo.push.api_key"
-       android:value="vivo_api_key" />
-       <meta-data
-           android:name="com.vivo.push.app_id"
-           android:value="vivo_app_id" />
-       <!-- Vivo push channel end-->
 
-       <!-- Huawei push channel start (optional) -->
+       <!-- ** Umeng Start ** -->
+       <meta-data
+           android:name="UMENG_APPKEY"
+           android:value="5fec7e1cadb42d58269648d8" /> <!-- Channel ID用来标识App的推广渠道，作为推送消息时给用户分组的一个维度。 -->
+       <!-- Under tag is umeng_analysis_with_push plugin define -->
+       <meta-data
+           android:name="UMENG_SECRET"
+           android:value="9aa304c3f2ff5e98734edb2784b43700" />
+       <meta-data
+           android:name="UMENG_CHANNEL"
+           android:value="Umeng" />
+       <!-- huawei push参数声明 -->
+       <!-- huawei start -->
        <meta-data
            android:name="com.huawei.hms.client.appid"
            android:value="appid=103680303" />
-       <!-- Huawei push channel end-->
+       <!-- huawei end -->
+       <!--vivo push参数声明 -->
+       <!-- vivo start-->
        <meta-data
-           android:name="flutterEmbedding"
-           android:value="2" />
+           android:name="com.vivo.push.app_id"
+           android:value="000000000" />
+       <meta-data
+           android:name="com.vivo.push.api_key"
+           android:value="oooooooooooooooooooooooooooooooo" />
+       <!-- VIVO end-->
+       <!-- XiaoMi start-->
+       <!-- Under tag is umeng_analysis_with_push plugin define -->
+       <!-- 因 Android 会将数字的 meta-data 识别为 Number 类型
+       所以数字形式的 meta-data 请在加前缀 "\ " 或定义到 strings.xml 中以识别为 String -->
+       <meta-data
+           android:name="com.xiaomi.push.app_id"
+           android:value="\2882303761518946758" />
+       <meta-data
+           android:name="com.xiaomi.push.app_key"
+           android:value="\5911894688758" />
+       <!-- XiaoMi end-->
+       <!-- ** Umeng End ** -->
+
        <meta-data
            android:name="com.baidu.lbsapi.API_KEY"
            android:value="3fcovLraCVi0jKrouSN1gvLgNmx81kf9" />

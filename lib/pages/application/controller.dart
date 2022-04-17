@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 import 'package:flutter_erp/common/apis/common.dart';
+import 'package:flutter_erp/common/entities/app_version.dart';
 import 'package:flutter_erp/common/routers/routes.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 import 'package:flutter_erp/common/values/values.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_erp/pages/conversion/logic.dart';
 import 'package:flutter_erp/pages/peer_chat/logic.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:umeng_analytics_with_push/umeng_analytics_with_push.dart';
 import 'package:uni_links/uni_links.dart';
 import '../../common/entities/im/Im_message.dart';
 import '../../common/services/storage.dart';
@@ -184,6 +186,13 @@ class ApplicationController extends GetxController {
     // handleInitialUri();
     // handleIncomingLinks();
     // 准备一些静态数据
+    await UmengAnalyticsWithPush.initialize();
+    try{
+      final deviceToken = await UmengAnalyticsWithPush.deviceToken;
+      print(deviceToken);
+    }catch(e){
+      print(e);
+    }
 
     super.onInit();
 

@@ -1,5 +1,26 @@
 package com.coscx.flutter_erp
+import com.auwx.umeng_analytics_with_push.UmengAnalyticsWithPush
+import io.flutter.app.FlutterApplication
 
+class MyFlutterApplication: FlutterApplication() {
+
+    override fun onCreate() {
+        super.onCreate()
+        UmengAnalyticsWithPush.preinitial(
+            this,
+            // AppKey, secret, channel 也可配置在 AndroidManifest 中
+            // Required here or AndroidManifest.application
+            //   <meta-data android:name="UMENG_APPKEY" android:value="aaaaaaaaaaaaaaaaaa" />
+            //   <meta-data android:name="UMENG_SECRET" android:value="aaaaaaaaaaaaaaaaaa" />
+            //   <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL}" />
+            "5fec7e1cadb42d58269648d8",
+            secret = "9aa304c3f2ff5e98734edb2784b43700",
+            channel = "default",
+            enableLog = BuildConfig.DEBUG,
+            // ... other arguments
+        )
+    }
+}
 //import androidx.annotation.NonNull;
 //import io.flutter.embedding.android.FlutterActivity
 //import io.flutter.embedding.engine.FlutterEngine
