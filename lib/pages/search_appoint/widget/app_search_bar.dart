@@ -82,14 +82,10 @@ class _AppSearchBarStateBarAppoint extends State<AppSearchBarAppoint> {
         color: const Color(0xFFf8f8f8),
         borderRadius: BorderRadius.all(Radius.circular(35.w)),
         onPressed: () {
-          if (widget.isAppoint==0){
+
             final logic = Get.find<SearchAppointLogic>();
             logic.searchUser(_controller.text);
-          }
-          if (widget.isAppoint==1){
-            final logic = Get.find<SearchAppointLogic>();
-            logic.searchUser(_controller.text);
-          }
+
 
           FocusScope.of(context).requestFocus(FocusNode()); //收起键盘
         },

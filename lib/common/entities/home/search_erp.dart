@@ -117,7 +117,7 @@ class Datas {
     }
     return Datas(
       currentPage: asT<int>(json['current_page'])!,
-      data: data!,
+      data: data!=null ?data :[],
       lastPage: asT<int>(json['last_page'])!,
       total: asT<int>(json['total'])!,
     );

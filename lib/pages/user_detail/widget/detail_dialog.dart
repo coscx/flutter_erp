@@ -93,7 +93,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                 _usernameController.clear();
                                 _placeController.clear();
                                 other_uuid = "";
-                                Navigator.of(context).pop();
+                                Navigator.of(context).pop(false);
                               },
                               child: Image.asset(
                                 'assets/images/btn_close_black.png',
@@ -565,7 +565,7 @@ Future<bool> commentDialog(
                                   time1 = time1s.substring(0, 19);
                                   time2 = time2s.substring(0, 19);
                                   _Controller.clear();
-                                  Navigator.of(context).pop();
+                                  Navigator.of(context).pop(false);
                                 },
                                 child: Image.asset(
                                   'assets/images/btn_close_black.png',

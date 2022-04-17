@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_erp/common/routers/names.dart';
 import 'package:flutter_erp/pages/flow_page/widget/flow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -78,7 +79,12 @@ class FlowPage extends StatelessWidget {
             Icons.search,
             color: Colors.black87,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Get.toNamed(AppRoutes.SearchFlow,arguments:logic.selectItems )?.then((value) {
+
+              logic.onRefresh();
+            });
+          },
         ),
         SizedBox(width: 20.w),
       ],

@@ -18,4 +18,6 @@ class AppRoutes {
   static const SearchUser = '/search_user';
   static const SearchUserAppoint = '/search_user_appoint';
   static const Amap = '/amap';
+  static const Fine = '/fine';
+  static const SearchFlow = '/search_flow';
 }

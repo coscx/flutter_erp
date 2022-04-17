@@ -23,8 +23,8 @@ class _CreateUserPageState extends State<CreateUserPages> {
   String mobile ="";
   int gender  = 1;
   String birthday = "";
-  int from = 0;
-  int marriage = 0;
+  int from = 1;
+  int marriage = 1;
   double age = 18, weight = 60, height = 170;
 
   final FocusNode _textFieldNode = FocusNode();
@@ -372,7 +372,7 @@ class _CreateUserPageState extends State<CreateUserPages> {
         cancelText: "取消",
         confirmText: "确定",
         textAlign: TextAlign.center,
-        selectedTextStyle: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.bold),
+        selectedTextStyle: TextStyle(color: Colors.redAccent,fontWeight: FontWeight.normal),
         delimiter: [
           PickerDelimiter(column: 4, child: Container(
             width: 16.w,
@@ -521,7 +521,7 @@ class _CreateUserPageState extends State<CreateUserPages> {
 
 
 
-                              Visibility(
+                              const Visibility(
                                   visible: false,
                                   child: CircleAvatar(
                                     backgroundImage: AssetImage("rightImageUri"),

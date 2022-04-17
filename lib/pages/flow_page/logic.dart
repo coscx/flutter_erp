@@ -3,6 +3,7 @@ import 'package:flutter_erp/common/apis/common.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../common/entities/home/common.dart';
 import 'state.dart';
 
 class FlowPageLogic extends GetxController {
@@ -15,7 +16,7 @@ class FlowPageLogic extends GetxController {
   int curPage = 1;
   int pageSize = 20;
   int total = 20;
-
+  List<SelectItem> selectItems = <SelectItem>[];
   @override
   void onInit() {
     _loadData();
@@ -26,7 +27,7 @@ class FlowPageLogic extends GetxController {
   // 下拉刷新
   void _loadData() async {
     var result =
-        await CommonAPI.wxArticle(curPage,  []);
+        await CommonAPI.wxArticle(curPage, selectItems);
     state.wxUser.addAll(result.data.data) ;
     //debugPrint(result.toJson().toString());
   }
@@ -36,7 +37,7 @@ class FlowPageLogic extends GetxController {
 
     curPage=1;
     var result =
-    await CommonAPI.wxArticle(curPage,  []);
+    await CommonAPI.wxArticle(curPage,  selectItems);
     state.wxUser.clear();
     state.wxUser.addAll(result.data.data) ;
     //debugPrint(result.toString());
@@ -47,7 +48,7 @@ class FlowPageLogic extends GetxController {
   void onLoading() async {
     curPage++;
     var result =
-    await CommonAPI.wxArticle(curPage,  []);
+    await CommonAPI.wxArticle(curPage,selectItems);
     state.wxUser.addAll(result.data.data) ;
     refreshController.loadComplete();
   }

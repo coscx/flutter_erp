@@ -56,7 +56,6 @@ dependencies:
   crypto: ^3.0.1
   connectivity: ^3.0.6 #网络状态
   city_pickers: ^1.0.1
-  cupertino_range_slider: ^1.0.1
   direct_select_flutter: ^1.1.1
   dio: ^4.0.6
   dio_cookie_manager: ^2.0.0
@@ -101,6 +100,7 @@ dependencies:
   image_picker: ^0.8.5
   image_gallery_saver: ^1.7.1
   image_cropper: ^1.5.1
+
   just_audio: ^0.9.20
   # loading
   loading_animations: ^2.2.0
@@ -132,6 +132,7 @@ dependencies:
   sqflite: ^2.0.2 #数据库
   select_form_field: ^2.2.0
   soundpool: ^2.3.0
+  syncfusion_flutter_sliders: ^20.1.48
   toggle_rotate: ^1.0.1
   # 通过 scheme 打开APP 获取 参数
   uni_links: ^0.5.1
@@ -205,6 +206,7 @@ flutter:
     - assets/packages/lottie_flutter/
     - assets/images/default/
     - assets/images/icon/
+    - assets/images/login/
   fonts:
     - family: Avenir
       fonts:

@@ -225,13 +225,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4"
-  cupertino_range_slider:
-    dependency: "direct main"
-    description:
-      name: cupertino_range_slider
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.1"
   date_time_picker:
     dependency: "direct main"
     description:
@@ -1231,6 +1224,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0"
+  syncfusion_flutter_core:
+    dependency: transitive
+    description:
+      name: syncfusion_flutter_core
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "20.1.48"
+  syncfusion_flutter_sliders:
+    dependency: "direct main"
+    description:
+      name: syncfusion_flutter_sliders
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "20.1.48"
   synchronized:
     dependency: transitive
     description:

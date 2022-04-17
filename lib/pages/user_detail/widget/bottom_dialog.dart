@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../common/widgets/DyBehaviorNull.dart';
+
 /// 底部弹出框
 class BottomSheetWidget extends StatefulWidget {
   BottomSheetWidget({this.list, required this.onItemClickListener})
@@ -64,19 +66,21 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
             ),
           ),
         ));
-    var listView = ListView.builder(
-        itemCount: itemCount,
-        itemBuilder: (BuildContext context, int index) {
-          if (index == itemCount - 1) {
-            return Container(
-              child: cancelContainer,
-              margin: EdgeInsets.only(top: 20.h),
-            );
-          }
-          return getItemContainer(context, index, listLength);
-        });
     var totalContainer = SizedBox(
-      child: listView,
+      child: ScrollConfiguration(
+        behavior: DyBehaviorNull(),
+        child:  ListView.builder(
+            itemCount: itemCount,
+            itemBuilder: (BuildContext context, int index) {
+              if (index == itemCount - 1) {
+                return Container(
+                  child: cancelContainer,
+                  margin: EdgeInsets.only(top: 20.h),
+                );
+              }
+              return getItemContainer(context, index, listLength);
+            }),
+      ),
       height: height,
       width: deviceWidth * 0.97,
     );
@@ -84,7 +88,7 @@ class _BottomSheetWidgetState extends State<BottomSheetWidget> {
       alignment: Alignment.center,
       children: <Widget>[
         Positioned(
-          bottom: 30.h,
+          bottom: 20.h,
           child: totalContainer,
         ),
       ],

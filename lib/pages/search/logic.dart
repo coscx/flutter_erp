@@ -33,7 +33,10 @@ class SearchLogic extends GetxController {
     homeUser.clear();
     homeUser .addAll(result.data.data);
     totalCount = "0";
-    update();
+    if (result.data.data.isNotEmpty){
+      update();
+    }
+
 
   }
 

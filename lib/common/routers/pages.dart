@@ -14,12 +14,16 @@ import 'package:flutter_erp/pages/frame/sign_in/index.dart';
 import 'package:flutter_erp/pages/frame/sign_up/index.dart';
 import 'package:flutter_erp/pages/frame/welcome/index.dart';
 import 'package:flutter_erp/pages/home/view.dart';
+import 'package:flutter_erp/pages/other/fine/view.dart';
 import 'package:flutter_erp/pages/peer_chat/binding.dart';
 import 'package:flutter_erp/pages/peer_chat/view.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/chat_input_view.dart';
 import 'package:flutter_erp/pages/search/binding.dart';
 import 'package:flutter_erp/pages/search/view.dart';
 import 'package:flutter_erp/pages/search_appoint/view.dart';
+import 'package:flutter_erp/pages/search_flow/binding.dart';
+import 'package:flutter_erp/pages/search_flow/logic.dart';
+import 'package:flutter_erp/pages/search_flow/view.dart';
 import 'package:flutter_erp/pages/setting/binding.dart';
 import 'package:flutter_erp/pages/setting/logic.dart';
 import 'package:flutter_erp/pages/setting/view.dart';
@@ -29,6 +33,7 @@ import 'package:get/get.dart';
 
 import '../../pages/add_vip/binding.dart';
 import '../../pages/home/binding.dart';
+import '../../pages/other/fine/binding.dart';
 import '../../pages/search_appoint/binding.dart';
 import 'routes.dart';
 
@@ -134,6 +139,18 @@ class AppPages {
         name: AppRoutes.SearchUserAppoint,
         page: () => SearchAppointPage(),
         binding: SearchAppointBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.Fine,
+        page: () => FinePage(),
+        binding: FineBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.SearchFlow,
+        page: () => SearchFlowPage(),
+        binding: SearchFlowBinding(),
         transition: Transition.rightToLeft
     ),
   ];

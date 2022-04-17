@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPages> {
             child: Stack(
               children: [
                 Container(
-                  padding: EdgeInsets.only(left: 0.w, top: 80.w, bottom: 0),
+                  padding: EdgeInsets.only(left: 0.w, top: 120.w, bottom: 0),
                   child: ScrollConfiguration(
                       behavior: DyBehaviorNull(),
                       child: SmartRefresher(

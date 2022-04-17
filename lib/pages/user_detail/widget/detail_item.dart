@@ -18,12 +18,16 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+
 import 'package:lottie/lottie.dart';
 
 import '../../../common/utils/common.dart';
 import '../../../common/widgets/circle_text.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
+import '../../../common/widgets/imageview/image_preview_page.dart';
+import '../../../common/widgets/imageview/image_preview_view.dart';
 import 'common_dialog.dart';
+import 'jh_photo_browser.dart';
 
 Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
     void Function(String tag, bool value) callSetState, String name) {
@@ -2561,15 +2565,20 @@ Future<bool> showPickerDateTime(
 Widget _buildLinkTo(BuildContext context, Data userdetail,
     void Function(String tag, bool value) callSetState, int canEdit) {
   List<Pics> imgList = userdetail.pics;
-  // var imageListView = <ImageOptions>[];
-  // for (int i = 0; i < imgList.length; i++) {
-  //   var e = imgList[i];
-  //   if (e == null) continue;
-  //   imageListView.add(ImageOptions(
-  //     url: e['file_url'],
-  //     tag: e['file_url'],
-  //   ));
-  // }
+  var imageUrlList = <String>[];
+  for (int i = 0; i < imgList.length; i++) {
+    imageUrlList.add(imgList[i].fileUrl);
+
+  }
+  var imageListView = <ImageOptions>[];
+  for (int i = 0; i < imgList.length; i++) {
+    var e = imgList[i];
+    if (e.fileUrl == "") continue;
+    imageListView.add(ImageOptions(
+      url: e.fileUrl,
+      tag: e.fileUrl,
+    ));
+  }
 
   List<Widget> list = [];
   if (imgList.isNotEmpty) {
@@ -2583,11 +2592,29 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
 
       Widget adds = GestureDetector(
         onTap: () {
-          // ImagePreview.preview(
-          //   context,
-          //   initialIndex: i,
-          //   images: imageListView,
+          ImagePreview.preview(
+            initialIndex: i,
+            images: imageListView,onIndexChanged: (e){},
+            onLongPressed: (e){},
+
+          );
+          // ImageViewer.showImageSlider(
+          //   images: [
+          //     ...imageUrlList
+          //   ],
+          //   startingPosition: i,
           // );
+          //
+          // Navigator.of(Get.context!).push(FadeRoute(
+          //     page: JhPhotoBrowser(
+          //       imgDataArr: imageUrlList,
+          //       index: i,
+          //       isHiddenClose: true,
+          //       isHiddenTitle: true,
+          //       onLongPress: () {
+          //
+          //       },
+          //     )));
         },
         child: Padding(
           key: ObjectKey(e.id),

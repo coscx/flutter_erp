@@ -12,6 +12,7 @@ import 'package:flutter_erp/pages/mine/view.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../common/widgets/back_top_window.dart';
 import 'index.dart';
 
 class ApplicationPage extends GetView<ApplicationController> {
@@ -69,10 +70,12 @@ class ApplicationPage extends GetView<ApplicationController> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: AndroidBackTop.backDesktop, //页面将要消失时，调用原生的返回桌面方法
+        child: Scaffold(
       //appBar: _buildAppBar(),
       body: _buildPageView(),
       bottomNavigationBar: _buildBottomNavigationBar(),
-    );
+    ));
   }
 }

@@ -123,7 +123,7 @@ Widget item_connect(
   bool isDark = false;
 
   return Container(
-    height: 70.h,
+    height: 75.h,
     padding: EdgeInsets.only(top: 10.h, bottom: 0.h),
     //width: double.infinity,
     //height: 180.h,
@@ -261,7 +261,7 @@ Widget item_appoint(
   return Container(
     padding: EdgeInsets.only(top: 10.h, bottom: 0),
     //width: double.infinity,
-    height: 70.h,
+    height: 82.h,
     child: Material(
         color: Colors.transparent,
         child: GestureDetector(
@@ -282,7 +282,7 @@ Widget item_appoint(
                           Circle(
                             //connectType 沟通类型 1-线上沟通 2-到店沟通
                             color: Colors.redAccent,
-                            radius: 5,
+                            radius: 10.w,
                           ),
                           Container(
                             // width: ScreenUtil().screenWidth * 0.15,
@@ -291,7 +291,7 @@ Widget item_appoint(
                             ),
                             margin: EdgeInsets.only(left: 10.w),
                             child: Text(
-                              name == null ? "" : name,
+                              name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -314,7 +314,7 @@ Widget item_appoint(
                             ),
                             margin: EdgeInsets.only(left: 5.w),
                             child: Text(
-                              other_name == null ? "" : other_name,
+                             other_name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -328,7 +328,7 @@ Widget item_appoint(
                               visible: true,
                               child: Container(
                                 margin: EdgeInsets.only(top: 2.w),
-                                width: ScreenUtil().screenWidth * 0.54,
+                                width: ScreenUtil().screenWidth * 0.52,
                                 child: Text(
                                   remark,
                                   maxLines: 1,
@@ -365,9 +365,7 @@ Widget item_appoint(
                         visible: true,
                         child: Text(
                           "约会时间:" +
-                              (appointment_time == null
-                                  ? ""
-                                  : appointment_time),
+                              (appointment_time),
                           style:
                               TextStyle(fontSize: 20.sp, color: Colors.black54),
                         )),
@@ -380,9 +378,7 @@ Widget item_appoint(
                           width: ScreenUtil().screenWidth * 0.51,
                           child: Text(
                             "约会地点:" +
-                                (appointment_address == null
-                                    ? ""
-                                    : appointment_address),
+                                (appointment_address),
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                                 fontSize: 20.sp, color: Colors.black54),
@@ -422,7 +418,7 @@ Widget itemAction(BuildContext context, String name, String title,
                           Circle(
                             //connectType 沟通类型 1-线上沟通 2-到店沟通
                             color: Colors.grey,
-                            radius: 5,
+                            radius: 10.w,
                           ),
                           Container(
                             constraints: BoxConstraints(
@@ -430,7 +426,7 @@ Widget itemAction(BuildContext context, String name, String title,
                             ),
                             margin: EdgeInsets.only(left: 15.w),
                             child: Text(
-                              name == null ? "" : name,
+                            name,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -670,7 +666,7 @@ _showAppointBottom(
                     ),
                     Container(
                       child: Text(
-                        "约会地点:" + (address == null ? "" : address),
+                        "约会地点:" + ( address),
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 28.sp,
@@ -697,9 +693,7 @@ _showAppointBottom(
                     Container(
                       child: Text(
                         "回访记录:" +
-                            (feedback == null || feedback == "null"
-                                ? ""
-                                : feedback),
+                            (feedback),
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 28.sp,
@@ -707,7 +701,7 @@ _showAppointBottom(
                             fontWeight: FontWeight.w800),
                       ),
                     ),
-                    feedback == null || feedback == "null" || feedback == ""
+                    feedback == ""
                         ? (canEdit ==0 ?Container() :buildBackSubmit(context,id,uuid,canEdit))
                         : Container()
                   ],
@@ -802,7 +796,7 @@ _showActionBottom(BuildContext context, String userName, String otherName,
                     ),
                     Container(
                       child: Text(
-                        "操作类型:" + (address == null ? "" : address),
+                        "操作类型:" + ( address),
                         textAlign: TextAlign.left,
                         style: TextStyle(
                             fontSize: 28.sp,

@@ -186,7 +186,7 @@ class ERPHttpUtil {
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
     if (Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
-      headers['Authorization'] = 'Bearer ${UserStore.to.token}';
+      headers['authorization'] = 'Bearer ${UserStore.to.token}';
     }
     return headers;
   }

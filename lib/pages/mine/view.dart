@@ -220,7 +220,7 @@ class MinePage extends StatelessWidget {
                                 ),
                               ), GestureDetector(
                                 onTap: () {
-                                  //Navigator.pushNamed(context, UnitRouter.fin);
+                                  Get.toNamed(AppRoutes.Fine);
                                 },
                                 child: TopCard(
                                   url: 'assets/images/default/join.png',
