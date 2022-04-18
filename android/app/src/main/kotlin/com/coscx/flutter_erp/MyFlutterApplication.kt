@@ -13,10 +13,11 @@ class MyFlutterApplication: FlutterApplication() {
             //   <meta-data android:name="UMENG_APPKEY" android:value="aaaaaaaaaaaaaaaaaa" />
             //   <meta-data android:name="UMENG_SECRET" android:value="aaaaaaaaaaaaaaaaaa" />
             //   <meta-data android:name="UMENG_CHANNEL" android:value="${CHANNEL}" />
-            "5fec7e1cadb42d58269648d8",
-            secret = "9aa304c3f2ff5e98734edb2784b43700",
+            appKey="625cbfde10fad5015d8e76f1",
+            secret = "1bef9ca99f1ea5011e53b33f6a491a54",
             channel = "default",
             enableLog = BuildConfig.DEBUG,
+            resourcePackageName="com.coscx.flutter_erp"
             // ... other arguments
         )
     }

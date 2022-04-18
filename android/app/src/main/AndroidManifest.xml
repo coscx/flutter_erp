@@ -114,10 +114,10 @@
        所以数字形式的 meta-data 请在加前缀 "\ " 或定义到 strings.xml 中以识别为 String -->
        <meta-data
            android:name="com.xiaomi.push.app_id"
-           android:value="\2882303761518946758" />
+           android:value="\2882303761520151632" />
        <meta-data
            android:name="com.xiaomi.push.app_key"
-           android:value="\5911894688758" />
+           android:value="\5762015130632" />
        <!-- XiaoMi end-->
        <!-- ** Umeng End ** -->
 

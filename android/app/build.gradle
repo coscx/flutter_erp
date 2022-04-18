@@ -92,4 +92,9 @@ flutter {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'com.android.support:multidex:1.0.3'
+    // 以下配置请根据需求选择性添加
+    // Umeng Push 厂商 SDK  https://developer.umeng.com/docs/67966/detail/98589
+    // 小米 Push 通道
+    implementation 'com.umeng.umsdk:xiaomi-push:4.9.1'
+    implementation 'com.umeng.umsdk:xiaomi-umengaccs:1.2.8'
 }

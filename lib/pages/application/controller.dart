@@ -189,7 +189,7 @@ class ApplicationController extends GetxController {
     await UmengAnalyticsWithPush.initialize();
     try{
       final deviceToken = await UmengAnalyticsWithPush.deviceToken;
-      print(deviceToken);
+      print("push_token: "+deviceToken.toString());
     }catch(e){
       print(e);
     }
