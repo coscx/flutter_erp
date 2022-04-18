@@ -468,7 +468,7 @@ packages:
     source: hosted
     version: "2.1.9"
   flutter_plugin_android_lifecycle:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.flutter-io.cn"
@@ -1290,17 +1290,12 @@ packages:
   umeng_analytics_with_push:
     dependency: "direct main"
     description:
-      name: umeng_analytics_with_push
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: bc3895799d3bc72110f46b4f052359ed9f9394e4
+      url: "https://github.com/coscx/umeng_push.git"
+    source: git
     version: "0.2.1"
-  umeng_analytics_with_push_platform_interface:
-    dependency: transitive
-    description:
-      name: umeng_analytics_with_push_platform_interface
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.1"
   uni_links:
     dependency: "direct main"
     description:
