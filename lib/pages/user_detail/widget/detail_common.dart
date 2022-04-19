@@ -261,7 +261,7 @@ Widget item_appoint(
   return Container(
     padding: EdgeInsets.only(top: 10.h, bottom: 0),
     //width: double.infinity,
-    height: 82.h,
+    height: 72.h,
     child: Material(
         color: Colors.transparent,
         child: GestureDetector(
@@ -328,7 +328,7 @@ Widget item_appoint(
                               visible: true,
                               child: Container(
                                 margin: EdgeInsets.only(top: 2.w),
-                                width: ScreenUtil().screenWidth * 0.52,
+                                width: ScreenUtil().screenWidth * 0.49,
                                 child: Text(
                                   remark,
                                   maxLines: 1,

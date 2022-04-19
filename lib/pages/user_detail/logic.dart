@@ -84,15 +84,19 @@ class UserDetailLogic extends GetxController {
 
   void _loadOtherData() async {
     var connect = await CommonAPI.getConnectList(uuid, 1);
+    connectList.clear();
     connectList.addAll(connect.data.data);
 
     var appoint = await CommonAPI.getAppointmentList(uuid, 1);
+    appointList.clear();
     appointList.addAll(appoint.data.data);
 
     var action = await CommonAPI.getActionList(uuid, 1);
+    actionList.clear();
     actionList.addAll(action.data.data);
 
     var call = await CommonAPI.getCallList(uuid, 1);
+    callList.clear();
     callList.addAll(call.data.data);
 
     //debugPrint(result.toJson().toString());
@@ -495,7 +499,7 @@ class UserDetailLogic extends GetxController {
       data['type'] = 0;
       data['is_pay'] = 0;
       data['can_write'] = 0;
-
+      data['message'] = "";
       var f = Appoint.fromJson(data);
       appointList.insert(0, f);
       showToast(Get.context!, '添加成功', true);

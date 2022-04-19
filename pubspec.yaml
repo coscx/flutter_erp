@@ -83,7 +83,7 @@ dependencies:
   fluwx: ^3.8.2
   flutter_sound: ^9.1.9
   # 屏幕适配
-  flutter_screenutil: ^5.3.1
+  flutter_screenutil: ^5.4.0
   # toast
   fluttertoast: ^8.0.9
   # easyloading

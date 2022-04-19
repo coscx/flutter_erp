@@ -3104,7 +3104,7 @@ header(BuildContext context, Data user) {
                       : Container(),
                   Container(
                       constraints: BoxConstraints(
-                        maxWidth: 120.w,
+                        maxWidth: 110.w,
                       ),
                       margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 0.h),
                       child: Text(
