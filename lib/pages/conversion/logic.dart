@@ -72,7 +72,7 @@ class ConversionLogic extends GetxController {
     }
 
     if (msg.type == ConversionType.CONVERSATION_PEER) {
-      im.clearGroupReadCount(cid: msg.cid!);
+      im.clearReadCount(cid: msg.cid!);
       var   message = state.conversion.map((e) {
         if (e.type == ConversionType.CONVERSATION_PEER) {
           e.newMsgCount = 0;
@@ -107,6 +107,7 @@ class ConversionLogic extends GetxController {
     }
     if (msg.type ==
         ConversionType.CONVERSATION_PEER) {
+        receiveMsgFresh();
         Get.toNamed(AppRoutes.Peer,arguments: model);
     }
   }

@@ -50,9 +50,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                 ? IconButton(
                 icon: Icon(Icons.error, color: Colors.red, size: 18.sp),
                 onPressed: () {
-                  if (null != onResend) {
-                    onResend(entity);
-                  }
+                  onResend(entity);
                 })
                 : ((entity.flags == 1)
                 ? Container(
@@ -63,15 +61,14 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
               child: SizedBox(
                   width: 12.w,
                   height: 12.h,
-                  child: CircularProgressIndicator(
+                  child: const CircularProgressIndicator(
                     valueColor: AlwaysStoppedAnimation(
                         Colors.blue),
                     strokeWidth: 2,
                   )),
             )
-                : SizedBox(
-              width: 0,
-              height: 0,
+                :  SizedBox(
+              width: 10.w,
             )),
             Expanded(
                 child: Container(
@@ -85,14 +82,10 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                       GestureDetector(
                         child: _contentWidget(entity,tfSender),
                         onTap: () {
-                          if (null != onItemClick) {
-                            onItemClick(entity);
-                          }
+                          onItemClick(entity);
                         },
                         onLongPress: () {
-                          if (null != onItemClick) {
-                            onItemLongClick(entity);
-                          }
+                          onItemLongClick(entity);
 
                         },
                       ),
@@ -100,7 +93,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                     ],
                   ),
                 )),
-            SizedBox(width: 10),
+            SizedBox(width: 10.w),
             _headPortrait('', 0),
           ],
         ),
@@ -119,7 +112,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
             _headPortrait('', 1),
             Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h, top: 12.h),
+                  margin: EdgeInsets.only(left: 10.w, right: 0.w, bottom: 0.h, top: 12.h),
 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,10 +150,10 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
         child: url.isEmpty
             ? Image.asset(
             (owner == 1
-                ? FileUtil.getImagePath('img_headportrait',
-                dir: 'icon', format: 'png')
-                : FileUtil.getImagePath('logo',
-                dir: 'splash', format: 'png')),
+                ? FileUtil.getImagePath('ic_user_female',
+                dir: 'default', format: 'png')
+                : FileUtil.getImagePath('ic_user_male',
+                dir: 'default', format: 'png')),
             width: 88.w,
             height: 88.h)
             : (ObjectUtil.isNetUri(url)
@@ -320,7 +313,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
       ):
 
       Container(
-          decoration: new BoxDecoration(
+          decoration: BoxDecoration(
             //背景Colors.transparent 透明
             color: Colors.transparent,
             //设置四周圆角 角度
@@ -464,7 +457,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
               width: width,
               color: entity.sender == tfSender
                   ? Colors.white
-                  : Color.fromARGB(255, 158, 234, 106),
+                  : const Color.fromARGB(255, 158, 234, 106),
               child: Row(
                 mainAxisAlignment: entity.sender == tfSender
                     ? MainAxisAlignment.start

@@ -15,10 +15,10 @@ class TimeUtil {
     zeroTmp=dd;
     int nows=zeroTmp - (zeroTmp + 8 * 3600 *1000) % (86400*1000);
     //获取当前的时间,yyyy-MM-dd HH:mm
-    String nowTime = DateUtil.getDateStrByMs(new DateTime.now().millisecondsSinceEpoch, format: DateFormat.ZH_MONTH_DAY_HOUR_MINUTE);
+    String nowTime = DateUtil.getDateStrByMs( DateTime.now().millisecondsSinceEpoch, format: DateFormat.ZH_MONTH_DAY_HOUR_MINUTE);
     //当前消息的时间,yyyy-MM-dd HH:mm
     String indexTime = DateUtil.getDateStrByMs(timestamp*1000, format: DateFormat.ZH_YEAR_MONTH_DAY_HOUR_MINUTE);
-    String nowTime1 = DateUtil.getDateStrByMs(new DateTime.now().millisecondsSinceEpoch, format: DateFormat.ZH_NORMAL);
+    String nowTime1 = DateUtil.getDateStrByMs( DateTime.now().millisecondsSinceEpoch, format: DateFormat.ZH_NORMAL);
     //当前消息的时间,yyyy-MM-dd HH:mm
     String indexTime1 = DateUtil.getDateStrByMs(timestamp*1000, format: DateFormat.ZH_NORMAL);
     if (DateUtil.formatDateTime1(indexTime1, DateFormat.YEAR) != DateUtil.formatDateTime1(nowTime1, DateFormat.YEAR)) {

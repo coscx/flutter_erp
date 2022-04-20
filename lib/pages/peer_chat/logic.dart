@@ -4,10 +4,12 @@ import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/message.dart';
 import 'package:flt_im_plugin/value_util.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'state.dart';
 
 class PeerChatLogic extends GetxController {
   final PeerChatState state = PeerChatState();
+  FltImPlugin im = FltImPlugin();
   Conversion model = Get.arguments;
   String memId = "";
   List<Message> messageList = <Message>[];
@@ -73,6 +75,24 @@ class PeerChatLogic extends GetxController {
 
     }
   }
+  void sendTextMessage(String content) async {
 
+    Map? result = await im.sendTextMessage(
+      secret: false,
+      sender: model.memId!,
+      receiver: model.cid!,
+      rawContent: content ,
+    );
+    Map? response = await im.loadData(messageID: '0');
+    var messages = ValueUtil.toArr(response!["data"])
+        .map((e) => Message.fromMap(ValueUtil.toMap(e)))
+        .toList()
+        .reversed
+        .toList();
+
+    messageList.clear();
+    messageList.addAll(messages);
+    update();
+  }
 
 }

@@ -237,9 +237,9 @@ class _MessageListViewState extends State<MessageListView> {
                   heightFactor: 2,
                   child: Text(
                     showTime,
-                    style: TextStyle(color: ColorT.transparent_80),
+                    style: const TextStyle(color: ColorT.transparent_80),
                   ))
-              : SizedBox(height: 0),
+              : const SizedBox(height: 0),
           PeerChatItemWidget(
               entity: entity,
               onResend: onResend!,

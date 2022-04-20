@@ -49,64 +49,66 @@ class _PeerPageState extends State<PeerPage> {
             brightness: Brightness.light,
           ),
         ),
-        child: Scaffold(
-            appBar: AppBar(
-              titleSpacing: 220.w,
-              leadingWidth: 100.w,
-              title: Row(
-                children: [
-                  Text(widget.model.cid!,
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 40.sp,
-                          fontWeight: FontWeight.bold)),
-                ],
-              ),
-              //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
-              backgroundColor: Colors.white,
-              elevation: 0,
-              //去掉Appbar底部阴影
-              actions: <Widget>[
-                Container(
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.black87,
-                    ),
-                    onPressed: () {
-                      //Navigator.pushNamed(context, UnitRouter.search);
-                    },
-                  ),
+        child: SafeArea(
+          child: Scaffold(
+              appBar: AppBar(
+                titleSpacing: 220.w,
+                leadingWidth: 100.w,
+                title: Row(
+                  children: [
+                    Text(widget.model.cid!,
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 40.sp,
+                            fontWeight: FontWeight.bold)),
+                  ],
                 ),
-                SizedBox(width: 20.w),
-              ],
+                //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
+                backgroundColor: Colors.white,
+                elevation: 0,
+                //去掉Appbar底部阴影
+                actions: <Widget>[
+                  Container(
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.black87,
+                      ),
+                      onPressed: () {
+                        //Navigator.pushNamed(context, UnitRouter.search);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 20.w),
+                ],
 
-              //bottom: bar(),
-            ),
-            body: Column(children: <Widget>[
-              MessageListView(
-                  messageList: widget.messageList,
-                  onResendClick: (reSendEntity) {},
-                  onItemClick: _onItemClick,
-                  onItemLongClick: (entity) {},
-                  bodyClick: () {
-                    debugPrint("bodyClick");
-                    //hideKeyBoard();
-                    EventBusUtil.fire(PeerRecAckEvent(""));
-                  },
-                  tfSender: '',
-                  scrollController: scrollController,
-                voice: voice,
-
+                //bottom: bar(),
               ),
-              Divider(height: 1.h),
-              ChatInputView(
-                model: widget.model,
-                memId: widget.memId,
-                scrollController: scrollController,
-                voice: voice,
-              )
-            ])));
+              body: Column(children: <Widget>[
+                MessageListView(
+                    messageList: widget.messageList,
+                    onResendClick: (reSendEntity) {},
+                    onItemClick: _onItemClick,
+                    onItemLongClick: (entity) {},
+                    bodyClick: () {
+                      debugPrint("bodyClick");
+                      //hideKeyBoard();
+                      EventBusUtil.fire(PeerRecAckEvent(""));
+                    },
+                    tfSender: widget.model.memId!,
+                    scrollController: scrollController,
+                  voice: voice,
+
+                ),
+                Divider(height: 1.h),
+                ChatInputView(
+                  model: widget.model,
+                  memId: widget.memId,
+                  scrollController: scrollController,
+                  voice: voice,
+                )
+              ])),
+        ));
   }
 
   _onItemClick(_entity) {}

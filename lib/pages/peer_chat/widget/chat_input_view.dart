@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:card_swiper/card_swiper.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flt_im_plugin/conversion.dart';
 import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/message.dart';
@@ -12,14 +14,19 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 
 import '../../../common/utils/permission.dart';
+import '../../../common/widgets/DyBehaviorNull.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../../common/widgets/more_widgets.dart';
 import '../../conversion/widget/colors.dart';
 import '../../conversion/widget/dialog_util.dart';
 import '../../conversion/widget/object_util.dart';
 import '../../user_detail/widget/bottom_dialog.dart';
+import '../logic.dart';
 import 'common_util.dart';
 import 'event_bus.dart';
 import 'file_util.dart';
@@ -252,10 +259,6 @@ class _ChatInputViewState extends State<ChatInputView> {
     );
   }
 
-  _buildTextMessage(String content) {
-    controller.clear();
-    isShowSend = false;
-  }
 
   _bottomWidget(BuildContext context) {
     late Widget widget;
@@ -320,13 +323,26 @@ class _ChatInputViewState extends State<ChatInputView> {
     // _widgets.add(MoreWidgets.buildIcon(Icons.favorite, '我的收藏'));
     guideToolsList.add(GridView.count(
         crossAxisCount: 4, padding: EdgeInsets.all(10.w), children: _widgets));
-    List<Widget> _widgets1 = [];
+    // List<Widget> _widgets1 = [];
     // _widgets1.add(MoreWidgets.buildIcon(Icons.person, '名片'));
     // _widgets1.add(MoreWidgets.buildIcon(Icons.folder, '文件'));
-    guideToolsList.add(GridView.count(
-        crossAxisCount: 4,
-        padding: const EdgeInsets.all(0.0),
-        children: _widgets1));
+    // guideToolsList.add(GridView.count(
+    //     crossAxisCount: 4,
+    //     padding: const EdgeInsets.all(0.0),
+    //     children: _widgets1));
+    return ScrollConfiguration(
+        behavior: DyBehaviorNull(),
+        child: Swiper(
+      physics: const AlwaysScrollableScrollPhysics(),
+      loop: false,
+      itemBuilder: (BuildContext context,int index){
+        return guideToolsList[index];
+      },
+      itemCount: guideToolsList.length,
+
+      pagination:  const SwiperPagination(),
+
+    ));
     // return Swiper(
     //     autoStart: false,
     //     circular: false,
@@ -336,51 +352,76 @@ class _ChatInputViewState extends State<ChatInputView> {
     //         itemColor: ColorT.gray_99,
     //         itemActiveColor: ObjectUtil.getThemeSwatchColor()),
     //     children: guideToolsList);
+    return Container();
   }
 
   _faceWidget() {
     _initFaceList();
-    return Column(
+    return ScrollConfiguration(
+        behavior: DyBehaviorNull(),
+    child:Column(
       children: <Widget>[
         Flexible(
             child: Stack(
           children: <Widget>[
-            // Offstage(
-            //   offstage: isFaceFirstList,
-            //   child: Swiper(
-            //       autoStart: false,
-            //       circular: false,
-            //       indicator: CircleSwiperIndicator(
-            //           radius: 3.0,
-            //           padding: EdgeInsets.only(top: 10.w),
-            //           itemColor: ColorT.gray_99,
-            //           itemActiveColor: ObjectUtil.getThemeSwatchColor()),
-            //       children: guideFigureList),
-            // ),
-            // Offstage(
-            //   offstage: !isFaceFirstList,
-            //   child: EmojiPicker(
-            //     rows: 3,
-            //     columns: 7,
-            //     //recommendKeywords: ["racing", "horse"],
-            //     numRecommended: 10,
-            //     onEmojiSelected: (emoji, category) {
-            //       controller.text =controller.text + emoji.emoji;
-            //       controller.selection = TextSelection.fromPosition(
-            //           TextPosition(offset: controller.text.length));
-            //
-            //       if (isShowSend == false) {
-            //
-            //           if (controller.text.isNotEmpty) {
-            //             isShowSend = true;
-            //           } else {
-            //             isShowSend = false;
-            //           }
-            //
-            //       }
-            //     },
-            //   ),
-            // )
+            Offstage(
+              offstage: isFaceFirstList,
+              child: Swiper(
+                  pagination:  const SwiperPagination(),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  loop: false,
+                  itemBuilder: (BuildContext context,int index){
+                    return guideFigureList[index];
+                  },
+                  itemCount: guideFigureList.length),
+
+            ),
+            Offstage(
+              offstage: !isFaceFirstList,
+              child: EmojiPicker(
+                config: Config(
+                              columns: 7,
+                              emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                              verticalSpacing: 0,
+                              horizontalSpacing: 0,
+                              initCategory: Category.SMILEYS,
+                              bgColor: const Color(0xFFF2F2F2),
+                              indicatorColor: Colors.blue,
+                              iconColor: Colors.grey,
+                              iconColorSelected: Colors.blue,
+                              progressIndicatorColor: Colors.blue,
+                              backspaceColor: Colors.blue,
+                              skinToneDialogBgColor: Colors.white,
+                              skinToneIndicatorColor: Colors.grey,
+                              enableSkinTones: true,
+                              showRecentsTab: true,
+                              recentsLimit: 28,
+                              noRecentsText: "暂无更多",
+                              noRecentsStyle: const TextStyle(
+                              fontSize: 20, color: Colors.black26),
+                              tabIndicatorAnimDuration: kTabScrollDuration,
+                              categoryIcons: const CategoryIcons(),
+                              buttonMode: ButtonMode.MATERIAL),
+
+                onEmojiSelected: (Category category, Emoji emoji) {
+                  controller.text =controller.text + emoji.emoji;
+                  controller.selection = TextSelection.fromPosition(
+                      TextPosition(offset: controller.text.length));
+
+                  if (isShowSend == false) {
+
+                      if (controller.text.isNotEmpty) {
+                        isShowSend = true;
+                      } else {
+                        isShowSend = false;
+                      }
+                     setState(() {
+
+                     });
+                  }
+                },
+              ),
+            )
           ],
         )),
         SizedBox(
@@ -405,6 +446,9 @@ class _ChatInputViewState extends State<ChatInputView> {
                         ),
                         onTap: () {
                           isFaceFirstList = true;
+                          setState(() {
+
+                          });
                         },
                       ))),
               Align(
@@ -421,13 +465,16 @@ class _ChatInputViewState extends State<ChatInputView> {
                         ),
                         onTap: () {
                           isFaceFirstList = false;
+                          setState(() {
+
+                          });
                         },
                       ))),
             ],
           ),
         )
       ],
-    );
+    ));
   }
 
   _voiceWidget() {
@@ -619,13 +666,20 @@ class _ChatInputViewState extends State<ChatInputView> {
                 setState(() {});
               },
               icon: Image.asset(name,
-                  width: crossAxisCount == 5 ? 60.w : 32.w,
-                  height: crossAxisCount == 5 ? 60.h : 32.h));
+                  width: crossAxisCount == 5 ? 120.w : 64.w,
+                  height: crossAxisCount == 5 ? 120.h : 64.h));
         }).toList());
   }
 
   //重发
   _onResend(Message entity) {}
+  _buildTextMessage(String content) {
+
+    final logic = Get.find<PeerChatLogic>();
+    logic.sendTextMessage(content);
+    controller.clear();
+    isShowSend = false;
+  }
 
   _willBuildImageMessage(File imageFile) {
     if (imageFile.path.isEmpty) {

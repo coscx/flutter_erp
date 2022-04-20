@@ -181,7 +181,7 @@ class DateUtil {
   }
 
   static String formatDateTime1(String time, DateFormat format) {
-    return formatDateTime(time, format, "", "");
+    return formatDateTime(time, format, " ", ":");
   }
 
   ///format DateTime.

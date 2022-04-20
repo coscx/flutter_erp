@@ -29,7 +29,7 @@
     <uses-feature
         android:name="android.hardware.nfc" />
    <application
-        android:label="flutter_erp"
+        android:label="鹊桥erp"
         android:name="com.coscx.erp.MyFlutterApplication"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
