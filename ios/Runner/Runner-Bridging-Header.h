@@ -4,4 +4,4 @@
 #import <UMCommon/MobClick.h>
 #import <UMPush/UMessage.h>
 #import <UserNotifications/UserNotifications.h>
-#import <umeng_analytics_push/UmengAnalyticsPushIos.h>
+#import <umeng_analytics_with_push/UmengAnalyticsPushIos.h>
