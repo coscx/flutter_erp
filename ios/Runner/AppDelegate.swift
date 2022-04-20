@@ -6,7 +6,7 @@ import Flutter
 @objc class AppDelegate: FlutterAppDelegate {
     override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         GeneratedPluginRegistrant.register(with: self)
-        UmengAnalyticsPushFlutterIos.iosPreInit(launchOptions, appkey:"600e1f36b3b4f6635de2a6ae", channel:"appstore")
+        UmengAnalyticsPushFlutterIos.iosPreInit(launchOptions, appkey:"625fa70af17f127dd96e56e8", channel:"appstore")
         return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
