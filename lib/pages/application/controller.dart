@@ -186,7 +186,7 @@ class ApplicationController extends GetxController {
     // handleInitialUri();
     // handleIncomingLinks();
     // 准备一些静态数据
-    await UmengAnalyticsWithPush.initialize();
+    await UmengAnalyticsWithPush.initialize(logEnabled: true,pushEnabled: true);
     try{
       final deviceToken = await UmengAnalyticsWithPush.deviceToken;
       print("push_token: "+deviceToken.toString());
