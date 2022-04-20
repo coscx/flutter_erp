@@ -1,4 +1,4 @@
-package com.coscx.flutter_erp
+package com.coscx.erp
 import com.auwx.umeng_analytics_with_push.UmengAnalyticsWithPush
 import io.flutter.app.FlutterApplication
 

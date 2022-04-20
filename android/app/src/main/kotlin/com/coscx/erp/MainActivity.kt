@@ -1,4 +1,4 @@
-package com.coscx.flutter_erp
+package com.coscx.erp
 
 import android.os.Handler
 import android.os.Looper

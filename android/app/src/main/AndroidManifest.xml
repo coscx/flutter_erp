@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.coscx.flutter_erp">
+    package="com.coscx.erp">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.NFC" />
@@ -30,7 +30,7 @@
         android:name="android.hardware.nfc" />
    <application
         android:label="flutter_erp"
-        android:name="com.coscx.flutter_erp.MyFlutterApplication"
+        android:name="com.coscx.erp.MyFlutterApplication"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:allowBackup="true"

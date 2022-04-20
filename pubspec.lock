@@ -1292,7 +1292,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e25dc1bad8f5ec67cba94ca5c6d80ea960569ee9
+      resolved-ref: c8a624a2891da237ba265a85226bed992d296b83
       url: "https://github.com/coscx/umeng_push.git"
     source: git
     version: "0.2.1"
