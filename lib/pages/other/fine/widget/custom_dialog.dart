@@ -16,7 +16,6 @@ import '../../../user_detail/widget/share.dart';
 
 class LoginDialog extends Dialog {
   LoginDialog() ;
-  CreatorController _creatorController = CreatorController();
   GlobalKey repaintWidgetKey = GlobalKey(); // 绘图key值
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class LoginDialog extends Dialog {
               height: 640.h,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(6)),
+                borderRadius: BorderRadius.all(Radius.circular(12.w)),
               ),
               child: Container(
                 // alignment: Alignment.topCenter,

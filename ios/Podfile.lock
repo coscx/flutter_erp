@@ -64,10 +64,10 @@ PODS:
     - Flutter
   - flutter_my_picker_null_safety (0.0.1):
     - Flutter
-  - flutter_sound (9.2.2):
+  - flutter_sound (9.2.9):
     - Flutter
-    - flutter_sound_core (= 9.2.2)
-  - flutter_sound_core (9.2.2)
+    - flutter_sound_core (= 9.2.9)
+  - flutter_sound_core (9.2.9)
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -131,6 +131,18 @@ PODS:
     - FMDB (>= 2.7.5)
   - Toast (4.0.0)
   - TOCropViewController (2.6.1)
+  - UMCCommonLog (2.0.2)
+  - UMCommon (7.3.6):
+    - UMDevice
+  - UMDevice (2.2.1)
+  - umeng_analytics_with_push (0.0.1):
+    - Flutter
+    - UMCCommonLog
+    - UMCommon
+    - UMDevice
+    - UMPush
+  - UMPush (4.0.2):
+    - UMCommon
   - uni_links (0.0.1):
     - Flutter
   - url_launcher_ios (0.0.1):
@@ -174,6 +186,7 @@ DEPENDENCIES:
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - soundpool (from `.symlinks/plugins/soundpool/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - umeng_analytics_with_push (from `.symlinks/plugins/umeng_analytics_with_push/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - vibration (from `.symlinks/plugins/vibration/ios`)
@@ -203,6 +216,10 @@ SPEC REPOS:
     - SDWebImageWebPCoder
     - Toast
     - TOCropViewController
+    - UMCCommonLog
+    - UMCommon
+    - UMDevice
+    - UMPush
     - WechatOpenSDK_Fuck
 
 EXTERNAL SOURCES:
@@ -260,6 +277,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/soundpool/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  umeng_analytics_with_push:
+    :path: ".symlinks/plugins/umeng_analytics_with_push/ios"
   uni_links:
     :path: ".symlinks/plugins/uni_links/ios"
   url_launcher_ios:
@@ -292,8 +311,8 @@ SPEC CHECKSUMS:
   flutter_image_compress: fd2b476345226e1a10ea352fa306af95704642c1
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_my_picker_null_safety: 1059e863e1a019c57a447862f4aec6d4322f69b1
-  flutter_sound: b4eccdf53c922ad12146ac94fb2a18ceb5855c12
-  flutter_sound_core: 0e902ec587e9854b4f852f4bad2d625057d9958b
+  flutter_sound: 447f8c0cda48513f1e53454f12a7a6a40791c929
+  flutter_sound_core: 47cddf0ba97bd020908bafd43d43a12946922ec9
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   fluwx: 02670633ce7509206f62b366e9734e7dda81e100
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -321,6 +340,11 @@ SPEC CHECKSUMS:
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
+  UMCCommonLog: bea707e50c85cef4b0eb47cc5c7226bb843245ca
+  UMCommon: c61df8457c275afd4f8a2fca10c7446d66220ac0
+  UMDevice: 053478c4b4d7292f31f0a275c227d3c4007a5571
+  umeng_analytics_with_push: 15a9cd610c7dd494709e6e846e59fb7a490628ff
+  UMPush: c420e1cf2d1c96f1257f390bc626314fb7e6d9e6
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   vibration: 1ec279c4a1a7a646627b54039d812334b3f1114a
@@ -329,6 +353,6 @@ SPEC CHECKSUMS:
   webview_flutter_wkwebview: b7e70ef1ddded7e69c796c7390ee74180182971f
   WechatOpenSDK_Fuck: aa8f4b0af902837e887a1d40c62f06c060c1dc98
 
-PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+PODFILE CHECKSUM: 8d619ab58bc4f2ab8bd610d0a4637628b63078ed
 
 COCOAPODS: 1.11.3

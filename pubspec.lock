@@ -480,28 +480,28 @@ packages:
       name: flutter_screenutil
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "5.4.0"
+    version: "5.4.0+1"
   flutter_sound:
     dependency: "direct main"
     description:
       name: flutter_sound
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "9.2.2"
+    version: "9.2.9"
   flutter_sound_platform_interface:
     dependency: transitive
     description:
       name: flutter_sound_platform_interface
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "9.2.2"
+    version: "9.2.9"
   flutter_sound_web:
     dependency: transitive
     description:
       name: flutter_sound_web
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "9.2.2"
+    version: "9.2.9"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -1292,7 +1292,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c8a624a2891da237ba265a85226bed992d296b83
+      resolved-ref: "66838b0c92f1053bd1ce6ae7c150809cd05ae31e"
       url: "https://github.com/coscx/umeng_push.git"
     source: git
     version: "0.2.1"
