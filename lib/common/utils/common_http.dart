@@ -185,7 +185,9 @@ class ERPHttpUtil {
   /// 读取本地配置
   Map<String, dynamic>? getAuthorizationHeader() {
     var headers = <String, dynamic>{};
-    if (Get.isRegistered<UserStore>() && UserStore.to.hasToken == true) {
+    var a =Get.isRegistered<UserStore>();
+    var b= UserStore.to.hasToken;
+    if (a== true && b == true) {
       headers['authorization'] = 'Bearer ${UserStore.to.token}';
     }
     return headers;

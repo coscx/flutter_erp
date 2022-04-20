@@ -56,6 +56,7 @@ class LoginLogic extends GetxController {
       await StorageService.to.setString("avatar", result.data!.user.avatar);
       await StorageService.to.setString("roleId", result.data!.user.idcardVerified.toString());
       await UserStore.to.saveProfile(result);
+      await UserStore.to.setToken(result.data!.token.accessToken);
       EasyLoading.dismiss();
       Get.offAndToNamed(AppRoutes.Application);
       return true;
@@ -82,6 +83,7 @@ class LoginLogic extends GetxController {
       await StorageService.to.setString("avatar", result.data!.user.avatar);
       await StorageService.to.setString("roleId", result.data!.user.idcardVerified.toString());
       await  UserStore.to.saveProfile(result);
+      await UserStore.to.setToken(result.data!.token.accessToken);
       EasyLoading.dismiss();
       Get.offAndToNamed(AppRoutes.Application);
       return true;

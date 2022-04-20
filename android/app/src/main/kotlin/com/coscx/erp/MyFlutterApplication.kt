@@ -17,7 +17,7 @@ class MyFlutterApplication: FlutterApplication() {
             secret = "1bef9ca99f1ea5011e53b33f6a491a54",
             channel = "default",
             enableLog = BuildConfig.DEBUG,
-            resourcePackageName="com.coscx.flutter_erp"
+            resourcePackageName="com.coscx.erp"
             // ... other arguments
         )
     }
