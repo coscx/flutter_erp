@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/routers/names.dart';
+import 'package:flutter_erp/common/widgets/empty_page.dart';
 import 'package:flutter_erp/pages/flow_page/widget/flow.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -112,22 +113,24 @@ class FlowPage extends StatelessWidget {
         : SliverToBoxAdapter(
             child: Center(
             child: Container(
+              padding: EdgeInsets.only(top: 200.h),
               alignment: FractionalOffset.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(Icons.airplay, color: Colors.orangeAccent, size: 300.sp),
-                  Container(
-                    padding: EdgeInsets.only(top: 100.h),
-                    child: Text(
-                      "暂时没有用户了",
-                      style: TextStyle(
-                        fontSize: 40.sp,
-                        color: Colors.orangeAccent,
-                      ),
-                    ),
-                  )
+                  EmptyPage(),
+                  // Icon(Icons.airplay, color: Colors.orangeAccent, size: 300.sp),
+                  // Container(
+                  //
+                  //   child: Text(
+                  //     "暂时没有用户了",
+                  //     style: TextStyle(
+                  //       fontSize: 40.sp,
+                  //       color: Colors.orangeAccent,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
             ),

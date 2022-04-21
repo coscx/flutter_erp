@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 import '../../../common/entities/flow/wx_article.dart';
 import '../../../common/routers/names.dart';
+import '../../../common/widgets/extend_image.dart';
 
 const String defaultImg =
     'https://img.bosszhipin.com/beijin/mcs/useravatar/20171211/4d147d8bb3e2a3478e20b50ad614f4d02062e3aec7ce2519b427d24a3f300d68_s.jpg';
@@ -79,22 +80,20 @@ class MyFlow extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        CachedNetworkImage(
-                          imageUrl: item.img != ""
-                              ? (getExt(item.img) != "mp4"
-                                  ? item.img
-                                  : defaultImg)
-                              : defaultImg,
-                          imageBuilder: (context, imageProvider) => Container(
-                            height: imageHeight,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            child: Stack(
+
+                          Stack(
                               children: <Widget>[
+                                Container(
+
+                                  width: 300.h,
+                                  height: 200.h,
+                                  child: getCacheImage(
+                                      item.img != ""
+                                          ? (getExt(item.img) != "mp4"
+                                          ? item.img
+                                          : defaultImg)
+                                          : defaultImg),
+                                ),
                                 Positioned(
                                   child: Container(
                                     width: boxWidth,
@@ -104,7 +103,7 @@ class MyFlow extends StatelessWidget {
                                       right: 10.w,
                                     ),
                                     decoration:
-                                        BoxDecoration(color: Color(0x20000000)),
+                                        const BoxDecoration(color:  Color(0x20000000)),
                                     child: Row(
                                       children: <Widget>[
                                         Container(
@@ -126,13 +125,7 @@ class MyFlow extends StatelessWidget {
                                 ),
                               ],
                             ),
-                          ),
-                          placeholder: (context, url) => Image.asset(
-                            'assets/images/default/img_default.png',
-                            height: imageHeight,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+
                       ],
                     ),
                   ),

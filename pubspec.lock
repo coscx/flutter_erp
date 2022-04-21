@@ -99,27 +99,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.0.1"
-  cached_network_image:
-    dependency: "direct main"
-    description:
-      name: cached_network_image
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.2.0"
-  cached_network_image_platform_interface:
-    dependency: transitive
-    description:
-      name: cached_network_image_platform_interface
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.0"
-  cached_network_image_web:
-    dependency: transitive
-    description:
-      name: cached_network_image_web
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.1"
   card_swiper:
     dependency: "direct main"
     description:
@@ -316,6 +295,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.0"
+  extended_image:
+    dependency: "direct main"
+    description:
+      name: extended_image
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "6.0.2+1"
+  extended_image_library:
+    dependency: transitive
+    description:
+      name: extended_image_library
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.1.4"
   fake_async:
     dependency: transitive
     description:
@@ -349,7 +342,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "37f2eeec165dcd8b3e809d3001c4e95b4ffd3b2c"
+      resolved-ref: a7c7ce30fb08f28c299d36dd3bf874de57dddc2d
       url: "https://github.com/coscx/lat.git"
     source: git
     version: "1.0.0"
@@ -374,13 +367,6 @@ packages:
       url: "https://github.com/coscx/flutter_2d_amap.git"
     source: git
     version: "0.2.0+2"
-  flutter_blurhash:
-    dependency: transitive
-    description:
-      name: flutter_blurhash
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.6.6"
   flutter_cache_manager:
     dependency: "direct main"
     description:
@@ -596,6 +582,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.13.4"
+  http_client_helper:
+    dependency: transitive
+    description:
+      name: http_client_helper
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.2"
   http_parser:
     dependency: transitive
     description:
@@ -792,13 +785,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
-  octo_image:
-    dependency: transitive
-    description:
-      name: octo_image
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.1"
   overlay_support:
     dependency: "direct main"
     description:
@@ -977,9 +963,11 @@ packages:
   photo_view:
     dependency: "direct main"
     description:
-      name: photo_view
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: master
+      resolved-ref: "23063d535909027b8e198c2cffa83bf8f0480c96"
+      url: "https://github.com/bluefireteam/photo_view"
+    source: git
     version: "0.13.0"
   platform:
     dependency: transitive

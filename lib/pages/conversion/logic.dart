@@ -15,7 +15,7 @@ class ConversionLogic extends GetxController {
   var popString = ['清空记录', '删除好友', '加入黑名单'];
   int offset = 0;
   int limit = 10; //一次加载10条数据,不建议加载太多。
-   String memberId="82";
+  String memberId=StorageService.to.getString("im_sender");
   void onRefresh() async {
     FltImPlugin im = FltImPlugin();
     Map? response = await im.getConversations();
@@ -31,13 +31,12 @@ class ConversionLogic extends GetxController {
   }
   @override
   void onInit() {
-
     super.onInit();
   }
 
   @override
   void onReady() {
-    init();
+    //init();
     super.onReady();
   }
   void onTapDeleteConversion(String cid){

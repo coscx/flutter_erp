@@ -17,6 +17,7 @@ class ConversionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logic.init();
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(

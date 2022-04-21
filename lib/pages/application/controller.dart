@@ -307,10 +307,12 @@ class ApplicationController extends GetxController {
   }
 
   void onPeerMessageACK(result, int error) {
-    Map<String, dynamic> message = Map<String, dynamic>.from(result);
-    //EventBusUtil.fire(PeerRecAckEvent(message['content']));
     Map<String, dynamic> m = Map<String, dynamic>.from(result);
-
+    bool gg =Get.isRegistered<PeerChatLogic>();
+    if (gg){
+      var peerChatLogic = Get.find<PeerChatLogic>();
+      peerChatLogic.receiveMsgAck(m);
+    }
     //BlocProvider.of<PeerBloc>(context).add(EventReceiveNewMessageAck(m));
   }
 
@@ -368,9 +370,7 @@ class ApplicationController extends GetxController {
     bool gg =Get.isRegistered<PeerChatLogic>();
     if (gg){
       var peerChatLogic = Get.find<PeerChatLogic>();
-
         peerChatLogic.receiveMsgFresh();
-
     }
 
 

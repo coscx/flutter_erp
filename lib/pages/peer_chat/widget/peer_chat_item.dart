@@ -3,12 +3,14 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flt_im_plugin/message.dart';
 import 'package:flt_im_plugin/value_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../../../common/entities/im/Im_message.dart';
+import '../../../common/widgets/extend_image.dart';
+import '../../../common/widgets/imageview/image_preview_page.dart';
+import '../../../common/widgets/imageview/image_preview_view.dart';
 import '../../conversion/widget/dialog_util.dart';
 import '../../conversion/widget/functions.dart';
 import '../../conversion/widget/object_util.dart';
@@ -44,6 +46,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
         margin: EdgeInsets.only(left: 40.w, right: 10.w, bottom: 6.h, top: 6.h),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             //显示是否重发1、发送2中按钮，发送成功0或者null不显示
             (entity.flags == 0 || entity.flags == 8)
@@ -72,13 +75,12 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
             )),
             Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h, top: 12.h),
+                  margin: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h, top: 0.h),
 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
 
-                      SizedBox(height: 1.h),
                       GestureDetector(
                         child: _contentWidget(entity,tfSender),
                         onTap: () {
@@ -105,14 +107,14 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
     } else {
       //其他人的消息
       return Container(
-        margin: EdgeInsets.only(left: 10.w, right: 40.w, bottom: 6.h, top: 6.h),
+        margin: EdgeInsets.only(left: 10.w, right: 40.w, bottom: 6.h, top: 0.h),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _headPortrait('', 1),
             Expanded(
                 child: Container(
-                  margin: EdgeInsets.only(left: 10.w, right: 0.w, bottom: 0.h, top: 12.h),
+                  margin: EdgeInsets.only(left: 10.w, right: 0.w, bottom: 0.h, top: 0.h),
 
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -120,9 +122,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                       GestureDetector(
                         child: _contentWidget(entity,tfSender),
                         onTap: () {
-                          if (null != onItemClick) {
-                            onItemClick(entity);
-                          }
+                          onItemClick(entity);
                         },
                         // onLongPress: () {
                         //   if (null != onItemClick) {
@@ -145,25 +145,34 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
   *  头像
   */
   Widget _headPortrait(String url, int owner) {
-    return ClipRRect(
-        borderRadius: BorderRadius.circular(6.w),
-        child: url.isEmpty
-            ? Image.asset(
-            (owner == 1
-                ? FileUtil.getImagePath('ic_user_female',
-                dir: 'default', format: 'png')
-                : FileUtil.getImagePath('ic_user_male',
-                dir: 'default', format: 'png')),
-            width: 88.w,
-            height: 88.h)
-            : (ObjectUtil.isNetUri(url)
-            ? Image.network(
-          url,
-          width: 88.w,
-          height: 88.h,
-          fit: BoxFit.fill,
-        )
-            : Image.asset(url, width: 88, height: 88)));
+    return Container(
+        width: 88.w,
+        height: 88.h,
+        decoration: BoxDecoration(
+
+            borderRadius: BorderRadius.circular(10.w),
+            color: Colors.white
+        ),
+
+      child: ClipRRect(
+          borderRadius: BorderRadius.circular(10.w),
+          child: url.isEmpty
+              ? Image.asset(
+
+              (owner == 1
+                  ? FileUtil.getImagePath('ic_user_female',
+                  dir: 'default', format: 'png')
+                  : FileUtil.getImagePath('ic_user_male',
+                  dir: 'default', format: 'png')),
+            fit: BoxFit.cover,
+             )
+              : (ObjectUtil.isNetUri(url)
+              ? Image.network(
+            url,
+            fit: BoxFit.cover,
+          )
+              : Image.asset(url))),
+    );
   }
 
   /*
@@ -228,16 +237,19 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
   }
   Widget buildTextWidget(Message entity,String  tfSender) {
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(16.w),
-      child: Container(
-        padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 16.h, bottom: 16.h),
-        color: entity.sender == tfSender
-            ?Color.fromARGB(255, 158, 234, 106)
-            : Colors.white,
-        child: Text(
-          entity.content!['text'],
-          style: TextStyle(fontSize: 32.sp, color: Colors.black),
+    return Container(
+      padding: EdgeInsets.only(top: 12.h),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16.w),
+        child: Container(
+          padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 16.h, bottom: 16.h),
+          color: entity.sender == tfSender
+              ?const Color.fromARGB(255, 158, 234, 106)
+              : Colors.white,
+          child: Text(
+            entity.content!['text'],
+            style: TextStyle(fontSize: 32.sp, color: Colors.black),
+          ),
         ),
       ),
     );
@@ -275,7 +287,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
     double width = ValueUtil.toDouble(message.content!['width']);
     double height = ValueUtil.toDouble(message.content!['height']);
     String imageURL = ValueUtil.toStr(message.content!['imageURL']);
-    if (imageURL == null || imageURL.length == 0) {
+    if (imageURL.isEmpty) {
       imageURL = ValueUtil.toStr(message.content!['url']);
     }
     double size = 240.w;
@@ -289,7 +301,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
     } else if (message.type== MessageType.MESSAGE_TEXT &&
         message.content!['text'].contains('assets/images/figure')) {
       //assets/images/figure中的表情
-      size = 120.w;
+      size = 240.w;
       image = Image.asset(message.content!['text'], width: size, height: size);
       isFace=1;
     }
@@ -297,7 +309,6 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
       isSelf: message.sender== tfSender,
       message: message,
       child: isFace==1?
-
       ClipRRect(
         borderRadius: BorderRadius.circular(8.w),
         child: Container(
@@ -313,51 +324,31 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
       ):
 
       Container(
+
           decoration: BoxDecoration(
-            //背景Colors.transparent 透明
             color: Colors.transparent,
-            //设置四周圆角 角度
             borderRadius: BorderRadius.all(Radius.circular(4.w)),
-            //设置四周边框
-
           ),
-
-          width: 190.w,
-          height: 220.h,
+          width: 200.w,
+          height: 200.h,
           child: //Image.network(imageURL)
           GestureDetector(
             child:
-            //FutureBuilder(
-            //   future: getLocalCacheImage(url: imageURL),
-            //   builder: (context, snapshot) {
-            //     if (snapshot.connectionState != ConnectionState.done) {
-            //       return Container();
-            //     }
-            //     if (snapshot.hasData) {
-            //       return Image.memory(snapshot.data);
-            //     } else {
-            //       if (imageURL.startsWith("http://localhost")) {
-            //         return Container();
-            //       } else if (imageURL.startsWith('file:/')) {
-            //         return Image.file(File(imageURL));
-            //       }
-            //       return Image.network(imageURL);
-            //     }
-            //   },
-            // ),
             buildLocalImageWidget(imageURL),
             // Image.network(imageURL),
             onTap: () {
-
-        /*      ImagePreview.preview(
-                context,
-                images: List.generate(1, (index) {
-                  return ImageOptions(
-                    url: imageURL,
-                    tag: imageURL,
-                  );
-                }),
-              );*/
+              try{
+                ImagePreview.preview(
+                  images: List.generate(1, (index) {
+                    return ImageOptions(
+                      url: imageURL,
+                      tag: imageURL,
+                    );
+                  }),
+                );
+              }catch(e){
+                debugPrint(e.toString());
+              }
 
             },
             onLongPress: () {
@@ -378,27 +369,25 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
             return Container();
           }
           if (snapshot.hasData) {
-            return Image.memory(snapshot.data as Uint8List);
+            return Image.memory(snapshot.data as Uint8List,fit: BoxFit.cover,);
           } else {
             if (imageURL.startsWith("http://localhost")) {
               return Container();
             } else if (imageURL.startsWith('file:/')) {
-              return Image.file(File(imageURL));
+              return Image.file(File(imageURL),fit: BoxFit.cover,);
             }
-            return Image.network(imageURL);
+            return Image.network(imageURL,fit: BoxFit.cover,);
           }
         },
       );
     } else if (imageURL.startsWith('file:/')) {
       return Image.file(File(imageURL.substring(6)));
     }
-    return CachedNetworkImage(
-      imageUrl: imageURL,
-      // placeholder: (context, url) => new CircularProgressIndicator(),
-      errorWidget: (context, url, error) => new Icon(Icons.error),
+    return getCacheImage(
+      imageURL,
     );
 
-    Image.network(imageURL);
+   // Image.network(imageURL);
 
   }
 

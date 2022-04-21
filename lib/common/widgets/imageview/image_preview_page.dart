@@ -5,7 +5,6 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,6 +13,7 @@ import 'package:flutter_erp/common/widgets/imageview/primitive_navigation_bar.da
 import 'package:flutter_erp/common/widgets/imageview/support_activity_indicator.dart';
 import 'package:get/get.dart';
 
+import '../extend_image.dart';
 import 'image_preview_route.dart';
 import 'image_preview_view.dart';
 
@@ -191,7 +191,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> with SingleTickerPr
   ImageProvider _buildImageProvider(BuildContext context, int index) {
     final url = widget.images![index].url;
     if (url!.startsWith('http')) {
-      return CachedNetworkImageProvider(url);
+      return getCacheImageProvider(url);
     } else if (url.startsWith('file:/')) {
       return FileImage(File(url.substring(6)));
     } else {

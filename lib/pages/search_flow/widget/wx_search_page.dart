@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_erp/common/apis/common.dart';
+import 'package:flutter_erp/common/entities/home/only_store.dart';
 import 'package:flutter_erp/pages/search_flow/widget/single_choice.dart';
 
 
@@ -45,37 +47,37 @@ class _WxSearchPageState extends State<WxSearchPage> {
   List<StoreItem> pickerStoreItem = [];
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     minValue = 18;
     maxValue = 80;
-    // Future.delayed(Duration(milliseconds: 1)).then((e) async {
-    //   var result = await IssuesApi.getOnlyStoreList();
-    //   if (result['code'] == 200) {
-    //     List<dynamic> da = result['data'];
-    //
-    //     StoreItem ff = StoreItem();
-    //     ff.id = "0";
-    //     ff.type = 600;
-    //     ff.name = "请选择";
-    //     ff.index = 0;
-    //     ff.isSelect = false;
-    //     pickerStoreItem.add(ff);
-    //     pickerStoreData.add(ff.name);
-    //     da.forEach((value) {
-    //       StoreItem ff = StoreItem();
-    //       ff.id = value['id'].toString();
-    //       ff.type = 600;
-    //       ff.name = value['name'];
-    //       ff.index = 0;
-    //       ff.isSelect = false;
-    //       pickerStoreItem.add(ff);
-    //       pickerStoreData.add(value['name']);
-    //     });
-    //   } else {
-    //
-    //   }
-    // });
+    Future.delayed(const Duration(milliseconds: 1)).then((e) async {
+      var result = await CommonAPI.getOnlyStoreList();
+      if (result.code== 200) {
+        List<StoreData> da = result.Data;
+
+        StoreItem ff = StoreItem();
+        ff.id = "0";
+        ff.type = 600;
+        ff.name = "请选择";
+        ff.index = 0;
+        ff.isSelect = false;
+        pickerStoreItem.add(ff);
+        pickerStoreData.add(ff.name!);
+        for (var value in da) {
+          StoreItem ff = StoreItem();
+          ff.id = value.id.toString();
+          ff.type = 600;
+          ff.name = value.name;
+          ff.index = 0;
+          ff.isSelect = false;
+          pickerStoreItem.add(ff);
+          pickerStoreData.add(value.name);
+        }
+      } else {
+
+      }
+    });
   }
 
   @override

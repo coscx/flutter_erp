@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:city_pickers/city_pickers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +23,7 @@ import 'package:lottie/lottie.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/widgets/circle_text.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
+import '../../../common/widgets/extend_image.dart';
 import '../../../common/widgets/imageview/image_preview_page.dart';
 import '../../../common/widgets/imageview/image_preview_view.dart';
 import 'common_dialog.dart';
@@ -2631,19 +2631,19 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      CachedNetworkImage(
-                        imageUrl:
-                            e.fileUrl != "" ? e.fileUrl : defaultImg,
-                        imageBuilder: (context, imageProvider) => Container(
-                          height: imageHeight,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+
+                        Container(
+                          color: Colors.blue,
+
                           child: Stack(
                             children: <Widget>[
+                              Container(
+                                width: 250.w,
+                                height: 200.h,
+                                child: getCacheImage(
+                                  e.fileUrl != "" ? e.fileUrl : defaultImg,
+                                ),
+                              ),
                               Positioned(
                                 child: Container(
                                   width: 50.w,
@@ -2678,13 +2678,7 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
                               ),
                             ],
                           ),
-                        ),
-                        placeholder: (context, url) => Image.asset(
-                          'assets/images/default/img_default.png',
-                          height: imageHeight,
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                        )
                     ],
                   ),
                 ),
@@ -2936,6 +2930,36 @@ avatar(String url, bool isVip, String name) {
   return Container(
     child: Stack(
       children: [
+        url == ""
+            ? Container(
+          margin: EdgeInsets.only(left: 20.w, top: 20.h),
+          // width: 100.w,
+          // height: 100.h,h
+          color: Colors.transparent,
+          child: CircleText(
+            text: name,
+            size: 140.w,
+            fontSize: 50.sp,
+            color: Colors.lightBlue,
+            //shadowColor: Colors.transparent,
+          ),
+        )
+            : Container(
+          margin: EdgeInsets.only(left: 30.w, top: 32.h),
+          child: CircleAvatar(
+            radius: (70.w),
+            child: ClipOval(
+              child: Container(
+                width: 160.w,
+                height: 160.h,
+                child: getCacheImage(
+                  url,
+                ),
+              ),
+            ),
+            backgroundColor: Colors.white,
+          ),
+        ),
         isVip
             ? Container(
                 width: 200.w,
@@ -2949,38 +2973,7 @@ avatar(String url, bool isVip, String name) {
                 margin: EdgeInsets.only(left: 0.w, top: 10.h),
               )
             : Container(),
-        url == ""
-            ? Container(
-                margin: EdgeInsets.only(left: 20.w, top: 20.h),
-                // width: 100.w,
-                // height: 100.h,h
-                color: Colors.transparent,
-                child: CircleText(
-                  text: name,
-                  size: 140.w,
-                  fontSize: 50.sp,
-                  color: Colors.lightBlue,
-                  //shadowColor: Colors.transparent,
-                ),
-              )
-            : Container(
-                margin: EdgeInsets.only(left: 30.w, top: 30.h),
-                child: CircleAvatar(
-                  radius: (70.w),
-                  child: ClipOval(
-                    child: CachedNetworkImage(
-                        imageUrl: url,
-                        fit: BoxFit.cover,
-                        width: 140.w,
-                        height: 140.h,
-                        placeholder: (context, url) => Image.asset(
-                              'assets/images/default/img_default.png',
-                              fit: BoxFit.fill,
-                            )),
-                  ),
-                  backgroundColor: Colors.white,
-                ),
-              ),
+
       ],
     ),
   );
@@ -3027,19 +3020,18 @@ header(BuildContext context, Data user) {
       children: <Widget>[
         GestureDetector(
             onTap: () {
-              // ImagePreview.preview(
-              //   context,
-              //   images: List.generate(1, (index) {
-              //     return ImageOptions(
-              //       url: headImg != ""
-              //           ? headImg
-              //           : ("assets/packages/images/ic_user_none_round.png"),
-              //       tag: headImg != ""
-              //           ? headImg
-              //           : ("assets/packages/images/ic_user_none_round.png"),
-              //     );
-              //   }),
-              // );
+              ImagePreview.preview(
+                images: List.generate(1, (index) {
+                  return ImageOptions(
+                    url: headImg != ""
+                        ? headImg
+                        : ("assets/packages/images/ic_user_none_round.png"),
+                    tag: headImg != ""
+                        ? headImg
+                        : ("assets/packages/images/ic_user_none_round.png"),
+                  );
+                }),
+              );
             },
             child: Padding(
               padding: EdgeInsets.only(left: 10.w, right: 0.w),

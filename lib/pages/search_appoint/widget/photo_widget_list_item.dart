@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/routers/pages.dart';
@@ -12,6 +12,7 @@ import '../../../common/routers/names.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/values/cons.dart';
 import '../../../common/widgets/circle_text.dart';
+import '../../../common/widgets/extend_image.dart';
 
 class PhotoSearchWidgetListItemAppoint extends StatelessWidget {
   final Data photo;
@@ -133,19 +134,13 @@ class PhotoSearchWidgetListItemAppoint extends StatelessWidget {
                       child: ClipOval(
                         child: photo.headImg==""
                             ? Container()
-                            : CachedNetworkImage(
-                                imageUrl: photo.channel == 0
+                            : getCacheImage(
+                                 photo.channel == 0
                                     ? photo.headImg
                                     : (photo.esAge != ""
                                         ? photo.esAge
                                         : photo.headImg),
-                                fit: BoxFit.cover,
-                                width: 140.w,
-                                height: 140.h,
-                                placeholder: (context, url) => Image.asset(
-                                  'assets/packages/images/ic_user_none_round.png',
-                                  fit: BoxFit.fill,
-                                ),
+
                               ),
                       ),
                     ),

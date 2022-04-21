@@ -89,7 +89,7 @@ class AppPages {
       name: AppRoutes.Detail,
       page: () => UserDetailPage(),
       binding: UserDetailBinding(),
-      transition: Transition.rightToLeft
+        transition: Transition.noTransition
     ),
 
     GetPage(
@@ -160,4 +160,22 @@ class AppPages {
   //   page: () => NotfoundView(),
   // );
 
+}
+class SizeTransitions extends CustomTransition {
+  @override
+  Widget buildTransition(
+      BuildContext context,
+      Curve? curve,
+      Alignment? alignment,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
+    return FadeTransition(
+        opacity:  CurvedAnimation(
+        parent: animation,
+        curve: curve!,
+      ),
+        child: child,
+    );
+  }
 }

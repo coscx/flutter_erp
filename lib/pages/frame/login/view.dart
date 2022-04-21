@@ -17,6 +17,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GetBuilder<LoginLogic>(builder: (logic) {
       return Scaffold(
           body: ScrollConfiguration(

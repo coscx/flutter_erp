@@ -16,6 +16,7 @@ import 'package:flutter_sound/public/flutter_sound_player.dart';
 import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../../../common/utils/permission.dart';
@@ -278,16 +279,18 @@ class _ChatInputViewState extends State<ChatInputView> {
     }
     List<Widget> _widgets = [];
     _widgets.add(MoreWidgets.buildIcon(Icons.insert_photo, '相册',
-        o: (res) => ImageUtil.getGalleryImage().then((imageFile) {
-              //相册取图片
-              _willBuildImageMessage(imageFile);
-            })));
+        o: (res) async {
+         var imageFile = await  ImageUtil.getGalleryImage();
+          _willBuildImageMessage(imageFile);
+        }
+      )
+    );
     _widgets.add(MoreWidgets.buildIcon(Icons.camera_alt, '拍摄',
         o: (res) => PopupWindowUtil.showCameraChosen(context,
                 onCallBack: (type, file) async {
               if (type == 1) {
                 //相机取图片
-                _willBuildImageMessage(file as File);
+                _willBuildImageMessage(file as XFile);
               } else if (type == 2) {
                 //相机拍视频
                 _buildVideoMessage(file as Map<String, dynamic>);
@@ -681,7 +684,7 @@ class _ChatInputViewState extends State<ChatInputView> {
     isShowSend = false;
   }
 
-  _willBuildImageMessage(File imageFile) {
+  _willBuildImageMessage(XFile imageFile) {
     if (imageFile.path.isEmpty) {
       return;
     }
@@ -689,8 +692,10 @@ class _ChatInputViewState extends State<ChatInputView> {
     return;
   }
 
-  _buildImageMessage(File file, bool sendOriginalImage) {
-    file.readAsBytes().then((content) => {});
+  _buildImageMessage(XFile file, bool sendOriginalImage) async {
+    var content = await file.readAsBytes();
+    var logic = Get.find<PeerChatLogic>();
+    logic.sendImgMessage(content);
     isShowTools = false;
     controller.clear();
   }
