@@ -193,7 +193,17 @@ class ApplicationController extends GetxController {
     }catch(e){
       print(e);
     }
-
+    Future.delayed(const Duration(seconds: 5)).then((e) async {
+      var result = await CommonAPI.getUserStatus();
+      if (result.code== 402) {
+        await StorageService.to.remove("im_token");
+        await StorageService.to.remove("memberId");
+        await StorageService.to.remove("token");
+        await StorageService.to.remove("user_token");
+        await StorageService.to.remove("user_profile");
+        Get.offAllNamed(AppRoutes.LOGIN);
+      }
+    });
     super.onInit();
 
 

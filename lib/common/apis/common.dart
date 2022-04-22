@@ -291,6 +291,16 @@ class CommonAPI {
     return CommonResult.fromJson(response);
   }
 
+  static Future<CommonResult> getUserStatus() async {
+    var response = await NewERPHttpUtil().post(
+      '/api/GetUserStatus',
+      queryParameters: {},
+    );
+    return CommonResult.fromJson(response);
+  }
+
+
+
   static Future<WxArticleEntity> wxArticle(  int page, final List<SelectItem> selectItems) async {
     Map<String, dynamic> searchParm = {};
     searchParm['currentPage'] = page;

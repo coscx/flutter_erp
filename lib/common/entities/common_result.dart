@@ -60,7 +60,7 @@ class CommonResult {
   });
 
   factory CommonResult.fromJson(Map<String, dynamic> json) => CommonResult(
-    status: asT<String>(json['status'])!,
+    status: json.containsKey('data')? asT<String>(json['status'])!:"",
     code: asT<int>(json['code'])!,
     data: json.containsKey('data')? asT<String>(json['data'])!:"",
     message: json.containsKey('message')? asT<String>(json['message'])! :"",
