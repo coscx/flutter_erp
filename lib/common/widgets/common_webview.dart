@@ -30,6 +30,7 @@ class _CommonWebViewPageState extends State<CommonWebViewPage> {
       ),
       backgroundColor: Colors.white,
       body: WebView(
+        javascriptMode : JavascriptMode.unrestricted,
         initialUrl: widget.htmlUrl,
       ),
     );

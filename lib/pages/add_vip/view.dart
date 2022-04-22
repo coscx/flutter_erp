@@ -7,7 +7,7 @@ import 'package:flutter_picker/Picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import '../../common/widgets/DyBehaviorNull.dart';
+import '../../common/widgets/dy_behavior_null.dart';
 import 'package:another_xlider/another_xlider.dart';
 import 'logic.dart';
 

@@ -7,7 +7,7 @@ import 'package:get/get_core/src/get_main.dart';
 
 import '../../../common/routers/names.dart';
 import '../../../common/style/toly_icon.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 
 class SettingPages extends StatelessWidget {

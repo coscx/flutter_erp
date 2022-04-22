@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 
 /// 底部弹出框
 class BottomSheetWidget extends StatefulWidget {

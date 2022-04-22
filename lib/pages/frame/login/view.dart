@@ -4,7 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common/style/toly_icon.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../../common/widgets/toast.dart';
 import 'logic.dart';

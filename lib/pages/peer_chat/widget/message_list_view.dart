@@ -6,7 +6,7 @@ import 'package:flutter_erp/pages/peer_chat/widget/time_util.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/voice.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../../conversion/widget/colors.dart';
 import '../../conversion/widget/functions.dart';
 

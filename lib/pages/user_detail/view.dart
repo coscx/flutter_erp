@@ -20,7 +20,7 @@ import 'package:url_launcher/url_launcher.dart';
 import './widget/detail_common.dart';
 import './widget/detail_item.dart';
 import '../../common/values/cons.dart';
-import '../../common/widgets/DyBehaviorNull.dart';
+import '../../common/widgets/dy_behavior_null.dart';
 import '../../common/widgets/pop_button.dart';
 import '../../common/widgets/refresh.dart';
 import 'logic.dart';

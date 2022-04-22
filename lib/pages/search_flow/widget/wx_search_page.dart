@@ -10,7 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 
 import '../../../common/entities/home/common.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 
 
 

@@ -20,4 +20,5 @@ class AppRoutes {
   static const Amap = '/amap';
   static const Fine = '/fine';
   static const SearchFlow = '/search_flow';
+  static const Webview = '/webview';
 }

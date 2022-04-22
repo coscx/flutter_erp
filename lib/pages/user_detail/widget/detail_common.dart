@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flui_nullsafety/flui_nullsafety.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common/utils/common.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import 'circle.dart';
 import 'common_dialog.dart';
 import 'detail_dialog.dart';
@@ -28,7 +28,7 @@ Widget item_photo(BuildContext context) {
                 Row(children: <Widget>[
                   Icon(
                     Icons.account_circle_outlined,
-                    size: 18,
+                    size: 36.sp,
                     color: Colors.black54,
                   ),
                   Container(
@@ -65,7 +65,7 @@ Widget item_photo(BuildContext context) {
                               style:
                                   TextStyle(fontSize: 7.sp, color: Colors.grey),
                             )),
-                        Visibility(
+                        const Visibility(
                             visible: false,
                             child: CircleAvatar(
                               backgroundImage: AssetImage("rightImageUri"),
@@ -74,7 +74,7 @@ Widget item_photo(BuildContext context) {
                     ),
                     Icon(
                       Icons.arrow_forward_ios_outlined,
-                      size: 15,
+                      size: 30.sp,
                       color: Colors.black54,
                     )
                   ]),

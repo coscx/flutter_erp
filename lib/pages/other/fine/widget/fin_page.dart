@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import '../../../../common/widgets/DyBehaviorNull.dart';
-import '../../../../common/widgets/MyScrollPhysics.dart';
+import '../../../../common/widgets/dy_behavior_null.dart';
+import '../../../../common/widgets/my_scroll_physics.dart';
 import '../../../../common/widgets/refresh.dart';
 import 'custom_dialog.dart';
 

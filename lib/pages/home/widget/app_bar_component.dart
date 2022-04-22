@@ -9,7 +9,7 @@ import 'package:gzx_dropdown_menu/gzx_dropdown_menu.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../common/entities/home/common.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../logic.dart';
 
 class AppBarComponent extends StatefulWidget {

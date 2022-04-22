@@ -2,9 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
@@ -25,8 +23,13 @@ class MyFlow extends StatelessWidget {
   MyFlow({required this.liveData});
 
   // 跳转直播间
-  void _goToLiveRoom(context, Datas item) {
-    Get.toNamed(AppRoutes.Detail,arguments: item.uuid);
+  void _goToDetail(context, Datas item) {
+    Get.toNamed(AppRoutes.Detail, arguments: item.uuid);
+  }
+
+  void _goToWebView(context, Datas item) {
+    Get.toNamed(AppRoutes.Webview,
+        arguments: {"title": item.customerName, "url": item.url});
   }
 
   @override
@@ -39,7 +42,6 @@ class MyFlow extends StatelessWidget {
       ]),
     );
   }
-
 
   String getExt(String name) {
     var m = "";
@@ -61,139 +63,138 @@ class MyFlow extends StatelessWidget {
     liveData.asMap().keys.forEach((index) {
       Datas item = liveData[index];
       liveList.add(
-        GestureDetector(
-          onTap: () {
-            _goToLiveRoom(context, item);
-          },
-          child: Padding(
-            key: ObjectKey(item.id),
-            padding:
-                EdgeInsets.only(left: 20.w, right: 20.w, bottom: boxMargin * 2),
-            child: Column(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(12.w),
-                  ),
-                  child: Container(
-                    width: boxWidth,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: <Widget>[
-
+        Padding(
+          key: ObjectKey(item.id),
+          padding:
+              EdgeInsets.only(left: 20.w, right: 20.w, bottom: boxMargin * 2),
+          child: Column(
+            children: [
+              GestureDetector(
+                  onTap: () {
+                    _goToWebView(context, item);
+                  },
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(12.w),
+                    ),
+                    child: Container(
+                      width: boxWidth,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: <Widget>[
                           Stack(
-                              children: <Widget>[
-                                Container(
-
-                                  width: 300.h,
-                                  height: 200.h,
-                                  child: getCacheImage(
-                                      item.img != ""
-                                          ? (getExt(item.img) != "mp4"
-                                          ? item.img
-                                          : defaultImg)
-                                          : defaultImg),
-                                ),
-                                Positioned(
-                                  child: Container(
-                                    width: boxWidth,
-                                    height: 70.h,
-                                    padding: EdgeInsets.only(
-                                      left: 10.w,
-                                      right: 10.w,
-                                    ),
-                                    decoration:
-                                        const BoxDecoration(color:  Color(0x20000000)),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Container(
-                                          width: ScreenUtil().screenWidth / 2 -
-                                              70.w,
-                                          //height: 200.h,
-                                          child: Text(item.title,
-                                              maxLines: 3,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  fontSize: 25.sp,
-                                                  color: Colors.white)),
-                                        ),
-                                      ],
-                                    ),
+                            children: <Widget>[
+                              Container(
+                                width: 300.h,
+                                height: 200.h,
+                                child: getCacheImage(item.img != ""
+                                    ? (getExt(item.img) != "mp4"
+                                        ? item.img
+                                        : defaultImg)
+                                    : defaultImg),
+                              ),
+                              Positioned(
+                                child: Container(
+                                  width: boxWidth,
+                                  height: 70.h,
+                                  padding: EdgeInsets.only(
+                                    left: 10.w,
+                                    right: 10.w,
                                   ),
-                                  bottom: 0,
-                                  left: 0,
+                                  decoration: const BoxDecoration(
+                                      color: Color(0x20000000)),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Container(
+                                        width:
+                                            ScreenUtil().screenWidth / 2 - 70.w,
+                                        //height: 200.h,
+                                        child: Text(item.title,
+                                            maxLines: 3,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                                fontSize: 25.sp,
+                                                color: Colors.white)),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
+                                bottom: 0,
+                                left: 0,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  )),
+              GestureDetector(
+                  onTap: () {
+                    _goToDetail(context, item);
+                  },
+                  child: Container(
+                    width: ScreenUtil().screenWidth / 2 - 50.w,
+                    color: Colors.transparent,
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 30.h,
+                          child: Row(children: [
+                            Container(
+                              width: 80.w,
+                              padding: EdgeInsets.only(left: 0.w, right: 0.w),
+                              //width: 200.w,
+                              child: Text(
+                                item.customerName,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 23.sp,
+                                ),
+                              ),
                             ),
-
+                            Container(
+                              padding: EdgeInsets.only(left: 0.w, right: 5.w),
+                              //width: 200.w,
+                              child: Text(
+                                item.gender == 1 ? "男" : "女",
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 23.sp,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 0.w, right: 5.w),
+                              //width: 200.w,
+                              child: Text(
+                                item.age.toString(),
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 30.sp,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 0.w, right: 0.w),
+                              //width: 200.w,
+                              child: Text(
+                                "来源:" + item.store,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 23.sp,
+                                ),
+                              ),
+                            )
+                          ]),
+                        ),
                       ],
                     ),
-                  ),
-                ),
-                Container(
-                  width: ScreenUtil().screenWidth / 2 - 50.w,
-                  color: Colors.transparent,
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 30.h,
-                        child: Row(children: [
-                          Container(
-                            width: 80.w,
-                            padding: EdgeInsets.only(left: 0.w, right: 0.w),
-                            //width: 200.w,
-                            child: Text(
-                              item.customerName,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 23.sp,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 0.w, right: 5.w),
-                            //width: 200.w,
-                            child: Text(
-                              item.gender== 1 ? "男" : "女",
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 23.sp,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 0.w, right: 5.w),
-                            //width: 200.w,
-                            child: Text(
-                              item.age.toString(),
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 30.sp,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(left: 0.w, right: 0.w),
-                            //width: 200.w,
-                            child: Text(
-                              "来源:" + item.store,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 23.sp,
-                              ),
-                            ),
-                          )
-                        ]),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                  )),
+            ],
           ),
         ),
       );

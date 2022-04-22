@@ -10,7 +10,7 @@ import 'package:menu_button/menu_button.dart';
 
 import '../../../common/routers/names.dart';
 import '../../../common/utils/common.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../logic.dart';
 import 'detail_common.dart';
 

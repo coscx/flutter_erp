@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../../common/widgets/more_widgets.dart';
 import '../../conversion/widget/colors.dart';

@@ -3,7 +3,7 @@ import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../common/entities/detail/user.dart';
-import '../../../common/widgets/DyBehaviorNull.dart';
+import '../../../common/widgets/dy_behavior_null.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../user_detail/widget/common_dialog.dart';
 
