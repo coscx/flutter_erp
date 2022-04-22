@@ -77,7 +77,7 @@ class CommonAPI {
   }
   static Future<TreeStoreResult> getTreeStoreList() async {
     var response = await ERPHttpUtil().get(
-      '/api/v1/system/user/getTreeStores',
+      '/api/v1/system/user/getTreeStoreOnline',
       queryParameters: {},
     );
     return TreeStoreResult.fromJson(response);
