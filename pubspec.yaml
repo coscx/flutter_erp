@@ -87,7 +87,6 @@ dependencies:
   #font_awesome_flutter: ^10.1.0
   refresh_loadmore: ^2.0.5
   fluwx: ^3.8.2
-  flutter_sound: ^9.1.9
   # 屏幕适配
   flutter_screenutil: ^5.4.0
   # toast
@@ -131,6 +130,7 @@ dependencies:
   # permission 权限
   permission_handler: ^9.2.0
   qr_flutter: ^4.0.0
+  record: ^3.0.4
   radial_menu: ^0.0.1
   shared_preferences: ^2.0.13
   # share

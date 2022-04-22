@@ -34,7 +34,7 @@ class CommonUtil{
       _recorderTxt = _recorderTxt + ":0$millSecond";
     }
     print(_recorderTxt);
-    await player.dispose();
+    await player.stop();
     return  d.inMilliseconds / 01000;
   }
 

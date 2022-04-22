@@ -474,27 +474,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.4.0+1"
-  flutter_sound:
-    dependency: "direct main"
-    description:
-      name: flutter_sound
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "9.2.9"
-  flutter_sound_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_sound_platform_interface
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "9.2.9"
-  flutter_sound_web:
-    dependency: transitive
-    description:
-      name: flutter_sound_web
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "9.2.9"
   flutter_spinkit:
     dependency: "direct main"
     description:
@@ -778,13 +757,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.8.01"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.0"
   overlay_support:
     dependency: "direct main"
     description:
@@ -997,13 +969,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.4"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "6.0.2"
   pull_to_refresh:
     dependency: "direct main"
     description:
@@ -1032,13 +997,27 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.0.1"
-  recase:
-    dependency: transitive
+  record:
+    dependency: "direct main"
     description:
-      name: recase
+      name: record
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.0"
+    version: "3.0.4"
+  record_platform_interface:
+    dependency: transitive
+    description:
+      name: record_platform_interface
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.0"
+  record_web:
+    dependency: transitive
+    description:
+      name: record_web
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.1"
   rect_getter:
     dependency: transitive
     description:

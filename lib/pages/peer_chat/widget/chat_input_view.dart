@@ -11,15 +11,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/popupwindow_widget.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/voice.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:flutter_sound/public/flutter_sound_player.dart';
-import 'package:flutter_sound/public/flutter_sound_recorder.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:intl/intl.dart';
 
-import '../../../common/utils/permission.dart';
 import '../../../common/widgets/DyBehaviorNull.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../../common/widgets/more_widgets.dart';
@@ -35,21 +30,29 @@ import 'image_util.dart';
 
 abstract class CounterController {
   Function increment();
+
   Function decrement();
 }
+
 class ChatInputView extends StatefulWidget {
   final Conversion model;
   final String memId;
   final ScrollController scrollController;
   final Voice voice;
-  const ChatInputView({Key? key, required this.model, required this.memId, required this.scrollController, required this.voice}) : super(key: key);
+
+  const ChatInputView(
+      {Key? key,
+      required this.model,
+      required this.memId,
+      required this.scrollController,
+      required this.voice})
+      : super(key: key);
+
   @override
   _ChatInputViewState createState() => _ChatInputViewState();
 }
 
 class _ChatInputViewState extends State<ChatInputView> {
-  FlutterSoundRecorder? recorderModule = FlutterSoundRecorder();
-  FlutterSoundPlayer? playerModule = FlutterSoundPlayer();
   bool isBlackName = false;
   List<String> popString = <String>[];
   bool isShowSend = false; //是否显示发送按钮
@@ -87,25 +90,21 @@ class _ChatInputViewState extends State<ChatInputView> {
     getLocalMessage();
     initData();
     checkBlackList();
-    recorderModule = widget.voice.recorderModule;
-    playerModule = widget.voice.playerModule;
+
     peerAckSubscription = EventBusUtil.listen((event) {
       if (event is PeerRecAckEvent) {
         if (!mounted) return;
         print("event.uuid");
         listOnTap();
         hideKeyBoard();
-        setState(() {
-
-        });
+        setState(() {});
       }
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
-    return   Column(
+    return Column(
       children: [
         Container(
           decoration: BoxDecoration(
@@ -138,54 +137,52 @@ class _ChatInputViewState extends State<ChatInputView> {
                     }),
                 isShowSend
                     ? GestureDetector(
-                  onTap: () {
-                    if (controller.text.isEmpty) {
-                      return;
-                    }
-                    _buildTextMessage(controller.text);
-                  },
-                  child: Container(
-                    alignment: Alignment.center,
-                    width: 90.w,
-                    height: 32.h,
-                    margin: EdgeInsets.only(right: 8.w),
-                    child: Text(
-                      '发送',
-                      style:
-                      TextStyle(fontSize: 28.sp, color: Colors.red),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                      BorderRadius.all(Radius.circular(8.w)),
-                    ),
-                  ),
-                )
+                        onTap: () {
+                          if (controller.text.isEmpty) {
+                            return;
+                          }
+                          _buildTextMessage(controller.text);
+                        },
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 90.w,
+                          height: 32.h,
+                          margin: EdgeInsets.only(right: 8.w),
+                          child: Text(
+                            '发送',
+                            style:
+                                TextStyle(fontSize: 28.sp, color: Colors.red),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.w)),
+                          ),
+                        ),
+                      )
                     : IconButton(
-                    icon: const Icon(Icons.add_circle_outline),
-                    iconSize: 55.sp,
-                    onPressed: () {
-                      hideKeyBoard();
-                      inputRightSendOnTap();
-                      setState(() {});
-                    }),
+                        icon: const Icon(Icons.add_circle_outline),
+                        iconSize: 55.sp,
+                        onPressed: () {
+                          hideKeyBoard();
+                          inputRightSendOnTap();
+                          setState(() {});
+                        }),
               ],
             ),
           ),
         ),
         (isShowTools || isShowFace || isShowVoice)
             ? Container(
-          height: 418.h,
-          child: _bottomWidget(context),
-        )
+                height: 418.h,
+                child: _bottomWidget(context),
+              )
             : const SizedBox(
-          height: 0,
-        )
+                height: 0,
+              )
       ],
     );
   }
-
-
 
   _deletePeerMessage(BuildContext context, Message entity) {
     showDialog(
@@ -260,7 +257,6 @@ class _ChatInputViewState extends State<ChatInputView> {
     );
   }
 
-
   _bottomWidget(BuildContext context) {
     late Widget widget;
     if (isShowTools) {
@@ -278,13 +274,11 @@ class _ChatInputViewState extends State<ChatInputView> {
       guideToolsList.clear();
     }
     List<Widget> _widgets = [];
-    _widgets.add(MoreWidgets.buildIcon(Icons.insert_photo, '相册',
-        o: (res) async {
-         var imageFile = await  ImageUtil.getGalleryImage();
-          _willBuildImageMessage(imageFile);
-        }
-      )
-    );
+    _widgets
+        .add(MoreWidgets.buildIcon(Icons.insert_photo, '相册', o: (res) async {
+      var imageFile = await ImageUtil.getGalleryImage();
+      _willBuildImageMessage(imageFile);
+    }));
     _widgets.add(MoreWidgets.buildIcon(Icons.camera_alt, '拍摄',
         o: (res) => PopupWindowUtil.showCameraChosen(context,
                 onCallBack: (type, file) async {
@@ -336,16 +330,14 @@ class _ChatInputViewState extends State<ChatInputView> {
     return ScrollConfiguration(
         behavior: DyBehaviorNull(),
         child: Swiper(
-      physics: const AlwaysScrollableScrollPhysics(),
-      loop: false,
-      itemBuilder: (BuildContext context,int index){
-        return guideToolsList[index];
-      },
-      itemCount: guideToolsList.length,
-
-      pagination:  const SwiperPagination(),
-
-    ));
+          physics: const AlwaysScrollableScrollPhysics(),
+          loop: false,
+          itemBuilder: (BuildContext context, int index) {
+            return guideToolsList[index];
+          },
+          itemCount: guideToolsList.length,
+          pagination: const SwiperPagination(),
+        ));
     // return Swiper(
     //     autoStart: false,
     //     circular: false,
@@ -362,122 +354,113 @@ class _ChatInputViewState extends State<ChatInputView> {
     _initFaceList();
     return ScrollConfiguration(
         behavior: DyBehaviorNull(),
-    child:Column(
-      children: <Widget>[
-        Flexible(
-            child: Stack(
+        child: Column(
           children: <Widget>[
-            Offstage(
-              offstage: isFaceFirstList,
-              child: Swiper(
-                  pagination:  const SwiperPagination(),
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  loop: false,
-                  itemBuilder: (BuildContext context,int index){
-                    return guideFigureList[index];
-                  },
-                  itemCount: guideFigureList.length),
+            Flexible(
+                child: Stack(
+              children: <Widget>[
+                Offstage(
+                  offstage: isFaceFirstList,
+                  child: Swiper(
+                      pagination: const SwiperPagination(),
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      loop: false,
+                      itemBuilder: (BuildContext context, int index) {
+                        return guideFigureList[index];
+                      },
+                      itemCount: guideFigureList.length),
+                ),
+                Offstage(
+                  offstage: !isFaceFirstList,
+                  child: EmojiPicker(
+                    config: Config(
+                        columns: 7,
+                        emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
+                        verticalSpacing: 0,
+                        horizontalSpacing: 0,
+                        initCategory: Category.SMILEYS,
+                        bgColor: const Color(0xFFF2F2F2),
+                        indicatorColor: Colors.blue,
+                        iconColor: Colors.grey,
+                        iconColorSelected: Colors.blue,
+                        progressIndicatorColor: Colors.blue,
+                        backspaceColor: Colors.blue,
+                        skinToneDialogBgColor: Colors.white,
+                        skinToneIndicatorColor: Colors.grey,
+                        enableSkinTones: true,
+                        showRecentsTab: true,
+                        recentsLimit: 28,
+                        noRecentsText: "暂无更多",
+                        noRecentsStyle: const TextStyle(
+                            fontSize: 20, color: Colors.black26),
+                        tabIndicatorAnimDuration: kTabScrollDuration,
+                        categoryIcons: const CategoryIcons(),
+                        buttonMode: ButtonMode.MATERIAL),
+                    onEmojiSelected: (Category category, Emoji emoji) {
+                      controller.text = controller.text + emoji.emoji;
+                      controller.selection = TextSelection.fromPosition(
+                          TextPosition(offset: controller.text.length));
 
-            ),
-            Offstage(
-              offstage: !isFaceFirstList,
-              child: EmojiPicker(
-                config: Config(
-                              columns: 7,
-                              emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0),
-                              verticalSpacing: 0,
-                              horizontalSpacing: 0,
-                              initCategory: Category.SMILEYS,
-                              bgColor: const Color(0xFFF2F2F2),
-                              indicatorColor: Colors.blue,
-                              iconColor: Colors.grey,
-                              iconColorSelected: Colors.blue,
-                              progressIndicatorColor: Colors.blue,
-                              backspaceColor: Colors.blue,
-                              skinToneDialogBgColor: Colors.white,
-                              skinToneIndicatorColor: Colors.grey,
-                              enableSkinTones: true,
-                              showRecentsTab: true,
-                              recentsLimit: 28,
-                              noRecentsText: "暂无更多",
-                              noRecentsStyle: const TextStyle(
-                              fontSize: 20, color: Colors.black26),
-                              tabIndicatorAnimDuration: kTabScrollDuration,
-                              categoryIcons: const CategoryIcons(),
-                              buttonMode: ButtonMode.MATERIAL),
-
-                onEmojiSelected: (Category category, Emoji emoji) {
-                  controller.text =controller.text + emoji.emoji;
-                  controller.selection = TextSelection.fromPosition(
-                      TextPosition(offset: controller.text.length));
-
-                  if (isShowSend == false) {
-
-                      if (controller.text.isNotEmpty) {
-                        isShowSend = true;
-                      } else {
-                        isShowSend = false;
+                      if (isShowSend == false) {
+                        if (controller.text.isNotEmpty) {
+                          isShowSend = true;
+                        } else {
+                          isShowSend = false;
+                        }
+                        setState(() {});
                       }
-                     setState(() {
-
-                     });
-                  }
-                },
+                    },
+                  ),
+                )
+              ],
+            )),
+            SizedBox(
+              height: 4.h,
+            ),
+            Divider(height: 2.h),
+            Container(
+              height: 48.h,
+              child: Row(
+                children: <Widget>[
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                          padding: EdgeInsets.only(left: 20.w),
+                          child: InkWell(
+                            child: Icon(
+                              Icons.sentiment_very_satisfied,
+                              color: isFaceFirstList
+                                  ? ObjectUtil.getThemeSwatchColor()
+                                  : headsetColor,
+                              size: 48.sp,
+                            ),
+                            onTap: () {
+                              isFaceFirstList = true;
+                              setState(() {});
+                            },
+                          ))),
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Container(
+                          padding: EdgeInsets.only(left: 20.w),
+                          child: InkWell(
+                            child: Icon(
+                              Icons.favorite_border,
+                              color: isFaceFirstList
+                                  ? headsetColor
+                                  : ObjectUtil.getThemeSwatchColor(),
+                              size: 48.sp,
+                            ),
+                            onTap: () {
+                              isFaceFirstList = false;
+                              setState(() {});
+                            },
+                          ))),
+                ],
               ),
             )
           ],
-        )),
-        SizedBox(
-          height: 4.h,
-        ),
-        Divider(height: 2.h),
-        Container(
-          height: 48.h,
-          child: Row(
-            children: <Widget>[
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      padding: EdgeInsets.only(left: 20.w),
-                      child: InkWell(
-                        child: Icon(
-                          Icons.sentiment_very_satisfied,
-                          color: isFaceFirstList
-                              ? ObjectUtil.getThemeSwatchColor()
-                              : headsetColor,
-                          size: 48.sp,
-                        ),
-                        onTap: () {
-                          isFaceFirstList = true;
-                          setState(() {
-
-                          });
-                        },
-                      ))),
-              Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                      padding: EdgeInsets.only(left: 20.w),
-                      child: InkWell(
-                        child: Icon(
-                          Icons.favorite_border,
-                          color: isFaceFirstList
-                              ? headsetColor
-                              : ObjectUtil.getThemeSwatchColor(),
-                          size: 48.sp,
-                        ),
-                        onTap: () {
-                          isFaceFirstList = false;
-                          setState(() {
-
-                          });
-                        },
-                      ))),
-            ],
-          ),
-        )
-      ],
-    ));
+        ));
   }
 
   _voiceWidget() {
@@ -527,8 +510,6 @@ class _ChatInputViewState extends State<ChatInputView> {
                           timer?.cancel();
                           timer = Timer.periodic(
                               const Duration(milliseconds: 1000), (t) {
-                            //print(voiceCount);
-
                             voiceCount = voiceCount + 1;
                             if (mounted) {
                               setState(() {});
@@ -537,8 +518,6 @@ class _ChatInputViewState extends State<ChatInputView> {
                         } else {
                           timer = Timer.periodic(
                               const Duration(milliseconds: 1000), (t) {
-                            //print(voiceCount);
-
                             voiceCount = voiceCount + 1;
                             if (mounted) {
                               setState(() {});
@@ -546,49 +525,29 @@ class _ChatInputViewState extends State<ChatInputView> {
                           });
                         }
 
-                        if (recorderModule!.isRecording) {
-                          await stopRecorder();
+                        if (widget.voice.isRecording) {
+                          stopRecorder();
                         }
                         startRecord();
                       },
                       onScaleEnd: (res) async {
-                        if (headsetColor == ObjectUtil.getThemeLightColor()) {
-                          DialogUtil.buildToast('试听功能暂未实现');
-                          if (recorderModule!.isRecording) {
-                            stopRecorder();
-                          }
-                        } else if (highlightColor ==
-                            ObjectUtil.getThemeLightColor()) {
-                          File file = File(voiceFilePath);
-                          file.delete();
-                          if (recorderModule!.isRecording) {
-                            stopRecorder();
-                          }
-                        } else {
-                          if (recorderModule!.isRecording) {
-                            stopRecorder();
-                            if (voiceCount < 1) {
+                        if (widget.voice.isRecording) {
+                          stopRecorder();
+                          if (voiceCount < 1) {
+                            DialogUtil.buildToast('你说话..时间太短啦~');
+                          } else {
+                            var length =
+                                await CommonUtil.getDuration(voiceFilePath);
+                            File file = File(voiceFilePath);
+                            if (length * 1000 < 1000) {
+                              //小于1s不发送
+                              file.delete();
                               DialogUtil.buildToast('你说话..时间太短啦~');
-
-                            }else{
-                              var length =
-                              await CommonUtil.getDuration(voiceFilePath);
-                              File file = File(voiceFilePath);
-                              if (length * 1000 < 1000) {
-                                //小于1s不发送
-                                file.delete();
-                                DialogUtil.buildToast('你说话..时间太短啦~');
-                              } else {
-                                Future.delayed(const Duration(milliseconds: 500),
-                                        () {
-                                      //发送语音
-                                      _buildVoiceMessage(file, length.floor());
-                                    });
-                              }
-                              voiceCount = 0;
-                              timer?.cancel();
+                            } else {
+                              _buildVoiceMessage(file, length.floor());
                             }
-
+                            voiceCount = 0;
+                            timer?.cancel();
                           }
                         }
 
@@ -676,8 +635,8 @@ class _ChatInputViewState extends State<ChatInputView> {
 
   //重发
   _onResend(Message entity) {}
-  _buildTextMessage(String content) {
 
+  _buildTextMessage(String content) {
     final logic = Get.find<PeerChatLogic>();
     logic.sendTextMessage(content);
     controller.clear();
@@ -701,6 +660,8 @@ class _ChatInputViewState extends State<ChatInputView> {
   }
 
   _buildVoiceMessage(File file, int length) {
+    var logic = Get.find<PeerChatLogic>();
+    logic.sendVoiceMessage(file,length);
     controller.clear();
   }
 
@@ -765,8 +726,6 @@ class _ChatInputViewState extends State<ChatInputView> {
     }
   }
 
-
-
   void hideKeyBoard() {
     textFieldNode.unfocus();
   }
@@ -800,7 +759,6 @@ class _ChatInputViewState extends State<ChatInputView> {
   }
 
   void inputRightSendOnTap() {
-
     if (isShowTools) {
       isShowTools = false;
     } else {
@@ -809,12 +767,6 @@ class _ChatInputViewState extends State<ChatInputView> {
       isShowVoice = false;
     }
   }
-
-
-
-
-
-
 
   Future<void> focusNodeListener() async {
     if (textFieldNode.hasFocus) {
@@ -834,15 +786,17 @@ class _ChatInputViewState extends State<ChatInputView> {
   startRecord() async {
     voiceText = '松开 结束';
     voiceBackground = ColorT.divider;
-    widget.voice.startRecord((p1,p2){
-       voiceFilePath =p1;
-       audioIconPath =p2;
+    widget.voice.startRecord((p1, p2) {
+      voiceFilePath = p1;
+      audioIconPath = p2;
+      setState(() {});
     });
-    setState(() {});
   }
-  stopRecorder(){
+
+  stopRecorder() {
     widget.voice.stopRecorder();
   }
+
   getLocalMessage() async {}
 
   initData() {
@@ -852,5 +806,4 @@ class _ChatInputViewState extends State<ChatInputView> {
   }
 
   checkBlackList() {}
-
 }

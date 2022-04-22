@@ -1,139 +1,134 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:flutter_sound/public/flutter_sound_player.dart';
-import 'package:flutter_sound/public/flutter_sound_recorder.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vibration/vibration.dart';
 
 import '../../../common/utils/permission.dart';
+import 'package:record/record.dart';
+typedef RecordFc = Function(int sec, String path);
+class Voice {
+  static const _dir = "voice";
+  static const _ext = ".m4a";
+  late String _path;
+  int _long = 0;
+  late final int _tag;
+  final RecordFc _callback;
+   Timer? timer =Timer.periodic(
+  const Duration(milliseconds: 1000), (t) async {});
+  bool _isPlaying = false;
+  bool _isRecording = false;
+  final _audioRecorder = Record();
+  final _voicePlayer = AudioPlayer();
+  bool get  isPlaying => _isPlaying;
+  bool get  isRecording => _isRecording;
 
- class Voice {
-   StreamSubscription? recorderSubscription;
-   StreamSubscription? playerSubscription;
-    FlutterSoundRecorder? flutterSound;
-   late  FlutterSoundRecorder recorderModule ;
-   late  FlutterSoundPlayer playerModule ;
-   Future<void> init() async {
-    requestPermiss();
-     recorderModule = FlutterSoundRecorder();
-     playerModule = FlutterSoundPlayer();
-    await playerModule.openPlayer();
-    await playerModule
-        .setSubscriptionDuration(const Duration(milliseconds: 30));
-    await recorderModule.openRecorder();
-    await recorderModule
-        .setSubscriptionDuration(const Duration(milliseconds: 30));
-    if (Platform.isAndroid) {
-      // copyAssets();
-    }
+  Voice(this._callback) : _tag = _now();
+  Future<void> init() async {
+    requestPermission();
   }
 
-  void requestPermiss() async {
+  void requestPermission() async {
     checkPermission();
   }
 
   getPermission() {
     requestPermissions();
   }
-      startRecord(Function(String p1,String p2) callBack) async {
+
+  startRecord(Function(String p1, String p2) callBack) async {
     Vibration.vibrate(duration: 50);
-    stopRecorder();
-
     try {
-      requestPermiss();
+      requestPermission();
       print('===>  获取了权限');
-      Directory tempDir = await getTemporaryDirectory();
-      var time = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-      var voiceFilePath = '${tempDir.path}/s-$time${ext[Codec.aacADTS.index]}';
-      print('===>  准备开始录音');
-      await recorderModule.startRecorder(
-        toFile: voiceFilePath,
-        codec: Codec.aacADTS,
-        bitRate: 8000,
-        sampleRate: 8000,
-      );
-      String audioIconPath ="";
-      /// 监听录音
-      recorderSubscription = recorderModule.onProgress?.listen((e) {
-        var volume = e.decibels;
-
-        if (volume! <= 0) {
+      if (await _audioRecorder.hasPermission()) {
+        var path = (await getApplicationDocumentsDirectory()).path;
+        _path = '$path/$_dir/$_tag$_ext';
+        File file = File(_path);
+        if (!(await file.exists())) {
+          await file.create(recursive: true);
+        }
+        _long = _now();
+        _audioRecorder.start(path: _path);
+        _isRecording =true;
+      }
+      String audioIconPath = "";
+      timer = Timer.periodic(
+          const Duration(milliseconds: 100), (t) async {
+        var d = await _audioRecorder.getAmplitude();
+        double volume = d.current;
+        volume =volume.abs();
+        //print(volume);
+        if (volume <= 0) {
           audioIconPath = '';
-        } else if (volume > 0 && volume < 30) {
-          audioIconPath = 'audio_player_1';
-        } else if (volume < 50) {
-          audioIconPath = 'audio_player_2';
-        } else if (volume < 100) {
+        } else if (volume > 0 && volume < 12) {
           audioIconPath = 'audio_player_3';
+        } else if (volume > 12 &&volume < 22) {
+          audioIconPath = 'audio_player_2';
+        } else if (volume > 22 && volume < 32) {
+          audioIconPath = 'audio_player_1';
         }
 
-        callBack(voiceFilePath,audioIconPath);
-
+        callBack(_path, audioIconPath);
       });
+
     } catch (err) {
       stopRecorder();
-      cancelRecorderSubscriptions();
+      _isRecording =false;
     }
-
   }
+
   /// 取消录音监听
   /// 结束录音
-   stopRecorder() async {
+  stopRecorder() async {
     try {
-      await recorderModule.stopRecorder();
-      print('stopRecorder');
-      cancelRecorderSubscriptions();
+      if (await _audioRecorder.isRecording()) {
+        _long = (_now() - _long) ~/ 1000;
+        _audioRecorder.stop();
+        _callback(_long, _path);
+      }
+      print('===> stopRecorder');
+
     } catch (err) {
       print('stopRecorder error: $err');
     }
+    timer?.cancel();
+    _isRecording =false;
   }
 
-  /// 取消录音监听
-    void cancelRecorderSubscriptions() {
-    if (recorderSubscription != null) {
-      recorderSubscription?.cancel();
-      recorderSubscription = null;
-    }
-  }
 
-  /// 取消播放监听
-    void cancelPlayerSubscriptions() {
-    if (playerSubscription != null) {
-      playerSubscription?.cancel();
-      playerSubscription = null;
-    }
-  }
-
-  /// 释放录音和播放
-   Future<void> releaseFlauto() async {
-    try {
-      await playerModule.closePlayer();
-      await recorderModule.closeRecorder();
-    } catch (e) {
-      print('Released unsuccessful');
-      print(e);
-    }
-  }
   /// 开始播放
-   Future<void> startPlayer(String path,) async {
+  Future<void> startPlayer(
+    String path,
+  ) async {
     try {
       var p = await fileExists(path);
-      if (p != "") {
-        await playerModule.startPlayer(
-            fromURI: p,
-            codec: Codec.aacADTS,
-            whenFinished: () {
-              print('==> 结束播放');
-              stopPlayer();
-            });
+      if (p == "") {
+        _voicePlayer.setFilePath(p);
       } else {
-        throw RecordingPermissionException("未找到文件路径");
-      }
+        _voicePlayer.setUrl(p);
 
-      cancelPlayerSubscriptions();
-      playerSubscription = playerModule.onProgress?.listen((e) {});
+      }
+      _isPlaying=true;
+      _voicePlayer.playerStateStream.listen((state) {
+
+        switch (state.processingState) {
+          case ProcessingState.idle:
+          case ProcessingState.loading:
+          case ProcessingState.buffering:
+          case ProcessingState.ready:
+            break;
+          case ProcessingState.completed:
+
+              if (_isPlaying) {
+                _isPlaying = false;
+                 //_voicePlayer.stop();
+              }
+
+            break;
+        }
+      });
 
       print('===> 开始播放');
     } catch (err) {
@@ -142,30 +137,19 @@ import '../../../common/utils/permission.dart';
   }
 
   /// 结束播放
-   Future<void> stopPlayer() async {
+  Future<void> stopPlayer() async {
     try {
-      await playerModule.stopPlayer();
-      print('===> 结束播放');
-      cancelPlayerSubscriptions();
+       _voicePlayer.stop();
+       _voicePlayer.dispose();
+      print('===> stopPlayer');
+
     } catch (err) {
       print('==> 错误: $err');
     }
   }
 
-  /// 暂停/继续播放
-   void pauseResumePlayer() {
-    if (playerModule.isPlaying) {
-      playerModule.pausePlayer();
-
-      print('===> 暂停播放');
-    } else {
-      playerModule.resumePlayer();
-
-      print('===> 继续播放');
-    }
-  }
   /// 判断文件是否存在
-   Future<String> fileExists(String paths) async {
+  Future<String> fileExists(String paths) async {
     if (paths.startsWith("http://localhost")) {
       //File f =   await _getLocalFile(path.basename(paths));
       return "";
@@ -175,4 +159,5 @@ import '../../../common/utils/permission.dart';
 
     return paths;
   }
+  static int _now() => DateTime.now().millisecondsSinceEpoch;
 }

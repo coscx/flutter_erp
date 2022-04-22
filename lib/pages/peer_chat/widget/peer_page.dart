@@ -29,7 +29,9 @@ class PeerPage extends StatefulWidget {
 
 class _PeerPageState extends State<PeerPage> {
   ScrollController scrollController = ScrollController();
-  var voice = Voice();
+  var voice = Voice((sec,path){
+
+  });
   @override
   void initState() {
     voice.init();

@@ -437,71 +437,74 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
     } else {
       width = 300.w;
     }
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(8.0),
-          child: Container(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-              width: width,
-              color: entity.sender == tfSender
-                  ? Colors.white
-                  : const Color.fromARGB(255, 158, 234, 106),
-              child: Row(
-                mainAxisAlignment: entity.sender == tfSender
-                    ? MainAxisAlignment.start
-                    : MainAxisAlignment.end,
-                children: <Widget>[
-                  entity.sender == tfSender
-                      ? Text('')
-                      : Text((entity.content!['duration']).toString() + 's',
-                      style: TextStyle(fontSize: 18, color: Colors.black)),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  entity.playing == 1
-                      ? Container(
-                    alignment: Alignment.center,
-                    padding: EdgeInsets.only(top: 1, right: 1),
-                    width: 18.0,
-                    height: 18.0,
-                    child: SizedBox(
-                        width: 14.0,
-                        height: 14.0,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Colors.black),
-                          strokeWidth: 2,
-                        )),
-                  )
-                      : Image.asset(
-                    FileUtil.getImagePath('audio_player_3',
-                        dir: 'icon', format: 'png'),
-                    width: 18,
-                    height: 18,
-                    color: Colors.black,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  entity.sender == tfSender
-                      ? Text((entity.content!['duration']).toString() + 's',
-                      style: TextStyle(fontSize: 36.sp, color: Colors.black))
-                      : Text(''),
-                ],
-              )),
-        ),
-        Container(
-          padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 60.h, bottom: 10.h),
-          width: width,
-          child: const LinearProgressIndicator(
-            value: 0.3,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
-            backgroundColor: Colors.transparent,
+    return Container(
+      padding: EdgeInsets.only( top: 15.w),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16.w),
+            child: Container(
+                padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 10.w, bottom: 10.w),
+                width: width,
+                color: entity.sender == tfSender
+                    ? Colors.white
+                    : const Color.fromARGB(255, 158, 234, 106),
+                child: Row(
+                  mainAxisAlignment: entity.sender == tfSender
+                      ? MainAxisAlignment.start
+                      : MainAxisAlignment.end,
+                  children: <Widget>[
+                    entity.sender == tfSender
+                        ? Text('')
+                        : Text((entity.content!['duration']).toString() + 's',
+                        style: TextStyle(fontSize: 32.sp, color: Colors.black)),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    entity.playing == 1
+                        ? Container(
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.only(top: 2.h, right: 2.h),
+                      width: 36.w,
+                      height: 60.w,
+                      child: SizedBox(
+                          width: 28.w,
+                          height: 28.h,
+                          child: CircularProgressIndicator(
+                            valueColor: const AlwaysStoppedAnimation(Colors.black),
+                            strokeWidth: 4.w,
+                          )),
+                    )
+                        : Image.asset(
+                      FileUtil.getImagePath('audio_player_3',
+                          dir: 'icon', format: 'png'),
+                      width: 36.w,
+                      height: 60.w,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    entity.sender == tfSender
+                        ? Text((entity.content!['duration']).toString() + 's',
+                        style: TextStyle(fontSize: 36.sp, color: Colors.black))
+                        : Text(''),
+                  ],
+                )),
           ),
-        ),
+          // Container(
+          //   padding: EdgeInsets.only(left: 15.w, right: 15.w, top: 60.h, bottom: 10.h),
+          //   width: width,
+          //   child: const LinearProgressIndicator(
+          //     value: 0.3,
+          //     valueColor: AlwaysStoppedAnimation<Color>(Colors.red),
+          //     backgroundColor: Colors.transparent,
+          //   ),
+          // ),
 
 
-      ],
+        ],
+      ),
     );
   }
 

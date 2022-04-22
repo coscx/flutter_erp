@@ -26,10 +26,10 @@ final _placeController = TextEditingController(text: '');
 String goalValue = '4.可继续沟通';
 String goalValueAppoint = '21.新分VIP';
 DateTime _date = DateTime.now();
-DateTime _date1 = _date.add(Duration(days: 3));
+DateTime _date1 = _date.add(const Duration(days: 3));
 int connect_type = 1;
 var time1s = _date.toString();
-var time2s = _date.add(Duration(days: 3)).toString();
+var time2s = _date.add( const Duration(days: 3)).toString();
 String time1 = time1s.substring(0, 19), time2 = time2s.substring(0, 19);
 
 String other_uuid = "";
