@@ -105,11 +105,11 @@ class Voice {
     try {
       var p = await fileExists(path);
       if (p == "") {
-        _voicePlayer.setFilePath(p);
+       await _voicePlayer.setFilePath(path);
       } else {
-        _voicePlayer.setUrl(p);
-
+        await _voicePlayer.setUrl(p);
       }
+      await _voicePlayer.load();
       _isPlaying=true;
       _voicePlayer.playerStateStream.listen((state) {
 
@@ -129,8 +129,8 @@ class Voice {
             break;
         }
       });
-
-      print('===> 开始播放');
+       _voicePlayer.play();
+      print('===> startPlayer');
     } catch (err) {
       print('==> 错误: $err');
     }

@@ -23,6 +23,8 @@ PODS:
     - Reachability
   - device_info (0.0.1):
     - Flutter
+  - emoji_picker_flutter (0.0.1):
+    - Flutter
   - flt_im_plugin (0.1.0):
     - flt_im_plugin/imkit (= 0.1.0)
     - flt_im_plugin/imlib (= 0.1.0)
@@ -64,10 +66,6 @@ PODS:
     - Flutter
   - flutter_my_picker_null_safety (0.0.1):
     - Flutter
-  - flutter_sound (9.2.9):
-    - Flutter
-    - flutter_sound_core (= 9.2.9)
-  - flutter_sound_core (9.2.9)
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
@@ -114,6 +112,8 @@ PODS:
   - permission_handler_apple (9.0.4):
     - Flutter
   - Reachability (3.2)
+  - record (0.0.1):
+    - Flutter
   - SDWebImage (5.1.1):
     - SDWebImage/Core (= 5.1.1)
   - SDWebImage/Core (5.1.1)
@@ -164,13 +164,13 @@ DEPENDENCIES:
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
+  - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
   - flt_im_plugin (from `.symlinks/plugins/flt_im_plugin/ios`)
   - Flutter (from `Flutter`)
   - flutter_2d_amap (from `.symlinks/plugins/flutter_2d_amap/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_my_picker_null_safety (from `.symlinks/plugins/flutter_my_picker_null_safety/ios`)
-  - flutter_sound (from `.symlinks/plugins/flutter_sound/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -182,6 +182,7 @@ DEPENDENCIES:
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
+  - record (from `.symlinks/plugins/record/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - soundpool (from `.symlinks/plugins/soundpool/ios`)
@@ -203,7 +204,6 @@ SPEC REPOS:
     - BSGridCollectionViewLayout
     - BSImagePicker
     - BSImageView
-    - flutter_sound_core
     - FMDB
     - libwebp
     - Mantle
@@ -233,6 +233,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/connectivity/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
+  emoji_picker_flutter:
+    :path: ".symlinks/plugins/emoji_picker_flutter/ios"
   flt_im_plugin:
     :path: ".symlinks/plugins/flt_im_plugin/ios"
   Flutter:
@@ -245,8 +247,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_my_picker_null_safety:
     :path: ".symlinks/plugins/flutter_my_picker_null_safety/ios"
-  flutter_sound:
-    :path: ".symlinks/plugins/flutter_sound/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
   fluwx:
@@ -269,6 +269,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_ios/ios"
   permission_handler_apple:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
+  record:
+    :path: ".symlinks/plugins/record/ios"
   share:
     :path: ".symlinks/plugins/share/ios"
   shared_preferences_ios:
@@ -305,14 +307,13 @@ SPEC CHECKSUMS:
   BSImageView: a149459433a2687157d034c78e059d30ac7f2544
   connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
+  emoji_picker_flutter: df19dac03a2b39ac667dc8d1da939ef3a9e21347
   flt_im_plugin: 56b59132b8d4d9dd9474c2cd8cc224d10e2c05aa
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   flutter_2d_amap: d116fde15b095d09399c5f754f52015c829fa718
   flutter_image_compress: fd2b476345226e1a10ea352fa306af95704642c1
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_my_picker_null_safety: 1059e863e1a019c57a447862f4aec6d4322f69b1
-  flutter_sound: 447f8c0cda48513f1e53454f12a7a6a40791c929
-  flutter_sound_core: 47cddf0ba97bd020908bafd43d43a12946922ec9
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   fluwx: 02670633ce7509206f62b366e9734e7dda81e100
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
@@ -332,6 +333,7 @@ SPEC CHECKSUMS:
   path_provider_ios: 14f3d2fd28c4fdb42f44e0f751d12861c43cee02
   permission_handler_apple: 44366e37eaf29454a1e7b1b7d736c2cceaeb17ce
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  record: 7ee2393532f8553bbb09fa19e95478323b7c0a99
   SDWebImage: 96d7f03415ccb28d299d765f93557ff8a617abd8
   SDWebImageWebPCoder: ce58a29621c2806dd5c36695ed192cf67163ff9d
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410

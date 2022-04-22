@@ -7,6 +7,7 @@ class AppTheme {
   static const radius = 10.0;
 
   static ThemeData light = ThemeData(
+    fontFamily: "DiDiSans",
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColor.scaffoldBackground,
     splashColor: Colors.transparent,

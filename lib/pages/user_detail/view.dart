@@ -62,8 +62,8 @@ class UserDetailPage extends StatelessWidget {
                       children: [
                         Text("用户详情",
                             style: TextStyle(
-                              fontFamily: "Quicksand",
-                              fontWeight: FontWeight.w900,
+                              //fontFamily: "Quicksand",
+                              fontWeight: FontWeight.w700,
                               fontStyle: FontStyle.italic,
                               fontSize: 38.sp,
                               decoration: TextDecoration.none,

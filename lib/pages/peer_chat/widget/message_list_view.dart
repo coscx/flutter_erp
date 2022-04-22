@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flt_im_plugin/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -117,7 +119,13 @@ class _MessageListViewState extends State<MessageListView> {
             padding:
                 EdgeInsets.only(left: 10.w, right: 10.w, top: 0, bottom: 0),
             itemBuilder: (BuildContext context, int index) {
-              String uuid = widget.messageList[index].content!['uUID'];
+              String uuid ="";
+              if(Platform.isIOS){
+                 uuid = widget.messageList[index].content!['uuid'];
+              }else{
+                 uuid = widget.messageList[index].content!['uUID'];
+              }
+
               if (index == widget.messageList.length - 1) {
                 GlobalKey<PeerChatItemWidgetState> key = GlobalKey();
                 globalKeyMap[uuid] = key;
