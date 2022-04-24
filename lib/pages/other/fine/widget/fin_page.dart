@@ -530,25 +530,25 @@ class _FinPageState extends State<FinPages> {
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-        decoration  : const BoxDecoration(
-        gradient: LinearGradient(
-        stops: [0, 0.5, 1],
-          colors: [
-            Color(0xffE2F1FF),
-            Color(0xffF9FBEB),
-            Color(0xffFFF4FA)
-          ],
-          begin: Alignment(2, 1),
-          end: Alignment(-2, -1),
-        )),
-        child:Theme(
+    return Theme(
             data: ThemeData(
               appBarTheme: AppBarTheme.of(context).copyWith(
                 brightness: Brightness.light,
               ),
             ),
-            child:Scaffold(
+            child: Container(
+                decoration  : const BoxDecoration(
+                    gradient: LinearGradient(
+                      stops: [0, 0.5, 1],
+                      colors: [
+                        Color(0xffE2F1FF),
+                        Color(0xffF9FBEB),
+                        Color(0xffFFF4FA)
+                      ],
+                      begin: Alignment(2, 1),
+                      end: Alignment(-2, -1),
+                    )),
+                child:Scaffold(
             backgroundColor: Colors.transparent, //把scaffold的背景色改成透明
             //endDrawer: CategoryEndDrawer(),
             appBar: AppBar(

@@ -72,10 +72,17 @@ class ApplicationPage extends GetView<ApplicationController> {
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: AndroidBackTop.backDesktop, //页面将要消失时，调用原生的返回桌面方法
-        child: Scaffold(
+        child: Theme(
+          data: ThemeData(
+            appBarTheme: AppBarTheme.of(context).copyWith(
+              brightness: Brightness.light,
+            ),
+          ),
+          child: Scaffold(
       //appBar: _buildAppBar(),
       body: _buildPageView(),
       bottomNavigationBar: _buildBottomNavigationBar(),
-    ));
+    ),
+        ));
   }
 }
