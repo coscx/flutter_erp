@@ -21,6 +21,7 @@ import '../../common/entities/im/Im_message.dart';
 import '../../common/services/storage.dart';
 import '../../common/values/key.dart';
 import '../../common/widgets/xupdate.dart';
+import '../group_chat/logic.dart';
 import 'index.dart';
 
 class ApplicationController extends GetxController {
@@ -316,15 +317,7 @@ class ApplicationController extends GetxController {
     });
   }
 
-  void onPeerMessageACK(result, int error) {
-    Map<String, dynamic> m = Map<String, dynamic>.from(result);
-    bool gg =Get.isRegistered<PeerChatLogic>();
-    if (gg){
-      var peerChatLogic = Get.find<PeerChatLogic>();
-      peerChatLogic.receiveMsgAck(m);
-    }
-    //BlocProvider.of<PeerBloc>(context).add(EventReceiveNewMessageAck(m));
-  }
+
 
   onPeerMessageFailure(Map result) {
     // IMMessage
@@ -387,8 +380,15 @@ class ApplicationController extends GetxController {
     //_showNotification(title,content);
     //BlocProvider.of<PeerBloc>(context).add(EventReceiveNewMessage(message));
   }
-
-  void onPeerSecretMessage(result) {}
+  void onPeerMessageACK(result, int error) {
+    Map<String, dynamic> m = Map<String, dynamic>.from(result);
+    bool gg =Get.isRegistered<PeerChatLogic>();
+    if (gg){
+      var peerChatLogic = Get.find<PeerChatLogic>();
+      peerChatLogic.receiveMsgAck(m);
+    }
+    //BlocProvider.of<PeerBloc>(context).add(EventReceiveNewMessageAck(m));
+  }
 
   void onGroupMessage(result) {
     Map<String, dynamic> message = Map<String, dynamic>.from(result);
@@ -404,6 +404,11 @@ class ApplicationController extends GetxController {
     }
     var conversionLogic = Get.find<ConversionLogic>();
     conversionLogic.receiveMsgFresh();
+    bool gg =Get.isRegistered<GroupChatLogic>();
+    if (gg){
+      var groupChatLogic = Get.find<GroupChatLogic>();
+      groupChatLogic.receiveMsgFresh();
+    }
     //_showNotification(title,content);
     //BlocProvider.of<GroupBloc>(context)
     //    .add(EventGroupReceiveNewMessage(message));
@@ -421,10 +426,17 @@ class ApplicationController extends GetxController {
       title = "通知";
       content = '聊天消息';
     }
-
+    bool gg =Get.isRegistered<GroupChatLogic>();
+    if (gg){
+      var groupChatLogic = Get.find<GroupChatLogic>();
+      groupChatLogic.receiveMsgAck(message);
+    }
     //_showNotification(title,content);
     //BlocProvider.of<GroupBloc>(context)
     //    .add(EventGroupReceiveNewMessageAck(message));
+  }
+  void onPeerSecretMessage(result) {
+
   }
 
   void onNewMessage(result, int error) async {

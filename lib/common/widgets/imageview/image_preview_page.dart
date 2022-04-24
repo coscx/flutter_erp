@@ -283,9 +283,9 @@ class _DefaultNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PrimitiveNavigationBar(
-      middle: Text('${currentIndex + 1}/$count',style: TextStyle(
+      middle: Text('${currentIndex + 1}/$count',style: const TextStyle(
           fontSize: 20, color: Colors.white)),
-      padding: EdgeInsetsDirectional.only(
+      padding: const EdgeInsetsDirectional.only(
         start: 10,
         end: 10,
       ),

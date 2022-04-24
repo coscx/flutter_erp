@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../conversion/widget/functions.dart';
+import 'functions.dart';
 import 'image_util.dart';
-import 'more_widgets.dart';
+import '../../../common/widgets/chat/more_widgets.dart';
 
 class PopupWindowUtil {
   /*

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../pages/conversion/widget/functions.dart';
+import 'chat/functions.dart';
 import '../../pages/conversion/widget/object_util.dart';
 
 class MoreWidgets {

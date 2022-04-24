@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../conversion/widget/colors.dart';
-import '../../conversion/widget/functions.dart';
-import '../../conversion/widget/object_util.dart';
+import '../../../pages/conversion/widget/colors.dart';
+import 'functions.dart';
+import '../../../pages/conversion/widget/object_util.dart';
 import 'constants.dart';
 import 'file_util.dart';
 class MoreWidgets {

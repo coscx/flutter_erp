@@ -21,4 +21,5 @@ class AppRoutes {
   static const Fine = '/fine';
   static const SearchFlow = '/search_flow';
   static const Webview = '/webview';
+  static const GroupChat = '/group_chat';
 }

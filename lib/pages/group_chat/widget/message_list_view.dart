@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flt_im_plugin/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_erp/pages/group_chat/widget/group_chat_item.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/peer_chat_item.dart';
 import 'package:flutter_erp/common/widgets/chat/time_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,7 @@ import '../../../common/widgets/dy_behavior_null.dart';
 import '../../conversion/widget/colors.dart';
 import '../../../common/widgets/chat/functions.dart';
 
-class MessageListView extends StatefulWidget {
+class GroupMessageListView extends StatefulWidget {
   final List<Message> messageList;
   final OnItemClick onResendClick;
   final OnItemClick onItemLongClick;
@@ -19,7 +20,7 @@ class MessageListView extends StatefulWidget {
   final String tfSender;
   final ScrollController scrollController;
   final Voice voice;
-  const MessageListView(
+  const GroupMessageListView(
       {Key? key,
       required this.messageList,
       required this.onResendClick,
@@ -31,10 +32,10 @@ class MessageListView extends StatefulWidget {
       : super(key: key);
 
   @override
-  _MessageListViewState createState() => _MessageListViewState();
+  _GroupMessageListViewState createState() => _GroupMessageListViewState();
 }
 
-class _MessageListViewState extends State<MessageListView> {
+class _GroupMessageListViewState extends State<GroupMessageListView> {
   Map<String, GlobalKey<PeerChatItemWidgetState>> globalKeyMap = {};
   bool isLoading = false;
   @override
@@ -246,7 +247,7 @@ class _MessageListViewState extends State<MessageListView> {
                     style: const TextStyle(color: ColorT.transparent_80),
                   ))
               : const SizedBox(height: 0),
-          PeerChatItemWidget(
+          GroupChatItemWidget(
               entity: entity,
               onResend: onResend!,
               onItemClick: onItemClick!,

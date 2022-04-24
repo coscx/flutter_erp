@@ -102,7 +102,8 @@ class ConversionLogic extends GetxController {
     });
     if (msg.type ==
         ConversionType.CONVERSATION_GROUP) {
-
+      receiveMsgFresh();
+      Get.toNamed(AppRoutes.GroupChat,arguments: model);
     }
     if (msg.type ==
         ConversionType.CONVERSATION_PEER) {

@@ -8,13 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common/widgets/chat/voice.dart';
 import 'message_list_view.dart';
 
-class PeerPage extends StatefulWidget {
+class GroupPage extends StatefulWidget {
 
   final List<Message> messageList;
   final Conversion model;
   final String memId;
 
-  const PeerPage({
+  const GroupPage({
     required this.messageList,
     Key? key,
     required this.model,
@@ -22,11 +22,11 @@ class PeerPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PeerPageState createState() => _PeerPageState();
+  _GroupPageState createState() => _GroupPageState();
 
 }
 
-class _PeerPageState extends State<PeerPage> {
+class _GroupPageState extends State<GroupPage> {
   ScrollController scrollController = ScrollController();
   var voice = Voice((sec,path){
 
@@ -86,7 +86,7 @@ class _PeerPageState extends State<PeerPage> {
                 //bottom: bar(),
               ),
               body: Column(children: <Widget>[
-                MessageListView(
+                GroupMessageListView(
                     messageList: widget.messageList,
                     onResendClick: (reSendEntity) {},
                     onItemClick: _onItemClick,

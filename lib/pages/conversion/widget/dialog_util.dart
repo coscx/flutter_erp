@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'functions.dart';
+import '../../../common/widgets/chat/functions.dart';
 import 'object_util.dart';
 
 class DialogUtil {

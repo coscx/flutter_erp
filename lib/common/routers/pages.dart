@@ -13,13 +13,15 @@ import 'package:flutter_erp/pages/frame/login/view.dart';
 import 'package:flutter_erp/pages/frame/sign_in/index.dart';
 import 'package:flutter_erp/pages/frame/sign_up/index.dart';
 import 'package:flutter_erp/pages/frame/welcome/index.dart';
+import 'package:flutter_erp/pages/group_chat/binding.dart';
+import 'package:flutter_erp/pages/group_chat/view.dart';
 import 'package:flutter_erp/pages/home/view.dart';
 import 'package:flutter_erp/pages/other/fine/view.dart';
 import 'package:flutter_erp/pages/other/webview/binding.dart';
 import 'package:flutter_erp/pages/other/webview/view.dart';
 import 'package:flutter_erp/pages/peer_chat/binding.dart';
 import 'package:flutter_erp/pages/peer_chat/view.dart';
-import 'package:flutter_erp/pages/peer_chat/widget/chat_input_view.dart';
+import 'package:flutter_erp/common/widgets/chat/chat_input_view.dart';
 import 'package:flutter_erp/pages/search/binding.dart';
 import 'package:flutter_erp/pages/search/view.dart';
 import 'package:flutter_erp/pages/search_appoint/view.dart';
@@ -159,6 +161,12 @@ class AppPages {
         name: AppRoutes.Webview,
         page: () => WebviewPage(),
         binding: WebviewBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.GroupChat,
+        page: () => GroupChatPage(),
+        binding: GroupChatBinding(),
         transition: Transition.rightToLeft
     ),
 

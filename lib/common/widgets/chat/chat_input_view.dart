@@ -8,21 +8,21 @@ import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_erp/pages/peer_chat/widget/popupwindow_widget.dart';
-import 'package:flutter_erp/pages/peer_chat/widget/voice.dart';
+import '../../../pages/group_chat/logic.dart';
+import 'popupwindow_widget.dart';
+import 'voice.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
-
-import '../../../common/widgets/dy_behavior_null.dart';
-import '../../../common/widgets/delete_category_dialog.dart';
-import '../../../common/widgets/more_widgets.dart';
-import '../../conversion/widget/colors.dart';
-import '../../conversion/widget/dialog_util.dart';
-import '../../conversion/widget/object_util.dart';
-import '../../user_detail/widget/bottom_dialog.dart';
-import '../logic.dart';
+import '../dy_behavior_null.dart';
+import '../delete_category_dialog.dart';
+import '../more_widgets.dart';
+import '../../../pages/conversion/widget/colors.dart';
+import '../../../pages/conversion/widget/dialog_util.dart';
+import '../../../pages/conversion/widget/object_util.dart';
+import '../../../pages/user_detail/widget/bottom_dialog.dart';
+import '../../../pages/peer_chat/logic.dart';
 import 'common_util.dart';
 import 'event_bus.dart';
 import 'file_util.dart';
@@ -637,7 +637,7 @@ class _ChatInputViewState extends State<ChatInputView> {
   _onResend(Message entity) {}
 
   _buildTextMessage(String content) {
-    final logic = Get.find<PeerChatLogic>();
+    final logic = Get.find<GroupChatLogic>();
     logic.sendTextMessage(content);
     controller.clear();
     isShowSend = false;
@@ -653,14 +653,14 @@ class _ChatInputViewState extends State<ChatInputView> {
 
   _buildImageMessage(XFile file, bool sendOriginalImage) async {
     var content = await file.readAsBytes();
-    var logic = Get.find<PeerChatLogic>();
+    var logic = Get.find<GroupChatLogic>();
     logic.sendImgMessage(content);
     isShowTools = false;
     controller.clear();
   }
 
   _buildVoiceMessage(File file, int length) {
-    var logic = Get.find<PeerChatLogic>();
+    var logic = Get.find<GroupChatLogic>();
     logic.sendVoiceMessage(file,length);
     controller.clear();
   }

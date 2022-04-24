@@ -342,7 +342,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a7c7ce30fb08f28c299d36dd3bf874de57dddc2d
+      resolved-ref: "3ce5e3712de8e38acff70913c27e2d7c4398d94e"
       url: "https://github.com/coscx/lat.git"
     source: git
     version: "1.0.0"
@@ -1252,7 +1252,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "66838b0c92f1053bd1ce6ae7c150809cd05ae31e"
+      resolved-ref: "104f8a3b98ea04f59bd0f7b768af76fe0313b5e2"
       url: "https://github.com/coscx/umeng_push.git"
     source: git
     version: "0.2.1"

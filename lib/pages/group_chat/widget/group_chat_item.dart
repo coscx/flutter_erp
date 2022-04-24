@@ -17,18 +17,18 @@ import '../../../common/widgets/chat/functions.dart';
 import '../../conversion/widget/object_util.dart';
 
 
-class PeerChatItemWidget extends StatefulWidget {
+class GroupChatItemWidget extends StatefulWidget {
   final Message entity;
   final OnItemClick onResend;
   final OnItemClick onItemClick;
   final OnItemClick onItemLongClick;
   final String  tfSender;
-  PeerChatItemWidget({required this.entity,required this.onResend, required this.onItemClick,required this.onItemLongClick,  required this.tfSender});
+  GroupChatItemWidget({required this.entity,required this.onResend, required this.onItemClick,required this.onItemLongClick,  required this.tfSender});
   @override
-  PeerChatItemWidgetState createState() => PeerChatItemWidgetState();
+  GroupChatItemWidgetState createState() => GroupChatItemWidgetState();
 }
 
-class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
+class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
   FltImPlugin im = FltImPlugin();
   @override
   Widget build(BuildContext context) {
@@ -102,10 +102,10 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
         ),
       );
     }
-
-
-
-    } else {
+    } else if (entity.type == MessageType.MESSAGE_GROUP_NOTIFICATION) {
+      //文本
+      return buildGroupNotifitionWidget(entity,tfSender);
+    }else {
       //其他人的消息
       return Container(
         margin: EdgeInsets.only(left: 10.w, right: 40.w, bottom: 6.h, top: 0.h),
@@ -113,6 +113,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _headPortrait('', 1),
+
             Expanded(
                 child: Container(
                   margin: EdgeInsets.only(left: 10.w, right: 0.w, bottom: 0.h, top: 0.h),
@@ -120,6 +121,15 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+
+                      Container(
+                        margin: EdgeInsets.only(left: 5.w, right: 0.w, bottom: 0.h, top: 0.h),
+                        //width: 20.w,
+                        child:Text(
+                          entity.sender,
+                          style:  TextStyle(color: Colors.black, fontSize: 32.sp),
+                        ),
+                      ),
                       GestureDetector(
                         child: _contentWidget(entity,tfSender),
                         onTap: () {
@@ -265,11 +275,7 @@ class PeerChatItemWidgetState extends State<PeerChatItemWidget> {
       }else{
         content =entity.content!['member'].toString()+ "被管理员解除禁言";
       }
-
-
     }
-
-
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.w),
       child: Container(
