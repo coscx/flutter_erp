@@ -56,8 +56,7 @@ class MyFlow extends StatelessWidget {
   Widget _listTableInfo(context, RxList<Datas> liveData) {
     final liveList = <Widget>[];
 
-    var boxWidth = ScreenUtil().screenWidth / 2 - 40.w;
-    var imageHeight = 200.h;
+
     var boxMargin = 10.w;
 
     liveData.asMap().keys.forEach((index) {
@@ -78,7 +77,7 @@ class MyFlow extends StatelessWidget {
                       Radius.circular(12.w),
                     ),
                     child: Container(
-                      width: boxWidth,
+                      width: 330.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
@@ -86,7 +85,7 @@ class MyFlow extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 //color: Colors.green,
-                                width: 350.h,
+                                //width: 350.h,
                                 height: 200.h,
                                 child: getCacheImage(item.img != ""
                                     ? (getExt(item.img) != "mp4"
@@ -96,21 +95,20 @@ class MyFlow extends StatelessWidget {
                               ),
                               Positioned(
                                 child: Container(
-                                  width: 290.h,
-                                  height: 70.h,
-                                  padding: EdgeInsets.only(
-                                    left: 10.w,
-                                    right: 10.w,
-                                  ),
-                                  decoration: const BoxDecoration(
-                                      color: Color(0x20000000)
-                                     // color: Colors.red
 
-                                  ),
                                   child:
                                       Container(
-                                        //width: boxWidth,
-                                        //height: 200.h,
+                                        width: 330.h,
+                                        height: 70.h,
+                                        padding: EdgeInsets.only(
+                                          left: 10.w,
+                                          right: 10.w,
+                                        ),
+                                        decoration: const BoxDecoration(
+                                            color: Color(0x20000000)
+                                          // color: Colors.red
+
+                                        ),
                                         child: Text(item.title,
                                             maxLines: 3,
                                             overflow: TextOverflow.ellipsis,
@@ -121,6 +119,7 @@ class MyFlow extends StatelessWidget {
 
                                 ),
                                 bottom: 0,
+                                right: 0,
                                 left: 0,
                               ),
                             ],
