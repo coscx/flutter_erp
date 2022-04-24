@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:card_swiper/card_swiper.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
@@ -39,13 +40,15 @@ class ChatInputView extends StatefulWidget {
   final String memId;
   final ScrollController scrollController;
   final Voice voice;
-
+  final Function(String content) sendTextClick;
+  final Function(Uint8List  content) sendImageClick;
+  final Function(File file, int length) sendVoiceClick;
   const ChatInputView(
       {Key? key,
       required this.model,
       required this.memId,
       required this.scrollController,
-      required this.voice})
+      required this.voice, required this.sendTextClick, required this.sendImageClick, required this.sendVoiceClick})
       : super(key: key);
 
   @override
@@ -637,8 +640,8 @@ class _ChatInputViewState extends State<ChatInputView> {
   _onResend(Message entity) {}
 
   _buildTextMessage(String content) {
-    final logic = Get.find<GroupChatLogic>();
-    logic.sendTextMessage(content);
+
+    widget.sendTextClick(content);
     controller.clear();
     isShowSend = false;
   }
@@ -653,15 +656,15 @@ class _ChatInputViewState extends State<ChatInputView> {
 
   _buildImageMessage(XFile file, bool sendOriginalImage) async {
     var content = await file.readAsBytes();
-    var logic = Get.find<GroupChatLogic>();
-    logic.sendImgMessage(content);
+
+    widget.sendImageClick(content);
     isShowTools = false;
     controller.clear();
   }
 
   _buildVoiceMessage(File file, int length) {
-    var logic = Get.find<GroupChatLogic>();
-    logic.sendVoiceMessage(file,length);
+
+    widget.sendVoiceClick(file,length);
     controller.clear();
   }
 
