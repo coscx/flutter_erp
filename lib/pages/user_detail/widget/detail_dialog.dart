@@ -56,7 +56,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                 children: <Widget>[
                   Container(
                     width: ScreenUtil().screenWidth * 0.95,
-                    height: ScreenUtil().screenHeight * 0.55,
+                    height: ScreenUtil().screenHeight * 0.70,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(12.w)),
@@ -183,7 +183,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                   children: [
                                     Expanded(
                                       child: Container(
-                                        height: 100.h,
+                                        //height: 100.h,
                                         child: TextField(
                                             focusNode: _textFieldNode,
                                             autofocus: false,
@@ -262,7 +262,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                   children: [
                                     Expanded(
                                       child: Container(
-                                        height: 100.h,
+                                        //height: 200.h,
                                         child: TextField(
                                             focusNode: _textPlaceFieldNode,
                                             autofocus: false,
@@ -334,11 +334,10 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                 SizedBox(
                                   height: 10.w,
                                 ),
-                                SizedBox(
-                                  height: 20.w,
-                                ),
+
                                 Container(
                                   width: 300.w,
+                                  height: 300.h,
                                   child: TextField(
                                     controller: _appointController,
                                     focusNode: _remarkFieldNode,
