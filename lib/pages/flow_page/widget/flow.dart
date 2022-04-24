@@ -85,7 +85,8 @@ class MyFlow extends StatelessWidget {
                           Stack(
                             children: <Widget>[
                               Container(
-                                width: 300.h,
+                                //color: Colors.green,
+                                width: 350.h,
                                 height: 200.h,
                                 child: getCacheImage(item.img != ""
                                     ? (getExt(item.img) != "mp4"
@@ -95,19 +96,20 @@ class MyFlow extends StatelessWidget {
                               ),
                               Positioned(
                                 child: Container(
-                                  width: boxWidth,
+                                  width: 350.h,
                                   height: 70.h,
                                   padding: EdgeInsets.only(
                                     left: 10.w,
                                     right: 10.w,
                                   ),
                                   decoration: const BoxDecoration(
-                                      color: Color(0x20000000)),
-                                  child: Row(
-                                    children: <Widget>[
+                                      color: Color(0x20000000)
+                                     // color: Colors.red
+
+                                  ),
+                                  child:
                                       Container(
-                                        width:
-                                            ScreenUtil().screenWidth / 2 - 70.w,
+                                        //width: boxWidth,
                                         //height: 200.h,
                                         child: Text(item.title,
                                             maxLines: 3,
@@ -116,8 +118,7 @@ class MyFlow extends StatelessWidget {
                                                 fontSize: 25.sp,
                                                 color: Colors.white)),
                                       ),
-                                    ],
-                                  ),
+
                                 ),
                                 bottom: 0,
                                 left: 0,

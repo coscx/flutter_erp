@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
                       children: <Widget>[
                         //BlocBuilder<GlobalBloc, GlobalState>(builder: _buildBackground),
                         Container(
-                          padding: EdgeInsets.only(top: 150.h),
+                          padding: EdgeInsets.only(top: 180.h),
                           child: ScrollConfiguration(
                               behavior: DyBehaviorNull(),
                               child: SmartRefresher(
@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
                               )),
                         ),
                         Container(
-                          padding: EdgeInsets.only(top: 70.h),
+                          padding: EdgeInsets.only(top: 80.h),
                           child: _buildHead(context),
                         ),
                         bar(
@@ -140,9 +140,7 @@ class HomePage extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
-              //                交叉轴的布局方式，对于column来说就是水平方向的布局方式
               crossAxisAlignment: CrossAxisAlignment.center,
-              //就是字child的垂直布局方向，向上还是向下
               verticalDirection: VerticalDirection.down,
               children: <Widget>[
                 SizedBox(

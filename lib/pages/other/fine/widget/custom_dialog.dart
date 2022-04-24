@@ -28,7 +28,7 @@ class LoginDialog extends Dialog {
           children: <Widget>[
             Container(
               width: 640.w,
-              height: 640.h,
+              height: 680.h,
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(12.w)),
@@ -44,13 +44,14 @@ class LoginDialog extends Dialog {
                         left: 30.w,
                         right: 30.w,
                         top: 30.h,
+                        bottom: 10.h
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Container(
                             padding: EdgeInsets.only(
-                              bottom: 10.h,
+                              bottom: 0.h,
                             ),
                             child: Text(
                               "渠道二维码",
@@ -63,19 +64,19 @@ class LoginDialog extends Dialog {
                               key: repaintWidgetKey,
                               child: Container(
                                 alignment: Alignment.center,
-                                //width: 400.w,
-                                //height: 400.h,
+                                width: 460.w,
+                                height: 460.h,
                                 color: Colors.white,
                                 // child: PlatformAiBarcodeCreatorWidget(
                                 //   creatorController: _creatorController,
                                 //   initialValue: "http://baidu.com",
                                 // ),
                                 child: Container(
-                                  padding: EdgeInsets.all(20.w),
+                                  padding: EdgeInsets.only(top: 0,bottom: 0,left: 10.w,right:10.w ),
                                   child: QrImage(
                                     data: "http://baidu.com/s",
                                     version: QrVersions.auto,
-                                    size: 460.w,
+                                    size: 460.h,
                                   ),
                                 ),
                               )),
@@ -308,7 +309,7 @@ class LoginDialog extends Dialog {
 
   Widget buildSubmit(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10.h, bottom: 0.h, left: 30.h, right: 30.h),
+      padding: EdgeInsets.only(top: 0.h, bottom: 0.h, left: 30.h, right: 30.h),
       child: Container(
         width: ScreenUtil().screenWidth * 0.6,
         height: 70.h,
