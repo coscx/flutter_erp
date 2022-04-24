@@ -96,7 +96,7 @@ class MyFlow extends StatelessWidget {
                               ),
                               Positioned(
                                 child: Container(
-                                  width: 350.h,
+                                  width: 290.h,
                                   height: 70.h,
                                   padding: EdgeInsets.only(
                                     left: 10.w,

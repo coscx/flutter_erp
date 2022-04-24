@@ -26,111 +26,113 @@ class HomePage extends StatelessWidget {
             brightness: Brightness.light,
           ),
         ),
-        child: Obx(()=>Scaffold(
-            key: logic.scaffoldKey,
-            endDrawer: GZXFilterGoodsPage(
-              selectItems: logic.selectItems,
-            ),
-            appBar: AppBar(
-              titleSpacing: 20.w,
-              leadingWidth: 0,
-              title: Row(
-                children: [
-                  Text(logic.title,
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 48.sp,
-                          fontWeight: FontWeight.bold)),
-                    logic.totalCount == ""
-                      ? Container()
-                      : Container(
-                      padding: EdgeInsets.only(left: 20.w),
-                        child: Row(
-                          children: [
-                            Text('共:',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 30.sp,
-                                fontWeight: FontWeight.w200)),
-                            Text(logic.totalCount,
-                                style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontSize: 30.sp,
-                                    fontWeight: FontWeight.normal))
-                          ],
+        child: Obx(()=>SafeArea(
+          child: Scaffold(
+              key: logic.scaffoldKey,
+              endDrawer: GZXFilterGoodsPage(
+                selectItems: logic.selectItems,
+              ),
+              appBar: AppBar(
+                titleSpacing: 20.w,
+                leadingWidth: 0,
+                title: Row(
+                  children: [
+                    Text(logic.title,
+                        style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 48.sp,
+                            fontWeight: FontWeight.bold)),
+                      logic.totalCount == ""
+                        ? Container()
+                        : Container(
+                        padding: EdgeInsets.only(left: 20.w),
+                          child: Row(
+                            children: [
+                              Text('共:',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 30.sp,
+                                  fontWeight: FontWeight.w200)),
+                              Text(logic.totalCount,
+                                  style: TextStyle(
+                                      color: Colors.redAccent,
+                                      fontSize: 30.sp,
+                                      fontWeight: FontWeight.normal))
+                            ],
+                          ),
                         ),
+
+                  ],
+                ),
+                //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
+                backgroundColor: Colors.white,
+                elevation: 0,
+                //去掉Appbar底部阴影
+                actions: <Widget>[
+                  Container(
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.black87,
                       ),
+                      onPressed: () {
+                        Get.toNamed(AppRoutes.SearchUser,arguments: 0);
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 20.w),
 
                 ],
+
+                //bottom: bar(),
               ),
-              //leading:const Text('Demo',style: TextStyle(color: Colors.black, fontSize: 15)),
-              backgroundColor: Colors.white,
-              elevation: 0,
-              //去掉Appbar底部阴影
-              actions: <Widget>[
-                Container(
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.black87,
+              body:  Container(
+                    decoration:  BoxDecoration(
+                      //背景
+                      color: const Color.fromRGBO(247, 247, 247, 100),
+                      //设置四周圆角 角度
+                      borderRadius: BorderRadius.all(Radius.circular(0.h)),
+                      //设置四周边框
+                      //border: new Border.all(width: 1, color: Colors.red),
                     ),
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.SearchUser,arguments: 0);
-                    },
-                  ),
-                ),
-                SizedBox(width: 20.w),
-
-              ],
-
-              //bottom: bar(),
-            ),
-            body:  Container(
-                  decoration:  BoxDecoration(
-                    //背景
-                    color: const Color.fromRGBO(247, 247, 247, 100),
-                    //设置四周圆角 角度
-                    borderRadius: BorderRadius.all(Radius.circular(0.h)),
-                    //设置四周边框
-                    //border: new Border.all(width: 1, color: Colors.red),
-                  ),
-                  child: Stack(
-                      children: <Widget>[
-                        //BlocBuilder<GlobalBloc, GlobalState>(builder: _buildBackground),
-                        Container(
-                          padding: EdgeInsets.only(top: 180.h),
-                          child: ScrollConfiguration(
-                              behavior: DyBehaviorNull(),
-                              child: SmartRefresher(
-                                physics: MyScrollPhysics(),
-                                enablePullDown: true,
-                                enablePullUp: true,
-                                header: DYrefreshHeader(),
-                                footer: DYrefreshFooter(),
-                                controller: logic.refreshController,
-                                onRefresh: logic.onRefresh,
-                                onLoading: logic.onLoading,
-                                child: CustomScrollView(
-                                  controller: logic.scrollController,
-                                  physics: const BouncingScrollPhysics(),
-                                  slivers: <Widget>[
-                                    _buildContent(context),
-                                  ],
-                                ),
-                              )),
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(top: 80.h),
-                          child: _buildHead(context),
-                        ),
-                        bar(
-                          selectItems: logic.selectItems,
-                          roleId: logic.roleId,
-                          scaffoldState: logic.scaffoldKey,
-                        ),
-                      ],
-                    )
-                )
+                    child: Stack(
+                        children: <Widget>[
+                          //BlocBuilder<GlobalBloc, GlobalState>(builder: _buildBackground),
+                          Container(
+                            padding: EdgeInsets.only(top: 150.h),
+                            child: ScrollConfiguration(
+                                behavior: DyBehaviorNull(),
+                                child: SmartRefresher(
+                                  physics: MyScrollPhysics(),
+                                  enablePullDown: true,
+                                  enablePullUp: true,
+                                  header: DYrefreshHeader(),
+                                  footer: DYrefreshFooter(),
+                                  controller: logic.refreshController,
+                                  onRefresh: logic.onRefresh,
+                                  onLoading: logic.onLoading,
+                                  child: CustomScrollView(
+                                    controller: logic.scrollController,
+                                    physics: const BouncingScrollPhysics(),
+                                    slivers: <Widget>[
+                                      _buildContent(context),
+                                    ],
+                                  ),
+                                )),
+                          ),
+                          Container(
+                            padding: EdgeInsets.only(top: 70.h),
+                            child: _buildHead(context),
+                          ),
+                          bar(
+                            selectItems: logic.selectItems,
+                            roleId: logic.roleId,
+                            scaffoldState: logic.scaffoldKey,
+                          ),
+                        ],
+                      )
+                  )
+          ),
         ))
     );
   }

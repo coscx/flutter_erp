@@ -76,7 +76,7 @@ class LoginDialog extends Dialog {
                                   child: QrImage(
                                     data: "http://baidu.com/s",
                                     version: QrVersions.auto,
-                                    size: 460.h,
+                                   // size: 460.h,
                                   ),
                                 ),
                               )),
