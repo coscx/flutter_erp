@@ -56,7 +56,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                 children: <Widget>[
                   Container(
                     width: ScreenUtil().screenWidth * 0.95,
-                    height: ScreenUtil().screenHeight * 0.70,
+                    height: 700.h,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(12.w)),
@@ -337,7 +337,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
 
                                 Container(
                                   width: 300.w,
-                                  height: 300.h,
+                                  height: 200.h,
                                   child: TextField(
                                     controller: _appointController,
                                     focusNode: _remarkFieldNode,
@@ -363,7 +363,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                 ),
                                 Padding(
                                   padding:
-                                      EdgeInsets.only(top: 20.h, bottom: 5.h),
+                                      EdgeInsets.only(top: 10.h, bottom: 0.h),
                                   child: RaisedButton(
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
@@ -459,9 +459,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                             fontSize: 36.sp)),
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 80.w,
-                                ),
+
                               ],
                             ),
                           ),
@@ -469,9 +467,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
+
                 ],
               ),
             );
