@@ -103,7 +103,7 @@ class HomePage extends StatelessWidget {
                             child: ScrollConfiguration(
                                 behavior: DyBehaviorNull(),
                                 child: SmartRefresher(
-                                  physics: MyScrollPhysics(),
+                                  physics: const MyScrollPhysics(),
                                   enablePullDown: true,
                                   enablePullUp: true,
                                   header: DYrefreshHeader(),

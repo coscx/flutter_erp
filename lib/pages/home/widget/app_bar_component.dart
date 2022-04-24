@@ -219,6 +219,7 @@ bool getSelect(){
               Container(
                 decoration:  const BoxDecoration(),
                 child: GZXDropDownHeader(
+                  height: 65.h,
                   items: [
                     GZXDropDownHeaderItem(_dropDownHeaderItemStrings[0],
                         style: TextStyle(color: (_dropDownHeaderItemStrings[0] =="全部门店" || _dropDownHeaderItemStrings[0] =="全部")?Colors.black:Colors.redAccent)),
