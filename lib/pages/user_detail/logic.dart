@@ -368,7 +368,7 @@ class UserDetailLogic extends GetxController {
         var f = Pics.fromJson(json);
         userDetail?.pics.add(f);
         update(["user_detail"]);
-        showToast(Get.context!, "编辑成功", false);
+        showToast(Get.context!, "上传成功", false);
       } else {
         showToastRed(Get.context!, result.message!, false);
       }
@@ -388,7 +388,7 @@ class UserDetailLogic extends GetxController {
       //   showToast(context, result['message'], false);
       // }
     } on Error catch (e) {
-      // EasyLoading.dismiss();
+       EasyLoading.dismiss();
       //var dd = e.response.data;
       // EasyLoading.showSuccess(dd['message']);
       //showToast(context,dd['message'],false);

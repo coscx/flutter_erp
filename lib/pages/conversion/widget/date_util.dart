@@ -56,7 +56,7 @@ class DateUtil {
   static DateTime getDateTimeByMs(int milliseconds,
       {bool isUtc: false}) {
     DateTime dateTime =
-    new DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
+     DateTime.fromMillisecondsSinceEpoch(milliseconds, isUtc: isUtc);
     return dateTime;
   }
 

@@ -132,7 +132,7 @@ class ObjectUtil {
   static var clickTime = 0;
 
   static bool isFastClick(){
-    var current = new DateTime.now().millisecondsSinceEpoch;
+    var current =  DateTime.now().millisecondsSinceEpoch;
     if(current - clickTime > 1500){
       clickTime = current;
       return false;

@@ -67,7 +67,7 @@ class NewsletterWidget extends GetView<MainController> {
             child: Text.rich(TextSpan(children: <TextSpan>[
               TextSpan(
                 text: 'By clicking on Subscribe button you agree to accept',
-                style: new TextStyle(
+                style:  TextStyle(
                   color: AppColors.thirdElementText,
                   fontFamily: "Avenir",
                   fontWeight: FontWeight.w400,
@@ -76,7 +76,7 @@ class NewsletterWidget extends GetView<MainController> {
               ),
               TextSpan(
                 text: ' Privacy Policy',
-                style: new TextStyle(
+                style:  TextStyle(
                   color: AppColors.secondaryElementText,
                   fontFamily: "Avenir",
                   fontWeight: FontWeight.w400,

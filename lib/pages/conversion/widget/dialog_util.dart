@@ -8,8 +8,8 @@ class DialogUtil {
   }
 
   static buildSnakeBar(BuildContext context, String str) {
-    final snackBar = new SnackBar(
-        content: new Text(str),
+    final snackBar =  SnackBar(
+        content:  Text(str),
         duration: Duration(milliseconds: 1500),
         backgroundColor: Colors.blue);
     Scaffold.of(context).showSnackBar(
@@ -19,8 +19,8 @@ class DialogUtil {
   //如果context在Scaffold之前，弹不出请用这个
   //使用GlobalKey开销较大，如果有其他可选方案，应尽量避免使用它
   static buildSnakeBarByKey(String str, GlobalKey<ScaffoldState> key) {
-    final snackBar = new SnackBar(
-        content: new Text(str),
+    final snackBar =  SnackBar(
+        content:  Text(str),
         duration: Duration(milliseconds: 1500),
         backgroundColor: Colors.blue);
     key.currentState!.showSnackBar(snackBar);
@@ -38,7 +38,7 @@ class DialogUtil {
     showDialog(
         context: context,
         barrierDismissible: true, //点击对话框barrier(遮罩)时是否关闭它
-        builder: (BuildContext context) => new AlertDialog(
+        builder: (BuildContext context) =>  AlertDialog(
                 shape: RoundedRectangleBorder(
                     side: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -47,10 +47,10 @@ class DialogUtil {
                         width: 0,
                         height: 10,
                       )
-                    : new Text(title),
+                    :  Text(title),
                 titlePadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
                 contentPadding: EdgeInsets.fromLTRB(20, 10, 20, 0),
-                content: new Text(content),
+                content:  Text(content),
                 actions: <Widget>[
                   ObjectUtil.isEmpty(left)
                       ? SizedBox(
@@ -58,7 +58,7 @@ class DialogUtil {
                           height: 15,
                         )
                       : FlatButton(
-                          child: new Text(
+                          child:  Text(
                             left,
                             style: TextStyle(color: Colors.blue),
                           ),
@@ -75,7 +75,7 @@ class DialogUtil {
                           height: 15,
                         )
                       : FlatButton(
-                          child: new Text(
+                          child:  Text(
                             right,
                             style: TextStyle(color: Colors.blue),
                           ),

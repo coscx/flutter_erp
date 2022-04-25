@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 showToast(BuildContext ctx, String msg, bool collected) {
-  if (msg ==null){
+  if (msg ==""){
     msg="ti";
   }
   // Toasts.toast(
@@ -22,18 +22,18 @@ showToast(BuildContext ctx, String msg, bool collected) {
     backgroundColor: Colors.white,
     leading: (cancel) => Container(
         child: IconButton(
-          icon: Icon(Icons.mood_sharp, color: Colors.green),
+          icon: const Icon(Icons.mood_sharp, color: Colors.green),
           onPressed: cancel,
         )),
     title: (text)=>Container(
-      child: Text(msg,style: new TextStyle(
+      child: Text(msg,style:  TextStyle(
           color: Colors.black, fontSize: 40.sp)),
     ),
     duration: const Duration(seconds: 5),
 
     trailing: (cancel) => Container(
       child: IconButton(
-        icon: Icon(Icons.cancel),
+        icon: const Icon(Icons.cancel),
         onPressed: cancel,
       ),
     ),
@@ -42,7 +42,7 @@ showToast(BuildContext ctx, String msg, bool collected) {
     },); //弹出简单通知Toast
 }
 showToastBottom(BuildContext ctx, String msg, bool collected) {
-  if (msg ==null){
+  if (msg ==""){
     msg="ti";
   }
   Fluttertoast.showToast(
@@ -55,36 +55,23 @@ showToastBottom(BuildContext ctx, String msg, bool collected) {
   );
 }
 showToastRed(BuildContext ctx, String msg, bool collected) {
-  if (msg ==null){
+  if (msg ==""){
     msg="ti";
   }
-  // Toasts.toast(
-  //   ctx,
-  //   msg,
-  //   duration: Duration(milliseconds:  5000 ),
-  //   action: collected
-  //       ? SnackBarAction(
-  //       textColor: Colors.white,
-  //       label: '收藏夹管理',
-  //       onPressed: () => Scaffold.of(ctx).openEndDrawer())
-  //       : null,
-  // );
   BotToast.showNotification(
     backgroundColor: Colors.white,
     leading: (cancel) => Container(
         child: IconButton(
-          icon: Icon(Icons.error, color: Colors.redAccent),
+          icon: const Icon(Icons.error, color: Colors.redAccent),
           onPressed: cancel,
         )),
-    title: (text)=>Container(
-      child: Text(msg,style: new TextStyle(
-          color: Colors.black, fontSize: 30.sp)),
-    ),
+    title: (text)=>Text(msg,style:  TextStyle(
+        color: Colors.black, fontSize: 30.sp)),
     duration: const Duration(seconds: 5),
 
     trailing: (cancel) => Container(
       child: IconButton(
-        icon: Icon(Icons.cancel),
+        icon: const Icon(Icons.cancel),
         onPressed: cancel,
       ),
     ),

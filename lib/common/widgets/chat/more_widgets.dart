@@ -316,9 +316,9 @@ class MoreWidgets {
   }) {
     BorderSide side = BorderSide(
         color: dividerColor, width: dividerHeight, style: BorderStyle.solid);
-    return new Container(
+    return  Container(
         padding: EdgeInsets.all(height / 2),
-        decoration: new BoxDecoration(
+        decoration:  BoxDecoration(
           color: bgColor,
           border: Border(top: side, bottom: side),
         ));
@@ -588,12 +588,12 @@ class MoreWidgets {
                                     },
                                     child: Container(
                                       padding: EdgeInsets.fromLTRB(0, 8.h, 0, 4.h),
-                                      decoration: new BoxDecoration(
+                                      decoration:  BoxDecoration(
                                           color:
                                               ObjectUtil.getThemeLightColor(),
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(8.w)),
-                                          border: new Border.all(
+                                          border:  Border.all(
                                               width: 1.w,
                                               color:
                                                   ObjectUtil.getThemeColor())),
@@ -621,11 +621,11 @@ class MoreWidgets {
                               },
                               child: Container(
                                 padding: EdgeInsets.fromLTRB(0, 8.h, 0, 8.h),
-                                decoration: new BoxDecoration(
+                                decoration:  BoxDecoration(
                                     color: ObjectUtil.getThemeLightColor(),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(8.w)),
-                                    border: new Border.all(
+                                    border:  Border.all(
                                         width: 1.w,
                                         color: ObjectUtil.getThemeColor())),
                                 alignment: Alignment.center,
@@ -656,13 +656,13 @@ class MoreWidgets {
   }
 
   static Widget buildNoDataPage() {
-    return new Align(
+    return  Align(
       alignment: Alignment.center,
       child: InkWell(
         onTap: () {},
         child: Text('没有数据',
             maxLines: 1,
-            style: new TextStyle(
+            style:  TextStyle(
                 fontSize: 32.sp,
                 color: Colors.black54,
                 letterSpacing: 0.6,
@@ -682,21 +682,21 @@ class MoreWidgets {
         context: context,
         position: RelativeRect.fromLTRB(130.0, 210.0, 130.0, 100.0),
         items: <PopupMenuItem<String>>[
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'one',
             child: Text(texts[0],
-                style: new TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
+                style:  TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
           ),
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'two',
             child: Text(texts[1],
-                style: new TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
+                style:  TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
           ),
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'three',
             child: Text(texts[2],
                 maxLines: 1,
-                style: new TextStyle(
+                style:  TextStyle(
                     fontSize: 28.sp, color: ObjectUtil.getThemeSwatchColor())),
           ),
         ]).then((res) {
@@ -715,10 +715,10 @@ class MoreWidgets {
         context: context,
         position: RelativeRect.fromLTRB(double.infinity, 70.h, 0, 0),
         items: <PopupMenuItem<String>>[
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'one',
             child: Text(texts[0],
-                style: new TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
+                style:  TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
           ),
           // new PopupMenuItem<String>(
           //   value: 'two',
@@ -747,21 +747,21 @@ class MoreWidgets {
         context: context,
         position: RelativeRect.fromLTRB(89, 96, 0, 0),
         items: <PopupMenuItem<String>>[
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'one',
             child: Text(texts[0],
-                style: new TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
+                style:  TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
           ),
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'two',
             child: Text(texts[1],
-                style: new TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
+                style:  TextStyle(fontSize: 28.sp, color: ColorT.app_main)),
           ),
-          new PopupMenuItem<String>(
+           PopupMenuItem<String>(
             value: 'three',
             child: Text(texts[2],
                 maxLines: 1,
-                style: new TextStyle(
+                style:  TextStyle(
                     fontSize: 28.sp, color: ObjectUtil.getThemeSwatchColor())),
           ),
         ]).then((res) {

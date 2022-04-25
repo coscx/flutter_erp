@@ -138,7 +138,7 @@ class LoginDialog extends Dialog {
     Directory tempDir = await getTemporaryDirectory();
 
     String storagePath = tempDir.path;
-    File file = new File('$storagePath/capture.png');
+    File file =  File('$storagePath/capture.png');
     //print(await file.length());
     if (!file.existsSync()) {
       file.createSync();
