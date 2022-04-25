@@ -17,15 +17,14 @@ class MinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Theme(
-          data: ThemeData(
-            appBarTheme: AppBarTheme.of(context).copyWith(
-              brightness: Brightness.light,
-            ),
+    return Theme(
+        data: ThemeData(
+          appBarTheme: AppBarTheme.of(context).copyWith(
+            brightness: Brightness.light,
           ),
-          child: Scaffold(
-
+        ),
+        child: GetBuilder<MineLogic>(builder: (logic) {
+          return Scaffold(
             backgroundColor: Colors.white,
             body: CustomScrollView(
               physics: const BouncingScrollPhysics(),
@@ -66,7 +65,7 @@ class MinePage extends StatelessWidget {
                               width: 150.w,
                               child: Stack(
                                 children: [
-                                  logic.userHead.value == ""  ? Container() :
+                                  logic.userHead== "" ? Container() :
                                   Positioned(
                                     left: 25.w,
                                     top: 120.h,
@@ -75,7 +74,7 @@ class MinePage extends StatelessWidget {
                                       height: 90.h,
                                       child: ClipOval(
                                         child: Image.network(
-                                          logic.userHead.value,
+                                          logic.userHead,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -114,7 +113,7 @@ class MinePage extends StatelessWidget {
                                       bottom: 5.h,
                                     ),
                                     child: Text(
-                                      logic.name.value,
+                                      logic.name,
                                       style: TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -145,7 +144,7 @@ class MinePage extends StatelessWidget {
                                               bottom: 0.h,
                                             ),
                                             child: Text(
-                                              "S001M00" + logic.memberId.value,
+                                              "S001M00" + logic.memberId,
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 28.sp,
@@ -409,9 +408,9 @@ class MinePage extends StatelessWidget {
                 )
               ],
             ),
-          )
-      );
-    });
+          );
+        })
+    );
   }
 
   _bindWx(BuildContext context, String img) {

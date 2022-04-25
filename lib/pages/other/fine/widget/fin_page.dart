@@ -536,27 +536,15 @@ class _FinPageState extends State<FinPages> {
                 brightness: Brightness.light,
               ),
             ),
-            child: Container(
-                decoration  : const BoxDecoration(
-                    gradient: LinearGradient(
-                      stops: [0, 0.5, 1],
-                      colors: [
-                        Color(0xffE2F1FF),
-                        Color(0xffF9FBEB),
-                        Color(0xffFFF4FA)
-                      ],
-                      begin: Alignment(2, 1),
-                      end: Alignment(-2, -1),
-                    )),
-                child:Scaffold(
+            child: Scaffold(
             backgroundColor: Colors.transparent, //把scaffold的背景色改成透明
             //endDrawer: CategoryEndDrawer(),
             appBar: AppBar(
-              backgroundColor: Colors.transparent, //把scaffold的背景色改成透明
+              //backgroundColor: Colors.transparent, //把scaffold的背景色改成透明
               elevation: 0,
               //去掉Appbar底部阴影
               leading: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: const Icon(Icons.arrow_back, color: Colors.black),
                 onPressed: () => Navigator.of(context).pop(),
               ),
               titleSpacing: 170.w,
@@ -589,6 +577,18 @@ class _FinPageState extends State<FinPages> {
               ],
             ),
             body: Container(
+                decoration  : const BoxDecoration(
+                    gradient: LinearGradient(
+                      stops: [0, 0.5, 1],
+                      colors: [
+                        Color(0xffE2F1FF),
+                        Color(0xffF9FBEB),
+                        Color(0xffFFF4FA)
+                      ],
+                      begin: Alignment(2, 1),
+                      end: Alignment(-2, -1),
+                    )),
+                child:Container(
               height: ScreenUtil().screenHeight,
 
               child: Container(

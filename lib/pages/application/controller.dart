@@ -105,7 +105,7 @@ class ApplicationController extends GetxController {
   @override
   Future<void> onInit() async {
     pageController = PageController(initialPage: state.page);
-    tabTitles = ['Welcome', 'Cagegory', 'Bookmarks', 'Account'];
+    tabTitles = ['首页', '微信推文', '消息', '我的'];
     bottomTabs = <BottomNavigationBarItem>[
       const BottomNavigationBarItem(
         icon: Icon(
@@ -116,7 +116,7 @@ class ApplicationController extends GetxController {
           Iconfont.home,
           color: AppColors.secondaryElementText,
         ),
-        label: 'main',
+        label: '首页',
         backgroundColor: AppColors.primaryBackground,
       ),
       const BottomNavigationBarItem(
@@ -128,7 +128,7 @@ class ApplicationController extends GetxController {
           Iconfont.grid,
           color: AppColors.secondaryElementText,
         ),
-        label: 'category',
+        label: '微信推文',
         backgroundColor: AppColors.primaryBackground,
       ),
       const BottomNavigationBarItem(
@@ -140,7 +140,7 @@ class ApplicationController extends GetxController {
           Iconfont.tag,
           color: AppColors.secondaryElementText,
         ),
-        label: 'tag',
+        label: '消息',
         backgroundColor: AppColors.primaryBackground,
       ),
       const BottomNavigationBarItem(
@@ -152,7 +152,7 @@ class ApplicationController extends GetxController {
           Iconfont.me,
           color: AppColors.secondaryElementText,
         ),
-        label: 'my',
+        label: '我的',
         backgroundColor: AppColors.primaryBackground,
       ),
     ];

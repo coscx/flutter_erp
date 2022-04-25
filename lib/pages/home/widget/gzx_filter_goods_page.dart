@@ -13,6 +13,7 @@ import '../../../common/entities/home/common.dart';
 import '../../../common/entities/home/only_store.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/utils/gzx_style.dart';
+import '../../user_detail/widget/common_dialog.dart';
 import '../logic.dart';
 import 'multi_select.dart';
 
@@ -734,7 +735,7 @@ class _GZXFilterGoodsPageState extends State<GZXFilterGoodsPage> {
                         widget.selectItems.removeWhere((e) => e.type == 8);
                         storeName = "选择门店";
                         userName = "选择用户";
-                        //showToastBottom(context, "重置成功", true);
+                        showToastBottom(context, "重置成功", true);
                         logic.onRefresh();
                       },
                       child: Container(

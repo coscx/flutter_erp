@@ -25,6 +25,7 @@ import '../entities/erp_user.dart';
 import '../entities/home/common.dart';
 import '../entities/home/only_store.dart';
 import '../entities/home/search_erp.dart';
+import '../entities/mine/mine.dart';
 import '../utils/common_http.dart';
 import '../utils/new_common_http.dart';
 
@@ -216,6 +217,15 @@ class CommonAPI {
     );
     return CommonResult.fromJson(response);
   }
+
+  static Future<DashBordDataResult> getDashBord() async {
+    var response = await NewERPHttpUtil().post(
+      '/api/DashBord',
+      data: {},
+    );
+    return DashBordDataResult.fromJson(response);
+  }
+
 
   static Future<CommonResult> delPhoto( int imgId,) async {
     var response = await ERPHttpUtil().post(
