@@ -86,7 +86,7 @@ dependencies:
   flutter_pickers: ^2.1.9
   #font_awesome_flutter: ^10.1.0
   refresh_loadmore: ^2.0.5
-  fluwx: ^3.8.2
+  fluwx: ^3.8.5
   # 屏幕适配
   flutter_screenutil: ^5.4.0
   # toast
