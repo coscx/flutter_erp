@@ -55,12 +55,12 @@ class CommonAPI {
     );
     return LoginEntity.fromJson(response);
   }
-  static Future<LoginEntity> bindAppWeChat(String code) async {
+  static Future<CommonResult> bindAppWeChat(String code) async {
     var response = await ERPHttpUtil().post(
-      '/api/v1/auth/version',
+      '/api/v1/auth/bindAppWeChat',
       queryParameters: {"code":code},
     );
-    return LoginEntity.fromJson(response);
+    return CommonResult.fromJson(response);
   }
   static Future<Stores> getOnlyStoreList() async {
     var response = await ERPHttpUtil().get(

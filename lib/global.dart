@@ -43,8 +43,8 @@ class Global {
         universalLink: universalLink);
     var result = await isWeChatInstalled;
     print("wx is installed $result");
-    var success = await startLog(logLevel: WXLogLevel.NORMAL);
-    print('startlog:$success\n');
+    // var success = await startLog(logLevel: WXLogLevel.NORMAL);
+    // print('startlog:$success\n');
   }
 
 }
