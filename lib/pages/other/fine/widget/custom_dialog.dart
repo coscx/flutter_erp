@@ -3,7 +3,6 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:ai_barcode/ai_barcode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -11,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:syncfusion_flutter_barcodes/barcodes.dart';
 
 import '../../../user_detail/widget/share.dart';
 
@@ -73,10 +73,10 @@ class LoginDialog extends Dialog {
                                 // ),
                                 child: Container(
                                   padding: EdgeInsets.only(top: 0,bottom: 0,left: 10.w,right:10.w ),
-                                  child: QrImage(
-                                    data: "http://baidu.com/s",
-                                    version: QrVersions.auto,
-                                   // size: 460.h,
+                                  child: SfBarcodeGenerator(
+                                    value: 'www.syncfusion.com',
+                                    symbology: QRCode(),
+                                    showValue: false,
                                   ),
                                 ),
                               )),

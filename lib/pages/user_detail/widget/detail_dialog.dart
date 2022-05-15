@@ -217,7 +217,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                       height: 70.h,
                                       padding: EdgeInsets.only(
                                           top: 0.h, left: 15.w, bottom: 0.h),
-                                      child: OutlineButton(
+                                      child: OutlinedButton(
                                         onPressed: () async {
                                           var value = await Get.toNamed(
                                               AppRoutes.SearchUserAppoint,
@@ -240,17 +240,17 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                               color: Colors.blue,
                                               fontSize: 30.sp),
                                         ),
-                                        textColor: Colors.blue,
-                                        splashColor: Colors.green,
-                                        highlightColor: Colors.white,
-                                        shape: BeveledRectangleBorder(
-                                          side: BorderSide(
-                                            color: Colors.red,
-                                            width: 2.w,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.w),
-                                        ),
+                                        // textColor: Colors.blue,
+                                        // splashColor: Colors.green,
+                                        // highlightColor: Colors.white,
+                                        // shape: BeveledRectangleBorder(
+                                        //   side: BorderSide(
+                                        //     color: Colors.red,
+                                        //     width: 2.w,
+                                        //   ),
+                                        //   borderRadius:
+                                        //       BorderRadius.circular(10.w),
+                                        // ),
                                       ),
                                     )
                                   ],
@@ -295,7 +295,7 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                       height: 70.h,
                                       padding: EdgeInsets.only(
                                           top: 0.h, left: 15.w, bottom: 0.h),
-                                      child: OutlineButton(
+                                      child: OutlinedButton(
                                         onPressed: () async {
                                           var value =
                                               await Get.toNamed(AppRoutes.Amap);
@@ -316,17 +316,17 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                               color: Colors.blue,
                                               fontSize: 30.sp),
                                         ),
-                                        textColor: Colors.blue,
-                                        splashColor: Colors.green,
-                                        highlightColor: Colors.white,
-                                        shape: BeveledRectangleBorder(
-                                          side: BorderSide(
-                                            color: Colors.red,
-                                            width: 2.w,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.w),
-                                        ),
+                                        // textColor: Colors.blue,
+                                        // splashColor: Colors.green,
+                                        // highlightColor: Colors.white,
+                                        // shape: BeveledRectangleBorder(
+                                        //   side: BorderSide(
+                                        //     color: Colors.red,
+                                        //     width: 2.w,
+                                        //   ),
+                                        //   borderRadius:
+                                        //       BorderRadius.circular(10.w),
+                                        // ),
                                       ),
                                     )
                                   ],
@@ -334,7 +334,6 @@ Future<bool> appointDialog(BuildContext context, String uuid) async {
                                 SizedBox(
                                   height: 10.w,
                                 ),
-
                                 Container(
                                   width: 300.w,
                                   height: 200.h,
