@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../common/entities/home/common.dart';
-import 'gzx_filter_goods_page.dart';
 
 typedef BoolWidgetBuilder = Widget Function(BuildContext context, bool selected,String name);
 
 class MultiChipFilters extends StatefulWidget {
   final List<SelectItem> data;
-  List<SelectItem> selectedS = <SelectItem>[];
+  final List<SelectItem> selectedS ;
   final BoolWidgetBuilder labelBuilder;
   final IndexedWidgetBuilder avatarBuilder;
   final Function(List<SelectItem>) onChange;
-   double childAspectRatio;
+  final double childAspectRatio;
   MultiChipFilters({Key? key, required this.data,required this.labelBuilder,required this.avatarBuilder,required this.onChange,required this.selectedS,required this.childAspectRatio}) : super(key: key);
 
   @override
@@ -20,7 +18,6 @@ class MultiChipFilters extends StatefulWidget {
 }
 
 class _MultiChipFilterState extends State<MultiChipFilters> {
-  List<int> _selected = <int>[];
 
   @override
   Widget build(BuildContext context) {

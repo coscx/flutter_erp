@@ -310,33 +310,33 @@ class UserDetailPage extends StatelessWidget {
         context: Get.context!,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text("手机号码"),
+            title: const Text("手机号码"),
             content: Column(
               children: <Widget>[
                 SizedBox(
-                  height: 10,
+                  height: 20.h,
                 ),
                 Align(
                   child: Text(mobile),
-                  alignment: Alignment(0, 0),
+                  alignment: const Alignment(0, 0),
                 ),
               ],
             ),
             actions: <Widget>[
               CupertinoDialogAction(
-                child: Text("取消"),
+                child: const Text("取消"),
                 onPressed: () {
                   Navigator.pop(context);
-                  print("取消");
+                  debugPrint("取消");
                 },
               ),
               CupertinoDialogAction(
-                child: Text("复制"),
+                child: const Text("复制"),
                 onPressed: () {
                   Clipboard.setData(ClipboardData(text: mobile));
                   showToast(context, "复制成功", true);
                   Navigator.pop(context);
-                  print("确定");
+                  debugPrint("确定");
                 },
               ),
             ],
@@ -404,19 +404,19 @@ class UserDetailPage extends StatelessWidget {
     return _buildStateDetail(context, logic.userDetail!, logic.connectList,
         logic.appointList, logic.actionList, logic.callList);
 
-    return Container(
-      child: Container(
-        margin: EdgeInsets.only(
-            top: 300.h,
-            left: ScreenUtil().screenWidth / 2 - 50.h,
-            right: ScreenUtil().screenWidth / 2 - 50.h),
-        height: 100.h,
-        width: 100.w,
-        alignment: Alignment.center,
-        child: Lottie.asset(
-            'assets/packages/lottie_flutter/16379-an-ios-like-loading.json'),
-      ),
-    );
+    // return Container(
+    //   child: Container(
+    //     margin: EdgeInsets.only(
+    //         top: 300.h,
+    //         left: ScreenUtil().screenWidth / 2 - 50.h,
+    //         right: ScreenUtil().screenWidth / 2 - 50.h),
+    //     height: 100.h,
+    //     width: 100.w,
+    //     alignment: Alignment.center,
+    //     child: Lottie.asset(
+    //         'assets/packages/lottie_flutter/16379-an-ios-like-loading.json'),
+    //   ),
+    // );
   }
 
   Widget _buildStateDetail(BuildContext context,

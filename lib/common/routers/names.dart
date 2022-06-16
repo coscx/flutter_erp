@@ -22,4 +22,6 @@ class AppRoutes {
   static const SearchFlow = '/search_flow';
   static const Webview = '/webview';
   static const GroupChat = '/group_chat';
+  static const FineDetail = '/fine_detail';
+
 }

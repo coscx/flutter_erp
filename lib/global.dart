@@ -6,6 +6,7 @@ import 'package:flutter_erp/common/utils/utils.dart';
 import 'package:fluwx/fluwx.dart';
 import 'package:get/get.dart';
 
+import 'common/utils/app_env.dart';
 import 'common/values/key.dart';
 
 /// 全局静态数据
@@ -14,6 +15,7 @@ class Global {
   static Future init() async {
     WidgetsFlutterBinding.ensureInitialized();
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    appEnv.init(); // 初始环境
     setSystemUi();
     Loading();
     otherInit();

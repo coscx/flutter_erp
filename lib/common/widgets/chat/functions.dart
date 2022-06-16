@@ -15,7 +15,7 @@ typedef OnSubmitCallback = Future<void> Function(
 
 class Operation {
 } //输入完成时触发
-
+typedef OnMenuItemClick = Function(Object,int); //控件点击时触发
 typedef OnItemClick = Function(Object); //控件点击时触发
 
 typedef OnItemDoubleClick = Future<void> Function(Object); //控件点击时触发

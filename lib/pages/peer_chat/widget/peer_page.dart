@@ -97,6 +97,13 @@ class _PeerPageState extends State<PeerPage> {
                     onResendClick: (reSendEntity) {},
                     onItemClick: _onItemClick,
                     onItemLongClick: (entity) {},
+                   onMenuItemClick: (entity,key) {
+
+                    if (key ==0){
+                      var logic = Get.find<PeerChatLogic>();
+                      logic.sendRevokeMessage(entity as Message);
+                    }
+                  },
                     bodyClick: () {
                       debugPrint("bodyClick");
                       //hideKeyBoard();

@@ -105,7 +105,23 @@ class GroupChatLogic extends GetxController {
     );
     setMessageFlag(result!);
   }
-
+  void sendRevokeMessage(Message entity) async {
+    String uuid ;
+    if (Platform.isAndroid == true) {
+      //im.deletePeerMessage(id:entity.content['uUID']);
+      uuid=  entity.content!['uUID'];
+    } else {
+      uuid =entity.content!['uuid'];
+    }
+    Map? result = await im.sendGroupRevokeMessage(
+      secret: false,
+      sender: model.memId!,
+      receiver: model.cid!,
+      uuid: uuid,
+    );
+    revokeMessageLocalDelete(uuid,result!);
+    update();
+  }
   void sendImgMessage(Uint8List content) async {
     Map? result = await im.sendGroupImageMessage(
       secret: false,
@@ -138,5 +154,20 @@ class GroupChatLogic extends GetxController {
 
     update();
   }
+  revokeMessageLocalDelete(String uuid, Map result){
 
+    var message = Message.fromMap(ValueUtil.toMap(result['data']));
+    for (var i = 0; i < messageList.length; i++) {
+      String uuids ;
+      if (Platform.isAndroid == true) {
+        uuids=  messageList[i].content!['uUID'];
+      } else {
+        uuids =messageList[i].content!['uuid'];
+      }
+      if (uuids == uuid) {
+        messageList[i] = message;
+      }
+    }
+    update();
+  }
 }

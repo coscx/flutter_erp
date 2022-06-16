@@ -15,6 +15,7 @@ class MessageListView extends StatefulWidget {
   final OnItemClick onResendClick;
   final OnItemClick onItemLongClick;
   final OnItemClick onItemClick;
+  final OnMenuItemClick onMenuItemClick;
   final VoidCallback bodyClick;
   final String tfSender;
   final ScrollController scrollController;
@@ -27,7 +28,9 @@ class MessageListView extends StatefulWidget {
       required this.onItemClick,
       required this.bodyClick,
       required this.tfSender,
-      required this.scrollController, required this.voice})
+      required this.scrollController,
+      required this.voice,
+      required this.onMenuItemClick})
       : super(key: key);
 
   @override
@@ -141,7 +144,9 @@ class _MessageListViewState extends State<MessageListView> {
                         widget.tfSender,
                         widget.onResendClick,
                         widget.onItemLongClick,
-                        widget.onItemClick),
+                        widget.onItemClick,
+                        widget.onMenuItemClick
+                    ),
                   ],
                 );
               } else {
@@ -156,7 +161,8 @@ class _MessageListViewState extends State<MessageListView> {
                         widget.tfSender,
                         widget.onResendClick,
                         widget.onItemLongClick,
-                        widget.onItemClick),
+                        widget.onItemClick,
+                        widget.onMenuItemClick),
                   ],
                 );
               }
@@ -175,7 +181,9 @@ class _MessageListViewState extends State<MessageListView> {
       String tfSender,
       OnItemClick? onResendClick,
       OnItemClick? onItemLongClick,
-      OnItemClick? onItemClick) {
+      OnItemClick? onItemClick,
+      OnMenuItemClick onMenuItemClick
+      ) {
     //list最后一条消息（时间上是最老的），是没有下一条了
     Message? _nextEntity =
         (index == messageList.length - 1) ? null : messageList[index + 1];
@@ -184,6 +192,9 @@ class _MessageListViewState extends State<MessageListView> {
         onResend: (reSendEntity) => onResendClick!(reSendEntity),
         onItemLongClick: (entity) {
           // _deletePeerMessage(context, entity);
+        },
+        onMenuItemClick: (Object entity, int key){
+          onMenuItemClick(entity,key);
         },
         onItemClick: (onClickEntity) {
           Message entity = _entity;
@@ -219,7 +230,9 @@ class _MessageListViewState extends State<MessageListView> {
       Key key, Message? nextEntity, Message entity, String tfSender,
       {OnItemClick? onResend,
       OnItemClick? onItemClick,
-      OnItemClick? onItemLongClick}) {
+      OnItemClick? onItemLongClick,
+      OnMenuItemClick? onMenuItemClick
+      }) {
     bool _isShowTime = true;
     var showTime; //最终显示的时间
     if (null == nextEntity) {
@@ -251,6 +264,7 @@ class _MessageListViewState extends State<MessageListView> {
               onResend: onResend!,
               onItemClick: onItemClick!,
               onItemLongClick: onItemLongClick!,
+              onMenuItemClick:onMenuItemClick!,
               tfSender: tfSender)
         ],
       ),

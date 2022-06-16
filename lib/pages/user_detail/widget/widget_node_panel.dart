@@ -20,14 +20,14 @@ class WidgetNodePanel extends StatefulWidget {
   final void Function(String tag,bool value)? callSetState;
   String? name;
   WidgetNodePanel(
-      {this.text,
+      {Key? key, this.text,
       this.subText,
       this.code,
       this.show,
       this.codeStyle,
       this.codeFamily,
       this.showMore, this.showControl,this.callSetState,this.name
-      });
+      }) : super(key: key);
 
   @override
   _WidgetNodePanelState createState() => _WidgetNodePanelState();
@@ -42,43 +42,41 @@ class _WidgetNodePanelState extends State<WidgetNodePanel> {
 
 @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
 
   }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          buildNodeTitle(),
-          SizedBox(
-            height: 2.h,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        buildNodeTitle(),
+        SizedBox(
+          height: 2.h,
+        ),
+        //_buildCode(context),
+        Padding(
+          padding: const EdgeInsets.only(top: 0, bottom: 0),
+          child:   Visibility(
+              visible:widget.showControl!,
+              replacement:const Text('data'),
+              maintainState:true,
+              child:Column(
+                children: [
+                  widget.show!,
+                  widget.showMore! ? Container(
+                      margin: EdgeInsets.only(left: 10.w, right: 20.w,top: 10.h,bottom: 10.h),
+                      child: const Text("查看更多")
+                  ):Container()
+                ],
+              )
           ),
-          //_buildCode(context),
-          Padding(
-            padding: const EdgeInsets.only(top: 0, bottom: 0),
-            child:   Visibility(
-                visible:widget.showControl!,
-                replacement:Text('data'),
-                maintainState:true,
-                child:Column(
-                  children: [
-                    widget.show!,
-                    widget.showMore! ? Container(
-                        margin: EdgeInsets.only(left: 10.w, right: 20.w,top: 10.h,bottom: 10.h),
-                        child: Text("查看更多")
-                    ):Container()
-                  ],
-                )
-            ),
-          ),
+        ),
 
-          //_buildNodeInfo(),
-          Divider(),
-        ],
-      ),
+        //_buildNodeInfo(),
+        const Divider(),
+      ],
     );
   }
 
@@ -105,14 +103,6 @@ class _WidgetNodePanelState extends State<WidgetNodePanel> {
       ) ,
   );
 
-  Widget _buildNodeInfo() => Container(
-        width: double.infinity,
-        child: Panel(
-            child: Text(
-          '${widget.subText}',
-          style: TextStyle(fontSize: 14.sp),
-        )),
-      );
 
   Widget _buildCodeButton(bool show ) => Padding(
         padding:  EdgeInsets.only(right: 18.w),

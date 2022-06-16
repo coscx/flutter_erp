@@ -17,9 +17,9 @@ import '../../../common/widgets/extend_image.dart';
 class PhotoWidgetListItem extends StatelessWidget {
   final Data photo;
 
-  PhotoWidgetListItem({
+  PhotoWidgetListItem({Key? key,
     required this.photo,
-  });
+  }) : super(key: key);
 
   final List<int> colors = Cons.tabColors;
 
@@ -131,27 +131,25 @@ class PhotoWidgetListItem extends StatelessWidget {
                   ),
                 )
               : Container(
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        left: 0.w, bottom: 0.h, top: 0.h, right: 0.w),
-                    child: CircleAvatar(
-                      foregroundColor: Colors.white10,
-                      radius: (70.sp),
-                      child: ClipOval(
-                        child: photo.headImg==""
-                            ? Container()
-                            : getCacheImage(
-                               photo.channel == 0
-                                    ? photo.headImg
-                                    : (photo.esAge != ""
-                                        ? photo.esAge
-                                        : photo.headImg),
+                padding: EdgeInsets.only(
+                    left: 0.w, bottom: 0.h, top: 0.h, right: 0.w),
+                child: CircleAvatar(
+                  foregroundColor: Colors.white10,
+                  radius: (70.sp),
+                  child: ClipOval(
+                    child: photo.headImg==""
+                        ? Container()
+                        : getCacheImage(
+                           photo.channel == 0
+                                ? photo.headImg
+                                : (photo.esAge != ""
+                                    ? photo.esAge
+                                    : photo.headImg),
 
-                              ),
-                      ),
-                    ),
+                          ),
                   ),
                 ),
+              ),
         ),
       );
 
@@ -163,57 +161,53 @@ class PhotoWidgetListItem extends StatelessWidget {
     String level = getLevel(photo.status);
     return Padding(
       padding: EdgeInsets.only(left: 1.w, bottom: 0.h, top: 0.h),
-      child: Container(
-        child: Text(
-            photo.name +
-                " " +
-                (photo.gender== 1 ? "男" : "女") +
-                " " +
-                photo.age.toString()+
-                "岁 " +
-                "" +
-                ((photo.height== 0 )
-                    ? ""
-                    : photo.height.toString() + "cm") +
-                " " +
-                level,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontSize: 30.sp,
-                fontWeight: FontWeight.bold,
-                shadows: const [
-                  Shadow(color: Colors.white, offset: Offset(.3, .3))
-                ])),
-      ),
+      child: Text(
+          photo.name +
+              " " +
+              (photo.gender== 1 ? "男" : "女") +
+              " " +
+              photo.age.toString()+
+              "岁 " +
+              "" +
+              ((photo.height== 0 )
+                  ? ""
+                  : photo.height.toString() + "cm") +
+              " " +
+              level,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyle(
+              fontSize: 30.sp,
+              fontWeight: FontWeight.bold,
+              shadows: const [
+                Shadow(color: Colors.white, offset: Offset(.3, .3))
+              ])),
     );
   }
 
   Widget _buildSummary() {
     return Padding(
       padding: EdgeInsets.only(left: 1.w, bottom: 0.h, top: 5.h),
-      child: Container(
-        child: Text(
-          //尾部摘要
-          (hasHouseLevel[photo.hasHouse]) +
-              " " +
-              (hasCarLevel[photo.hasCar]) +
-              " " +
-              (marriageLevel[photo.marriage]) +
-              " 生日:" +
-              (photo.birthday == ""
-                  ? "-"
-                  : (photo.birthday.length > 10
-                      ? photo.birthday.toString().substring(0, 10)
-                      : "")) +
-              " 收入:" +
-              photo.income.toString() +
-              "w",
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(color: Colors.black, fontSize: 23.sp, shadows: const [
-            Shadow(color: Colors.white, offset: Offset(.5, .5))
-          ]),
-        ),
+      child: Text(
+        //尾部摘要
+        (hasHouseLevel[photo.hasHouse]) +
+            " " +
+            (hasCarLevel[photo.hasCar]) +
+            " " +
+            (marriageLevel[photo.marriage]) +
+            " 生日:" +
+            (photo.birthday == ""
+                ? "-"
+                : (photo.birthday.length > 10
+                    ? photo.birthday.toString().substring(0, 10)
+                    : "")) +
+            " 收入:" +
+            photo.income.toString() +
+            "w",
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(color: Colors.black, fontSize: 23.sp, shadows: const [
+          Shadow(color: Colors.white, offset: Offset(.5, .5))
+        ]),
       ),
     );
   }
@@ -224,7 +218,7 @@ class PhotoWidgetListItem extends StatelessWidget {
     String vipName = "";
     String vipName1 = "";
     var vipExpireTime = photo.vipExpireTime;
-    if (vipExpireTime == null) {
+    if (vipExpireTime == "") {
       isVip = false;
     } else {
       if (photo.status== 2) {
@@ -251,9 +245,9 @@ class PhotoWidgetListItem extends StatelessWidget {
                 style: TextStyle(
                     color: Colors.redAccent,
                     fontSize: 23.sp,
-                    shadows: [
-                      const Shadow(
-                          color: Colors.white, offset: const Offset(.5, .5))
+                    shadows: const [
+                      Shadow(
+                          color: Colors.white, offset: Offset(.5, .5))
                     ]),
               ))
             : (expire
@@ -264,9 +258,9 @@ class PhotoWidgetListItem extends StatelessWidget {
                     style: TextStyle(
                         color: Colors.redAccent,
                         fontSize: 23.sp,
-                        shadows: [
-                          const Shadow(
-                              color: Colors.white, offset: const Offset(.5, .5))
+                        shadows: const [
+                           Shadow(
+                              color: Colors.white, offset:  Offset(.5, .5))
                         ]),
                   )
                 : Text(
@@ -275,12 +269,8 @@ class PhotoWidgetListItem extends StatelessWidget {
                         " 沟通" +
                         photo.connectCount.toString() +
                         "次 " +
-                        (photo.connectStatus== 0
-                            ? ""
-                            : (photo.connectStatus == null
-                                ? ""
-                                : getConnectLevel(photo.connectStatus)
-                                    .toString())),
+                        (photo.connectStatus== 0? "" : getConnectLevel(photo.connectStatus)
+                                    .toString()),
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(

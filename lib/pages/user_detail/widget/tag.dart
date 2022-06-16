@@ -11,8 +11,8 @@ class Tag extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final double borderWidth;
-  Tag(
-      {
+  const Tag(
+      {Key? key,
         this.text,
         this.alignment = Alignment.center,
         this.color = const Color(0xFFFFFFFF),
@@ -21,7 +21,7 @@ class Tag extends StatelessWidget {
         this.margin = const EdgeInsets.all(0),
         this.height = 20,
         this.borderWidth = 1,
-        this.borderColor = const Color(0xFF000000)});
+        this.borderColor = const Color(0xFF000000)}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

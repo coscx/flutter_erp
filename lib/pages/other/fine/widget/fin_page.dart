@@ -2,8 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../../common/routers/names.dart';
 import '../../../../common/widgets/dy_behavior_null.dart';
 import '../../../../common/widgets/my_scroll_physics.dart';
 import '../../../../common/widgets/refresh.dart';
@@ -514,17 +517,22 @@ class _FinPageState extends State<FinPages> {
     super.initState();
   }
 
-  List<MyContent> _buildMyItem() {
+  List<GestureDetector> _buildMyItem() {
     return dm
-        .map((e) => MyContent(
-              icon: e.icon,
-              name: e.name,
-              money: e.money,
-              count: e.count,
-              status: e.status,
-              time: e.time,
-              color: e.color,
-            ))
+        .map((e) => GestureDetector(
+      onTap: (){
+        Get.toNamed(AppRoutes.FineDetail);
+      },
+          child: MyContent(
+                icon: e.icon,
+                name: e.name,
+                money: e.money,
+                count: e.count,
+                status: e.status,
+                time: e.time,
+                color: e.color,
+              ),
+        ))
         .toList();
   }
 

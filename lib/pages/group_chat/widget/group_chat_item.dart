@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:async';
 import 'dart:io';
+import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flt_im_plugin/message.dart';
@@ -16,19 +17,80 @@ import '../../conversion/widget/dialog_util.dart';
 import '../../../common/widgets/chat/functions.dart';
 import '../../conversion/widget/object_util.dart';
 
+class ItemModel {
+  String title;
+  IconData icon;
 
+  ItemModel(this.title, this.icon);
+}
 class GroupChatItemWidget extends StatefulWidget {
   final Message entity;
   final OnItemClick onResend;
   final OnItemClick onItemClick;
   final OnItemClick onItemLongClick;
+  final OnMenuItemClick onMenuItemClick;
   final String  tfSender;
-  GroupChatItemWidget({required this.entity,required this.onResend, required this.onItemClick,required this.onItemLongClick,  required this.tfSender});
+  GroupChatItemWidget({required this.entity,required this.onResend, required this.onItemClick,required this.onItemLongClick,  required this.tfSender,required this.onMenuItemClick});
   @override
   GroupChatItemWidgetState createState() => GroupChatItemWidgetState();
 }
 
 class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
+  CustomPopupMenuController _controller = CustomPopupMenuController();
+  List<ItemModel> menuItems = [
+    ItemModel('撤回', Icons.content_copy),
+    ItemModel('转发', Icons.send),
+    ItemModel('收藏', Icons.collections),
+    ItemModel('删除', Icons.delete),
+    ItemModel('多选', Icons.playlist_add_check),
+    ItemModel('引用', Icons.format_quote),
+    ItemModel('提醒', Icons.add_alert),
+    ItemModel('搜一搜', Icons.search),
+  ];
+
+  Widget _buildLongPressMenu() {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(5),
+      child: Container(
+        width: 220,
+        color: const Color(0xFF4C4C4C),
+        child: GridView.count(
+          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 20.h),
+          crossAxisCount: 5,
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 10,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          children: menuItems.asMap().entries
+              .map((item) => GestureDetector(
+            onTap: (){
+              debugPrint("onTap Menu"+item.key.toString());
+              widget.onMenuItemClick(widget.entity,item.key);
+              _controller.hideMenu();
+            },
+                child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+                Icon(
+                  item.value.icon,
+                  size: 35.sp,
+                  color: Colors.white,
+                ),
+                Container(
+                  margin: EdgeInsets.only(top: 4.h),
+                  child: Text(
+                    item.value.title,
+                    style: TextStyle(color: Colors.white, fontSize: 24.sp),
+                  ),
+                ),
+            ],
+          ),
+              ))
+              .toList(),
+        ),
+      ),
+    );
+  }
   FltImPlugin im = FltImPlugin();
   @override
   Widget build(BuildContext context) {
@@ -41,7 +103,16 @@ class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
       return buildRevokeWidget(entity,tfSender);
     }
     if (entity.sender == tfSender) {
-   {
+      double hs =10.w;
+      if (entity.type == MessageType.MESSAGE_TEXT) {
+        hs = 50.w;
+        if ((entity.content!['text'] != null && entity.content!['text'].contains('assets/images/face') )||
+            (entity.content!['text'] != null && entity.content!['text'].contains('assets/images/figure'))) {
+          hs = -150.w;
+        }
+      } else if (entity.type == MessageType.MESSAGE_IMAGE) {
+        hs = -150.w;
+      }
       //自己的消息
       return Container(
         margin: EdgeInsets.only(left: 40.w, right: 10.w, bottom: 6.h, top: 6.h),
@@ -77,21 +148,31 @@ class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
             Expanded(
                 child: Container(
                   margin: EdgeInsets.only(left: 0.w, right: 0.w, bottom: 0.h, top: 0.h),
-
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
 
-                      GestureDetector(
+                      CustomPopupMenu(
+                        controller: _controller,
                         child: _contentWidget(entity,tfSender),
-                        onTap: () {
-                          onItemClick(entity);
-                        },
-                        onLongPress: () {
-                          onItemLongClick(entity);
+                        menuBuilder: _buildLongPressMenu,
+                        barrierColor: Colors.transparent,
+                        pressType: PressType.longPress,
+                        verticalMargin:1.h,
+                        horizontalMargin:hs,
+                      )
 
-                        },
-                      ),
+
+                      // GestureDetector(
+                      //   child: _contentWidget(entity,tfSender),
+                      //   onTap: () {
+                      //     onItemClick(entity);
+                      //   },
+                      //   onLongPress: () {
+                      //     onItemLongClick(entity);
+                      //
+                      //   },
+                      // ),
 
                     ],
                   ),
@@ -101,7 +182,7 @@ class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
           ],
         ),
       );
-    }
+
     } else if (entity.type == MessageType.MESSAGE_GROUP_NOTIFICATION) {
       //文本
       return buildGroupNotifitionWidget(entity,tfSender);
@@ -355,9 +436,9 @@ class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
               }
 
             },
-            onLongPress: () {
-              DialogUtil.buildToast('长按了消息');
-            },
+            // onLongPress: () {
+            //   DialogUtil.buildToast('长按了消息');
+            // },
           )
 
       ),

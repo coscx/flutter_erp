@@ -17,6 +17,7 @@ import 'package:flutter_erp/pages/group_chat/binding.dart';
 import 'package:flutter_erp/pages/group_chat/view.dart';
 import 'package:flutter_erp/pages/home/view.dart';
 import 'package:flutter_erp/pages/other/fine/view.dart';
+import 'package:flutter_erp/pages/other/fine_detail/view.dart';
 import 'package:flutter_erp/pages/other/webview/binding.dart';
 import 'package:flutter_erp/pages/other/webview/view.dart';
 import 'package:flutter_erp/pages/peer_chat/binding.dart';
@@ -38,6 +39,8 @@ import 'package:get/get.dart';
 import '../../pages/add_vip/binding.dart';
 import '../../pages/home/binding.dart';
 import '../../pages/other/fine/binding.dart';
+import '../../pages/other/fine_detail/widget/fine_detail.dart';
+import '../../pages/other/fine_detail/binding.dart';
 import '../../pages/search_appoint/binding.dart';
 import 'routes.dart';
 
@@ -169,7 +172,12 @@ class AppPages {
         binding: GroupChatBinding(),
         transition: Transition.rightToLeft
     ),
-
+    GetPage(
+        name: AppRoutes.FineDetail,
+        page: () => FineDetailPage(),
+        binding: FineDetailBinding(),
+        transition: Transition.rightToLeft
+    ),
   ];
 
   // static final unknownRoute = GetPage(

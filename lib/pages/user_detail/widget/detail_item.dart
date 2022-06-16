@@ -2,11 +2,9 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:city_pickers/city_pickers.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_erp/common/entities/detail/user_detail.dart';
 import 'package:flutter_erp/pages/user_detail/logic.dart';
 import 'package:flutter_erp/pages/user_detail/widget/tag.dart';
@@ -17,7 +15,6 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
-
 import 'package:lottie/lottie.dart';
 
 import '../../../common/utils/common.dart';
@@ -27,7 +24,6 @@ import '../../../common/widgets/extend_image.dart';
 import '../../../common/widgets/imageview/image_preview_page.dart';
 import '../../../common/widgets/imageview/image_preview_view.dart';
 import 'common_dialog.dart';
-import 'jh_photo_browser.dart';
 
 Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
     void Function(String tag, bool value) callSetState, String name) {
@@ -202,10 +198,10 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                                   fontSize: 40.sp,
                                 ),
                               ));
-                          print(result);
+                          debugPrint(result.toString());
                           if (result != null) {
                             final logic = Get.find<UserDetailLogic>();
-                            logic.editCustomerAddress(info.uuid,1, result);
+                            logic.editCustomerAddress(info.uuid, 1, result);
 
                             // var results = await IssuesApi.editCustomerAddress(
                             //     info['uuid'], 1, result);
@@ -224,8 +220,8 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Icons.local_activity_outlined,
                             "籍贯",
                             (info.nativePlace == ""
-                                    ? "-"
-                                    : info.nativePlace.toString()),
+                                ? "-"
+                                : info.nativePlace.toString()),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -254,10 +250,10 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                                   fontSize: 40.sp,
                                 ),
                               ));
-                          print(result);
+                          debugPrint(result.toString());
                           if (result != null) {
                             final logic = Get.find<UserDetailLogic>();
-                            logic.editCustomerAddress(info.uuid,2, result);
+                            logic.editCustomerAddress(info.uuid, 2, result);
                             // var results = await IssuesApi.editCustomerAddress(
                             //     info['uuid'], 2, result);
                             // if (results['code'] == 200) {
@@ -274,9 +270,9 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.house_outlined,
                             "居住",
-                             (info.locationPlace == ""
-                                    ? "-"
-                                    : info.locationPlace.toString()),
+                            (info.locationPlace == ""
+                                ? "-"
+                                : info.locationPlace.toString()),
                             true)),
                     GestureDetector(
                         onTap: () {},
@@ -296,7 +292,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                           var result = await showPickerArray(
                               context,
                               [nationLevel],
-                              info.nation== 0 ? [1] : [info.nation],
+                              info.nation == 0 ? [1] : [info.nation],
                               "nation",
                               info,
                               "",
@@ -308,7 +304,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.gamepad_outlined,
                             "民族",
-                            info.nation== 0
+                            info.nation == 0
                                 ? "-"
                                 : getNationLevel((info.nation)),
                             true)),
@@ -368,7 +364,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.line_weight,
                             "体重",
-                            info.weight== 0
+                            info.weight == 0
                                 ? "-"
                                 : info.weight.toString() + "kg",
                             true)),
@@ -393,10 +389,9 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               context,
                               "请输入兴趣",
                               "",
-
-                                   (info.interest == ""
-                                      ? ""
-                                      : info.interest.toString()),
+                              (info.interest == ""
+                                  ? ""
+                                  : info.interest.toString()),
                               "interest",
                               5,
                               info);
@@ -409,7 +404,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.integration_instructions_outlined,
                             "兴趣",
-                            info.interest== ""
+                            info.interest == ""
                                 ? "-"
                                 : info.interest.toString(),
                             true)),
@@ -422,9 +417,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                           var result = await showPickerArray(
                               context,
                               [floodLevel],
-                              info.bloodType == 0
-                                  ? [3]
-                                  : [info.bloodType],
+                              info.bloodType == 0 ? [3] : [info.bloodType],
                               "blood_type",
                               info,
                               "",
@@ -450,10 +443,9 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               context,
                               "请输入择偶要求",
                               "",
-
-                                  (info.demands == ""
-                                      ? ""
-                                      : info.demands.toString()),
+                              (info.demands == ""
+                                  ? ""
+                                  : info.demands.toString()),
                               "demands",
                               5,
                               info);
@@ -466,9 +458,9 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.developer_mode,
                             "择偶",
-                             (info.demands == ""
-                                    ? "-"
-                                    : info.demands.toString()),
+                            (info.demands == ""
+                                ? "-"
+                                : info.demands.toString()),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -480,9 +472,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               context,
                               "请输入备注",
                               "",
-                              (info.remark== ""
-                                      ? ""
-                                      : info.remark.toString()),
+                              (info.remark == "" ? "" : info.remark.toString()),
                               "remark",
                               5,
                               info);
@@ -495,9 +485,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                             Colors.black,
                             Icons.bookmarks_outlined,
                             "备注",
-                           (info.remark == ""
-                                    ? "-"
-                                    : info.remark.toString()),
+                            (info.remark == "" ? "-" : info.remark.toString()),
                             true)),
                   ]),
             )),
@@ -506,13 +494,8 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
   );
 }
 
-Widget buildEdu(
-    BuildContext context,
-    Info info,
-    int canEdit,
-    bool showControl,
-    void Function(String tag, bool value) callSetState,
-    String name) {
+Widget buildEdu(BuildContext context, Info info, int canEdit, bool showControl,
+    void Function(String tag, bool value) callSetState, String name) {
   return Container(
     margin: EdgeInsets.only(left: 15.w, right: 5.w, bottom: 0.h),
     child: Column(
@@ -546,9 +529,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [EduLevel],
-                              info.education== 0
-                                  ? [1]
-                                  : [info.education],
+                              info.education == 0 ? [1] : [info.education],
                               "education",
                               info,
                               "",
@@ -574,10 +555,7 @@ Widget buildEdu(
                               context,
                               "请输入毕业院校",
                               "",
-
-                                   (info.school == ""
-                                      ? ""
-                                      : info.school .toString()),
+                              (info.school == "" ? "" : info.school.toString()),
                               "school",
                               1,
                               info);
@@ -590,9 +568,9 @@ Widget buildEdu(
                             Colors.black,
                             Icons.school,
                             "毕业院校",
-                            info.school .toString() == ""
+                            info.school.toString() == ""
                                 ? "-"
-                                : info.school .toString(),
+                                : info.school.toString(),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -604,9 +582,7 @@ Widget buildEdu(
                               context,
                               "请输入所学专业",
                               "",
-                              (info.major == ""
-                                      ? ""
-                                      : info.major.toString()),
+                              (info.major == "" ? "" : info.major.toString()),
                               "major",
                               1,
                               info);
@@ -619,9 +595,7 @@ Widget buildEdu(
                             Colors.black,
                             Icons.tab,
                             "所学专业",
-                            info.major == ""
-                                ? "-"
-                                : info.major.toString(),
+                            info.major == "" ? "-" : info.major.toString(),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -632,7 +606,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [companyTypeLevel],
-                              info.work == 0 ? [1] : [info.work ],
+                              info.work == 0 ? [1] : [info.work],
                               "work",
                               info,
                               "",
@@ -644,9 +618,9 @@ Widget buildEdu(
                             Colors.black,
                             Icons.reduce_capacity,
                             "企业类型",
-                            info.work  == 0
+                            info.work == 0
                                 ? "-"
-                                : getCompanyLevel(info.work ) + "",
+                                : getCompanyLevel(info.work) + "",
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -657,7 +631,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [WorkTypeLevel],
-                              info.workJob == 0 ? [1] : [info.workJob ],
+                              info.workJob == 0 ? [1] : [info.workJob],
                               "work_job",
                               info,
                               "",
@@ -669,9 +643,9 @@ Widget buildEdu(
                             Colors.black,
                             Icons.location_city,
                             "所属行业",
-                            info.workJob  == ""
+                            info.workJob == ""
                                 ? "-"
-                                : getWorkType(info.workJob ),
+                                : getWorkType(info.workJob),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -683,9 +657,9 @@ Widget buildEdu(
                               context,
                               "请输入职位描述",
                               "",
-                               (info.workIndustry == ""
-                                      ? ""
-                                      : info.workIndustry.toString()),
+                              (info.workIndustry == ""
+                                  ? ""
+                                  : info.workIndustry.toString()),
                               "work_industry",
                               5,
                               info);
@@ -698,7 +672,7 @@ Widget buildEdu(
                             Colors.black,
                             Icons.description_outlined,
                             "职位描述",
-                            info.workIndustry== ""
+                            info.workIndustry == ""
                                 ? "-"
                                 : info.workIndustry.toString(),
                             true)),
@@ -713,7 +687,7 @@ Widget buildEdu(
                               [WorkOverTimeLevel],
                               info.workOvertime == 0
                                   ? [1]
-                                  : [info.workOvertime ],
+                                  : [info.workOvertime],
                               "work_overtime",
                               info,
                               "",
@@ -725,9 +699,9 @@ Widget buildEdu(
                             Colors.black,
                             Icons.more_outlined,
                             "加班情况",
-                            info.workOvertime  == 0
+                            info.workOvertime == 0
                                 ? "-"
-                                : getWorkOverTime(info.workOvertime ),
+                                : getWorkOverTime(info.workOvertime),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -760,9 +734,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [hasHouseLevel],
-                              info.hasHouse == 0
-                                  ? [1]
-                                  : [info.hasHouse],
+                              info.hasHouse == 0 ? [1] : [info.hasHouse],
                               "has_house",
                               info,
                               "",
@@ -774,7 +746,7 @@ Widget buildEdu(
                             Colors.redAccent,
                             Icons.house_outlined,
                             "是否有房",
-                            info.hasHouse== 0
+                            info.hasHouse == 0
                                 ? "-"
                                 : getHasHouse(info.hasHouse),
                             true)),
@@ -787,9 +759,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [houseFutureLevel],
-                              info.loanRecord == 0
-                                  ? [1]
-                                  : [info.loanRecord],
+                              info.loanRecord == 0 ? [1] : [info.loanRecord],
                               "loan_record",
                               info,
                               "",
@@ -801,7 +771,7 @@ Widget buildEdu(
                             Colors.black,
                             Icons.copyright_rounded,
                             "房贷情况",
-                            info.loanRecord== 0
+                            info.loanRecord == 0
                                 ? "-"
                                 : getHouseFuture(info.loanRecord),
                             true)),
@@ -814,7 +784,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [hasCarLevel],
-                              info.hasCar== 0 ? [1] : [info.hasCar],
+                              info.hasCar == 0 ? [1] : [info.hasCar],
                               "has_car",
                               info,
                               "",
@@ -826,9 +796,7 @@ Widget buildEdu(
                             Colors.black,
                             Icons.car_rental,
                             "是否有车",
-                            info.hasCar== 0
-                                ? "-"
-                                : getHasCar(info.hasCar),
+                            info.hasCar == 0 ? "-" : getHasCar(info.hasCar),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -839,7 +807,7 @@ Widget buildEdu(
                           var result = await showPickerArray(
                               context,
                               [carLevelLevel],
-                              info.carType== 0 ? [1] : [info.carType],
+                              info.carType == 0 ? [1] : [info.carType],
                               "car_type",
                               info,
                               "",
@@ -851,9 +819,7 @@ Widget buildEdu(
                             Colors.black,
                             Icons.wb_auto_outlined,
                             "车辆档次",
-                            info.carType == 0
-                                ? "-"
-                                : getCarLevel(info.carType),
+                            info.carType == 0 ? "-" : getCarLevel(info.carType),
                             true)),
                   ]),
             )),
@@ -902,7 +868,7 @@ Widget buildMarriage(
                           var result = await showPickerArray(
                               context,
                               [marriageLevel],
-                              info.marriage == 0 ? [1] : [info.marriage ],
+                              info.marriage == 0 ? [1] : [info.marriage],
                               "marriage",
                               info,
                               "",
@@ -914,9 +880,9 @@ Widget buildMarriage(
                             Colors.redAccent,
                             Icons.wc,
                             "婚姻状态",
-                            info.marriage  == 0
+                            info.marriage == 0
                                 ? "-"
-                                : getMarriageLevel(info.marriage ),
+                                : getMarriageLevel(info.marriage),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -927,9 +893,7 @@ Widget buildMarriage(
                           var result = await showPickerArray(
                               context,
                               [childLevel],
-                              info.hasChild== 0
-                                  ? [1]
-                                  : [info.hasChild],
+                              info.hasChild == 0 ? [1] : [info.hasChild],
                               "has_child",
                               info,
                               "",
@@ -957,9 +921,9 @@ Widget buildMarriage(
                               "",
                               info.childRemark == null
                                   ? ""
-                                  : (info.childRemark  == ""
+                                  : (info.childRemark == ""
                                       ? ""
-                                      : info.childRemark .toString()),
+                                      : info.childRemark.toString()),
                               "child_remark",
                               5,
                               info);
@@ -972,9 +936,9 @@ Widget buildMarriage(
                             Colors.black,
                             Icons.mark_chat_read_outlined,
                             "子女备注",
-                            info.childRemark  == ""
+                            info.childRemark == ""
                                 ? "-"
-                                : info.childRemark .toString(),
+                                : info.childRemark.toString(),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -985,9 +949,7 @@ Widget buildMarriage(
                           var result = await showPickerArray(
                               context,
                               [onlyChildLevel],
-                              info.onlyChild== 0
-                                  ? [1]
-                                  : [info.onlyChild],
+                              info.onlyChild == 0 ? [1] : [info.onlyChild],
                               "only_child",
                               info,
                               "",
@@ -1055,7 +1017,7 @@ Widget buildMarriage(
                             Colors.black,
                             Icons.attribution_rounded,
                             "父亲职业",
-                            info.fatherWork== ""
+                            info.fatherWork == ""
                                 ? "-"
                                 : info.fatherWork.toString(),
                             true)),
@@ -1071,9 +1033,9 @@ Widget buildMarriage(
                               "",
                               info.motherWork == null
                                   ? ""
-                                  : (info.motherWork  == ""
+                                  : (info.motherWork == ""
                                       ? ""
-                                      : info.motherWork .toString()),
+                                      : info.motherWork.toString()),
                               "mother_work",
                               1,
                               info);
@@ -1086,9 +1048,9 @@ Widget buildMarriage(
                             Colors.black,
                             Icons.sports_motorsports_outlined,
                             "母亲职业",
-                            info.motherWork  == ""
+                            info.motherWork == ""
                                 ? "-"
-                                : info.motherWork .toString(),
+                                : info.motherWork.toString(),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -1117,7 +1079,7 @@ Widget buildMarriage(
                             Colors.redAccent,
                             Icons.monetization_on,
                             "父母收入",
-                            info.parentsIncome== ""
+                            info.parentsIncome == ""
                                 ? "-"
                                 : info.parentsIncome.toString(),
                             true)),
@@ -1146,8 +1108,7 @@ Widget buildMarriage(
                             "父母社保",
                             info.parentsInsurance == 0
                                 ? "-"
-                                : getParentProtectLevel(
-                                    info.parentsInsurance),
+                                : getParentProtectLevel(info.parentsInsurance),
                             true)),
                   ]),
             )),
@@ -1196,7 +1157,7 @@ Widget buildSimilar(
                           var result = await showPickerArray(
                               context,
                               [faithLevel],
-                              info.faith== 0 ? [0] : [info.faith],
+                              info.faith == 0 ? [0] : [info.faith],
                               "faith",
                               info,
                               "",
@@ -1208,9 +1169,7 @@ Widget buildSimilar(
                             Colors.black,
                             Icons.fastfood,
                             "宗教信仰",
-                            info.faith == 0
-                                ? "-"
-                                : getFaithLevel(info.faith),
+                            info.faith == 0 ? "-" : getFaithLevel(info.faith),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -1233,9 +1192,7 @@ Widget buildSimilar(
                             Colors.black,
                             Icons.smoking_rooms,
                             "是否吸烟",
-                            info.smoke== 0
-                                ? "-"
-                                : getSmokeLevel(info.smoke),
+                            info.smoke == 0 ? "-" : getSmokeLevel(info.smoke),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -1246,9 +1203,7 @@ Widget buildSimilar(
                           var result = await showPickerArray(
                               context,
                               [drinkLevel],
-                              info.drinkwine == 0
-                                  ? [0]
-                                  : [info.drinkwine],
+                              info.drinkwine == 0 ? [0] : [info.drinkwine],
                               "drinkwine",
                               info,
                               "",
@@ -1273,9 +1228,7 @@ Widget buildSimilar(
                           var result = await showPickerArray(
                               context,
                               [lifeLevel],
-                              info.liveRest == 0
-                                  ? [0]
-                                  : [info.liveRest],
+                              info.liveRest == 0 ? [0] : [info.liveRest],
                               "live_rest",
                               info,
                               "",
@@ -1300,9 +1253,7 @@ Widget buildSimilar(
                           var result = await showPickerArray(
                               context,
                               [creatLevel],
-                              info.wantChild== 0
-                                  ? [0]
-                                  : [info.wantChild],
+                              info.wantChild == 0 ? [0] : [info.wantChild],
                               "want_child",
                               info,
                               "",
@@ -1314,7 +1265,7 @@ Widget buildSimilar(
                             Colors.black,
                             Icons.child_friendly_outlined,
                             "生育欲望",
-                            info.wantChild== 0
+                            info.wantChild == 0
                                 ? "-"
                                 : getCreatLevel(info.wantChild),
                             true)),
@@ -1327,9 +1278,7 @@ Widget buildSimilar(
                           var result = await showPickerArray(
                               context,
                               [marriageDateLevel],
-                              info.marryTime== 0
-                                  ? [0]
-                                  : [info.marryTime],
+                              info.marryTime == 0 ? [0] : [info.marryTime],
                               "marry_time",
                               info,
                               "",
@@ -1449,9 +1398,9 @@ Widget buildUserSelect(
                               [EduLevel],
                               demand.wishEducation == ""
                                   ? [0]
-                                  : [int.parse(demand.wishEducation )],
+                                  : [int.parse(demand.wishEducation)],
                               "wish_education",
-                          demand,
+                              demand,
                               "",
                               true,
                               uuid);
@@ -1462,10 +1411,9 @@ Widget buildUserSelect(
                             Colors.black,
                             Icons.menu_book,
                             "学历",
-                            demand.wishEducation  == ""
+                            demand.wishEducation == ""
                                 ? "-"
-                                : getEduLevel(
-                                    int.parse(demand.wishEducation )),
+                                : getEduLevel(int.parse(demand.wishEducation)),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -1492,7 +1440,7 @@ Widget buildUserSelect(
                             Colors.black,
                             Icons.height,
                             "身高",
-                            demand.wishHeights== ""
+                            demand.wishHeights == ""
                                 ? "-"
                                 : getHeightDemand(demand.wishHeights) + "",
                             true)),
@@ -1519,7 +1467,7 @@ Widget buildUserSelect(
                                 style: TextStyle(
                                     color: Colors.blue, fontSize: 40.sp),
                               ));
-                          print(result);
+                          debugPrint(result.toString());
                           if (result != null) {
                             final logic = Get.find<UserDetailLogic>();
                             logic.editCustomerDemandAddress(uuid, result);
@@ -1540,11 +1488,11 @@ Widget buildUserSelect(
                             Colors.black,
                             Icons.local_activity_outlined,
                             "现居地",
-                            demand.wishLpCityName== ""
+                            demand.wishLpCityName == ""
                                 ? "-"
                                 : (demand.wishLpProvinceName +
-                                demand.wishLpCityName +
-                                demand.wishLpAreaName),
+                                    demand.wishLpCityName +
+                                    demand.wishLpAreaName),
                             true)),
                     GestureDetector(
                         onTap: () async {
@@ -1555,11 +1503,11 @@ Widget buildUserSelect(
                           var result = await showPickerArrayDemand(
                               context,
                               [marriageLevel],
-                              demand.wishMarriage== ""
+                              demand.wishMarriage == ""
                                   ? [0]
                                   : [int.parse(demand.wishMarriage)],
                               "wish_marriage",
-                          demand,
+                              demand,
                               "",
                               true,
                               uuid);
@@ -1589,7 +1537,7 @@ Widget buildUserSelect(
                           var result = await showPickerArrayDemand(
                               context,
                               [IncomeLevel],
-                              demand.wishIncome== "" ? [0] : [income],
+                              demand.wishIncome == "" ? [0] : [income],
                               "wish_income",
                               demand,
                               "",
@@ -1618,9 +1566,9 @@ Widget buildUserSelect(
                               "",
                               demand.description == null
                                   ? ""
-                                  : (demand.description  == ""
+                                  : (demand.description == ""
                                       ? ""
-                                      : demand.description .toString()),
+                                      : demand.description.toString()),
                               "description",
                               5,
                               demand,
@@ -1634,9 +1582,9 @@ Widget buildUserSelect(
                             Colors.black,
                             Icons.margin,
                             "理想中的TA",
-                            demand.description  == ""
+                            demand.description == ""
                                 ? "-"
-                                : (demand.description ),
+                                : (demand.description),
                             true)),
                   ]),
             )),
@@ -1703,8 +1651,8 @@ Widget buildConnect(List<Widget> connectList, bool showControl,
             codeFamily: 'Inconsolata',
             text: "客户沟通记录",
             code: "",
-            show: connectList.length > 0
-                ? Container(
+            show: connectList.isNotEmpty
+                ? SizedBox(
                     width: ScreenUtil().screenWidth * 0.98,
                     // height: 300,
                     child: Wrap(
@@ -1714,9 +1662,7 @@ Widget buildConnect(List<Widget> connectList, bool showControl,
                         runSpacing: 0,
                         children: <Widget>[...connectList]),
                   )
-                : Container(
-                    child: Text("暂无沟通"),
-                  )),
+                : const Text("暂无沟通")),
       ],
     ),
   );
@@ -1740,8 +1686,8 @@ Widget buildAppoint(List<Widget> appointListView, bool showControl,
             codeFamily: 'Inconsolata',
             text: "客户排约记录",
             code: "",
-            show: appointListView.length > 0
-                ? Container(
+            show: appointListView.isNotEmpty
+                ? SizedBox(
                     width: ScreenUtil().screenWidth * 0.98,
                     // height: 300,
                     child: Wrap(
@@ -1776,8 +1722,8 @@ Widget buildAction(List<Widget> actionListView, bool showControl,
             codeFamily: 'Inconsolata',
             text: "客户操作记录",
             code: "",
-            show: actionListView.length > 0
-                ? Container(
+            show: actionListView.isNotEmpty
+                ? SizedBox(
                     width: ScreenUtil().screenWidth * 0.98,
                     // height: 300,
                     child: Wrap(
@@ -1787,9 +1733,7 @@ Widget buildAction(List<Widget> actionListView, bool showControl,
                         runSpacing: 0,
                         children: <Widget>[...actionListView]),
                   )
-                : Container(
-                    child: Text("暂无记录"),
-                  )),
+                : Text("暂无记录")),
       ],
     ),
   );
@@ -1812,8 +1756,8 @@ Widget buildCall(List<Widget> callListView, bool showControl,
             codeFamily: 'Inconsolata',
             text: "电话查看记录",
             code: "",
-            show: callListView.length > 0
-                ? Container(
+            show: callListView.isNotEmpty
+                ? SizedBox(
                     width: ScreenUtil().screenWidth * 0.98,
                     // height: 300,
                     child: Wrap(
@@ -1846,7 +1790,7 @@ Widget buildSelect(List<Widget> selectListView, bool showControl) {
             text: "电话查看记录",
             code: "",
             show: selectListView.length > 0
-                ? Container(
+                ? SizedBox(
                     width: ScreenUtil().screenWidth * 0.98,
                     // height: 300,
                     child: Wrap(
@@ -1857,7 +1801,7 @@ Widget buildSelect(List<Widget> selectListView, bool showControl) {
                         children: <Widget>[...selectListView]),
                   )
                 : Container(
-                    child: Text("暂无记录"),
+                    child: const Text("暂无记录"),
                   )),
       ],
     ),
@@ -1875,72 +1819,70 @@ Widget _item_detail(BuildContext context, Color color, IconData icon,
     child: Material(
         color: Colors.transparent,
         child: Container(
-          child: Container(
-            margin: EdgeInsets.only(
-                left: 10.w, right: 20.w, top: 10.h, bottom: 10.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(children: <Widget>[
-                  Icon(
-                    icon,
-                    size: 32.sp,
-                    color: Colors.black54,
+          margin: EdgeInsets.only(
+              left: 10.w, right: 20.w, top: 10.h, bottom: 10.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(children: <Widget>[
+                Icon(
+                  icon,
+                  size: 32.sp,
+                  color: Colors.black54,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 15.w),
+                  child: Text(
+                    name,
+                    style: TextStyle(fontSize: 30.sp, color: Colors.grey),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 15.w),
-                    child: Text(
-                      name,
-                      style: TextStyle(fontSize: 30.sp, color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(10.w),
-                  ),
-                  Visibility(
-                      visible: true,
-                      child: Container(
-                        width: ScreenUtil().screenWidth * 0.71,
-                        child: Text(
-                          answer,
-                          maxLines: 20,
-                          style: TextStyle(fontSize: 28.sp, color: color),
-                        ),
-                      )),
-                ]),
-                //Visibility是控制子组件隐藏/可见的组件
+                ),
+                SizedBox(
+                  width: ScreenUtil().setWidth(10.w),
+                ),
                 Visibility(
-                  visible: show,
-                  child: Row(children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(right: 10.w),
-                      child: Row(children: <Widget>[
-                        SizedBox(
-                          width: ScreenUtil().setWidth(10.w),
-                        ),
-                        Visibility(
-                            visible: false,
-                            child: Text(
-                              "2021-01-12 15:35:30",
-                              style: TextStyle(
-                                  fontSize: 14.sp, color: Colors.grey),
-                            )),
-                        const Visibility(
-                            visible: false,
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage("rightImageUri"),
-                            ))
-                      ]),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 30.sp,
-                      color: Colors.black54,
-                    )
-                  ]),
-                )
-              ],
-            ),
+                    visible: true,
+                    child: Container(
+                      width: ScreenUtil().screenWidth * 0.71,
+                      child: Text(
+                        answer,
+                        maxLines: 20,
+                        style: TextStyle(fontSize: 28.sp, color: color),
+                      ),
+                    )),
+              ]),
+              //Visibility是控制子组件隐藏/可见的组件
+              Visibility(
+                visible: show,
+                child: Row(children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(right: 10.w),
+                    child: Row(children: <Widget>[
+                      SizedBox(
+                        width: ScreenUtil().setWidth(10.w),
+                      ),
+                      Visibility(
+                          visible: false,
+                          child: Text(
+                            "2021-01-12 15:35:30",
+                            style: TextStyle(
+                                fontSize: 14.sp, color: Colors.grey),
+                          )),
+                      const Visibility(
+                          visible: false,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage("rightImageUri"),
+                          ))
+                    ]),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 30.sp,
+                    color: Colors.black54,
+                  )
+                ]),
+              )
+            ],
           ),
         )),
   );
@@ -1957,41 +1899,36 @@ showEditDialog(BuildContext context, String title, String hintText, String text,
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text(title),
-          content: Container(
-            //elevation: 0.0,
-            child: Column(
-              children: <Widget>[
-                //Text(text),
-                TextField(
-                  minLines: maxLine,
-                  maxLines: maxLine,
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: hintText,
+          content: Column(
+            children: <Widget>[
+              //Text(text),
+              TextField(
+                minLines: maxLine,
+                maxLines: maxLine,
+                controller: _controller,
+                decoration: InputDecoration(
+                  hintText: hintText,
 
-                    //filled: true,
-                    //fillColor: Colors.white
-                  ),
+                  //filled: true,
+                  //fillColor: Colors.white
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           actions: <Widget>[
             CupertinoDialogAction(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('取消'),
+              child: const Text('取消'),
             ),
-            Container(
-              child: CupertinoDialogAction(
-                onPressed: () async {
-                  final logic = Get.find<UserDetailLogic>();
-                  logic.editUserOnce(info.uuid, type, _controller.text);
-                  Navigator.pop(context);
-                },
-                child: Text('确定'),
-              ),
+            CupertinoDialogAction(
+              onPressed: () async {
+                final logic = Get.find<UserDetailLogic>();
+                logic.editUserOnce(info.uuid, type, _controller.text);
+                Navigator.pop(context);
+              },
+              child: Text('确定'),
             ),
           ],
         );
@@ -2002,58 +1939,53 @@ showBackDialog(BuildContext context, String title, String hintText, String text,
     String type, int maxLine, int id, String uuid) {
   TextEditingController _controller =
       TextEditingController.fromValue(TextEditingValue(
-    text: '${text == null ? "" : text}', //判断keyword是否为空
+    text: '${ text}', //判断keyword是否为空
   ));
   showCupertinoDialog(
       context: context,
       builder: (context) {
         return CupertinoAlertDialog(
           title: Text(title),
-          content: Container(
-            //elevation: 0.0,
-            child: Column(
-              children: <Widget>[
-                //Text(text),
-                TextField(
-                  minLines: maxLine,
-                  maxLines: maxLine,
-                  controller: _controller,
-                  decoration: InputDecoration(
-                    hintText: hintText,
+          content: Column(
+            children: <Widget>[
+              //Text(text),
+              TextField(
+                minLines: maxLine,
+                maxLines: maxLine,
+                controller: _controller,
+                decoration: InputDecoration(
+                  hintText: hintText,
 
-                    //filled: true,
-                    //fillColor: Colors.white
-                  ),
+                  //filled: true,
+                  //fillColor: Colors.white
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           actions: <Widget>[
             CupertinoDialogAction(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('取消'),
+              child: const Text('取消'),
             ),
-            Container(
-              child: CupertinoDialogAction(
-                onPressed: () async {
-                  final logic = Get.find<UserDetailLogic>();
-                  logic.editUserOnce(uuid, type, _controller.text);
-                  // var result = await IssuesApi.addAppointBack(
-                  //     id, _controller.text);
-                  // if (result['code'] == 200) {
-                  //   showToast(context, "添加成功", false);
-                  //   Map<String, dynamic> photo = Map();
-                  //   photo['uuid'] = uuid;
-                  //   BlocProvider.of<DetailBloc>(context).add(FetchWidgetDetailNoFresh(photo));
-                  // } else {
-                  //   showToastRed(context, result['message'], false);
-                  // }
-                  Navigator.pop(context);
-                },
-                child: Text('确定'),
-              ),
+            CupertinoDialogAction(
+              onPressed: () async {
+                final logic = Get.find<UserDetailLogic>();
+                logic.editUserOnce(uuid, type, _controller.text);
+                // var result = await IssuesApi.addAppointBack(
+                //     id, _controller.text);
+                // if (result['code'] == 200) {
+                //   showToast(context, "添加成功", false);
+                //   Map<String, dynamic> photo = Map();
+                //   photo['uuid'] = uuid;
+                //   BlocProvider.of<DetailBloc>(context).add(FetchWidgetDetailNoFresh(photo));
+                // } else {
+                //   showToastRed(context, result['message'], false);
+                // }
+                Navigator.pop(context);
+              },
+              child: Text('确定'),
             ),
           ],
         );
@@ -2064,7 +1996,7 @@ showEditDialogDemand(BuildContext context, String title, String hintText,
     String text, String type, int maxLine, Demand info, uuid) {
   TextEditingController _controller =
       TextEditingController.fromValue(TextEditingValue(
-    text: '${text == null ? "" : text}', //判断keyword是否为空
+    text: '${ text}', //判断keyword是否为空
   ));
   showCupertinoDialog(
       context: context,
@@ -2095,26 +2027,24 @@ showEditDialogDemand(BuildContext context, String title, String hintText,
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: Text('取消'),
+              child: const Text('取消'),
             ),
-            Container(
-              child: CupertinoDialogAction(
-                onPressed: () async {
-                  final logic = Get.find<UserDetailLogic>();
-                  logic.editUserDemandOnce(uuid, type, _controller.text);
-                  // var result = await IssuesApi.editCustomerDemandOnce(
-                  //     uuid, type, _controller.text);
-                  // if (result['code'] == 200) {
-                  //   BlocProvider.of<DetailBloc>(context)
-                  //       .add(EditDetailDemandEvent(type, _controller.text));
-                  //   //showToast(context,"编辑成功",false);
-                  // } else {
-                  //   showToast(context, result['message'], false);
-                  // }
-                  Navigator.pop(context);
-                },
-                child: Text('确定'),
-              ),
+            CupertinoDialogAction(
+              onPressed: () async {
+                final logic = Get.find<UserDetailLogic>();
+                logic.editUserDemandOnce(uuid, type, _controller.text);
+                // var result = await IssuesApi.editCustomerDemandOnce(
+                //     uuid, type, _controller.text);
+                // if (result['code'] == 200) {
+                //   BlocProvider.of<DetailBloc>(context)
+                //       .add(EditDetailDemandEvent(type, _controller.text));
+                //   //showToast(context,"编辑成功",false);
+                // } else {
+                //   showToast(context, result['message'], false);
+                // }
+                Navigator.pop(context);
+              },
+              child: const Text('确定'),
             ),
           ],
         );
@@ -2157,7 +2087,7 @@ Future<bool> showPickerDemandAge(
     var b = int.parse(f[1]) - 18;
     bb = b;
   } catch (e) {
-    print(e);
+    debugPrint(e.toString());
   }
   if (aa > 80) aa = 80;
   if (bb > 80) bb = 80;
@@ -2165,7 +2095,7 @@ Future<bool> showPickerDemandAge(
       selecteds: [aa, bb],
       itemExtent: 40,
       magnification: 1.2,
-      selectionOverlay: CupertinoPickerDefaultSelectionOverlay(
+      selectionOverlay: const CupertinoPickerDefaultSelectionOverlay(
         background: Colors.transparent,
       ),
       cancelText: "取消",
@@ -2173,8 +2103,8 @@ Future<bool> showPickerDemandAge(
       cancelTextStyle: TextStyle(fontSize: 40.sp, color: Colors.grey),
       confirmTextStyle: TextStyle(fontSize: 40.sp, color: Colors.blue),
       adapter: NumberPickerAdapter(data: [
-        NumberPickerColumn(begin: 18, end: 80),
-        NumberPickerColumn(begin: 18, end: 80),
+        const NumberPickerColumn(begin: 18, end: 80),
+        const NumberPickerColumn(begin: 18, end: 80),
       ]),
       selectedTextStyle: TextStyle(
         fontSize: 40.sp,
@@ -2189,14 +2119,14 @@ Future<bool> showPickerDemandAge(
             child: Container(
           width: 30.w,
           alignment: Alignment.center,
-          child: Icon(Icons.more_vert),
+          child: const Icon(Icons.more_vert),
         ))
       ],
       hideHeader: true,
-      title: Text("请选择年龄"),
+      title: const Text("请选择年龄"),
       onConfirm: (Picker picker, List value) async {
-        print(value.toString());
-        print(picker.getSelectedValues());
+        debugPrint(value.toString());
+        debugPrint(picker.getSelectedValues().toString());
         var fg = picker.getSelectedValues();
         var values = <String>[];
         for (int i = 0; i < fg.length; i++) {
@@ -2234,7 +2164,7 @@ Future<bool> showPickerDemandHeight(
     var b = int.parse(f[1]) - 120;
     bb = b;
   } catch (e) {
-    print(e);
+    debugPrint(e.toString());
   }
   if (aa > 200) aa = 200;
   if (bb > 200) bb = 200;
@@ -2266,14 +2196,14 @@ Future<bool> showPickerDemandHeight(
             child: Container(
           width: 30.w,
           alignment: Alignment.center,
-          child: Icon(Icons.more_vert),
+          child: const Icon(Icons.more_vert),
         ))
       ],
       hideHeader: true,
-      title: Text("请选择身高"),
+      title: const Text("请选择身高"),
       onConfirm: (Picker picker, List value) async {
-        print(value.toString());
-        print(picker.getSelectedValues());
+        debugPrint(value.toString());
+        debugPrint(picker.getSelectedValues().toString());
         var fg = picker.getSelectedValues();
         var values = <String>[];
         for (int i = 0; i < fg.length; i++) {
@@ -2311,7 +2241,7 @@ Future<bool> showPickerDemandWeight(
     var b = int.parse(f[1]) - 40;
     bb = b;
   } catch (e) {
-    print(e);
+    debugPrint(e.toString());
   }
   var result = await Picker(
       selecteds: [aa, bb],
@@ -2341,14 +2271,14 @@ Future<bool> showPickerDemandWeight(
             child: Container(
           width: 30.w,
           alignment: Alignment.center,
-          child: Icon(Icons.more_vert),
+          child: const Icon(Icons.more_vert),
         ))
       ],
       hideHeader: true,
-      title: Text("请选择体重"),
+      title: const Text("请选择体重"),
       onConfirm: (Picker picker, List value) async {
-        print(value.toString());
-        print(picker.getSelectedValues());
+        debugPrint(value.toString());
+        debugPrint(picker.getSelectedValues().toString());
         var fg = picker.getSelectedValues();
         var values = <String>[];
         for (int i = 0; i < fg.length; i++) {
@@ -2404,8 +2334,8 @@ Future<bool> showPickerArray(
         color: Colors.black,
       ),
       onConfirm: (Picker picker, List value) async {
-        print(value.toString());
-        print(picker.getSelectedValues());
+        debugPrint(value.toString());
+        debugPrint(picker.getSelectedValues().toString());
         int values;
         if (isIndex) {
           values = value.first;
@@ -2414,15 +2344,6 @@ Future<bool> showPickerArray(
         }
         final logic = Get.find<UserDetailLogic>();
         logic.editUserOnce(info.uuid, type, values.toString());
-        // var result =
-        //     await IssuesApi.editCustomerOnce(info['uuid'], type, values);
-        // if (result['code'] == 200) {
-        //   BlocProvider.of<DetailBloc>(context)
-        //       .add(EditDetailEvent(type, values));
-        //   showToast(context, "编辑成功", false);
-        // } else {
-        //   showToast(context, result['message'], false);
-        // }
       }).showDialog(context);
   if (result != null) {
     return true;
@@ -2435,7 +2356,7 @@ Future<bool> showPickerArrayDemand(
     List<List<String>> pickerData,
     List<int> select,
     String type,
-   Demand info,
+    Demand info,
     String title,
     bool isIndex,
     String uuid) async {
@@ -2463,8 +2384,8 @@ Future<bool> showPickerArrayDemand(
         color: Colors.black,
       ),
       onConfirm: (Picker picker, List value) async {
-        print(value.toString());
-        print(picker.getSelectedValues());
+        debugPrint(value.toString());
+        debugPrint(picker.getSelectedValues().toString());
         String values;
         if (isIndex) {
           values = value.first.toString();
@@ -2473,14 +2394,6 @@ Future<bool> showPickerArrayDemand(
         }
         final logic = Get.find<UserDetailLogic>();
         logic.editUserDemandOnce(uuid, type, values.toString());
-        // var result = await IssuesApi.editCustomerDemandOnce(uuid, type, values);
-        // if (result['code'] == 200) {
-        //   BlocProvider.of<DetailBloc>(context)
-        //       .add(EditDetailDemandEvent(type, values));
-        //   showToast(context, "编辑成功", false);
-        // } else {
-        //   showToast(context, result['message'], false);
-        // }
       }).showDialog(context);
   if (result != null) {
     return true;
@@ -2530,28 +2443,19 @@ Future<bool> showPickerDateTime(
             child: Container(
               width: 16.w,
               alignment: Alignment.center,
-              child: const Text('', style: TextStyle(fontWeight: FontWeight.bold)),
+              child:
+                  const Text('', style: TextStyle(fontWeight: FontWeight.bold)),
               color: Colors.white,
             ))
       ],
       footer: Container(
         height: 50.h,
         alignment: Alignment.center,
-        child: Text(''),
+        child: const Text(''),
       ),
       onConfirm: (Picker picker, List value) async {
         final logic = Get.find<UserDetailLogic>();
         logic.editUserOnce(info.uuid, type, picker.adapter.text);
-        // var result = await IssuesApi.editCustomerOnceString(
-        //     info['uuid'], type, picker.adapter.text);
-        // if (result['code'] == 200) {
-        //   BlocProvider.of<DetailBloc>(context)
-        //       .add(EditDetailEventString(type, picker.adapter.text));
-        //   showToast(context, "编辑成功", false);
-        // } else {
-        //   showToast(context, result['message'], false);
-        // }
-        // print(picker.adapter.text);
       },
       onSelect: (Picker picker, int index, List<int> selecteds) {
         var stateText = picker.adapter.toString();
@@ -2568,7 +2472,6 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
   var imageUrlList = <String>[];
   for (int i = 0; i < imgList.length; i++) {
     imageUrlList.add(imgList[i].fileUrl);
-
   }
   var imageListView = <ImageOptions>[];
   for (int i = 0; i < imgList.length; i++) {
@@ -2594,27 +2497,10 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
         onTap: () {
           ImagePreview.preview(
             initialIndex: i,
-            images: imageListView,onIndexChanged: (e){},
-            onLongPressed: (e){},
-
+            images: imageListView,
+            onIndexChanged: (e) {},
+            onLongPressed: (e) {},
           );
-          // ImageViewer.showImageSlider(
-          //   images: [
-          //     ...imageUrlList
-          //   ],
-          //   startingPosition: i,
-          // );
-          //
-          // Navigator.of(Get.context!).push(FadeRoute(
-          //     page: JhPhotoBrowser(
-          //       imgDataArr: imageUrlList,
-          //       index: i,
-          //       isHiddenClose: true,
-          //       isHiddenTitle: true,
-          //       onLongPress: () {
-          //
-          //       },
-          //     )));
         },
         child: Padding(
           key: ObjectKey(e.id),
@@ -2626,59 +2512,57 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
                 borderRadius: BorderRadius.all(
                   Radius.circular(12.w),
                 ),
-                child: Container(
+                child: SizedBox(
                   width: boxWidth,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-
-                        Container(
-                          color: Colors.blue,
-
-                          child: Stack(
-                            children: <Widget>[
-                              Container(
-                                width: 250.w,
-                                height: 200.h,
-                                child: getCacheImage(
-                                  e.fileUrl != "" ? e.fileUrl : defaultImg,
-                                ),
+                      Container(
+                        color: Colors.blue,
+                        child: Stack(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 250.w,
+                              height: 200.h,
+                              child: getCacheImage(
+                                e.fileUrl != "" ? e.fileUrl : defaultImg,
                               ),
-                              Positioned(
-                                child: Container(
-                                  width: 50.w,
-                                  height: 50.h,
-                                  padding: EdgeInsets.only(
-                                    left: 10.w,
-                                    right: 10.w,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withAlpha(70),
-                                    borderRadius: BorderRadius.only(
-                                      bottomLeft: Radius.circular(10.w),
-                                      // Radius.circular(10.w),
-                                    ),
-                                  ),
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      if (canEdit == 0) {
-                                        showToastRed(context, "暂无权限", true);
-                                        return;
-                                      }
-                                      _deletePhoto(context, e, userdetail.info);
-                                    },
-                                    child: const Icon(
-                                      CupertinoIcons.delete_solid,
-                                      color: Colors.white,
-                                    ),
+                            ),
+                            Positioned(
+                              child: Container(
+                                width: 50.w,
+                                height: 50.h,
+                                padding: EdgeInsets.only(
+                                  left: 10.w,
+                                  right: 10.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.withAlpha(70),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10.w),
+                                    // Radius.circular(10.w),
                                   ),
                                 ),
-                                top: 0,
-                                right: 0,
+                                child: GestureDetector(
+                                  onTap: () {
+                                    if (canEdit == 0) {
+                                      showToastRed(context, "暂无权限", true);
+                                      return;
+                                    }
+                                    _deletePhoto(context, e, userdetail.info);
+                                  },
+                                  child: const Icon(
+                                    CupertinoIcons.delete_solid,
+                                    color: Colors.white,
+                                  ),
+                                ),
                               ),
-                            ],
-                          ),
-                        )
+                              top: 0,
+                              right: 0,
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -2696,12 +2580,11 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
   list.add(GestureDetector(
       child: Padding(
         padding: EdgeInsets.only(left: 10.w, right: 10.w),
-        child: Container(
-            child: Image.asset(
+        child: Image.asset(
           "assets/images/add.png",
           width: 200.w,
           height: 200.h,
-        )),
+        ),
       ),
       onTap: () async {
         if (canEdit == 0) {
@@ -2739,7 +2622,7 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
         //   try {
         //     var resultConnectList =
         //         await IssuesApi.uploadPhoto("1", byteData, _loading);
-        //     // print(resultConnectList['data']);
+        //     // debugPrint(resultConnectList['data']);
         //
         //     var result = await IssuesApi.editCustomer(
         //         userdetail['info']['uuid'], "1", resultConnectList['data']);
@@ -2806,8 +2689,7 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
   );
 }
 
-_deletePhoto(BuildContext context, Pics img,
-    Info detail) {
+_deletePhoto(BuildContext context, Pics img, Info detail) {
   showDialog(
       context: context,
       builder: (ctx) => Dialog(
@@ -2832,18 +2714,6 @@ _deletePhoto(BuildContext context, Pics img,
           ));
 }
 
-_loading(int a, int b) {
-  double _progress;
-  _progress = 0;
-  _progress = a / b;
-  EasyLoading.showProgress(_progress,
-      status: '${(_progress * 100).toStringAsFixed(0)}%');
-  //_progress += 0.03;
-  if (_progress >= 1) {
-    EasyLoading.dismiss();
-  }
-}
-
 Widget item_detail_gradute(BuildContext context, Color color, IconData icon,
     String name, String answer, bool show) {
   bool isDark = false;
@@ -2855,127 +2725,120 @@ Widget item_detail_gradute(BuildContext context, Color color, IconData icon,
     child: Material(
         color: Colors.transparent,
         child: Container(
-          child: Container(
-            margin: EdgeInsets.only(
-                left: 10.w, right: 20.w, top: 10.h, bottom: 10.h),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Row(children: <Widget>[
-                  Icon(
-                    icon,
-                    size: 32.sp,
-                    color: Colors.black54,
+          margin: EdgeInsets.only(
+              left: 10.w, right: 20.w, top: 10.h, bottom: 10.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(children: <Widget>[
+                Icon(
+                  icon,
+                  size: 32.sp,
+                  color: Colors.black54,
+                ),
+                Container(
+                  margin: EdgeInsets.only(left: 15.w),
+                  child: Text(
+                    name,
+                    style: TextStyle(fontSize: 30.sp, color: Colors.grey),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 15.w),
-                    child: Text(
-                      name,
-                      style: TextStyle(fontSize: 30.sp, color: Colors.grey),
-                    ),
-                  ),
-                  SizedBox(
-                    width: ScreenUtil().setWidth(10.w),
-                  ),
-                  Visibility(
-                      visible: true,
-                      child: Container(
-                        width: ScreenUtil().screenWidth * 0.58,
-                        child: Text(
-                          answer,
-                          maxLines: 20,
-                          style: TextStyle(fontSize: 28.sp, color: color),
-                        ),
-                      )),
-                ]),
-                //Visibility是控制子组件隐藏/可见的组件
+                ),
+                SizedBox(
+                  width: ScreenUtil().setWidth(10.w),
+                ),
                 Visibility(
-                  visible: show,
-                  child: Row(children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.only(right: 10.w),
-                      child: Row(children: <Widget>[
-                        SizedBox(
-                          width: ScreenUtil().setWidth(10.w),
-                        ),
-                        Visibility(
-                            visible: false,
-                            child: Text(
-                              "2021-01-12 15:35:30",
-                              style: TextStyle(
-                                  fontSize: 14.sp, color: Colors.grey),
-                            )),
-                        const Visibility(
-                            visible: false,
-                            child: CircleAvatar(
-                              backgroundImage: AssetImage("rightImageUri"),
-                            ))
-                      ]),
-                    ),
-                    Icon(
-                      Icons.arrow_forward_ios_outlined,
-                      size: 30.sp,
-                      color: Colors.black54,
-                    )
-                  ]),
-                )
-              ],
-            ),
+                    visible: true,
+                    child: SizedBox(
+                      width: ScreenUtil().screenWidth * 0.58,
+                      child: Text(
+                        answer,
+                        maxLines: 20,
+                        style: TextStyle(fontSize: 28.sp, color: color),
+                      ),
+                    )),
+              ]),
+              //Visibility是控制子组件隐藏/可见的组件
+              Visibility(
+                visible: show,
+                child: Row(children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(right: 10.w),
+                    child: Row(children: <Widget>[
+                      SizedBox(
+                        width: ScreenUtil().setWidth(10.w),
+                      ),
+                      Visibility(
+                          visible: false,
+                          child: Text(
+                            "2021-01-12 15:35:30",
+                            style: TextStyle(
+                                fontSize: 14.sp, color: Colors.grey),
+                          )),
+                      const Visibility(
+                          visible: false,
+                          child: CircleAvatar(
+                            backgroundImage: AssetImage("rightImageUri"),
+                          ))
+                    ]),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_outlined,
+                    size: 30.sp,
+                    color: Colors.black54,
+                  )
+                ]),
+              )
+            ],
           ),
         )),
   );
 }
 
 avatar(String url, bool isVip, String name) {
-  return Container(
-    child: Stack(
-      children: [
-        url == ""
-            ? Container(
-          margin: EdgeInsets.only(left: 20.w, top: 20.h),
-          // width: 100.w,
-          // height: 100.h,h
-          color: Colors.transparent,
-          child: CircleText(
-            text: name,
-            size: 140.w,
-            fontSize: 50.sp,
-            color: Colors.lightBlue,
-            //shadowColor: Colors.transparent,
-          ),
-        )
-            : Container(
-          margin: EdgeInsets.only(left: 30.w, top: 32.h),
-          child: CircleAvatar(
-            radius: (70.w),
-            child: ClipOval(
-              child: Container(
-                width: 160.w,
-                height: 160.h,
-                child: getCacheImage(
-                  url,
-                ),
+  return Stack(
+    children: [
+      url == ""
+          ? Container(
+              margin: EdgeInsets.only(left: 20.w, top: 20.h),
+              color: Colors.transparent,
+              child: CircleText(
+                text: name,
+                size: 140.w,
+                fontSize: 50.sp,
+                color: Colors.lightBlue,
+                //shadowColor: Colors.transparent,
               ),
-            ),
-            backgroundColor: Colors.white,
-          ),
-        ),
-        isVip
-            ? Container(
-                width: 200.w,
-                height: 200.h,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/radio_header_1.png"),
-                    fit: BoxFit.cover,
+            )
+          : Container(
+              margin: EdgeInsets.only(left: 30.w, top: 32.h),
+              child: CircleAvatar(
+                radius: (70.w),
+                child: ClipOval(
+                  child: SizedBox(
+                    width: 160.w,
+                    height: 160.h,
+                    child: getCacheImage(
+                      url,
+                    ),
                   ),
                 ),
-                margin: EdgeInsets.only(left: 0.w, top: 10.h),
-              )
-            : Container(),
-
-      ],
-    ),
+                backgroundColor: Colors.white,
+              ),
+            ),
+      isVip
+          ? Container(
+              width: 200.w,
+              height: 200.h,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/radio_header_1.png"),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              margin: EdgeInsets.only(left: 0.w, top: 10.h),
+            )
+          : Container(),
+    ],
   );
 }
 
@@ -2985,7 +2848,7 @@ header(BuildContext context, Data user) {
   String vipName = "";
   String vipName1 = "";
   var vipExpireTime = user.info.vipExpireTime;
-  if (vipExpireTime == null) {
+  if (vipExpireTime == "") {
     isVip = false;
   } else {
     if (user.info.status == 2) {
@@ -3049,83 +2912,81 @@ header(BuildContext context, Data user) {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 120.w,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 120.w,
+                    ),
+                    margin: EdgeInsets.fromLTRB(10.w, 10.h, 0.w, 0.h),
+                    child: Text(
+                      user.info.name,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32.sp,
                       ),
-                      margin: EdgeInsets.fromLTRB(10.w, 10.h, 0.w, 0.h),
-                      child: Text(
-                        user.info.name,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32.sp,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                  Container(
-                      //color: Colors.black12,
-                      padding: EdgeInsets.fromLTRB(5.w, 0.h, 5.w, 0.h),
-                      margin: EdgeInsets.fromLTRB(5.w, 10.h, 0.w, 0.h),
-                      alignment: Alignment.centerLeft,
-                      height: 28.h,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(255, 255, 255, 100),
-                        //设置四周圆角 角度
-                        borderRadius: BorderRadius.all(Radius.circular(5.h)),
-                        //设置四周边框
-                        border: Border.all(width: 1, color: Colors.red),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                Container(
+                    //color: Colors.black12,
+                    padding: EdgeInsets.fromLTRB(5.w, 0.h, 5.w, 0.h),
+                    margin: EdgeInsets.fromLTRB(5.w, 10.h, 0.w, 0.h),
+                    alignment: Alignment.centerLeft,
+                    height: 28.h,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 100),
+                      //设置四周圆角 角度
+                      borderRadius: BorderRadius.all(Radius.circular(5.h)),
+                      //设置四周边框
+                      border: Border.all(width: 1, color: Colors.red),
+                    ),
+                    child: Text(
+                      user.info.age.toString() + "岁",
+                      style: TextStyle(color: Colors.black, fontSize: 18.sp),
+                    )),
+                isVip == true
+                    ? Container(
+                        width: 60.h,
+                        height: 60.h,
+                        margin: EdgeInsets.fromLTRB(0.w, 5.h, 0.w, 0.h),
+                        child: Lottie.asset(
+                            'assets/packages/lottie_flutter/vip-icon.json'),
+                      )
+                    : Container(),
+                Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 110.w,
+                    ),
+                    margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 0.h),
+                    child: Text(
+                      vipName,
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 25.sp,
                       ),
-                      child: Text(
-                        user.info.age.toString() + "岁",
-                        style: TextStyle(color: Colors.black, fontSize: 18.sp),
-                      )),
-                  isVip == true
-                      ? Container(
-                          width: 60.h,
-                          height: 60.h,
-                          margin: EdgeInsets.fromLTRB(0.w, 5.h, 0.w, 0.h),
-                          child: Lottie.asset(
-                              'assets/packages/lottie_flutter/vip-icon.json'),
-                        )
-                      : Container(),
-                  Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 110.w,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+                Container(
+                    constraints: BoxConstraints(
+                      maxWidth: 170.w,
+                    ),
+                    margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 0.h),
+                    child: Text(
+                      vipName1,
+                      style: TextStyle(
+                        color: Colors.redAccent,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 25.sp,
                       ),
-                      margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 0.h),
-                      child: Text(
-                        vipName,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 25.sp,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                  Container(
-                      constraints: BoxConstraints(
-                        maxWidth: 170.w,
-                      ),
-                      margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 0.h),
-                      child: Text(
-                        vipName1,
-                        style: TextStyle(
-                          color: Colors.redAccent,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 25.sp,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      )),
-                ],
-              ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    )),
+              ],
             ),
             Row(
               children: <Widget>[

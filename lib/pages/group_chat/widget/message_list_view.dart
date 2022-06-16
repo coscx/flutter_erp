@@ -1,25 +1,29 @@
 import 'dart:io';
+
 import 'package:flt_im_plugin/message.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_erp/common/widgets/chat/time_util.dart';
 import 'package:flutter_erp/pages/group_chat/widget/group_chat_item.dart';
 import 'package:flutter_erp/pages/peer_chat/widget/peer_chat_item.dart';
-import 'package:flutter_erp/common/widgets/chat/time_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../common/widgets/chat/functions.dart';
 import '../../../common/widgets/chat/voice.dart';
 import '../../../common/widgets/dy_behavior_null.dart';
 import '../../conversion/widget/colors.dart';
-import '../../../common/widgets/chat/functions.dart';
 
 class GroupMessageListView extends StatefulWidget {
   final List<Message> messageList;
   final OnItemClick onResendClick;
   final OnItemClick onItemLongClick;
   final OnItemClick onItemClick;
+  final OnMenuItemClick onMenuItemClick;
   final VoidCallback bodyClick;
   final String tfSender;
   final ScrollController scrollController;
   final Voice voice;
+
   const GroupMessageListView(
       {Key? key,
       required this.messageList,
@@ -28,7 +32,10 @@ class GroupMessageListView extends StatefulWidget {
       required this.onItemClick,
       required this.bodyClick,
       required this.tfSender,
-      required this.scrollController, required this.voice})
+      required this.scrollController,
+      required this.voice,
+      required this.onMenuItemClick
+      })
       : super(key: key);
 
   @override
@@ -38,6 +45,7 @@ class GroupMessageListView extends StatefulWidget {
 class _GroupMessageListViewState extends State<GroupMessageListView> {
   Map<String, GlobalKey<PeerChatItemWidgetState>> globalKeyMap = {};
   bool isLoading = false;
+
   @override
   void initState() {
     widget.scrollController.addListener(() {
@@ -118,11 +126,11 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
             padding:
                 EdgeInsets.only(left: 10.w, right: 10.w, top: 0, bottom: 0),
             itemBuilder: (BuildContext context, int index) {
-              String uuid ="";
-              if(Platform.isIOS){
-                 uuid = widget.messageList[index].content!['uuid'];
-              }else{
-                 uuid = widget.messageList[index].content!['uUID'];
+              String uuid = "";
+              if (Platform.isIOS) {
+                uuid = widget.messageList[index].content!['uuid'];
+              } else {
+                uuid = widget.messageList[index].content!['uUID'];
               }
 
               if (index == widget.messageList.length - 1) {
@@ -142,7 +150,9 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
                         widget.tfSender,
                         widget.onResendClick,
                         widget.onItemLongClick,
-                        widget.onItemClick),
+                        widget.onItemClick,
+                        widget.onMenuItemClick
+                    ),
                   ],
                 );
               } else {
@@ -157,7 +167,9 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
                         widget.tfSender,
                         widget.onResendClick,
                         widget.onItemLongClick,
-                        widget.onItemClick),
+                        widget.onItemClick,
+                        widget.onMenuItemClick
+                    ),
                   ],
                 );
               }
@@ -176,7 +188,9 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
       String tfSender,
       OnItemClick? onResendClick,
       OnItemClick? onItemLongClick,
-      OnItemClick? onItemClick) {
+      OnItemClick? onItemClick,
+      OnMenuItemClick? onMenuItemClick
+      ) {
     //list最后一条消息（时间上是最老的），是没有下一条了
     Message? _nextEntity =
         (index == messageList.length - 1) ? null : messageList[index + 1];
@@ -185,6 +199,7 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
         onResend: (reSendEntity) => onResendClick!(reSendEntity),
         onItemLongClick: (entity) {
           // _deletePeerMessage(context, entity);
+          onItemLongClick!(entity);
         },
         onItemClick: (onClickEntity) {
           Message entity = _entity;
@@ -213,14 +228,20 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
             }
           }
           onItemClick!(onClickEntity);
-        });
+        },
+        onMenuItemClick: (Object entity, int key){
+           onMenuItemClick!(entity,key);
+        }
+        );
   }
 
   Widget buildChatListItem(
       Key key, Message? nextEntity, Message entity, String tfSender,
       {OnItemClick? onResend,
       OnItemClick? onItemClick,
-      OnItemClick? onItemLongClick}) {
+      OnItemClick? onItemLongClick,
+      OnMenuItemClick? onMenuItemClick
+      }) {
     bool _isShowTime = true;
     var showTime; //最终显示的时间
     if (null == nextEntity) {
@@ -248,11 +269,15 @@ class _GroupMessageListViewState extends State<GroupMessageListView> {
                   ))
               : const SizedBox(height: 0),
           GroupChatItemWidget(
-              entity: entity,
-              onResend: onResend!,
-              onItemClick: onItemClick!,
-              onItemLongClick: onItemLongClick!,
-              tfSender: tfSender)
+            entity: entity,
+            onResend: onResend!,
+            onItemClick: onItemClick!,
+            onItemLongClick: onItemLongClick!,
+            tfSender: tfSender,
+            onMenuItemClick: (Object entity, int key) {
+              onMenuItemClick!(entity,key);
+            },
+          )
         ],
       ),
     );

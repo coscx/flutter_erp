@@ -18,6 +18,8 @@ class HomePage extends StatelessWidget {
   final logic = Get.find<HomeLogic>();
   final state = Get.find<HomeLogic>().state;
 
+   HomePage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -68,16 +70,14 @@ class HomePage extends StatelessWidget {
               elevation: 0,
               //去掉Appbar底部阴影
               actions: <Widget>[
-                Container(
-                  child: IconButton(
-                    icon: const Icon(
-                      Icons.search,
-                      color: Colors.black87,
-                    ),
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.SearchUser,arguments: 0);
-                    },
+                IconButton(
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.black87,
                   ),
+                  onPressed: () {
+                    Get.toNamed(AppRoutes.SearchUser,arguments: 0);
+                  },
                 ),
                 SizedBox(width: 20.w),
 
@@ -123,7 +123,7 @@ class HomePage extends StatelessWidget {
                           padding: EdgeInsets.only(top: 80.h),
                           child: _buildHead(context),
                         ),
-                        bar(
+                        Bar(
                           selectItems: logic.selectItems,
                           roleId: logic.roleId,
                           scaffoldState: logic.scaffoldKey,
@@ -135,108 +135,106 @@ class HomePage extends StatelessWidget {
     );
   }
   Widget _buildHead(BuildContext context ) {
-    return Container(
-        child: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              verticalDirection: VerticalDirection.down,
-              children: <Widget>[
-                SizedBox(
-                  width: 1.w,
-                ),
-                Container(
-                  width: 100.w,
-                  child: Text(
-                    "筛选:",
-                    style: TextStyle(
-                      fontSize: 32.sp,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-                CupertinoSegmentedControl<int>(
-                  //unselectedColor: Colors.yellow,
-                  //selectedColor: Colors.green,
-                  //pressedColor: Colors.blue,
-                  //borderColor: Colors.red,
-                  groupValue: logic.sex.value == 0 ? 1 : logic.sex.value ,
-                  onValueChanged: _onValueChanged,
-                  padding: EdgeInsets.only(right: 0.w),
-                  children: {
-                    1: logic.sex.value == 1
-                        ? Padding(
-                      padding: EdgeInsets.only(left: 50.w, right: 40.w),
-                      child: Text("男",
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: Colors.white,
-                          )),
-                    )
-                        : Text("男",
-                        style: TextStyle(
-                          fontSize: 30.sp,
-                          color: Colors.blue,
-                        )),
-                    2: logic.sex.value == 2
-                        ? Padding(
-                      padding: EdgeInsets.only(left: 50.w, right: 40.w),
-                      child: Text("女",
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            color: Colors.white,
-                          )),
-                    )
-                        : Text("女",
-                        style: TextStyle(
-                          fontSize: 30.sp,
-                          color: Colors.blue,
-                        )),
-                  },
-                ),
-                buildHeadTxt(context),
-                PopupMenuButton<String>(
-                  itemBuilder: (context) => buildItems(),
-                  padding: EdgeInsets.only(right: 0.w),
-                  offset: Offset(-15.w, 70.h),
-                  color: Colors.white,
-                  elevation: 1,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20.w),
-                        bottomRight: Radius.circular(20.w),
-                        topRight: Radius.circular(5.w),
-                        bottomLeft: Radius.circular(20.w),
-                      )),
-                  onSelected: (e) async {
-                    //print(e);
-                    var ccMode = 0;
-                    if (e == '全部') {
-                      logic.currentPhotoMode.value =0;
-                      ccMode = 10;
-                    }
-                    if (e == '我的') {
-                      logic.currentPhotoMode.value =2;
-                      ccMode = 2;
-                    }
-                    if (e == '良缘') {
-                      logic.currentPhotoMode.value =1;
-                      ccMode = 1;
-                    }
-                    if (e == '公海') {
-                      logic.currentPhotoMode.value =3;
-                      ccMode = 3;
-                    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.max,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      verticalDirection: VerticalDirection.down,
+      children: <Widget>[
+        SizedBox(
+          width: 1.w,
+        ),
+        SizedBox(
+          width: 100.w,
+          child: Text(
+            "筛选:",
+            style: TextStyle(
+              fontSize: 32.sp,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        CupertinoSegmentedControl<int>(
+          //unselectedColor: Colors.yellow,
+          //selectedColor: Colors.green,
+          //pressedColor: Colors.blue,
+          //borderColor: Colors.red,
+          groupValue: logic.sex.value == 0 ? 1 : logic.sex.value ,
+          onValueChanged: _onValueChanged,
+          padding: EdgeInsets.only(right: 0.w),
+          children: {
+            1: logic.sex.value == 1
+                ? Padding(
+              padding: EdgeInsets.only(left: 50.w, right: 40.w),
+              child: Text("男",
+                  style: TextStyle(
+                    fontSize: 30.sp,
+                    color: Colors.white,
+                  )),
+            )
+                : Text("男",
+                style: TextStyle(
+                  fontSize: 30.sp,
+                  color: Colors.blue,
+                )),
+            2: logic.sex.value == 2
+                ? Padding(
+              padding: EdgeInsets.only(left: 50.w, right: 40.w),
+              child: Text("女",
+                  style: TextStyle(
+                    fontSize: 30.sp,
+                    color: Colors.white,
+                  )),
+            )
+                : Text("女",
+                style: TextStyle(
+                  fontSize: 30.sp,
+                  color: Colors.blue,
+                )),
+          },
+        ),
+        buildHeadTxt(context),
+        PopupMenuButton<String>(
+          itemBuilder: (context) => buildItems(),
+          padding: EdgeInsets.only(right: 0.w),
+          offset: Offset(-15.w, 70.h),
+          color: Colors.white,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20.w),
+                bottomRight: Radius.circular(20.w),
+                topRight: Radius.circular(5.w),
+                bottomLeft: Radius.circular(20.w),
+              )),
+          onSelected: (e) async {
+            //print(e);
+            var ccMode = 0;
+            if (e == '全部') {
+              logic.currentPhotoMode.value =0;
+              ccMode = 10;
+            }
+            if (e == '我的') {
+              logic.currentPhotoMode.value =2;
+              ccMode = 2;
+            }
+            if (e == '良缘') {
+              logic.currentPhotoMode.value =1;
+              ccMode = 1;
+            }
+            if (e == '公海') {
+              logic.currentPhotoMode.value =3;
+              ccMode = 3;
+            }
 
 
-                      logic.roleId = ccMode;
-                      logic.onRefresh();
-                  },
-                  onCanceled: () => print('onCanceled'),
-                )
-              ],
-            )));
+              logic.roleId = ccMode;
+              logic.onRefresh();
+          },
+          onCanceled: () => debugPrint('onCanceled'),
+        )
+      ],
+    );
   }
   void _onValueChanged(int value) {
     logic.sex.value = value;
@@ -346,18 +344,17 @@ class HomePage extends StatelessWidget {
           ));
   }
 }
-class bar extends StatelessWidget implements PreferredSizeWidget {
+class Bar extends StatelessWidget implements PreferredSizeWidget {
   final List<SelectItem> selectItems;
   final int roleId;
   final  GlobalKey<ScaffoldState> scaffoldState;
-  bar({
+  const Bar({Key? key,
     required this.selectItems,
     required this.roleId,
     required this.scaffoldState,
-  });
+  }) : super(key: key);
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => Size.fromHeight(580.h);
 
   @override

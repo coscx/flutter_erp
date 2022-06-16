@@ -16,9 +16,9 @@ class AppBarComponent extends StatefulWidget {
   final List<SelectItem> selectItems;
   final GlobalKey<ScaffoldState> state;
   final int mode;
-  AppBarComponent({
+   const AppBarComponent({Key? key,
     required this.selectItems,required this.state, required this.mode,
-  });
+  }) : super(key: key);
   @override
   _AppBarComponentState createState() => _AppBarComponentState();
 }
@@ -32,8 +32,8 @@ class _AppBarComponentState extends State<AppBarComponent> {
   final Color bgColor = Colors.black;
   final Color textColor = Colors.redAccent;
   final List<String> _dropDownHeaderItemStrings = ['全部门店', '客户状态', '沟通状态', '筛选'];
-  List<SortCondition> _brandSortConditions = [];
-  List<SortCondition> _distanceSortConditions = [];
+  final List<SortCondition> _brandSortConditions = [];
+  final List<SortCondition> _distanceSortConditions = [];
   late SortCondition _selectBrandSortCondition;
   late SortCondition _selectDistanceSortCondition;
   final GZXDropdownMenuController _dropdownMenuController =
@@ -210,127 +210,125 @@ bool getSelect(){
   @override
   Widget build(BuildContext context) {
 
-    return Container(
-      child: Stack(
-        key: _stackKey,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                decoration:  const BoxDecoration(),
-                child: GZXDropDownHeader(
-                  height: 65.h,
-                  items: [
-                    GZXDropDownHeaderItem(_dropDownHeaderItemStrings[0],
-                        style: TextStyle(color: (_dropDownHeaderItemStrings[0] =="全部门店" || _dropDownHeaderItemStrings[0] =="全部")?Colors.black:Colors.redAccent)),
-                    GZXDropDownHeaderItem(_dropDownHeaderItemStrings[1], style: TextStyle(color: (_dropDownHeaderItemStrings[1] =="客户状态" )?Colors.black:Colors.redAccent)),
-                    GZXDropDownHeaderItem(_dropDownHeaderItemStrings[2], style: TextStyle(color: (_dropDownHeaderItemStrings[2] =="沟通状态" )?Colors.black:Colors.redAccent)),
-                    GZXDropDownHeaderItem(_dropDownHeaderItemStrings[3], style: TextStyle(color: (getSelect() == false )?Colors.black:Colors.redAccent),
-                        iconSize: 30.sp),
-                  ],
-                  stackKey: _stackKey,
-                  controller: _dropdownMenuController,
-                  onItemTap: (index) {
-                    if (index == 3) {
-                      widget.state.currentState?.openEndDrawer();
-                      _dropdownMenuController.hide();
-                    }
-                  },
-                ),
+    return Stack(
+      key: _stackKey,
+      children: <Widget>[
+        Column(
+          children: <Widget>[
+            Container(
+              decoration:  const BoxDecoration(),
+              child: GZXDropDownHeader(
+                height: 65.h,
+                items: [
+                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[0],
+                      style: TextStyle(color: (_dropDownHeaderItemStrings[0] =="全部门店" || _dropDownHeaderItemStrings[0] =="全部")?Colors.black:Colors.redAccent)),
+                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[1], style: TextStyle(color: (_dropDownHeaderItemStrings[1] =="客户状态" )?Colors.black:Colors.redAccent)),
+                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[2], style: TextStyle(color: (_dropDownHeaderItemStrings[2] =="沟通状态" )?Colors.black:Colors.redAccent)),
+                  GZXDropDownHeaderItem(_dropDownHeaderItemStrings[3], style: TextStyle(color: (getSelect() == false )?Colors.black:Colors.redAccent),
+                      iconSize: 30.sp),
+                ],
+                stackKey: _stackKey,
+                controller: _dropdownMenuController,
+                onItemTap: (index) {
+                  if (index == 3) {
+                    widget.state.currentState?.openEndDrawer();
+                    _dropdownMenuController.hide();
+                  }
+                },
               ),
-            ],
-          ),
-          GZXDropDownMenu(
-            controller: _dropdownMenuController,
-            animationMilliseconds: 350,
-            menus: [
-              GZXDropdownMenuBuilder(
-                  dropDownHeight: 62.h * 8.0,
-                  dropDownWidget: _buildQuanChengWidget((selectValue) {
-                    _dropDownHeaderItemStrings[0] = selectValue.name!;
-                    _dropdownMenuController.hide();
-                    setState(() {});
-                    if (selectValue.type == 101) {
-                      if (selectValue.id == "1") {
-                        selectValue.id = "0";
-                      } else {
-                        return;
-                      }
-                    }
-                    int k = 0;
-                    for (int i = 0; i < widget.selectItems.length; i++) {
-                      if (widget.selectItems[i].type == 100) {
-                        widget.selectItems[i].id = selectValue.id.toString();
-                        k = 1;
-                        break;
-                      }
-                    }
-                    if (k > 0) {
+            ),
+          ],
+        ),
+        GZXDropDownMenu(
+          controller: _dropdownMenuController,
+          animationMilliseconds: 350,
+          menus: [
+            GZXDropdownMenuBuilder(
+                dropDownHeight: 62.h * 8.0,
+                dropDownWidget: _buildStoreWidget((selectValue) {
+                  _dropDownHeaderItemStrings[0] = selectValue.name!;
+                  _dropdownMenuController.hide();
+                  setState(() {});
+                  if (selectValue.type == 101) {
+                    if (selectValue.id == "1") {
+                      selectValue.id = "0";
                     } else {
-                      SelectItem s = SelectItem();
-                      s.type = 100;
-                      s.id = selectValue.id.toString();
-                      widget.selectItems.add(s);
+                      return;
                     }
-                    logic.onRefresh();
-                  })),
-              GZXDropdownMenuBuilder(
-                  dropDownHeight: 62.h * _brandSortConditions.length,
-                  dropDownWidget:
-                  _buildConditionListWidget(_brandSortConditions, (value) {
-                    _selectBrandSortCondition = value;
-                    _dropDownHeaderItemStrings[1] =
-                        _selectBrandSortCondition.name!;
-                    _dropdownMenuController.hide();
-                    setState(() {});
-                    int k = 0;
-                    for (int i = 0; i < widget.selectItems.length; i++) {
-                      if (widget.selectItems[i].type == 120) {
-                        widget.selectItems[i].id = value.id.toString();
-                        k = 1;
-                        break;
-                      }
+                  }
+                  int k = 0;
+                  for (int i = 0; i < widget.selectItems.length; i++) {
+                    if (widget.selectItems[i].type == 100) {
+                      widget.selectItems[i].id = selectValue.id.toString();
+                      k = 1;
+                      break;
                     }
-                    if (k > 0) {
-                    } else {
-                      SelectItem s = SelectItem();
-                      s.type = 120;
-                      s.id = value.id.toString();
-                      widget.selectItems.add(s);
+                  }
+                  if (k > 0) {
+                  } else {
+                    SelectItem s = SelectItem();
+                    s.type = 100;
+                    s.id = selectValue.id.toString();
+                    widget.selectItems.add(s);
+                  }
+                  logic.onRefresh();
+                })),
+            GZXDropdownMenuBuilder(
+                dropDownHeight: 62.h * _brandSortConditions.length,
+                dropDownWidget:
+                _buildConditionListWidget(_brandSortConditions, (value) {
+                  _selectBrandSortCondition = value;
+                  _dropDownHeaderItemStrings[1] =
+                      _selectBrandSortCondition.name!;
+                  _dropdownMenuController.hide();
+                  setState(() {});
+                  int k = 0;
+                  for (int i = 0; i < widget.selectItems.length; i++) {
+                    if (widget.selectItems[i].type == 120) {
+                      widget.selectItems[i].id = value.id.toString();
+                      k = 1;
+                      break;
                     }
-                    logic.onRefresh();
-                  })),
-              GZXDropdownMenuBuilder(
-                  dropDownHeight: 62.h * _distanceSortConditions.length,
-                  dropDownWidget: _buildConditionListWidget(
-                      _distanceSortConditions, (value) {
-                    _selectDistanceSortCondition = value;
-                    _dropDownHeaderItemStrings[2] =
-                        _selectDistanceSortCondition.name!;
-                    _dropdownMenuController.hide();
-                    setState(() {});
-                    int k = 0;
-                    for (int i = 0; i < widget.selectItems.length; i++) {
-                      if (widget.selectItems[i].type == 130) {
-                        widget.selectItems[i].id = value.id.toString();
-                        k = 1;
-                        break;
-                      }
+                  }
+                  if (k > 0) {
+                  } else {
+                    SelectItem s = SelectItem();
+                    s.type = 120;
+                    s.id = value.id.toString();
+                    widget.selectItems.add(s);
+                  }
+                  logic.onRefresh();
+                })),
+            GZXDropdownMenuBuilder(
+                dropDownHeight: 62.h * _distanceSortConditions.length,
+                dropDownWidget: _buildConditionListWidget(
+                    _distanceSortConditions, (value) {
+                  _selectDistanceSortCondition = value;
+                  _dropDownHeaderItemStrings[2] =
+                      _selectDistanceSortCondition.name!;
+                  _dropdownMenuController.hide();
+                  setState(() {});
+                  int k = 0;
+                  for (int i = 0; i < widget.selectItems.length; i++) {
+                    if (widget.selectItems[i].type == 130) {
+                      widget.selectItems[i].id = value.id.toString();
+                      k = 1;
+                      break;
                     }
-                    if (k > 0) {
-                    } else {
-                      SelectItem s = SelectItem();
-                      s.type = 130;
-                      s.id = value.id.toString();
-                      widget.selectItems.add(s);
-                    }
-                    logic.onRefresh();
-                  })),
-            ],
-          ),
+                  }
+                  if (k > 0) {
+                  } else {
+                    SelectItem s = SelectItem();
+                    s.type = 130;
+                    s.id = value.id.toString();
+                    widget.selectItems.add(s);
+                  }
+                  logic.onRefresh();
+                })),
+          ],
+        ),
 
-        ],
-      ),
+      ],
     );
   }
 
@@ -339,12 +337,11 @@ bool getSelect(){
 
   int _selectSecondLevelIndex = -1;
 
-  _buildQuanChengWidget(void Function(SelectItem selectValue) itemOnTap) {
-//    List firstLevels =  List<int>.filled(15, 0);
+  _buildStoreWidget(void Function(SelectItem selectValue) itemOnTap) {
 
     return Row(
       children: <Widget>[
-        Container(
+        SizedBox(
           width: 200.w,
           child: ListView(
             children: firstLevels.map((item) {
@@ -446,7 +443,7 @@ bool getSelect(){
     );
   }
 
-  _buildConditionListWidget(items, void itemOnTap(SortCondition)) {
+  _buildConditionListWidget(items,  itemOnTap(SortCondition)) {
     return ScrollConfiguration(
         behavior: DyBehaviorNull(),
     child: ListView.separated(
@@ -469,7 +466,7 @@ bool getSelect(){
 
             itemOnTap(goodsSortCondition);
           },
-          child: Container(
+          child: SizedBox(
 //            color: Colors.blue,
             height: 59.h,
             child: Row(

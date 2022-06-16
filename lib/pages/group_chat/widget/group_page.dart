@@ -96,7 +96,16 @@ class _GroupPageState extends State<GroupPage> {
                     messageList: widget.messageList,
                     onResendClick: (reSendEntity) {},
                     onItemClick: _onItemClick,
-                    onItemLongClick: (entity) {},
+                    onItemLongClick: (entity) {
+                      debugPrint("onItemLongClick");
+                    },
+                  onMenuItemClick: (entity,key) {
+
+                    if (key ==0){
+                      var logic = Get.find<GroupChatLogic>();
+                      logic.sendRevokeMessage(entity as Message);
+                    }
+                  },
                     bodyClick: () {
                       debugPrint("bodyClick");
                       //hideKeyBoard();

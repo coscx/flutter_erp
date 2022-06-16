@@ -126,7 +126,24 @@ class PeerChatLogic extends GetxController {
         second: length);
     setMessageFlag(result!);
   }
+  void sendRevokeMessage(Message entity) async {
+    String uuid ;
+    if (Platform.isAndroid == true) {
+      //im.deletePeerMessage(id:entity.content['uUID']);
+      uuid=  entity.content!['uUID'];
+    } else {
+      uuid =entity.content!['uuid'];
+    }
+    Map? result = await im.sendRevokeMessage(
+      secret: false,
+      sender: model.memId!,
+      receiver: model.cid!,
+      uuid: uuid,
+    );
 
+    revokeMessageLocalDelete(uuid,result!);
+    update();
+  }
   setMessageFlag(Map result){
 
     var message = Message.fromMap(ValueUtil.toMap(result['data']));
@@ -137,6 +154,22 @@ class PeerChatLogic extends GetxController {
       }
     }
 
+    update();
+  }
+  revokeMessageLocalDelete(String uuid, Map result){
+
+    var message = Message.fromMap(ValueUtil.toMap(result['data']));
+    for (var i = 0; i < messageList.length; i++) {
+      String uuids ;
+      if (Platform.isAndroid == true) {
+        uuids=  messageList[i].content!['uUID'];
+      } else {
+        uuids =messageList[i].content!['uuid'];
+      }
+      if (uuids == uuid) {
+        messageList[i] = message;
+      }
+    }
     update();
   }
 }

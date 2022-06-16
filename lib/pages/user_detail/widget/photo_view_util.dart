@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
 class PhotoViewSimpleScreen extends StatelessWidget {
-  const PhotoViewSimpleScreen({
+   const PhotoViewSimpleScreen({Key? key,
     required this.imageProvider, //图片
     required this.loadingChild, //加载时的widget
     required this.backgroundDecoration, //背景修饰
     this.minScale, //最大缩放倍数
     this.maxScale, //最小缩放倍数
     required this.heroTag, //hero动画tagid
-  });
+  }) : super(key: key);
 
   final ImageProvider imageProvider;
   final Widget loadingChild;
@@ -46,7 +46,7 @@ class PhotoViewSimpleScreen extends StatelessWidget {
               right: 10,
               top: MediaQuery.of(context).padding.top,
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.close,
                   size: 30,
                   color: Colors.white,

@@ -38,7 +38,7 @@ class JhPhotoBrowser extends StatefulWidget {
   bool isHiddenClose;
   bool isHiddenTitle;
 
-  JhPhotoBrowser({
+  JhPhotoBrowser({Key? key,
 
     required this.imgDataArr,
     this.index = 0,
@@ -47,7 +47,7 @@ class JhPhotoBrowser extends StatefulWidget {
     this.heroTag,
     this.isHiddenClose = false,
     this.isHiddenTitle = false,
-  }) {
+  }) : super(key: key) {
     controller = PageController(initialPage: index);
   }
 
@@ -60,7 +60,6 @@ class _JhPhotoBrowserState extends State<JhPhotoBrowser> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     currentIndex = widget.index;
   }
@@ -148,7 +147,7 @@ class _JhPhotoBrowserState extends State<JhPhotoBrowser> {
           child: Offstage(
             offstage: widget.isHiddenClose,
             child: IconButton(
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               icon: Icon(
                 Icons.close,
                 size: 60.sp,
@@ -163,7 +162,7 @@ class _JhPhotoBrowserState extends State<JhPhotoBrowser> {
         SafeArea(
           child: Align(
             alignment: Alignment.bottomCenter,
-            child: Container(
+            child: SizedBox(
               height: widget.imgDataArr.length == 1 ? 0 : 50,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -171,7 +170,7 @@ class _JhPhotoBrowserState extends State<JhPhotoBrowser> {
                   widget.imgDataArr.length,
                   (i) => GestureDetector(
                     child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 3.5),
+                        padding: const EdgeInsets.symmetric(horizontal: 3.5),
                         child: CircleAvatar(
 //                      foregroundColor: Theme.of(context).primaryColor,
                           radius: 3.5,

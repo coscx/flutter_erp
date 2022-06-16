@@ -162,7 +162,7 @@ class ApplicationController extends GetxController {
       webKey: flutter2dAMapWebKey,
     );
     im = FltImPlugin();
-    await  FltImPlugin().init(host: IM_SERVER_HOST_URL, apiURL: IM_SERVER_API_URL);
+    await im.init(host: IM_SERVER_HOST_URL, apiURL: IM_SERVER_API_URL);
     tfSender = ValueUtil.toStr(82);
     String imSender = StorageService.to.getString("memberId");
     if (imSender != "") {
@@ -187,7 +187,7 @@ class ApplicationController extends GetxController {
     // handleInitialUri();
     // handleIncomingLinks();
     // 准备一些静态数据
-    await UmengAnalyticsWithPush.initialize(logEnabled: true,pushEnabled: true);
+    await UmengAnalyticsWithPush.initialize(logEnabled: false,pushEnabled: true);
     try{
       final deviceToken = await UmengAnalyticsWithPush.deviceToken;
       print("push_token: "+deviceToken.toString());
