@@ -33,7 +33,7 @@ import '../utils/new_common_http.dart';
 class CommonAPI {
   /// 登录
   static Future<AppVersionEntity> getVersion() async {
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/auth/version',
       data: {},
     );
@@ -41,17 +41,17 @@ class CommonAPI {
   }
   static Future<LoginEntity> login(String username, String password) async {
     var data = {'username': username, 'password': password};
-    var response = await ERPHttpUtil().post(
-      '/api/v1/auth/loginApp',
-      queryParameters: data,
+    var response = await NewERPHttpUtil().post(
+      '/api/v1/auth/login',
+      data: data,
     );
     return LoginEntity.fromJson(response);
   }
   static Future<LoginEntity> wxLogin(String code) async {
     var data = {'code': code};
-    var response = await ERPHttpUtil().post(
-      '/api/v1/auth/loginAppByWechat',
-      queryParameters: data,
+    var response = await NewERPHttpUtil().post(
+      '/api/ErpAppLogin',
+      data: data,
     );
     return LoginEntity.fromJson(response);
   }
@@ -63,7 +63,7 @@ class CommonAPI {
     return CommonResult.fromJson(response);
   }
   static Future<Stores> getOnlyStoreList() async {
-    var response = await ERPHttpUtil().get(
+    var response = await NewERPHttpUtil().get(
       '/api/v1/store/select',
       queryParameters: {},
     );
@@ -77,9 +77,9 @@ class CommonAPI {
     return ErpUserResult.fromJson(response);
   }
   static Future<TreeStoreResult> getTreeStoreList() async {
-    var response = await ERPHttpUtil().get(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/system/user/getTreeStoreOnline',
-      queryParameters: {},
+      data: {},
     );
     return TreeStoreResult.fromJson(response);
   }
@@ -120,7 +120,7 @@ class CommonAPI {
     return CallLogDataResult.fromJson(response);
   }
   static Future<ViewCallResult> viewCall(String uuid) async {
-    var response = await ERPHttpUtil().get(
+    var response = await NewERPHttpUtil().get(
       '/api/v1/auth/getCustomerMobile/' + uuid,
       queryParameters: {'customer_uuid': uuid},
     );
@@ -128,8 +128,8 @@ class CommonAPI {
   }
 
   static Future<ClaimCustomerResult> claimCustomer(String uuid) async {
-    var response = await ERPHttpUtil().post(
-      '/api/v1/customer/public/claimCustomerApp',
+    var response = await NewERPHttpUtil().post(
+      '/api/v1/customer/public/claimCustomer',
       queryParameters: {'customer_uuids[0]': uuid},
     );
     return ClaimCustomerResult.fromJson(response);
@@ -142,16 +142,17 @@ class CommonAPI {
     return StoreVipDataResult.fromJson(response);
   }
   static Future<FreeVipDataResult> addMealFree( Map<String, dynamic> data) async {
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/store/addMealFree',
-      queryParameters: data,
+      data: data,
     );
+
     return FreeVipDataResult.fromJson(response);
   }
   static Future<CommonResult> buyVip( Map<String, dynamic> data) async {
-    var response = await ERPHttpUtil().post(
-      '/api/v1/customer/buyVipApp',
-      queryParameters: data,
+    var response = await NewERPHttpUtil().post(
+      '/api/v1/customer/buyVip',
+      data: data,
     );
     return CommonResult.fromJson(response);
   }
@@ -163,19 +164,19 @@ class CommonAPI {
     return UserDataResult.fromJson(response);
   }
 
-  static Future<CommonResult> distribute(String uuid, int type, String userUuid) async {
-    var response = await ERPHttpUtil().post(
+  static Future<CommonResult> distribute(String uuid, int type, int userUuid) async {
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/system/distribute',
-      queryParameters: {'customer_uuids[0]': uuid, 'type': type, 'user_uuid': userUuid},
+      data: {'customer_uuid': uuid, 'type': type, 'user_id': userUuid},
     );
     return CommonResult.fromJson(response);
   }
   static Future<CommonResult> editCustomerOnceString(String uuid, String type, String answer) async {
     Map<String, dynamic> searchParam = {};
     searchParam[type] = answer;
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/editCustomer/' + uuid,
-      queryParameters: searchParam,
+      data: searchParam,
     );
     return CommonResult.fromJson(response);
   }
@@ -185,35 +186,35 @@ class CommonAPI {
         {'type': type, 'file_url': url}
       ])
     };
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/editCustomer/' + uuid,
-      queryParameters: data,
+      data: data,
     );
     return CommonResult.fromJson(response);
   }
 
   static Future<CommonResult> editCustomerAddress(String uuid, Map<String, dynamic> searchParam) async {
 
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/editCustomer/' + uuid,
-      queryParameters: searchParam,
+      data: searchParam,
     );
     return CommonResult.fromJson(response);
   }
   static Future<CommonResult> editCustomerDemndAddress(String uuid, Map<String, dynamic> searchParam) async {
 
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/editCustomerDemand/' + uuid,
-      queryParameters: searchParam,
+      data: searchParam,
     );
     return CommonResult.fromJson(response);
   }
   static Future<CommonResult> editCustomerDemandOnce(String uuid, String type, String answer) async {
     Map<String, dynamic> searchParam = {};
     searchParam[type] = answer;
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/editCustomerDemand/' + uuid,
-      queryParameters: searchParam,
+      data: searchParam,
     );
     return CommonResult.fromJson(response);
   }
@@ -228,9 +229,9 @@ class CommonAPI {
 
 
   static Future<CommonResult> delPhoto( int imgId,) async {
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/deleteResources' ,
-      queryParameters: {'ids[0]': imgId},
+      data: {'id': imgId},
     );
     return CommonResult.fromJson(response);
   }
@@ -249,7 +250,7 @@ class CommonAPI {
     Map<String, dynamic> params = Map();
     params['type'] = type;
 
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/uploadPic' ,
         data: formData, queryParameters: params,
     );
@@ -268,9 +269,9 @@ class CommonAPI {
     data['birthday'] = birthday;
     data['marriage'] = marriage;
     data['channel'] = channel;
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/personal/addCustomer',
-      queryParameters: data,
+      data: data,
     );
     return CommonResult.fromJson(response);
   }
@@ -287,16 +288,16 @@ class CommonAPI {
     return HomeEntity.fromJson(response);
   }
   static Future<CommonResult> addAppoint(  String uuid, Map<String, dynamic> data) async {
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/addAppointment',
-      queryParameters: data,
+      data: data,
     );
     return CommonResult.fromJson(response);
   }
   static Future<CommonResult> addConnect(  String uuid, Map<String, dynamic> data) async {
-    var response = await ERPHttpUtil().post(
+    var response = await NewERPHttpUtil().post(
       '/api/v1/customer/addConnect',
-      queryParameters: data,
+      data: data,
     );
     return CommonResult.fromJson(response);
   }

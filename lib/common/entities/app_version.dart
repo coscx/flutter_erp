@@ -59,7 +59,7 @@ class AppVersionEntity {
   });
 
   factory AppVersionEntity.fromJson(Map<String, dynamic> json) => AppVersionEntity(
-    status: asT<String>(json['status'])!,
+    status: json.containsKey('status')? asT<String>(json['status'])!:"",
     code: asT<int>(json['code'])!,
     data: Data.fromJson(asT<Map<String, dynamic>>(json['data'])!),
   );

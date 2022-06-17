@@ -69,7 +69,7 @@ class ClaimCustomerResult {
 
   factory ClaimCustomerResult.fromJson(Map<String, dynamic> json) =>
       ClaimCustomerResult(
-        status: asT<String>(json['status'])!,
+        status: json.containsKey('status')? asT<String>(json['status'])!:"",
         code: asT<int>(json['code'])!,
         data: asT<int>(json['data'])!,
         message: json.containsKey('message')? asT<String>(json['message'])! :"",

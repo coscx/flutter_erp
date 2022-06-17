@@ -61,7 +61,7 @@ class FreeVipDataResult {
 
   factory FreeVipDataResult.fromJson(Map<String, dynamic> json) =>
       FreeVipDataResult(
-        status: asT<String>(json['status'])!,
+        status: json.containsKey('status')? asT<String>(json['status'])!:"",
         code: asT<int>(json['code'])!,
         data: FreeVipData.fromJson(asT<Map<String, dynamic>>(json['data'])!),
         message: json.containsKey('message')? asT<String>(json['message'])! :"",
@@ -122,18 +122,18 @@ class Id {
   });
 
   factory Id.fromJson(Map<String, dynamic> json) => Id(
-    favorable: asT<String>(json['favorable'])!,
-    storeId: asT<String>(json['store_id'])!,
-    time: asT<String>(json['time'])!,
-    meet: asT<String>(json['meet'])!,
-    description: asT<String>(json['description'])!,
-    name: asT<String>(json['name'])!,
-    services: asT<String>(json['services'])!,
-    original: asT<String>(json['original'])!,
-    free: asT<int>(json['free'])!,
-    updatedAt: asT<String>(json['updated_at'])!,
-    createdAt: asT<String>(json['created_at'])!,
-    id: asT<int>(json['id'])!,
+    favorable: json.containsKey('status')? asT<String>(json['favorable'])!:"",
+    storeId: json.containsKey('status')? asT<String>(json['store_id'])!:"",
+    time: json.containsKey('status')? asT<String>(json['time'])!:"",
+    meet: json.containsKey('status')? asT<String>(json['meet'])!:"",
+    description: json.containsKey('status')? asT<String>(json['description'])!:"",
+    name: json.containsKey('status')? asT<String>(json['name'])!:"",
+    services: json.containsKey('status')? asT<String>(json['services'])!:"",
+    original: json.containsKey('status')? asT<String>(json['original'])!:"",
+    free: json.containsKey('status')? asT<int>(json['free'])!:0,
+    updatedAt: json.containsKey('status')? asT<String>(json['updated_at'])!:"",
+    createdAt: json.containsKey('status')? asT<String>(json['created_at'])!:"",
+    id: json.containsKey('status')? asT<int>(json['id'])!:0,
   );
 
   String favorable;

@@ -211,7 +211,7 @@ class _NaviPageState extends State<ErpUserPage> {
                             }
 
                             var actionList = await CommonAPI.distribute(
-                                widget.uuid, ++index, selectUuid);
+                                widget.uuid, ++index, selectId);
                             if (actionList.code == 200) {
                               showToast(context, '划分成功', true);
                               Navigator.pop(context, selectId);

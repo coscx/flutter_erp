@@ -13,7 +13,7 @@ class AddVipLogic extends GetxController {
   var startBirthDayTitle = DateTime.now().toString().substring(0, 19).obs;
   var startBirthDayValue = DateTime.now().toString().substring(0, 19).obs;
   String store = "";
-  String storeName = "选择会员套餐";
+  var storeName = "选择会员套餐".obs;
   String price = "";
   String month = "";
   String count = "";
@@ -71,6 +71,10 @@ class AddVipLogic extends GetxController {
         ff1.type = 9999;
         ff1.name = "自定义套餐";
         ff1.index = 0;
+        ff1.price = "";
+        ff1.month = "";
+        ff1.count = "";
+        ff1.tag ="";
         ff1.isSelect = false;
         pickerStoreItem.add(ff1);
         pickerStoreData.add(ff1.name!);
@@ -117,7 +121,7 @@ class AddVipLogic extends GetxController {
     data['store_id'] = args['store_id'];
     data['time'] = month;
     data['meet'] = count;
-    data['pay_time'] = startBirthDayValue;
+    data['pay_time'] = startBirthDayValue.value;
     data['description'] = tag;
     data['name'] = "自定义套餐";
     data['original'] = price;
@@ -129,7 +133,7 @@ class AddVipLogic extends GetxController {
       var data1 = <String, dynamic>{};
       data1['pay_price'] = price;
       data1['customer_uuid'] = args['uuid'];
-      data1['pay_time'] = startBirthDayValue;
+      data1['pay_time'] = startBirthDayValue.value;
       data1['remark'] = tag;
       data1['vip_id'] = vipId;
       if (type == 9999) {
@@ -150,4 +154,7 @@ class AddVipLogic extends GetxController {
     }
   }
 
+}
+update(){
+  update();
 }

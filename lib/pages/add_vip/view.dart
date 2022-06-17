@@ -452,7 +452,7 @@ class AddVipPage extends StatelessWidget {
                             print(value.toString());
                             print(picker.adapter.text);
 
-                            logic.storeName =
+                            logic.storeName.value =
                             logic.pickerStoreData[value[0]];
                             logic.price =
                             logic.pickerStoreItem[value[0]].price!;
@@ -479,21 +479,22 @@ class AddVipPage extends StatelessWidget {
                               logic.vipCountController.clear();
                               logic.isButton1Disabled = true;
                             }
+
                           })
                           .showModal(
                           Get.context!); //_scaffoldKey.currentState);
                     },
                     child: Text(
-                      logic.storeName == "" ? " " : logic.storeName,
+                      logic.storeName.value == "" ? " " : logic.storeName.value,
                       style: TextStyle(
                           fontSize: 30.sp,
-                          color: logic.storeName == "选择会员套餐"
+                          color: logic.storeName.value == "选择会员套餐"
                               ? Colors.black
                               : Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
                         onPrimary: Colors.white,
-                        primary: logic.storeName == "选择会员套餐"
+                        primary: logic.storeName.value == "选择会员套餐"
                             ? Colors.grey.withAlpha(33)
                             : Colors.blue,
                         shadowColor: Colors.black12,

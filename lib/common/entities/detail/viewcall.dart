@@ -59,7 +59,7 @@ class ViewCallResult {
   });
 
   factory ViewCallResult.fromJson(Map<String, dynamic> json) => ViewCallResult(
-    status: asT<String>(json['status'])!,
+    status: json.containsKey('status')? asT<String>(json['status'])!:"",
     code: asT<int>(json['code'])!,
     data: asT<String>(json['data'])!,
   );
