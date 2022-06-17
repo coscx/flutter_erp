@@ -31,6 +31,7 @@ class MineLogic extends GetxController {
          if (result.code == 200) {
             //StorageService.to.setString("openid",result.data!.imToken);
              bind="已绑定微信";
+             showToast(Get.context!, "绑定成功", false);
              update();
          } else {
             showToastRed(Get.context!, result.message!, false);

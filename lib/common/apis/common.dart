@@ -26,7 +26,6 @@ import '../entities/home/common.dart';
 import '../entities/home/only_store.dart';
 import '../entities/home/search_erp.dart';
 import '../entities/mine/mine.dart';
-import '../utils/common_http.dart';
 import '../utils/new_common_http.dart';
 
 /// 用户
@@ -56,9 +55,9 @@ class CommonAPI {
     return LoginEntity.fromJson(response);
   }
   static Future<CommonResult> bindAppWeChat(String code) async {
-    var response = await ERPHttpUtil().post(
-      '/api/v1/auth/bindAppWeChat',
-      queryParameters: {"code":code},
+    var response = await NewERPHttpUtil().post(
+      '/api/bindAppWeChat',
+      data: {"code":code},
     );
     return CommonResult.fromJson(response);
   }
