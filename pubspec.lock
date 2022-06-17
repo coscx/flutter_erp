@@ -328,7 +328,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3ce5e3712de8e38acff70913c27e2d7c4398d94e"
+      resolved-ref: "9f4f87b728a2b2b23afe17ae793315b1e0e684fa"
       url: "https://github.com/coscx/lat.git"
     source: git
     version: "1.0.0"
@@ -1476,4 +1476,3 @@ packages:
 sdks:
   dart: ">=2.17.0 <3.0.0"
   flutter: ">=2.10.0"
-  flutter_plugin_android_lifecycle: ">=2.0.5 <3.0.0"

@@ -165,6 +165,8 @@ class GroupChatLogic extends GetxController {
         uuids =messageList[i].content!['uuid'];
       }
       if (uuids == uuid) {
+        var f = messageList[i];
+        message.timestamp = f.timestamp;
         messageList[i] = message;
       }
     }
