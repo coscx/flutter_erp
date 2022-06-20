@@ -58,7 +58,7 @@ class LoginLogic extends GetxController {
       await UserStore.to.saveProfile(result);
       await UserStore.to.setToken(result.data!.token.accessToken);
       EasyLoading.dismiss();
-      Get.offAndToNamed(AppRoutes.Application);
+      Get.offAndToNamed(AppRoutes.OAApplication);
       return true;
     }else{
       showToastRed(Get.context!, result.message!, false);

@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_erp/common/utils/iconfont.dart';
+import 'package:flutter_erp/common/values/values.dart';
+import 'package:flutter_erp/common/widgets/unit_bottom_bar.dart';
+import 'package:flutter_erp/common/widgets/widgets.dart';
+
+import 'package:flutter_erp/pages/conversion/view.dart';
+import 'package:flutter_erp/pages/flow_page/view.dart';
+import 'package:flutter_erp/pages/home/view.dart';
+import 'package:flutter_erp/pages/main/index.dart';
+import 'package:flutter_erp/pages/mine/view.dart';
+import 'package:flutter_erp/pages/oa/home_message/view.dart';
+import 'package:flutter_erp/pages/oa/person/view.dart';
+import 'package:flutter_erp/pages/oa/work/view.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+
+import '../../../common/widgets/back_top_window.dart';
+import 'index.dart';
+
+class OAApplicationPage extends GetView<OAApplicationController> {
+  // 顶部导航
+  AppBar _buildAppBar() {
+    return transparentAppBar(
+        title: Obx(() => Text(
+              controller.tabTitles[controller.state.page],
+              style: TextStyle(
+                color: AppColors.primaryText,
+                fontFamily: 'Montserrat',
+                fontSize: 18.sp,
+                fontWeight: FontWeight.w600,
+              ),
+            )),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.search,
+              color: AppColors.primaryText,
+            ),
+            onPressed: () {},
+          )
+        ]);
+  }
+
+  // 内容页
+  Widget _buildPageView() {
+    return PageView(
+      physics: const NeverScrollableScrollPhysics(),
+      children: <Widget>[
+        HomeMessagePage(),
+        PersonPage(),
+        WorkPage(),
+
+      ],
+      controller: controller.pageController,
+      onPageChanged: controller.handlePageChanged,
+    );
+  }
+
+// 底部导航
+  Widget _buildBottomNavigationBar() {
+    return Obx(() => BottomNavigationBar(
+      items: controller.bottomTabs,
+      currentIndex: controller.state.page,
+      // fixedColor: AppColors.primaryElement,
+      type: BottomNavigationBarType.fixed,
+      onTap: controller.handleNavBarTap,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
+    ));
+  }
+
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+        onWillPop: AndroidBackTop.backDesktop, //页面将要消失时，调用原生的返回桌面方法
+        child: Theme(
+          data: ThemeData(
+            appBarTheme: AppBarTheme.of(context).copyWith(
+              brightness: Brightness.light,
+            ),
+          ),
+          child: Scaffold(
+      //appBar: _buildAppBar(),
+      body: _buildPageView(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    ),
+        ));
+  }
+}

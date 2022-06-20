@@ -5,6 +5,11 @@ class AppRoutes {
   static const SIGN_UP = '/sign_up';
   static const NotFound = '/not_found';
 
+  static const OAApplication = '/oa_application';
+  static const HomeMessage = '/home_message';
+  static const Work = '/work';
+  static const Person = '/person';
+
   static const Application = '/application';
   static const Category = '/category';
   static const Home = '/home';

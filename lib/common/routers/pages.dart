@@ -16,6 +16,13 @@ import 'package:flutter_erp/pages/frame/welcome/index.dart';
 import 'package:flutter_erp/pages/group_chat/binding.dart';
 import 'package:flutter_erp/pages/group_chat/view.dart';
 import 'package:flutter_erp/pages/home/view.dart';
+import 'package:flutter_erp/pages/oa/application/index.dart';
+import 'package:flutter_erp/pages/oa/home_message/binding.dart';
+import 'package:flutter_erp/pages/oa/home_message/view.dart';
+import 'package:flutter_erp/pages/oa/person/binding.dart';
+import 'package:flutter_erp/pages/oa/person/view.dart';
+import 'package:flutter_erp/pages/oa/work/binding.dart';
+import 'package:flutter_erp/pages/oa/work/view.dart';
 import 'package:flutter_erp/pages/other/fine/view.dart';
 import 'package:flutter_erp/pages/other/fine_detail/view.dart';
 import 'package:flutter_erp/pages/other/webview/binding.dart';
@@ -178,6 +185,33 @@ class AppPages {
         binding: FineDetailBinding(),
         transition: Transition.rightToLeft
     ),
+
+    GetPage(
+        name: AppRoutes.OAApplication,
+        page: () => OAApplicationPage(),
+        binding: OAApplicationBinding(),
+        transition: Transition.rightToLeft
+    ),
+
+    GetPage(
+        name: AppRoutes.HomeMessage,
+        page: () => HomeMessagePage(),
+        binding: HomeMessageBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.Work,
+        page: () => WorkPage(),
+        binding: WorkBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.Person,
+        page: () => PersonPage(),
+        binding: PersonBinding(),
+        transition: Transition.rightToLeft
+    ),
+
   ];
 
   // static final unknownRoute = GetPage(

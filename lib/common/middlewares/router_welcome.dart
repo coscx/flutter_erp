@@ -17,7 +17,12 @@ class RouteWelcomeMiddleware extends GetMiddleware {
     if (ConfigStore.to.isAgree == false) {
       return null;
     } else if (UserStore.to.isLogin == true) {
-      return const RouteSettings(name: AppRoutes.Application);
+
+      if (UserStore.to.profile.data?.user.messageCount == 1) {
+        return const RouteSettings(name: AppRoutes.OAApplication);
+      }else{
+        return const RouteSettings(name: AppRoutes.Application);
+      }
     } else {
       return const RouteSettings(name: AppRoutes.LOGIN);
     }
