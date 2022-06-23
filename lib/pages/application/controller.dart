@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_2d_amap/flutter_2d_amap.dart';
 import 'package:flutter_erp/common/apis/common.dart';
-import 'package:flutter_erp/common/entities/app_version.dart';
 import 'package:flutter_erp/common/routers/routes.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 import 'package:flutter_erp/common/values/values.dart';
@@ -454,8 +453,8 @@ class ApplicationController extends GetxController {
   }
 
   void onNewGroupMessage(result, int error) async {
-    var count = 1;
-    debugPrint(result);
+    //var count = 1;
+    //debugPrint(result);
     //Map response = await im.getConversations();
     //var  conversions = response["data"];
     // conversions.map((e) {
@@ -469,8 +468,8 @@ class ApplicationController extends GetxController {
   }
 
   void onGroupNotification(result) async {
-    debugPrint(result);
-    Map<String, dynamic> message = Map<String, dynamic>.from(result);
+   // debugPrint(result);
+    //Map<String, dynamic> message = Map<String, dynamic>.from(result);
     //BlocProvider.of<GroupBloc>(context)
     //    .add(EventGroupReceiveNewMessage(message));
     onNewGroupMessage(result, 0);

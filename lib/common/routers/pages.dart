@@ -21,6 +21,9 @@ import 'package:flutter_erp/pages/oa/home_message/binding.dart';
 import 'package:flutter_erp/pages/oa/home_message/view.dart';
 import 'package:flutter_erp/pages/oa/person/binding.dart';
 import 'package:flutter_erp/pages/oa/person/view.dart';
+import 'package:flutter_erp/pages/oa/user_detail/binding.dart';
+import 'package:flutter_erp/pages/oa/user_detail/logic.dart';
+import 'package:flutter_erp/pages/oa/user_detail/view.dart';
 import 'package:flutter_erp/pages/oa/work/binding.dart';
 import 'package:flutter_erp/pages/oa/work/view.dart';
 import 'package:flutter_erp/pages/other/fine/view.dart';
@@ -211,7 +214,12 @@ class AppPages {
         binding: PersonBinding(),
         transition: Transition.rightToLeft
     ),
-
+    GetPage(
+        name: AppRoutes.OADetail,
+        page: () => OAUserDetailPage(),
+        binding: OAUserDetailBinding(),
+        transition: Transition.rightToLeft
+    ),
   ];
 
   // static final unknownRoute = GetPage(

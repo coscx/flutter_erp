@@ -357,6 +357,14 @@ class GroupChatItemWidgetState extends State<GroupChatItemWidget> {
         content =entity.content!['member'].toString()+ "被管理员解除禁言";
       }
     }
+    if(type==1){
+      if(entity.content!['master'].toString() == tfSender){
+        content ="您创建了群组"+entity.content!['groupID'].toString();
+      }else{
+        content =entity.content!['master'].toString()+"创建了群组"+entity.content!['groupID'].toString();
+      }
+
+    }
     return ClipRRect(
       borderRadius: BorderRadius.circular(16.w),
       child: Container(

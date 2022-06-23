@@ -58,7 +58,12 @@ class LoginLogic extends GetxController {
       await UserStore.to.saveProfile(result);
       await UserStore.to.setToken(result.data!.token.accessToken);
       EasyLoading.dismiss();
-      Get.offAndToNamed(AppRoutes.OAApplication);
+
+      if (result.data!.user.messageCount == 1) {
+        Get.offAndToNamed(AppRoutes.OAApplication);
+      }else{
+        Get.offAndToNamed(AppRoutes.Application);
+      }
       return true;
     }else{
       showToastRed(Get.context!, result.message!, false);
@@ -85,7 +90,11 @@ class LoginLogic extends GetxController {
       await  UserStore.to.saveProfile(result);
       await UserStore.to.setToken(result.data!.token.accessToken);
       EasyLoading.dismiss();
-      Get.offAndToNamed(AppRoutes.Application);
+      if (result.data!.user.messageCount == 1) {
+        Get.offAndToNamed(AppRoutes.OAApplication);
+      }else{
+        Get.offAndToNamed(AppRoutes.Application);
+      }
       return true;
     }
 

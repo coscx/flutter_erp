@@ -28,5 +28,6 @@ class AppRoutes {
   static const Webview = '/webview';
   static const GroupChat = '/group_chat';
   static const FineDetail = '/fine_detail';
+  static const OADetail = '/oa_detail';
 
 }

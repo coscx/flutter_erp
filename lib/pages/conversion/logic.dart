@@ -4,7 +4,7 @@ import 'package:flt_im_plugin/value_util.dart';
 import 'package:flutter_erp/common/routers/names.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import 'state.dart';
 

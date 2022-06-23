@@ -393,9 +393,7 @@ class _ChatInputViewState extends State<ChatInputView> {
                         enableSkinTones: true,
                         showRecentsTab: true,
                         recentsLimit: 28,
-                        noRecentsText: "暂无更多",
-                        noRecentsStyle: const TextStyle(
-                            fontSize: 20, color: Colors.black26),
+                        noRecents: Container(child: Text("暂无更多"),),
                         tabIndicatorAnimDuration: kTabScrollDuration,
                         categoryIcons: const CategoryIcons(),
                         buttonMode: ButtonMode.MATERIAL),

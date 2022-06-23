@@ -1,21 +1,16 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:flt_im_plugin/flt_im_plugin.dart';
 import 'package:flt_im_plugin/value_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_2d_amap/flutter_2d_amap.dart';
-import 'package:flutter_erp/common/apis/common.dart';
-import 'package:flutter_erp/common/entities/app_version.dart';
+
 import 'package:flutter_erp/common/routers/routes.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 import 'package:flutter_erp/common/values/values.dart';
 import 'package:flutter_erp/pages/conversion/logic.dart';
 import 'package:flutter_erp/pages/peer_chat/logic.dart';
 import 'package:get/get.dart';
-import 'package:package_info/package_info.dart';
-import 'package:umeng_analytics_with_push/umeng_analytics_with_push.dart';
+
 import 'package:uni_links/uni_links.dart';
 
 import 'index.dart';
@@ -152,43 +147,6 @@ class OAApplicationController extends GetxController {
     pageController.dispose();
     super.dispose();
   }
-
-  login(String tfSender, {void Function()? success}) async {
-    if (tfSender == "") {
-      debugPrint('发送用户id 必须填写');
-      return;
-    }
-    final res = await FltImPlugin().login(uid: tfSender,token: "");
-    debugPrint(res.toString());
-    int code = ValueUtil.toInt(res!['code']);
-    if (code == 0) {
-      success?.call();
-      tfSender = "";
-    } else {
-      String message = ValueUtil.toStr(res['message']);
-      debugPrint(message);
-    }
-  }
-
-  loginByToken(String token, String tfSender,
-      {void Function()? success}) async {
-    if (tfSender == "") {
-      debugPrint('发送用户id 必须填写');
-      return;
-    }
-    final res = await FltImPlugin().login(uid: tfSender, token: token);
-    debugPrint(res.toString());
-    int code = ValueUtil.toInt(res!['code']);
-    if (code == 0) {
-      success?.call();
-      tfSender = "";
-    } else {
-      String message = ValueUtil.toStr(res['message']);
-      debugPrint(message);
-    }
-  }
-
-
 
 
 

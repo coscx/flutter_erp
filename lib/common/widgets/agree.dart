@@ -20,7 +20,7 @@ class _AgreeState extends State<Agree> with ProtocolModel {
     super.initState();
   }
   _init() async {
-    SchedulerBinding.instance?.addPostFrameCallback((_) async {
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
       bool agree = StorageService.to.getBool("agree");
       if (agree == true) {
         Get.offAllNamed(AppRoutes.LOGIN);

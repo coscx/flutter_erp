@@ -91,19 +91,19 @@ class _AppBarComponentState extends State<AppBarComponent> {
             _distanceSortConditions
                 .add(SortCondition(name: '沟通状态', id: 0, isSelected: true, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '1.新分未联系', id: 1, isSelected: false, all: true));
+                SortCondition(name: '新分未联系', id: 1, isSelected: false, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '2.号码无效', id: 2, isSelected: false, all: true));
+                SortCondition(name: '号码无效', id: 2, isSelected: false, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '3.号码未接通', id: 3, isSelected: false, all: true));
+                SortCondition(name: '号码未接通', id: 3, isSelected: false, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '4.可继续沟通', id: 4, isSelected: false, all: true));
+                SortCondition(name: '可继续沟通', id: 4, isSelected: false, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '5.有意向面谈', id: 5, isSelected: false, all: true));
+                SortCondition(name: '有意向面谈', id: 5, isSelected: false, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '6.已到店', id: 6, isSelected: false, all: true));
+                SortCondition(name: '已到店', id: 6, isSelected: false, all: true));
             _distanceSortConditions.add(
-                SortCondition(name: '7.已成交', id: 7, isSelected: false, all: true));
+                SortCondition(name: '已成交', id: 7, isSelected: false, all: true));
             _distanceSortConditions.add(SortCondition(
                 name: '12.公海', id: 12, isSelected: false, all: true));
           }
@@ -126,21 +126,21 @@ class _AppBarComponentState extends State<AppBarComponent> {
     _distanceSortConditions
         .add(SortCondition(name: '沟通状态', id: 0, isSelected: true, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '1.新分未联系', id: 1, isSelected: false, all: true));
+        SortCondition(name: '新分未联系', id: 1, isSelected: false, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '2.号码无效', id: 2, isSelected: false, all: true));
+        SortCondition(name: '号码无效', id: 2, isSelected: false, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '3.号码未接通', id: 3, isSelected: false, all: true));
+        SortCondition(name: '号码未接通', id: 3, isSelected: false, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '4.可继续沟通', id: 4, isSelected: false, all: true));
+        SortCondition(name: '可继续沟通', id: 4, isSelected: false, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '5.有意向面谈', id: 5, isSelected: false, all: true));
+        SortCondition(name: '有意向面谈', id: 5, isSelected: false, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '6.已到店', id: 6, isSelected: false, all: true));
+        SortCondition(name: '已到店', id: 6, isSelected: false, all: true));
     _distanceSortConditions.add(
-        SortCondition(name: '7.已成交', id: 7, isSelected: false, all: true));
+        SortCondition(name: '已成交', id: 7, isSelected: false, all: true));
     _distanceSortConditions.add(SortCondition(
-        name: '12.公海', id: 12, isSelected: false, all: true));
+        name: '公海', id: 12, isSelected: false, all: true));
     _selectDistanceSortCondition = _distanceSortConditions[0];
 
     CitySelect ta = CitySelect();

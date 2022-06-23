@@ -7,6 +7,9 @@ import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../common/routers/names.dart';
 
+import '../../../common/widgets/chat/images.dart';
+import '../../../common/widgets/chat/strings.dart';
+import '../../../common/widgets/chat/styles.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import 'logic.dart';
 
@@ -66,7 +69,20 @@ class WorkPage extends StatelessWidget {
                               width: 150.w,
                               child: Stack(
                                 children: [
-                                  logic.userHead== "" ? Container() :
+                                  logic.userHead== "" ? Positioned(
+                                    left: 25.w,
+                                    top: 120.h,
+                                    child: Container(
+                                      width: 90.h,
+                                      height: 90.h,
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                        "assets/images/user.png"
+                                        ),
+                                      ),
+                                      //backgroundColor: Colors.white,
+                                    ),
+                                  ) :
                                   Positioned(
                                     left: 25.w,
                                     top: 120.h,
@@ -82,17 +98,7 @@ class WorkPage extends StatelessWidget {
                                       //backgroundColor: Colors.white,
                                     ),
                                   ),
-                                  Positioned(
-                                    left: 10.w,
-                                    top: 100.h,
-                                    child: Container(
-                                      width: 120.h,
-                                      height: 120.h,
-                                      //margin: EdgeInsets.fromLTRB(1.w, 5.h, 5.w, 0.h),
-                                      child: Lottie.asset(
-                                          'assets/packages/lottie_flutter/36535-avatar-pendant.json'),
-                                    ),
-                                  ),
+
                                 ],
                               ),
                             ),
@@ -166,26 +172,26 @@ class WorkPage extends StatelessWidget {
                           right: 40.w,
                           top: 80.w,
                           child: Container(
-                            padding: EdgeInsets.only(
-                                left: 0.w,
-                                right: 0.w,
-                                top: 0.h,
-                                bottom: 70.h
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                //Navigator.pushNamed(context, UnitRouter.setting);
-                                //Get.toNamed(AppRoutes.Setting);
-                              _exit(context);
-                              },
-                              child: Container(
-                                width: 50.h,
-                                height: 50.h,
-                                //margin: EdgeInsets.fromLTRB(1.w, 5.h, 5.w, 0.h),
-                                child: Lottie.asset(
-                                    'assets/packages/lottie_flutter/6547-gear.json'),
-                              ),
-                            ),
+                            // padding: EdgeInsets.only(
+                            //     left: 0.w,
+                            //     right: 0.w,
+                            //     top: 0.h,
+                            //     bottom: 70.h
+                            // ),
+                            // child: GestureDetector(
+                            //   onTap: () {
+                            //     //Navigator.pushNamed(context, UnitRouter.setting);
+                            //     //Get.toNamed(AppRoutes.Setting);
+                            //   _exit(context);
+                            //   },
+                            //   child: Container(
+                            //     width: 50.h,
+                            //     height: 50.h,
+                            //     //margin: EdgeInsets.fromLTRB(1.w, 5.h, 5.w, 0.h),
+                            //     child: Lottie.asset(
+                            //         'assets/packages/lottie_flutter/6547-gear.json'),
+                            //   ),
+                            // ),
 
                           ),
                         ),
@@ -267,8 +273,30 @@ class WorkPage extends StatelessWidget {
                                 title: logic.bind,
                               ),
                             ),
-
-
+                            GestureDetector(
+                              onTap: () async {
+                                var ss = await StorageService.to.getString(
+                                    "openid");
+                                if (ss == "") {
+                                  logic.bindWxOnTap();
+                                } else {
+                                  _bindWx(context, "");
+                                }
+                              },
+                              child: NewMenuItem(
+                                icon: "assets/images/about.png",
+                                title: "关于我们",
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                _exit(context);
+                              },
+                              child: NewMenuItem(
+                                icon: "assets/images/logout.png",
+                                title: "退出登录",
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -333,6 +361,31 @@ class WorkPage extends StatelessWidget {
           ),
         ));
   }
+  Widget _buildItemView({
+    required String icon,
+    required String label,
+    Function()? onTap,
+  }) =>
+      GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 52.h,
+          padding: EdgeInsets.symmetric(horizontal: 42.w),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(icon, width: 22.w, height: 22.h),
+              SizedBox(width: 13.w),
+              Text(
+                label,
+                style: PageStyle.ts_333333_32sp,
+              ),
+              Spacer(),
+              Image.asset(ImageRes.ic_next, width: 14.w, height: 26.h),
+            ],
+          ),
+        ),
+      );
   Widget _getItemCell(String text) {
     return Container(
       decoration: BoxDecoration(
@@ -456,17 +509,17 @@ class MenuItem extends StatelessWidget {
       child: Column(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(
-              left: 20.0,
-              top: 12.0,
-              right: 20.0,
-              bottom: 10.0,
+            padding:  EdgeInsets.only(
+              left: 40.w,
+              top: 24.h,
+              right: 40.w,
+              bottom: 10.h,
             ),
             child: Row(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(
-                    right: 12.0,
+                  padding:  EdgeInsets.only(
+                    right: 24.w,
                   ),
                   child: SvgPicture.asset(
                     icon,
@@ -476,10 +529,10 @@ class MenuItem extends StatelessWidget {
                 Expanded(
                   child: Text(
                     title,
-                    style: TextStyle(color: Colors.black87, fontSize: 16.0),
+                    style: TextStyle(color: Colors.black87, fontSize: 32.sp),
                   ),
                 ),
-                Icon(
+                const Icon(
                   Icons.chevron_right,
                   color: Colors.black12,
                 )
@@ -487,7 +540,7 @@ class MenuItem extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 13),
+            padding:  EdgeInsets.only(left: 40.w, right: 40.w, top: 26.h),
             child: Container(),
           )
         ],
@@ -495,14 +548,59 @@ class MenuItem extends StatelessWidget {
     );
   }
 
+}
+class NewMenuItem extends StatelessWidget {
+  NewMenuItem({ required this.icon, required this.title, this.onPressed});
 
+  final String icon;
+  final String title;
+  final VoidCallback? onPressed;
 
-
-
-
-
-
-
-
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding:  EdgeInsets.only(
+              left: 40.w,
+              top: 0.h,
+              right: 40.w,
+              bottom: 10.h,
+            ),
+            child: Row(
+              children: [
+                Padding(
+                  padding:  EdgeInsets.only(
+                    right: 30.w,
+                  ),
+                  child: Image.asset(
+                    icon,
+                    width: 90.w,
+                    // color: Colors.black54,
+                  ),
+                ),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(color: Colors.black87, fontSize: 32.sp),
+                  ),
+                ),
+                const Icon(
+                  Icons.chevron_right,
+                  color: Colors.black12,
+                )
+              ],
+            ),
+          ),
+          Padding(
+            padding:  EdgeInsets.only(left: 40.w, right: 40.w, top: 26.h),
+            child: Container(),
+          )
+        ],
+      ),
+    );
+  }
 
 }

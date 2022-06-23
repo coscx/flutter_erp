@@ -5,7 +5,7 @@ import 'package:flutter_erp/pages/home/widget/gzx_filter_goods_page.dart';
 import 'package:flutter_erp/pages/home/widget/photo_widget_list_item.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../common/entities/home/common.dart';
 import '../../common/routers/names.dart';
 import '../../common/widgets/dy_behavior_null.dart';

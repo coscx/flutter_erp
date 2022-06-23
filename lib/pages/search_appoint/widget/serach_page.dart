@@ -5,7 +5,7 @@ import 'package:flutter_erp/pages/search_appoint/widget/photo_widget_list_item.d
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import '../../../common/widgets/dy_behavior_null.dart';
 import '../../../common/widgets/my_scroll_physics.dart';
 import '../../../common/widgets/refresh.dart';

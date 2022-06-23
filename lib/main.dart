@@ -10,7 +10,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 Future<void> main() async {
   await Global.init();
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(750, 1334),
-      builder: (c) => RefreshConfiguration(
+      builder: (c,w) => RefreshConfiguration(
         headerBuilder: () => const ClassicHeader(),
         footerBuilder: () => const ClassicFooter(),
         hideFooterWhenNotFull: true,

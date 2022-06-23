@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:badges/badges.dart';
 import 'package:flt_im_plugin/conversion.dart';
 import 'package:flt_im_plugin/message.dart';
@@ -122,10 +122,10 @@ class PersonPage extends StatelessWidget {
                           image: index ==
                               0
                               ? Image.asset(
-                              "assets/packages/images/chat_hi.png")
+                              "assets/images/event.png")
                               .image
                               : Image.asset(
-                              "assets/packages/images/chat_notice.png")
+                              "assets/images/follow.png")
                               .image),
                     ),
                   ),
@@ -139,7 +139,9 @@ class PersonPage extends StatelessWidget {
                           constraints: BoxConstraints(maxWidth: 260.w),
                           margin: EdgeInsets.only(top: 2.w, left: 10.w),
                           child: Text(
-                          "跟进通知",
+                            index ==
+                                0
+                                ? "跟进通知":"掉落公海通知",
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(
@@ -152,7 +154,9 @@ class PersonPage extends StatelessWidget {
                           constraints: BoxConstraints(maxWidth: 0.6.sw),
                           margin: EdgeInsets.only(top: 8.w),
                           child: Text(
-                              "掉落公海通知",
+                              index ==
+                                  0
+                                  ? "暂无通知":"暂无通知",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_erp/common/apis/common.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../common/entities/home/common.dart';
 import 'state.dart';
