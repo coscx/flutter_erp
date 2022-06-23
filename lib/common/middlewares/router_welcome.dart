@@ -14,9 +14,12 @@ class RouteWelcomeMiddleware extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    if (ConfigStore.to.isAgree == false) {
-      return null;
-    } else if (UserStore.to.isLogin == true) {
+    if (GetPlatform.isAndroid) {
+      if (ConfigStore.to.isAgree == false) {
+        return null;
+      }
+    }
+    if (UserStore.to.isLogin == true) {
 
       if (UserStore.to.profile.data?.user.messageCount == 1) {
         return const RouteSettings(name: AppRoutes.OAApplication);

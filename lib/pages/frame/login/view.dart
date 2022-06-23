@@ -150,7 +150,7 @@ class LoginPage extends StatelessWidget {
                 width: 50.w,
                 child: DeleteCategoryDialog(
                   title: '注册功能暂未开放',
-                  content: '请联系主管申请注册',
+                  content: '请联系主管申请账号',
                   onSubmit: () {
                     //BlocProvider.of<HomeBloc>(context).add(EventResetCheckUser(photo,1));
                     Navigator.of(context).pop();

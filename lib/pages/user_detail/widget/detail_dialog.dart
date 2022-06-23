@@ -11,6 +11,7 @@ import 'package:menu_button/menu_button.dart';
 import '../../../common/routers/names.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/widgets/dy_behavior_null.dart';
+import '../../oa/user_detail/logic.dart';
 import '../logic.dart';
 import 'detail_common.dart';
 
@@ -887,8 +888,8 @@ Future<bool> commentDialog(
                                             time2;
                                         connect['connect_message'] = _Controller.text;
                                         connect['customer_uuid'] = customer_uuid;
-                                        final logic = Get.find<UserDetailLogic>();
-                                        logic.addConnect(customer_uuid, connect);
+                                        final logic = Get.find<OAUserDetailLogic>();
+                                        logic.addConnectCheck(customer_uuid, connect);
                                         goalValue = '1.新分未联系';
                                         _date = DateTime.now();
                                         connect_type = 1;

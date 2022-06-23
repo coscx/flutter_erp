@@ -83,7 +83,7 @@ class OAUserDetailLogic extends GetxController {
   }
 
   void _loadOtherData() async {
-    var connect = await CommonAPI.getConnectList(uuid, 1);
+    var connect = await CommonAPI.getConnectListCheck(uuid, 1);
     connectList.clear();
     connectList.addAll(connect.data.data);
 
@@ -521,4 +521,18 @@ class OAUserDetailLogic extends GetxController {
       showToastRed(Get.context!, result.message!, true);
     }
   }
+  Future<void> addConnectCheck(String uuid, Map<String, dynamic> data) async {
+    data['username'] = StorageService.to.getString("name");
+    data['customer_uuid'] = uuid;
+    var result = await CommonAPI.addConnectCheck(uuid, data);
+    if (result.code == 200) {
+      data['id'] = 0;
+      var f = Connect.fromJson(data);
+      connectList.insert(0, f);
+      showToast(Get.context!, '添加成功', true);
+    } else {
+      showToastRed(Get.context!, result.message!, true);
+    }
+  }
+
 }

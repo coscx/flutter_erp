@@ -96,6 +96,13 @@ class CommonAPI {
     );
     return ConnectDataResult.fromJson(response);
   }
+  static Future<ConnectDataResult> getConnectListCheck(String uuid, int page) async {
+    var response = await NewERPHttpUtil().get(
+      '/api/v1/customer/GetConnectListCheck',
+      queryParameters: {'customer_uuid': uuid, 'currentPage': page, "pageSize": 20},
+    );
+    return ConnectDataResult.fromJson(response);
+  }
   static Future<AppointDataResult> getAppointmentList(String uuid, int page) async {
     var response = await NewERPHttpUtil().get(
       '/api/v1/customer/appointmentList',
@@ -300,7 +307,13 @@ class CommonAPI {
     );
     return CommonResult.fromJson(response);
   }
-
+  static Future<CommonResult> addConnectCheck(  String uuid, Map<String, dynamic> data) async {
+    var response = await NewERPHttpUtil().post(
+      '/api/v1/customer/addConnectCheck',
+      data: data,
+    );
+    return CommonResult.fromJson(response);
+  }
   static Future<CommonResult> getUserStatus() async {
     var response = await NewERPHttpUtil().post(
       '/api/GetUserStatus',

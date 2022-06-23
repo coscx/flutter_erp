@@ -125,7 +125,7 @@ class ProtocolModel {
       context: context,
       targPage: CommonWebViewPage(
         pageTitle: "用户协议",
-        htmlUrl: "https://baidu.com",
+        htmlUrl: "http://link.queqiaochina.com/agree.html",
       ),
     );
   }
@@ -137,7 +137,7 @@ class ProtocolModel {
       context: context,
       targPage: CommonWebViewPage(
         pageTitle: "隐私协议",
-        htmlUrl: "https://qq.com",
+        htmlUrl: "http://link.queqiaochina.com/privacy.html",
       ),
     );
   }

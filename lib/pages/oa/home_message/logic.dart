@@ -31,7 +31,7 @@ class HomeMessageLogic extends GetxController {
   // 下拉刷新
   void _loadData() async {
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), sex.value, roleId, 1, selectItems);
+    await CommonAPI.searchErpUserCheck(curPage.toString(), sex.value, roleId, 1, selectItems);
     state.homeUser.addAll(result.data.data) ;
     totalCount =result.data.total.toString();
     //debugPrint(result.toJson().toString());
@@ -41,7 +41,7 @@ class HomeMessageLogic extends GetxController {
   void onRefresh() async {
     curPage=1;
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), sex.value, roleId, 1, selectItems);
+    await CommonAPI.searchErpUserCheck(curPage.toString(), sex.value, roleId, 1, selectItems);
     state.homeUser.clear();
     state.homeUser .addAll(result.data.data) ;
     totalCount =result.data.total.toString();
@@ -52,7 +52,7 @@ class HomeMessageLogic extends GetxController {
   void onSexChange() async {
     curPage=1;
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(), sex.value, roleId, 1, selectItems);
+    await CommonAPI.searchErpUserCheck(curPage.toString(), sex.value, roleId, 1, selectItems);
     state.homeUser.clear();
     state.homeUser .addAll(result.data.data) ;
     totalCount =result.data.total.toString();
@@ -66,7 +66,7 @@ class HomeMessageLogic extends GetxController {
   void onLoading() async {
     curPage++;
     var result =
-    await CommonAPI.searchErpUser(curPage.toString(),sex.value, roleId, 1, selectItems);
+    await CommonAPI.searchErpUserCheck(curPage.toString(),sex.value, roleId, 1, selectItems);
     state.homeUser.addAll(result.data.data) ;
     totalCount =result.data.total.toString();
     refreshController.loadComplete();

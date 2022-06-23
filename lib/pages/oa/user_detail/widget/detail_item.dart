@@ -23,6 +23,7 @@ import '../../../../common/widgets/delete_category_dialog.dart';
 import '../../../../common/widgets/extend_image.dart';
 import '../../../../common/widgets/imageview/image_preview_page.dart';
 import '../../../../common/widgets/imageview/image_preview_view.dart';
+import '../logic.dart';
 import 'common_dialog.dart';
 
 Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
@@ -184,7 +185,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               ));
                           debugPrint(result.toString());
                           if (result != null) {
-                            final logic = Get.find<UserDetailLogic>();
+                            final logic = Get.find<OAUserDetailLogic>();
                             logic.editCustomerAddress(info.uuid, 1, result);
 
                             // var results = await IssuesApi.editCustomerAddress(
@@ -236,7 +237,7 @@ Widget buildBase(BuildContext context, Info info, int canEdit, bool showControl,
                               ));
                           debugPrint(result.toString());
                           if (result != null) {
-                            final logic = Get.find<UserDetailLogic>();
+                            final logic = Get.find<OAUserDetailLogic>();
                             logic.editCustomerAddress(info.uuid, 2, result);
                             // var results = await IssuesApi.editCustomerAddress(
                             //     info['uuid'], 2, result);
@@ -1428,7 +1429,7 @@ Widget buildUserSelect(
                               ));
                           debugPrint(result.toString());
                           if (result != null) {
-                            final logic = Get.find<UserDetailLogic>();
+                            final logic = Get.find<OAUserDetailLogic>();
                             logic.editCustomerDemandAddress(uuid, result);
                             // var results =
                             //     await IssuesApi.editCustomerDemandAddress(
@@ -1883,7 +1884,7 @@ showEditDialog(BuildContext context, String title, String hintText, String text,
             ),
             CupertinoDialogAction(
               onPressed: () async {
-                final logic = Get.find<UserDetailLogic>();
+                final logic = Get.find<OAUserDetailLogic>();
                 logic.editUserOnce(info.uuid, type, _controller.text);
                 Navigator.pop(context);
               },
@@ -1930,7 +1931,7 @@ showBackDialog(BuildContext context, String title, String hintText, String text,
             ),
             CupertinoDialogAction(
               onPressed: () async {
-                final logic = Get.find<UserDetailLogic>();
+                final logic = Get.find<OAUserDetailLogic>();
                 logic.editUserOnce(uuid, type, _controller.text);
                 // var result = await IssuesApi.addAppointBack(
                 //     id, _controller.text);
@@ -1990,7 +1991,7 @@ showEditDialogDemand(BuildContext context, String title, String hintText,
             ),
             CupertinoDialogAction(
               onPressed: () async {
-                final logic = Get.find<UserDetailLogic>();
+                final logic = Get.find<OAUserDetailLogic>();
                 logic.editUserDemandOnce(uuid, type, _controller.text);
                 // var result = await IssuesApi.editCustomerDemandOnce(
                 //     uuid, type, _controller.text);
@@ -2091,7 +2092,7 @@ Future<bool> showPickerDemandAge(
         for (int i = 0; i < fg.length; i++) {
           values.add(fg[i].toString());
         }
-        final logic = Get.find<UserDetailLogic>();
+        final logic = Get.find<OAUserDetailLogic>();
         logic.editUserDemandOnce(uuid, "wish_ages", values.join(","));
         // var result = await IssuesApi.editCustomerDemandOnce(
         //     uuid, "wish_ages", values.join(","));
@@ -2168,7 +2169,7 @@ Future<bool> showPickerDemandHeight(
         for (int i = 0; i < fg.length; i++) {
           values.add(fg[i].toString());
         }
-        final logic = Get.find<UserDetailLogic>();
+        final logic = Get.find<OAUserDetailLogic>();
         logic.editUserDemandOnce(uuid, "wish_heights", values.join(","));
         // var result = await IssuesApi.editCustomerDemandOnce(
         //     uuid, "wish_heights", values.join(","));
@@ -2243,7 +2244,7 @@ Future<bool> showPickerDemandWeight(
         for (int i = 0; i < fg.length; i++) {
           values.add(fg[i].toString());
         }
-        final logic = Get.find<UserDetailLogic>();
+        final logic = Get.find<OAUserDetailLogic>();
         logic.editUserDemandOnce(uuid, "wish_weights", values.join(","));
         // var result = await IssuesApi.editCustomerDemandOnce(
         //     uuid, "wish_weights", values.join("-"));
@@ -2301,7 +2302,7 @@ Future<bool> showPickerArray(
         } else {
           values = int.parse(picker.getSelectedValues().first);
         }
-        final logic = Get.find<UserDetailLogic>();
+        final logic = Get.find<OAUserDetailLogic>();
         logic.editUserOnce(info.uuid, type, values.toString());
       }).showDialog(context);
   if (result != null) {
@@ -2351,7 +2352,7 @@ Future<bool> showPickerArrayDemand(
         } else {
           values = (picker.getSelectedValues().first.toString());
         }
-        final logic = Get.find<UserDetailLogic>();
+        final logic = Get.find<OAUserDetailLogic>();
         logic.editUserDemandOnce(uuid, type, values.toString());
       }).showDialog(context);
   if (result != null) {
@@ -2413,7 +2414,7 @@ Future<bool> showPickerDateTime(
         child: const Text(''),
       ),
       onConfirm: (Picker picker, List value) async {
-        final logic = Get.find<UserDetailLogic>();
+        final logic = Get.find<OAUserDetailLogic>();
         logic.editUserOnce(info.uuid, type, picker.adapter.text);
       },
       onSelect: (Picker picker, int index, List<int> selecteds) {
@@ -2637,7 +2638,7 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
               ));
           if (croppedFile != null) {
             imageFile = croppedFile;
-            final logic = Get.find<UserDetailLogic>();
+            final logic = Get.find<OAUserDetailLogic>();
             logic.uploadPhoto(imageFile.path);
           }
         }
@@ -2663,7 +2664,7 @@ _deletePhoto(BuildContext context, Pics img, Info detail) {
                 onSubmit: () {
                   // BlocProvider.of<DetailBloc>(context)
                   //     .add(EventDelDetailImg(img, detail['info']));
-                  final logic = Get.find<UserDetailLogic>();
+                  final logic = Get.find<OAUserDetailLogic>();
                   logic.delPhoto(img.id);
 
                   Navigator.of(context).pop();

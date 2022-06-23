@@ -233,10 +233,7 @@ class OAUserDetailPage extends StatelessWidget {
                     ),
                   ),
                   onTap: () async {
-                    if (logic.canEdit == 0) {
-                      showToastRed(ctx, "暂无权限", true);
-                      return;
-                    }
+
                     showDialog(
                         barrierDismissible: true, //是否点击空白区域关闭对话框,默认为true，可以关闭
                         context: Get.context!,
@@ -273,15 +270,13 @@ class OAUserDetailPage extends StatelessWidget {
   Widget _buildConnectButton() {
     return GestureDetector(
       onTap: () async {
-        if (logic.canEdit == 1) {
+
           var d = await commentDialog(
               Get.context!, logic.connectStatus, logic.userDetail!.info,logic.uuid);
           if (d == true) {
             logic.buildConnectButton();
           }
-        } else {
-          showToastRed(Get.context!, "暂无权限", true);
-        }
+
       },
       child: Padding(
         padding: EdgeInsets.only(right: 20.0, top: 0.h),
