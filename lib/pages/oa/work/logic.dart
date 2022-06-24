@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 import '../../../common/apis/common.dart';
 import '../../../common/services/storage.dart';
 import 'state.dart';

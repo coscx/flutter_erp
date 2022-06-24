@@ -8,10 +8,10 @@ enum ENV {
 
 // dio请求前缀
 final Map<ENV, String> _baseUrl = {
-  ENV.DEV: 'https://urldev.com',
-  ENV.TEST: 'https://urltest.com',
+  ENV.DEV: 'https://erptest.queqiaochina.com',
+  ENV.TEST: 'https://erptest.queqiaochina.com',
   ENV.PRE: 'https://urlpre.com',
-  ENV.PROD: 'https://url.com',
+  ENV.PROD: 'https://erp.queqiaochina.com',
 };
 
 /// app环境

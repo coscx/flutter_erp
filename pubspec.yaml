@@ -87,7 +87,7 @@ dependencies:
   timeline_list: ^0.0.6
   #font_awesome_flutter: ^10.1.0
   refresh_loadmore: ^2.0.5
-  fluwx: ^3.8.5
+  fluwx_no_pay: ^3.9.0
   # 屏幕适配
   flutter_screenutil: ^5.5.3+2
   # toast

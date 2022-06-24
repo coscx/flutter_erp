@@ -16,6 +16,8 @@ import 'package:flutter_erp/pages/frame/welcome/index.dart';
 import 'package:flutter_erp/pages/group_chat/binding.dart';
 import 'package:flutter_erp/pages/group_chat/view.dart';
 import 'package:flutter_erp/pages/home/view.dart';
+import 'package:flutter_erp/pages/oa/about_us/about_us_binding.dart';
+import 'package:flutter_erp/pages/oa/about_us/about_us_view.dart';
 import 'package:flutter_erp/pages/oa/application/index.dart';
 import 'package:flutter_erp/pages/oa/home_message/binding.dart';
 import 'package:flutter_erp/pages/oa/home_message/view.dart';
@@ -220,6 +222,13 @@ class AppPages {
         binding: OAUserDetailBinding(),
         transition: Transition.rightToLeft
     ),
+    GetPage(
+        name: AppRoutes.AboutUs,
+        page: () => AboutUsPage(),
+        binding: AboutUsBinding(),
+        transition: Transition.rightToLeft
+    ),
+
   ];
 
   // static final unknownRoute = GetPage(

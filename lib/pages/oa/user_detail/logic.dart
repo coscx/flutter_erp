@@ -10,7 +10,7 @@ import 'package:flutter_erp/common/routers/names.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:flutter_erp/pages/user_detail/widget/common_dialog.dart';
 import 'package:flutter_erp/pages/user_detail/widget/share.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 

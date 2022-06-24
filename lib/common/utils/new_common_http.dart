@@ -1,13 +1,19 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_cookie_manager/dio_cookie_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/store/store.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
 import 'package:flutter_erp/common/values/values.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart' hide FormData;
+
+import '../entities/common_result.dart';
+import 'app_env.dart';
 
 /*
   * http 操作类
@@ -29,7 +35,7 @@ class NewERPHttpUtil {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(
       // 请求基地址,可以包含子路径
-      baseUrl: NEW_ERP_SERVER_API_URL,
+      baseUrl: appEnv.baseUrl,
 
       // baseUrl: storage.read(key: STORAGE_KEY_APIURL) ?? SERVICE_API_BASEURL,
       //连接服务器超时时间，单位是毫秒.
@@ -105,10 +111,24 @@ class NewERPHttpUtil {
     switch (eInfo.code) {
       case 401:
         UserStore.to.onLogout();
-        EasyLoading.showError(eInfo.message);
+        Fluttertoast.showToast(
+            msg: eInfo.message ,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.black.withAlpha(100),
+            textColor: Colors.white,
+            fontSize: 14.0);
         break;
       default:
-        EasyLoading.showError('未知错误');
+        Fluttertoast.showToast(
+            msg: "网络异常错误" ,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.black.withAlpha(100),
+            textColor: Colors.white,
+            fontSize: 14.0);
         break;
     }
   }
@@ -244,14 +264,28 @@ class NewERPHttpUtil {
     if (authorization != null) {
       requestOptions.headers!.addAll(authorization);
     }
-    var response = await dio.post(
-      path,
-      data: data,
-      queryParameters: queryParameters,
-      options: requestOptions,
-      cancelToken: cancelToken,
-    );
-    return response.data;
+
+
+      var response = await dio.post(
+        path,
+        data: data,
+        queryParameters: queryParameters,
+        options: requestOptions,
+        cancelToken: cancelToken,
+      );
+      EasyLoading.dismiss();
+      var res =  CommonResult.fromJson(response.data);
+      if (res.code !=200){
+        Fluttertoast.showToast(
+            msg: res.msg! ,
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 2,
+            backgroundColor: Colors.black.withAlpha(100),
+            textColor: Colors.white,
+            fontSize: 14.0);
+      }
+      return response.data;
   }
 
   /// restful put 操作

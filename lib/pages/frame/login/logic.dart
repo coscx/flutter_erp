@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_erp/pages/user_detail/widget/common_dialog.dart';
 import 'package:get/get.dart';
@@ -7,22 +8,60 @@ import '../../../common/apis/common.dart';
 import '../../../common/routers/names.dart';
 import '../../../common/services/storage.dart';
 import '../../../common/store/user.dart';
+import '../../../common/widgets/common_webview.dart';
+import '../../../common/widgets/log_utils.dart';
+import '../../../common/widgets/navigator_utils.dart';
 import 'state.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 class LoginLogic extends GetxController {
   final LoginState state = LoginState();
   final usernameController = TextEditingController(text: '');
   final passwordController = TextEditingController(text: '');
   FocusNode textFieldNode = FocusNode();
+  //注册协议的手势
+  var registProtocolRecognizer = TapGestureRecognizer();
+  //隐私协议的手势
+  var privacyProtocolRecognizer = TapGestureRecognizer();
   bool showPwd = false;
+  var showWx =false.obs;
   String result = "无";
   bool autoLogin =true;
+  bool privacy =false;
+  @override
+  void dispose() {
+    registProtocolRecognizer.dispose();
+    privacyProtocolRecognizer.dispose();
+    super.dispose();
+  }
   @override
   void onInit() {
     wxInit();
     super.onInit();
   }
-  void wxInit(){
+  //查看用户协议
+  void openUserProtocol(BuildContext context) {
+    LogUtils.e("查看用户协议");
+    NavigatorUtils.pushPage(
+      context: context,
+      targPage: CommonWebViewPage(
+        pageTitle: "用户协议",
+        htmlUrl: "http://link.queqiaochina.com/agree.html",
+      ),
+    );
+  }
+
+  //查看隐私协议
+  void openPrivateProtocol(BuildContext context) {
+    LogUtils.e("查看隐私协议");
+    NavigatorUtils.pushPage(
+      context: context,
+      targPage: CommonWebViewPage(
+        pageTitle: "隐私协议",
+        htmlUrl: "http://link.queqiaochina.com/privacy.html",
+      ),
+    );
+  }
+  Future<void> wxInit() async {
     fluwx.weChatResponseEventHandler
         .distinct((a, b) => a == b)
         .listen((res) async {
@@ -32,6 +71,11 @@ class LoginLogic extends GetxController {
         }
       }
     });
+    bool wx = await getWxLogin();
+    if (wx){
+      showWx.value =true;
+    }
+
   }
 
   void wxLogin(){
@@ -41,6 +85,16 @@ class LoginLogic extends GetxController {
         .then((data) {});
   }
 
+  Future<bool> getWxLogin() async {
+
+    var result = await CommonAPI.getWxLogin();
+    if (result.code == 200) {
+      if (result.data.hasupdate == true){
+        return true;
+      }
+    }
+    return false;
+  }
   Future<bool> login(String username, String password) async {
     EasyLoading.show();
     var result = await CommonAPI.login(username, password);

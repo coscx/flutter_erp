@@ -29,5 +29,6 @@ class AppRoutes {
   static const GroupChat = '/group_chat';
   static const FineDetail = '/fine_detail';
   static const OADetail = '/oa_detail';
+  static const AboutUs = '/about_us';
 
 }

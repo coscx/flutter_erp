@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 import '../../../common/apis/common.dart';
 import '../../../common/services/storage.dart';
 import '../../user_detail/widget/common_dialog.dart';

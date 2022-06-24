@@ -258,30 +258,10 @@ class WorkPage extends StatelessWidget {
                         margin: EdgeInsets.only(top: 40.h),
                         child: Column(
                           children: <Widget>[
+
                             GestureDetector(
                               onTap: () async {
-                                var ss = await StorageService.to.getString(
-                                    "openid");
-                                if (ss == "") {
-                                  logic.bindWxOnTap();
-                                } else {
-                                  _bindWx(context, "");
-                                }
-                              },
-                              child: MenuItem(
-                                icon: "assets/packages/images/login_wechat.svg",
-                                title: logic.bind,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                var ss = await StorageService.to.getString(
-                                    "openid");
-                                if (ss == "") {
-                                  logic.bindWxOnTap();
-                                } else {
-                                  _bindWx(context, "");
-                                }
+                                Get.toNamed(AppRoutes.AboutUs);
                               },
                               child: NewMenuItem(
                                 icon: "assets/images/about.png",

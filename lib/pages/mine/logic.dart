@@ -1,6 +1,6 @@
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:get/get.dart';
-import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 import '../../common/apis/common.dart';
 import '../user_detail/widget/common_dialog.dart';
 import 'state.dart';

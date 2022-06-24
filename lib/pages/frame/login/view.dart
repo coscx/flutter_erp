@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_erp/pages/frame/login/widget/login_form.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +16,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<LoginLogic>(builder: (logic) {
       return Scaffold(
           body: ScrollConfiguration(
@@ -30,8 +28,8 @@ class LoginPage extends StatelessWidget {
                           .of(context)
                           .size
                           .width,
-                      padding: EdgeInsets.only(
-                          left: 20.w, right: 20.w, top: 20.h),
+                      padding:
+                      EdgeInsets.only(left: 20.w, right: 20.w, top: 20.h),
                       child: Stack(
                         alignment: Alignment.center,
                         children: [
@@ -62,6 +60,7 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget _buildLoginByState(BuildContext context) {
+
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -97,18 +96,20 @@ class LoginPage extends StatelessWidget {
                         logic.showPwd = !logic.showPwd;
                         logic.update();
                       },
-                      child: Icon(
-                          logic.showPwd ? TolyIcon.icon_show : TolyIcon
-                              .icon_hide))
+                      child: Icon(logic.showPwd
+                          ? TolyIcon.icon_show
+                          : TolyIcon.icon_hide))
                 ],
               ),
               Row(
                 children: <Widget>[
-                  Checkbox(value: logic.autoLogin, onChanged: (e)
-                  {
-                    logic.autoLogin = !logic.autoLogin;
-                    logic.update();
-                  }),
+                  Checkbox(
+                      value: logic.autoLogin,
+                      //shape: CircleBorder(),//这里就是实现圆形的设置
+                      onChanged: (e) {
+                        logic.autoLogin = !logic.autoLogin;
+                        logic.update();
+                      }),
                   Text(
                     "自动登录",
                     style: TextStyle(
@@ -129,8 +130,58 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               _buildBtn(context),
-              buildOtherLogin(),
+               Obx(() {
+                return logic.showWx.value ?buildOtherLogin(): Container();
+              }) ,
               //const CircularProgressIndicator()
+              Container(
+                padding:
+                EdgeInsets.only(left: 20.w, right: 0.w, top: 100.h),
+                child: Row(
+                  children: <Widget>[
+                    Checkbox(
+                        value: logic.privacy,
+                        shape: const CircleBorder(),//这里就是实现圆形的设置
+                        onChanged: (e) {
+                          logic.privacy = !logic.privacy;
+                          logic.update();
+                        }),
+                RichText(
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  text: TextSpan(
+                      text: "请使用前同意",
+                      style: TextStyle(color: Colors.grey[600]),
+                      children: [
+                        TextSpan(
+                          text: "《用户协议》",
+                          style: const TextStyle(color: Colors.blue),
+                          recognizer: logic.registProtocolRecognizer
+                            ..onTap = () {
+                              //打开用户协议
+                              logic.openUserProtocol(context);
+                            },
+                        ),
+                        TextSpan(
+                          text: "与",
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                        TextSpan(
+                          text: "《隐私政策》",
+                          style: const TextStyle(color: Colors.blue),
+                          recognizer: logic.privacyProtocolRecognizer
+                            ..onTap = () {
+                              //打开用户协议
+                              logic.openPrivateProtocol(context);
+                            },
+                        ),
+
+                      ]),
+                )
+
+                  ],
+                ),
+              ),
             ],
           ),
         ],
@@ -174,6 +225,10 @@ class LoginPage extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(35.w))),
           color: Colors.blue,
           onPressed: () {
+            if (!logic.privacy) {
+              toastInfo(msg: '请勾选同意用户协议与隐私政策');
+              return;
+            }
             if (logic.usernameController.text.isEmpty) {
               toastInfo(msg: '请输入账号');
               return;
@@ -182,6 +237,8 @@ class LoginPage extends StatelessWidget {
               toastInfo(msg: '请输入密码');
               return;
             }
+
+
             logic.textFieldNode.unfocus();
             logic.login(
                 logic.usernameController.text, logic.passwordController.text);
@@ -309,13 +366,18 @@ class LoginPage extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
+            if (!logic.privacy) {
+              toastInfo(msg: '请勾选同意用户协议与隐私政策');
+              return;
+            }
             logic.wxLogin();
           },
           child: SvgPicture.asset(
             "assets/packages/images/login_wechat.svg",
             //color: Colors.green,
           ),
-        )
+        ),
+
       ],
     );
   }

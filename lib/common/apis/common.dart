@@ -46,6 +46,15 @@ class CommonAPI {
     );
     return LoginEntity.fromJson(response);
   }
+  static Future<AppVersionEntity> getWxLogin() async {
+    var data = {};
+    var response = await NewERPHttpUtil().post(
+      '/api/GetWxStatus',
+      data: data,
+    );
+    return AppVersionEntity.fromJson(response);
+  }
+
   static Future<LoginEntity> wxLogin(String code) async {
     var data = {'code': code};
     var response = await NewERPHttpUtil().post(

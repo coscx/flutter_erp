@@ -117,4 +117,5 @@ class ImageRes {
   static const ic_trumpet = "${_dir}ic_trumpet.webp";
   static const ic_voiceCallMsg = "${_dir}ic_call_voice_msg.webp";
   static const ic_videoCallMsg = "${_dir}ic_call_video_msg.webp";
+  static const ic_logo = "${_dir}user.png";
 }

@@ -56,7 +56,8 @@ class CommonResult {
     required this.status,
     required this.code,
     required this.data,
-    this.message
+    this.message,
+    this.msg
   });
 
   factory CommonResult.fromJson(Map<String, dynamic> json) => CommonResult(
@@ -64,12 +65,14 @@ class CommonResult {
     code: asT<int>(json['code'])!,
     data: json.containsKey('data')? asT<String>(json['data'])!:"",
     message: json.containsKey('message')? asT<String>(json['message'])! :"",
+    msg: json.containsKey('msg')? asT<String>(json['msg'])! :"",
   );
 
   String status;
   int code;
   String data;
   String? message;
+  String? msg;
   @override
   String toString() {
     return jsonEncode(this);

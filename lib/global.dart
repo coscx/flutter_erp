@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/services/services.dart';
 import 'package:flutter_erp/common/store/store.dart';
 import 'package:flutter_erp/common/utils/utils.dart';
-import 'package:fluwx/fluwx.dart';
+import 'package:fluwx_no_pay/fluwx_no_pay.dart';
 import 'package:get/get.dart';
 
 import 'common/utils/app_env.dart';
@@ -44,7 +44,7 @@ class Global {
         doOnIOS: true,
         universalLink: universalLink);
     var result = await isWeChatInstalled;
-    print("wx is installed $result");
+    //print("wx is installed $result");
     // var success = await startLog(logLevel: WXLogLevel.NORMAL);
     // print('startlog:$success\n');
   }
