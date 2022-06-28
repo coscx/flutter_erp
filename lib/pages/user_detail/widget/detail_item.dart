@@ -18,9 +18,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../../common/utils/common.dart';
+import '../../../common/widgets/chat_picture_preview.dart';
 import '../../../common/widgets/circle_text.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../../common/widgets/extend_image.dart';
+import '../../../common/widgets/im_util.dart';
 import '../../../common/widgets/imageview/image_preview_page.dart';
 import '../../../common/widgets/imageview/image_preview_view.dart';
 import 'common_dialog.dart';
@@ -2474,6 +2476,8 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
     imageUrlList.add(imgList[i].fileUrl);
   }
   var imageListView = <ImageOptions>[];
+  var picListView = <PicInfo>[];
+
   for (int i = 0; i < imgList.length; i++) {
     var e = imgList[i];
     if (e.fileUrl == "") continue;
@@ -2481,6 +2485,11 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
       url: e.fileUrl,
       tag: e.fileUrl,
     ));
+
+    picListView.add(PicInfo(
+      url: e.fileUrl,
+    ));
+
   }
 
   List<Widget> list = [];
@@ -2495,12 +2504,17 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
 
       Widget adds = GestureDetector(
         onTap: () {
-          ImagePreview.preview(
-            initialIndex: i,
-            images: imageListView,
-            onIndexChanged: (e) {},
-            onLongPressed: (e) {},
-          );
+          // ImagePreview.preview(
+          //   initialIndex: i,
+          //   images: imageListView,
+          //   onIndexChanged: (e) {},
+          //   onLongPressed: (e) {},
+          // );
+          Get.to(() => IMUtil.previewPic(
+              index: i,
+              tag: e.fileUrl != ""
+                  ? e.fileUrl
+                  : ("assets/packages/images/ic_user_none_round.png"), picList: picListView));
         },
         child: Padding(
           key: ObjectKey(e.id),
@@ -2883,18 +2897,25 @@ header(BuildContext context, Data user) {
       children: <Widget>[
         GestureDetector(
             onTap: () {
-              ImagePreview.preview(
-                images: List.generate(1, (index) {
-                  return ImageOptions(
-                    url: headImg != ""
-                        ? headImg
-                        : ("assets/packages/images/ic_user_none_round.png"),
+              // ImagePreview.preview(
+              //   images: List.generate(1, (index) {
+              //     return ImageOptions(
+              //       url: headImg != ""
+              //           ? headImg
+              //           : ("assets/packages/images/ic_user_none_round.png"),
+              //       tag: headImg != ""
+              //           ? headImg
+              //           : ("assets/packages/images/ic_user_none_round.png"),
+              //     );
+              //   }),
+              // );
+                Get.to(() => IMUtil.previewPic(
                     tag: headImg != ""
                         ? headImg
-                        : ("assets/packages/images/ic_user_none_round.png"),
-                  );
-                }),
-              );
+                        : ("assets/packages/images/ic_user_none_round.png"), picList: [PicInfo(url: headImg != ""
+                    ? headImg
+                    : ("assets/packages/images/ic_user_none_round.png"))]));
+
             },
             child: Padding(
               padding: EdgeInsets.only(left: 10.w, right: 0.w),
