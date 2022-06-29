@@ -736,6 +736,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.8.01"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   overlay_support:
     dependency: "direct main"
     description:
@@ -911,6 +918,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.4.0"
+  photo_manager:
+    dependency: transitive
+    description:
+      name: photo_manager
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.1.4"
   photo_view:
     dependency: "direct main"
     description:
@@ -948,6 +962,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.4"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "6.0.3"
   pull_to_refresh_flutter3:
     dependency: "direct main"
     description:
@@ -1374,14 +1395,14 @@ packages:
       name: video_player
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.5"
   video_player_android:
     dependency: transitive
     description:
       name: video_player_android
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.3.2"
+    version: "2.3.6"
   video_player_avfoundation:
     dependency: transitive
     description:
@@ -1445,6 +1466,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.7.2"
+  wechat_assets_picker:
+    dependency: "direct main"
+    description:
+      name: wechat_assets_picker
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "7.3.2"
   win32:
     dependency: transitive
     description:

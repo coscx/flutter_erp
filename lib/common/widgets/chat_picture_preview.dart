@@ -43,7 +43,7 @@ class _ChatPicturePreviewState extends State<ChatPicturePreview> {
   GlobalKey<PartRefreshWidgetState> globalKey = GlobalKey();
   @override
   void initState() {
-    _currentIndex=widget.index+1;
+    _currentIndex=widget.index;
     super.initState();
   }
   @override

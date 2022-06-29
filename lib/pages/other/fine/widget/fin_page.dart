@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_erp/common/apis/common.dart';
+import 'package:flutter_erp/common/entities/loan/loan.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -8,10 +9,10 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 import '../../../../common/routers/names.dart';
 import '../../../../common/widgets/dy_behavior_null.dart';
+import '../../../../common/widgets/empty_page.dart';
 import '../../../../common/widgets/my_scroll_physics.dart';
 import '../../../../common/widgets/refresh.dart';
 import 'custom_dialog.dart';
-
 
 class MyItem {
   final String icon;
@@ -23,8 +24,7 @@ class MyItem {
   final Color color;
 
   const MyItem(
-      {
-      required this.icon,
+      {required this.icon,
       required this.name,
       required this.money,
       required this.count,
@@ -52,7 +52,8 @@ class _FinPageState extends State<FinPages> {
   var dm1 = <MyItem>[];
   String myName = "";
   bool myValue = false;
-
+  List<Data> loanData = <Data>[];
+  int page =1;
   @override
   void initState() {
     var de = MyItem(
@@ -65,486 +66,97 @@ class _FinPageState extends State<FinPages> {
       color: Color(0xffD8AA0F),
     );
     dm.add(de);
-    de = de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
     dm1 = dm;
+    _df();
     super.initState();
   }
 
+  _df() async {
+    var d = await CommonAPI.getLoanList(page,groupValue);
+    if (d.data != null && d.data?.data != null) {
+      loanData = d.data!.data!;
+      setState((){});
+    }
+  }
+
+  MyItem getStatus(Data data) {
+    String status = "";
+    Color color = const Color(0xffFF6666);
+    String icon = "";
+
+    if (data.status == 9) {
+      status = "放款失败";
+      color = const Color(0xff4CD070);
+      icon = "assets/images/default/fine_fail.png";
+
+    }
+    if (data.status == 11) {
+      status = "资质不符";
+      color = const Color(0xff4CD070);
+      icon = "assets/images/default/fine_no.png";
+    }
+    if (data.status == 10) {
+      status = "客户放弃";
+      color = const Color(0xff6360CA);
+      icon = "assets/images/default/fine_lost.png";
+    }
+    if (data.status == 1) {
+      status = "联系中";
+      color = const Color(0xff4DA1EE);
+      icon = "assets/images/default/fine_call.png";
+    }
+    if (data.status == 8) {
+      status = "已放款";
+      color = const Color(0xffD8AA0F);
+      icon = "assets/images/default/fine_success.png";
+    }
+    return MyItem(
+      icon: icon,
+      name: data.csName,
+      status: status,
+      money: data.loanAmount.toString(),
+      time: data.submitTime,
+      count: data.loanCycle.toString(),
+      color: color,
+    );
+  }
+
   List<GestureDetector> _buildMyItem() {
-    return dm
+    if (loanData.isEmpty){
+      return [GestureDetector(
+        onTap: () {
+          Get.toNamed(AppRoutes.FineDetail);
+        },
+        child: EmptyPage(),
+      )];
+    }
+    return loanData
         .map((e) => GestureDetector(
-      onTap: (){
-        Get.toNamed(AppRoutes.FineDetail);
-      },
-          child: MyContent(
-                icon: e.icon,
-                name: e.name,
-                money: e.money,
-                count: e.count,
-                status: e.status,
-                time: e.time,
-                color: e.color,
+              onTap: () {
+                Get.toNamed(AppRoutes.FineDetail,arguments: e.loanId);
+              },
+              child: MyContent(
+                icon: getStatus(e).icon,
+                name: getStatus(e).name,
+                money: getStatus(e).money,
+                count: getStatus(e).count,
+                status: getStatus(e).status,
+                time: getStatus(e).time,
+                color: getStatus(e).color,
               ),
-        ))
+            ))
         .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Theme(
-            data: ThemeData(
-              appBarTheme: AppBarTheme.of(context).copyWith(
-                brightness: Brightness.light,
-              ),
-            ),
-            child: Scaffold(
+        data: ThemeData(
+          appBarTheme: AppBarTheme.of(context).copyWith(
+            brightness: Brightness.light,
+          ),
+        ),
+        child: Scaffold(
             backgroundColor: Colors.transparent, //把scaffold的背景色改成透明
             //endDrawer: CategoryEndDrawer(),
             appBar: AppBar(
@@ -585,151 +197,96 @@ class _FinPageState extends State<FinPages> {
               ],
             ),
             body: Container(
-                decoration  : const BoxDecoration(
+                decoration: const BoxDecoration(
                     gradient: LinearGradient(
-                      stops: [0, 0.5, 1],
-                      colors: [
-                        Color(0xffE2F1FF),
-                        Color(0xffF9FBEB),
-                        Color(0xffFFF4FA)
-                      ],
-                      begin: Alignment(2, 1),
-                      end: Alignment(-2, -1),
-                    )),
-                child:Container(
-              height: ScreenUtil().screenHeight,
-
-              child: Container(
-                margin: EdgeInsets.only(top: 30.h),
-                child: Stack(
-                  children: [
-                    _buildContent(context),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  stops: [0, 0.5, 1],
+                  colors: [
+                    Color(0xffE2F1FF),
+                    Color(0xffF9FBEB),
+                    Color(0xffFFF4FA)
+                  ],
+                  begin: Alignment(2, 1),
+                  end: Alignment(-2, -1),
+                )),
+                child: Container(
+                  height: ScreenUtil().screenHeight,
+                  child: Container(
+                    margin: EdgeInsets.only(top: 30.h),
+                    child: Stack(
                       children: [
-                        SizedBox(
-                          width: 10.w,
+                        _buildContent(context),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                            MyCard(),
+                            MyCard1(),
+                            SizedBox(
+                              width: 10.w,
+                            ),
+                          ],
                         ),
-                        MyCard(),
-                        MyCard1(),
-                        SizedBox(
-                          width: 10.w,
-                        ),
+                        _buildHeader(context, groupValue,
+                            (int index, bool value, String name) {
+                          // print(index);
+                          // print(value);
+                          // print(name);
+                          title = name;
+                          setState(() {
+                            myName = name;
+                            myValue = value;
+                            groupValue = index;
+                            if (!value) {
+                              title = "请选择当前状态";
+                              groupValue = -1;
+                            }
+                          });
+                        }, title),
                       ],
                     ),
-                    _buildHeader(context, groupValue,
-                        (int index, bool value, String name) {
-                      print(index);
-                      print(value);
-                      print(name);
-                      title = name;
-                      setState(() {
-
-                        myName = name;
-                        myValue = value;
-                        groupValue = index;
-                        if (!value) {
-                          title = "请选择当前状态";
-                          groupValue = -1;
-                        }
-                      });
-                    }, title),
-                  ],
-                ),
-              ),
-            ))));
+                  ),
+                ))));
   }
 
   Future<bool> _whenPop(BuildContext context) async {
     return true;
   }
-
+// 下拉刷新
+  void getData(int status) async {
+    page =1;
+    var d = await CommonAPI.getLoanList(page,groupValue);
+    if (d.data != null && d.data?.data != null) {
+      loanData = d.data!.data!;
+      setState((){});
+    }
+  }
 // 下拉刷新
   void _onRefresh() async {
     // var result = await IssuesApi.getErpUser();
     // dm = dm1.reversed.toList();
-
+    page =1;
+    var d = await CommonAPI.getLoanList(page,groupValue);
+    if (d.data != null && d.data?.data != null) {
+      loanData = d.data!.data!;
+      setState((){});
+    }
     _refreshController.refreshCompleted();
-    setState(() {});
+
   }
 
 // 上拉加载
   void _onLoading() async {
     //var result = await IssuesApi.getErpUser();
-
-    var de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_lost.png',
-      name: '张庭耀',
-      status: '客户放弃',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff6360CA),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_no.png',
-      name: '张庭耀',
-      status: '资质不符',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4CD070),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_fail.png',
-      name: '张庭耀',
-      status: '放款失败',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffFF6666),
-    );
-    dm.add(de);
-
-    de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    de = MyItem(
-      icon: 'assets/images/default/fine_call.png',
-      name: '张庭耀',
-      status: '联系中',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xff4DA1EE),
-    );
-
+    page=page+1;
+    var d = await CommonAPI.getLoanList(page,groupValue);
+    if (d.data != null && d.data?.data != null) {
+      loanData.addAll(d.data!.data!);
+      setState((){});
+    }
     _refreshController.loadComplete();
-    setState(() {});
+
   }
 
   Widget _buildContent(BuildContext context) => WillPopScope(
@@ -761,7 +318,7 @@ class _FinPageState extends State<FinPages> {
                         controller: _scrollControl,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[..._buildMyItem()],
+                          children: _buildMyItem(),
                         ),
                       ),
                     )),
@@ -774,16 +331,19 @@ class _FinPageState extends State<FinPages> {
       Stack(
         children: [
           Container(
-            decoration: show?BoxDecoration(boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(218, 218, 218, 0.4),
-                //阴影默认颜色,不能与父容器同时设置color
-                offset: Offset(0, 470.h),
-                //延伸的阴影，向右下偏移的距离
-                blurRadius: 0.h, //延伸距离,会有模糊效果
-              )
-            ],
-            ):null,
+            decoration: show
+                ? BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color.fromRGBO(218, 218, 218, 0.4),
+                        //阴影默认颜色,不能与父容器同时设置color
+                        offset: Offset(0, 470.h),
+                        //延伸的阴影，向右下偏移的距离
+                        blurRadius: 0.h, //延伸距离,会有模糊效果
+                      )
+                    ],
+                  )
+                : null,
             margin: EdgeInsets.only(top: 200.h),
             child: Container(
               height: heights,
@@ -803,8 +363,8 @@ class _FinPageState extends State<FinPages> {
                             padding: EdgeInsets.only(left: 40.h),
                             child: Text(
                               titles,
-                              style:
-                                  TextStyle(fontSize: 30.sp, color: Colors.black),
+                              style: TextStyle(
+                                  fontSize: 30.sp, color: Colors.black),
                             ),
                           ),
                           Container(
@@ -813,7 +373,7 @@ class _FinPageState extends State<FinPages> {
                                   ? Icons.keyboard_arrow_up_outlined
                                   : Icons.keyboard_arrow_down_outlined),
                               onPressed: () {
-                                print(1);
+
                                 setState(() {
                                   show = !show;
                                   if (show) {
@@ -836,17 +396,17 @@ class _FinPageState extends State<FinPages> {
                       visible: show,
                       child: Stack(
                         children: [
-
                           Container(
                             child: Container(
-                              padding: EdgeInsets.only(left: 40.h,top: 20.h),
+                              padding: EdgeInsets.only(left: 40.h, top: 20.h),
                               child: Column(
                                 children: [
                                   buildButton(context, groupValues, callback),
                                   Container(
                                     padding: EdgeInsets.only(top: 60.h),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           padding: EdgeInsets.only(
@@ -872,7 +432,7 @@ class _FinPageState extends State<FinPages> {
                                                       cc = Colors.transparent;
                                                       opacity = 1.0;
                                                     }
-                                                    dm = dm1.reversed.toList();
+                                                    getData(0);
                                                     groupValue = -1;
                                                     myValue = false;
                                                     myName = "";
@@ -902,7 +462,8 @@ class _FinPageState extends State<FinPages> {
                                                           width: 2.w),
                                                     ),
                                                     color: Colors.white,
-                                                    borderRadius: BorderRadius.only(
+                                                    borderRadius:
+                                                        BorderRadius.only(
                                                       topLeft:
                                                           Radius.circular(34.w),
                                                       bottomLeft:
@@ -915,16 +476,18 @@ class _FinPageState extends State<FinPages> {
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 30.sp),
-                                                      textAlign: TextAlign.center,
+                                                      textAlign:
+                                                          TextAlign.center,
                                                     ),
                                                   ),
-                                                  alignment: Alignment.centerLeft,
+                                                  alignment:
+                                                      Alignment.centerLeft,
                                                 ),
                                               ),
                                               GestureDetector(
                                                 onTap: () async {
                                                   //var result = await IssuesApi.getErpUser();
-                                                  setState(()  {
+                                                  setState(() {
                                                     show = !show;
                                                     if (show) {
                                                       heights = 450.h;
@@ -935,16 +498,12 @@ class _FinPageState extends State<FinPages> {
                                                       cc = Colors.transparent;
                                                       opacity = 1.0;
                                                     }
-                                                    var fg = dm1.reversed.toList();
-                                                    fg.removeWhere(
-                                                        (e) => e.status != myName);
-                                                    dm = fg;
+
                                                     if (groupValue == -1) {
-                                                      dm = dm1.reversed.toList();
+                                                      getData(0);
+                                                    }else{
+                                                      getData(groupValue);
                                                     }
-
-
-
                                                   });
                                                   _scrollControl.jumpTo(0);
                                                 },
@@ -959,16 +518,19 @@ class _FinPageState extends State<FinPages> {
                                                     color: Colors.blue,
                                                     borderRadius:
                                                         BorderRadius.horizontal(
-                                                            right: Radius.circular(
-                                                                34.w)),
+                                                            right:
+                                                                Radius.circular(
+                                                                    34.w)),
                                                   ),
                                                   child: Container(
                                                     child: Text('确定',
                                                         style: TextStyle(
                                                             fontSize: 30.sp,
-                                                            color: Colors.white)),
+                                                            color:
+                                                                Colors.white)),
                                                   ),
-                                                  alignment: Alignment.centerLeft,
+                                                  alignment:
+                                                      Alignment.centerLeft,
                                                 ),
                                               ),
                                             ],
@@ -1003,31 +565,31 @@ Widget buildButton(
     child: Wrap(runSpacing: 30.w, spacing: 30.w, children: [
       MButton(
         name: "已放款",
-        index: 0,
+        index: 8,
         groupValue: groupValue,
         callback: callback,
       ),
       MButton(
         name: "放款失败",
-        index: 1,
+        index: 9,
         groupValue: groupValue,
         callback: callback,
       ),
       MButton(
         name: "客户放弃",
-        index: 2,
+        index: 10,
         groupValue: groupValue,
         callback: callback,
       ),
       MButton(
         name: "资质不符",
-        index: 3,
+        index: 11,
         groupValue: groupValue,
         callback: callback,
       ),
       MButton(
         name: "联系中",
-        index: 4,
+        index: 1,
         groupValue: groupValue,
         callback: callback,
       ),
@@ -1045,8 +607,7 @@ class MButton extends StatefulWidget {
   final ChangeCallback callback;
 
   const MButton(
-      {
-      required this.name,
+      {required this.name,
       required this.index,
       required this.groupValue,
       required this.callback});
@@ -1221,8 +782,7 @@ class MyContent extends StatefulWidget {
   final Color color;
 
   const MyContent(
-      {
-      required this.icon,
+      {required this.icon,
       required this.name,
       required this.money,
       required this.count,

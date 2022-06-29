@@ -22,6 +22,7 @@ import 'package:flutter_erp/pages/oa/application/index.dart';
 import 'package:flutter_erp/pages/oa/home_message/binding.dart';
 import 'package:flutter_erp/pages/oa/home_message/view.dart';
 import 'package:flutter_erp/pages/oa/person/binding.dart';
+import 'package:flutter_erp/pages/oa/person/follow/binding.dart';
 import 'package:flutter_erp/pages/oa/person/view.dart';
 import 'package:flutter_erp/pages/oa/user_detail/binding.dart';
 import 'package:flutter_erp/pages/oa/user_detail/logic.dart';
@@ -50,6 +51,9 @@ import 'package:get/get.dart';
 
 import '../../pages/add_vip/binding.dart';
 import '../../pages/home/binding.dart';
+import '../../pages/oa/person/follow/view.dart';
+import '../../pages/oa/person/public/binding.dart';
+import '../../pages/oa/person/public/view.dart';
 import '../../pages/other/fine/binding.dart';
 import '../../pages/other/fine_detail/widget/fine_detail.dart';
 import '../../pages/other/fine_detail/binding.dart';
@@ -228,6 +232,20 @@ class AppPages {
         binding: AboutUsBinding(),
         transition: Transition.rightToLeft
     ),
+
+    GetPage(
+        name: AppRoutes.Follow,
+        page: () => FollowPage(),
+        binding: FollowBinding(),
+        transition: Transition.rightToLeft
+    ),
+    GetPage(
+        name: AppRoutes.Public,
+        page: () => PublicPage(),
+        binding: PublicBinding(),
+        transition: Transition.rightToLeft
+    ),
+
 
   ];
 

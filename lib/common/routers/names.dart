@@ -31,4 +31,6 @@ class AppRoutes {
   static const OADetail = '/oa_detail';
   static const AboutUs = '/about_us';
 
+  static const Public = '/public';
+  static const Follow = '/follow';
 }

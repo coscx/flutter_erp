@@ -11,10 +11,11 @@ import 'package:menu_button/menu_button.dart';
 import '../../../common/routers/names.dart';
 import '../../../common/utils/common.dart';
 import '../../../common/widgets/dy_behavior_null.dart';
+import '../../../common/widgets/record.dart';
 import '../../oa/user_detail/logic.dart';
 import '../logic.dart';
 import 'detail_common.dart';
-
+late StateSetter _reloadTextSetter;
 final _Controller = TextEditingController(text: '');
 final _appointController = TextEditingController(text: '');
 FocusNode _textFieldNode = FocusNode();
@@ -23,7 +24,7 @@ FocusNode _connectFieldNode = FocusNode();
 final _usernameController = TextEditingController(text: '');
 FocusNode _textPlaceFieldNode = FocusNode();
 final _placeController = TextEditingController(text: '');
-
+String connectPlace="";
 String goalValue = '4.可继续沟通';
 String goalValueAppoint = '21.新分VIP';
 DateTime _date = DateTime.now();
@@ -515,6 +516,7 @@ Future<bool> commentDialog(
       barrierDismissible: false,
       context: context,
       builder: (ctx) => StatefulBuilder(builder: (context, state) {
+        _reloadTextSetter = state;
             return GestureDetector(
               onTap: () {
                 _connectFieldNode.unfocus();
@@ -524,7 +526,7 @@ Future<bool> commentDialog(
                 children: <Widget>[
                   Container(
                     width: ScreenUtil().screenWidth * 0.95,
-                    height: ScreenUtil().screenHeight * 0.55,
+                    height: ScreenUtil().screenHeight * 0.65,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(12.w)),
@@ -560,6 +562,7 @@ Future<bool> commentDialog(
                                   time1 = time1s.substring(0, 19);
                                   time2 = time2s.substring(0, 19);
                                   _Controller.clear();
+                                  connectPlace="";
                                   Navigator.of(context).pop(false);
                                 },
                                 child: Image.asset(
@@ -800,6 +803,72 @@ Future<bool> commentDialog(
                                       ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: 20.w,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text("录音:",
+                                          style: TextStyle(
+                                              fontSize: 30.sp,
+                                              color: Colors.grey)),
+                                      SizedBox(
+                                        width: 20.w,
+                                      ),
+                                      AudioRecorder(
+                                        onStop: (path) {
+                                           print('Recorded file path: $path');
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 20.w,
+                                  ),
+                                 Row(
+                                   children: [
+                                     Text("沟通地点:",
+                                         style: TextStyle(
+                                             fontSize: 30.sp,
+                                             color: Colors.grey)),
+                                     SizedBox(
+                                       width: 20.w,
+                                     ),
+
+                                     connectPlace!=""?Container(
+                                         width: 480.w,
+                                         child: Text(
+                                           connectPlace,
+                                           maxLines: 2,
+                                           style: TextStyle(
+                                               color: Colors.black,
+                                               fontSize: 30.sp),
+                                         )) :GestureDetector(
+                                       onTap: () async {
+                                         var value =
+                                             await Get.toNamed(AppRoutes.Amap);
+                                         print(value);
+                                         List<String> data =
+                                         value.toString().split("#");
+                                         appointment_address =
+                                             data.elementAt(1) + "";
+                                         address_lng = data.elementAt(2);
+                                         address_lat = data.elementAt(3);
+
+                                         _reloadTextSetter(() {
+                                           connectPlace =  data.elementAt(1) + "";
+                                         });
+                                       },
+                                       child: Text(
+                                         "请选择",
+                                         style: TextStyle(
+                                             color: Colors.blue,
+                                             fontSize: 30.sp),
+                                       ),
+                                     ),
+                                   ],
+                                 ) ,
+
                                   SizedBox(
                                     height: 20.w,
                                   ),

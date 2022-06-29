@@ -16,6 +16,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 
 import '../../../common/utils/common.dart';
 import '../../../common/widgets/chat_picture_preview.dart';
@@ -2655,13 +2656,29 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
         //   }
         //   EasyLoading.dismiss();
         // }
-        final pickedImage = await ImagePicker()
-            .getImage(source: ImageSource.gallery, imageQuality: 50);
-        File? imageFile = pickedImage != null ? File(pickedImage.path) : null;
-        if (imageFile != null) {
+
+        List<AssetEntity> asset = <AssetEntity>[];
+       var assets =  await AssetPicker.pickAssets(
+          context,
+          pickerConfig: AssetPickerConfig(
+            textDelegate: const AssetPickerTextDelegate(),
+            maxAssets: 1,
+            selectedAssets: asset,
+            pickerTheme: AssetPicker.themeData(
+              Colors.lightBlueAccent,
+              light: true,
+            ),
+          ),
+        );
+       var  imageFile =  assets!.first;
+        File? file = await imageFile.file;
+        // final pickedImage = await ImagePicker()
+        //     .getImage(source: ImageSource.gallery, imageQuality: 50);
+        // File? imageFile = pickedImage != null ? File(pickedImage.path) : null;
+        if (file?.path != null) {
           File? croppedFile = await ImageCropper().cropImage(
               aspectRatio: const CropAspectRatio(ratioX: 1, ratioY: 2),
-              sourcePath: imageFile.path,
+              sourcePath: file!.path,
               aspectRatioPresets: Platform.isAndroid
                   ? [
                       CropAspectRatioPreset.square,
@@ -2691,9 +2708,8 @@ Widget _buildLinkTo(BuildContext context, Data userdetail,
                 title: '图片裁剪',
               ));
           if (croppedFile != null) {
-            imageFile = croppedFile;
             final logic = Get.find<UserDetailLogic>();
-            logic.uploadPhoto(imageFile.path);
+            logic.uploadPhoto(croppedFile.path);
           }
         }
       }));
@@ -2910,6 +2926,7 @@ header(BuildContext context, Data user) {
               //   }),
               // );
                 Get.to(() => IMUtil.previewPic(
+                    index: 0,
                     tag: headImg != ""
                         ? headImg
                         : ("assets/packages/images/ic_user_none_round.png"), picList: [PicInfo(url: headImg != ""

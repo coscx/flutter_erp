@@ -63,14 +63,14 @@ class CommonResult {
   factory CommonResult.fromJson(Map<String, dynamic> json) => CommonResult(
     status: json.containsKey('status')? asT<String>(json['status'])!:"",
     code: asT<int>(json['code'])!,
-    data: json.containsKey('data')? asT<String>(json['data'])!:"",
+    data: json.containsKey('data')? asT<String>(json['data']):"",
     message: json.containsKey('message')? asT<String>(json['message'])! :"",
     msg: json.containsKey('msg')? asT<String>(json['msg'])! :"",
   );
 
   String status;
   int code;
-  String data;
+  String? data;
   String? message;
   String? msg;
   @override

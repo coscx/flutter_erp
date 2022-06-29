@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../common/entities/flow/wx_article.dart';
 import '../../../common/routers/names.dart';
@@ -27,9 +28,13 @@ class MyFlow extends StatelessWidget {
     Get.toNamed(AppRoutes.Detail, arguments: item.uuid);
   }
 
-  void _goToWebView(context, Datas item) {
+  Future<void> _goToWebView(context, Datas item) async {
     Get.toNamed(AppRoutes.Webview,
         arguments: {"title": item.customerName, "url": item.url});
+   // var t = await canLaunch(item.url);
+   //  if ( t) {
+   //   launch(item.url);
+   //  }
   }
 
   @override

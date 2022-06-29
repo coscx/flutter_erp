@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_erp/pages/conversion/widget/date.dart';
 import 'package:flutter_erp/pages/conversion/widget/dialog_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../common/routers/names.dart';
 import '../../../common/widgets/delete_category_dialog.dart';
 import '../../../common/widgets/dy_behavior_null.dart';
 import 'logic.dart';
@@ -100,7 +101,13 @@ class PersonPage extends StatelessWidget {
 
   Widget _buildListItem(
       BuildContext context,  int index) {
-    return  Container(
+    return  GestureDetector(
+        onTap: (){
+          index ==
+              0
+              ? Get.toNamed(AppRoutes.Follow):Get.toNamed(AppRoutes.Public);
+        },
+        child: Container(
           color: Colors.white,
           padding: EdgeInsets.only(top: 15.h, left: 20.w),
           child: Row(
@@ -170,8 +177,8 @@ class PersonPage extends StatelessWidget {
 
             ],
           ),
-        );
-
+        )
+    );
   }
 
 }

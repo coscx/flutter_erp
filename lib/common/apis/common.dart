@@ -16,8 +16,10 @@ import 'package:flutter_erp/common/entities/detail/viewcall.dart';
 import 'package:flutter_erp/common/entities/flow/wx_article.dart';
 import 'package:flutter_erp/common/entities/home/erp_user.dart';
 import 'package:flutter_erp/common/entities/home/tree_store.dart';
+import 'package:flutter_erp/common/entities/loan/loan_detail.dart';
 import 'package:flutter_erp/common/entities/login/login_model.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../entities/app_version.dart';
 import '../entities/detail/action.dart';
 import '../entities/detail/appoint.dart';
@@ -25,11 +27,28 @@ import '../entities/erp_user.dart';
 import '../entities/home/common.dart';
 import '../entities/home/only_store.dart';
 import '../entities/home/search_erp.dart';
+import '../entities/loan/loan.dart';
 import '../entities/mine/mine.dart';
+import '../utils/loan_http.dart';
 import '../utils/new_common_http.dart';
 
 /// 用户
 class CommonAPI {
+
+  static Future<Loan> getLoanList(int page,int status) async {
+    var response = await NewLoanHttpUtil().post(
+      '/api/GetLoanCheckList',
+      data: {"user_id":74,"currentPage":page,"status":status},
+    );
+    return Loan.fromJson(response);
+  }
+  static Future<LoanDetail> getLoanDetail(int id) async {
+    var response = await NewLoanHttpUtil().post(
+      '/api/GetLoanDetail',
+      data: {"loan_id":id},
+    );
+    return LoanDetail.fromJson(response);
+  }
   /// 登录
   static Future<AppVersionEntity> getVersion() async {
     var response = await NewERPHttpUtil().post(

@@ -12,6 +12,6 @@ class FineDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TimeLinePage();
+    return TimeLinePage(loanId: logic.loanId,);
   }
 }

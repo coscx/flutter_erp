@@ -354,7 +354,7 @@ class UserDetailLogic extends GetxController {
     try {
       var resultConnectList = await CommonAPI.uploadPhotoFile(1, path);
       var url = "https://queqiaoerp.oss-cn-shanghai.aliyuncs.com/" +
-          resultConnectList.data;
+          resultConnectList.data!;
       var result =
           await CommonAPI.editCustomerOnceStringResource(uuid, "1", url);
       if (result.code == 200) {
