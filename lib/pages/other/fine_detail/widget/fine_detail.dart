@@ -142,7 +142,7 @@ class _TimeLinePageState extends State<TimeLinePage>
             doodle:
             "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4016383514,3614601022&fm=26&gp=0.jpg",
             icon: const Icon(Icons.star, color: Colors.white),
-            iconBackground: Colors.grey
+            iconBackground: const Color(0xff4DA1EE)
         );
       }
       ).toList();
@@ -203,10 +203,10 @@ class _TimeLinePageState extends State<TimeLinePage>
                       SizedBox(height: 8.h),
                       Text(doodle.name, style: textTheme.subtitle1, textAlign: TextAlign.left),
                       SizedBox(height: 8.h),
-                      Text(doodle.opUser, style: textTheme.caption),
-                      SizedBox(height: 8.h),
-                      Container(padding: EdgeInsets.all(12.w), color: Color(0xFFF4F5F8), child: Text(doodle.content, style: textTheme.subtitle1, textAlign: TextAlign.left)),
-                      SizedBox(height: 8.h),
+                      doodle.opUser!=""?Text(doodle.opUser, style: textTheme.caption):Container(),
+                      doodle.opUser!=""?SizedBox(height: 8.h):Container(),
+                      doodle.content!=""?Container(padding: EdgeInsets.all(12.w), color: Color(0xFFF4F5F8), child: Text(doodle.content, style: textTheme.subtitle1, textAlign: TextAlign.left)):Container(),
+                      doodle.content!=""?SizedBox(height: 8.h):Container(),
                       Text(doodle.time, style: textTheme.caption),
                       SizedBox(height: 8.h),
                     ],

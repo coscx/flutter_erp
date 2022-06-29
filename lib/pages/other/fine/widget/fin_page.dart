@@ -259,6 +259,8 @@ class _FinPageState extends State<FinPages> {
     var d = await CommonAPI.getLoanList(page,groupValue);
     if (d.data != null && d.data?.data != null) {
       loanData = d.data!.data!;
+      _refreshController.resetNoData();
+
       setState((){});
     }
   }
@@ -270,6 +272,8 @@ class _FinPageState extends State<FinPages> {
     var d = await CommonAPI.getLoanList(page,groupValue);
     if (d.data != null && d.data?.data != null) {
       loanData = d.data!.data!;
+      _refreshController.resetNoData();
+
       setState((){});
     }
     _refreshController.refreshCompleted();
@@ -283,9 +287,13 @@ class _FinPageState extends State<FinPages> {
     var d = await CommonAPI.getLoanList(page,groupValue);
     if (d.data != null && d.data?.data != null) {
       loanData.addAll(d.data!.data!);
+      if (d.data!.data!.isEmpty){
+        _refreshController.loadNoData();
+        return;
+      }
       setState((){});
     }
-    _refreshController.loadComplete();
+   _refreshController.loadComplete();
 
   }
 
@@ -305,7 +313,7 @@ class _FinPageState extends State<FinPages> {
               child: Container(
                 margin: EdgeInsets.only(top: 60.h),
                 child: SmartRefresher(
-                    physics: MyScrollPhysics(),
+                    physics: const MyScrollPhysics(),
                     enablePullDown: true,
                     enablePullUp: true,
                     header: DYrefreshHeader(),
