@@ -71,13 +71,13 @@ class LoanDetail {
     data: json.containsKey('data')
         ? json['data'] == null
         ? null
-        : LoanData1.fromJson(asT<Map<String, dynamic>>(json['data'])!)
+        : Data.fromJson(asT<Map<String, dynamic>>(json['data'])!)
         : null,
     msg: json.containsKey('msg') ? asT<String>(json['msg'])! : '',
   );
 
   int code;
-  LoanData1? data;
+  Data? data;
   String msg;
 
   @override
@@ -92,13 +92,13 @@ class LoanDetail {
   };
 }
 
-class LoanData1 {
-  LoanData1({
+class Data {
+  Data({
     required this.data,
     required this.total,
   });
 
-  factory LoanData1.fromJson(Map<String, dynamic> json) {
+  factory Data.fromJson(Map<String, dynamic> json) {
     final List<LoanData>? data = json['data'] is List ? <LoanData>[] : null;
     if (data != null) {
       for (final dynamic item in json['data']!) {
@@ -109,7 +109,7 @@ class LoanData1 {
         }
       }
     }
-    return LoanData1(
+    return Data(
       data: data,
       total: json.containsKey('total') ? asT<int>(json['total'])! : 0,
     );
@@ -141,30 +141,42 @@ class LoanData {
     required this.step,
     required this.owner,
     required this.updateBy,
+    required this.pic,
   });
 
-  factory LoanData.fromJson(Map<String, dynamic> json) => LoanData(
-    circulationId: json.containsKey('circulation_id')
-        ? asT<int>(json['circulation_id'])!
-        : 0,
-    loanId: json.containsKey('loan_id') ? asT<int>(json['loan_id'])! : 0,
-    status: json.containsKey('status') ? asT<int>(json['status'])! : 0,
-    createTime: json.containsKey('create_time')
-        ? asT<String>(json['create_time'])!
-        : '',
-    createBy: json.containsKey('create_by')
-        ? asT<String>(json['create_by'])!
-        : '',
-    timeConsuming: json.containsKey('time_consuming')
-        ? asT<String>(json['time_consuming'])!
-        : '',
-    remark: json.containsKey('remark') ? asT<String>(json['remark'])! : '',
-    step: json.containsKey('step') ? asT<int>(json['step'])! : 0,
-    owner: json.containsKey('owner') ? asT<int>(json['owner'])! : 0,
-    updateBy: json.containsKey('update_by')
-        ? asT<String>(json['update_by'])!
-        : '',
-  );
+  factory LoanData.fromJson(Map<String, dynamic> json) {
+    final List<Pic>? pic = json['pic'] is List ? <Pic>[] : null;
+    if (pic != null) {
+      for (final dynamic item in json['pic']!) {
+        if (item != null) {
+          tryCatch(() {
+            pic.add(Pic.fromJson(asT<Map<String, dynamic>>(item)!));
+          });
+        }
+      }
+    }
+    return LoanData(
+      circulationId: json.containsKey('circulation_id')
+          ? asT<int>(json['circulation_id'])!
+          : 0,
+      loanId: json.containsKey('loan_id') ? asT<int>(json['loan_id'])! : 0,
+      status: json.containsKey('status') ? asT<int>(json['status'])! : 0,
+      createTime: json.containsKey('create_time')
+          ? asT<String>(json['create_time'])!
+          : '',
+      createBy:
+      json.containsKey('create_by') ? asT<String>(json['create_by'])! : '',
+      timeConsuming: json.containsKey('time_consuming')
+          ? asT<String>(json['time_consuming'])!
+          : '',
+      remark: json.containsKey('remark') ? asT<String>(json['remark'])! : '',
+      step: json.containsKey('step') ? asT<int>(json['step'])! : 0,
+      owner: json.containsKey('owner') ? asT<int>(json['owner'])! : 0,
+      updateBy:
+      json.containsKey('update_by') ? asT<String>(json['update_by'])! : '',
+      pic: pic,
+    );
+  }
 
   int circulationId;
   int loanId;
@@ -176,6 +188,7 @@ class LoanData {
   int step;
   int owner;
   String updateBy;
+  List<Pic>? pic;
 
   @override
   String toString() {
@@ -193,5 +206,38 @@ class LoanData {
     'step': step,
     'owner': owner,
     'update_by': updateBy,
+    'pic': pic,
+  };
+}
+
+class Pic {
+  Pic({
+    required this.circulationId,
+    required this.picType,
+    required this.picUrl,
+  });
+
+  factory Pic.fromJson(Map<String, dynamic> json) => Pic(
+    circulationId: json.containsKey('circulation_id')
+        ? asT<int>(json['circulation_id'])!
+        : 0,
+    picType: json.containsKey('pic_type') ? asT<int>(json['pic_type'])! : 0,
+    picUrl:
+    json.containsKey('pic_url') ? asT<String>(json['pic_url'])! : '',
+  );
+
+  int circulationId;
+  int picType;
+  String picUrl;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'circulation_id': circulationId,
+    'pic_type': picType,
+    'pic_url': picUrl,
   };
 }

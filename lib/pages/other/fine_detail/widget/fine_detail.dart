@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_erp/common/entities/loan/loan_detail.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
 
 import '../../../../common/apis/common.dart';
+import '../../../../common/widgets/chat_picture_preview.dart';
 import '../../../../common/widgets/dy_behavior_null.dart';
+import '../../../../common/widgets/im_util.dart';
+import '../../../../common/widgets/imageview/image_preview_view.dart';
 import 'doodle.dart';
 
 class TimeLinePage extends StatefulWidget {
@@ -142,7 +147,8 @@ class _TimeLinePageState extends State<TimeLinePage>
             doodle:
             "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=4016383514,3614601022&fm=26&gp=0.jpg",
             icon: const Icon(Icons.star, color: Colors.white),
-            iconBackground: const Color(0xff4DA1EE)
+            iconBackground: const Color(0xff4DA1EE),
+            pics: e.pic
         );
       }
       ).toList();
@@ -173,9 +179,42 @@ class _TimeLinePageState extends State<TimeLinePage>
       itemCount: doodleList.length,
       position: position);
 
+
+
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodleList[i];
     final textTheme = Theme.of(context).textTheme;
+    var picListView = <PicInfo>[];
+     List<Pic>? p = doodle.pics;
+    List<Widget> l = <Widget>[];
+
+     if (p !=null){
+       picListView = p.map((e){
+         return PicInfo(
+               url: e.picUrl,
+             );
+       }).toList();
+
+       for (int i = 0; i < p.length; i++) {
+         var e= p[i];
+         l.add(Container(
+           padding: EdgeInsets.only(right: 10.w),
+             width: 150.w,
+             child:GestureDetector(
+                 onTap: () {
+                   Get.to(() => IMUtil.previewPic(
+                       index: i,
+                       tag: e.picUrl != ""
+                           ? e.picUrl
+                           : ("assets/packages/images/ic_user_none_round.png"), picList: picListView));
+                 },
+                 child:Image.network(e.picUrl)
+             )));
+       }
+     }
+
+
+
     return TimelineModel(
         Card(
           color: doodle.color.withOpacity(doodle.opacity),
@@ -186,7 +225,6 @@ class _TimeLinePageState extends State<TimeLinePage>
           elevation: 0,
           child: Stack(children: [
             Container(
-
            decoration: doodle.current ==1 ? BoxDecoration(
                 border: Border.all(
                   color: Colors.red,
@@ -202,6 +240,11 @@ class _TimeLinePageState extends State<TimeLinePage>
                     children: <Widget>[
                       SizedBox(height: 8.h),
                       Text(doodle.name, style: textTheme.subtitle1, textAlign: TextAlign.left),
+                      doodle.pics ==null ? Container():Row(
+                        children: [
+                          ...l
+                        ],
+                      ),
                       SizedBox(height: 8.h),
                       doodle.opUser!=""?Text(doodle.opUser, style: textTheme.caption):Container(),
                       doodle.opUser!=""?SizedBox(height: 8.h):Container(),
@@ -226,7 +269,7 @@ class _TimeLinePageState extends State<TimeLinePage>
         position:
             i % 2 == 0 ? TimelineItemPosition.right : TimelineItemPosition.left,
         isFirst: i == 0,
-        isLast: i == doodles.length,
+        isLast: i == doodleList.length,
         iconBackground: doodle.iconBackground,
         icon: doodle.icon);
   }

@@ -44,6 +44,7 @@ class _FinPageState extends State<FinPages> {
   ScrollController _scrollControl = ScrollController();
   bool show = false;
   double heights = 140.h;
+  double closeHeights = 80.h;
   Color cc = Colors.transparent;
   double opacity = 1.0;
   int groupValue = -1;
@@ -343,7 +344,7 @@ class _FinPageState extends State<FinPages> {
                 ? BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Color.fromRGBO(218, 218, 218, 0.4),
+                        color: const Color.fromRGBO(218, 218, 218, 0.4),
                         //阴影默认颜色,不能与父容器同时设置color
                         offset: Offset(0, 470.h),
                         //延伸的阴影，向右下偏移的距离
@@ -385,11 +386,11 @@ class _FinPageState extends State<FinPages> {
                                 setState(() {
                                   show = !show;
                                   if (show) {
-                                    heights = 486.h;
+                                    heights = 500.h;
                                     cc = Colors.white;
                                     opacity = 1;
                                   } else {
-                                    heights = 140.h;
+                                    heights = closeHeights;
                                     cc = Colors.transparent;
                                     opacity = 1.0;
                                   }
@@ -436,7 +437,7 @@ class _FinPageState extends State<FinPages> {
                                                       cc = Colors.white;
                                                       opacity = 0.1;
                                                     } else {
-                                                      heights = 140.h;
+                                                      heights = closeHeights;
                                                       cc = Colors.transparent;
                                                       opacity = 1.0;
                                                     }
@@ -502,7 +503,7 @@ class _FinPageState extends State<FinPages> {
                                                       cc = Colors.white;
                                                       opacity = 0.1;
                                                     } else {
-                                                      heights = 140.h;
+                                                      heights = closeHeights;
                                                       cc = Colors.transparent;
                                                       opacity = 1.0;
                                                     }
