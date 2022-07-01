@@ -30,7 +30,6 @@ class NewLoanHttpUtil {
 
   late Dio dio;
   CancelToken cancelToken = CancelToken();
-
   NewLoanHttpUtil._internal() {
     // BaseOptions、Options、RequestOptions 都可以配置参数，优先级别依次递增，且可以根据优先级别覆盖参数
     BaseOptions options = BaseOptions(

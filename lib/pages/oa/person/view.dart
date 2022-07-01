@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 import 'package:badges/badges.dart';
@@ -22,7 +23,9 @@ class PersonPage extends StatelessWidget {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: Scaffold(

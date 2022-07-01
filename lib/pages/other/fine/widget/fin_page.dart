@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_erp/common/entities/loan/loan.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-
 import '../../../../common/routers/names.dart';
 import '../../../../common/widgets/dy_behavior_null.dart';
 import '../../../../common/widgets/empty_page.dart';
@@ -34,16 +32,18 @@ class MyItem {
 }
 
 class FinPages extends StatefulWidget {
+  const FinPages({Key? key}) : super(key: key);
+
   @override
   _FinPageState createState() => _FinPageState();
 }
 
 class _FinPageState extends State<FinPages> {
-  RefreshController _refreshController =
+  final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
-  ScrollController _scrollControl = ScrollController();
+  final ScrollController _scrollControl = ScrollController();
   bool show = false;
-  double heights = 140.h;
+  double heights = 80.h;
   double closeHeights = 80.h;
   Color cc = Colors.transparent;
   double opacity = 1.0;
@@ -57,17 +57,6 @@ class _FinPageState extends State<FinPages> {
   int page =1;
   @override
   void initState() {
-    var de = MyItem(
-      icon: 'assets/images/default/fine_success.png',
-      name: '张庭耀',
-      status: '已放款',
-      money: '100',
-      time: '2022-04-04 10:12:23',
-      count: '60',
-      color: Color(0xffD8AA0F),
-    );
-    dm.add(de);
-    dm1 = dm;
     _df();
     super.initState();
   }
@@ -154,7 +143,9 @@ class _FinPageState extends State<FinPages> {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: Scaffold(
@@ -209,7 +200,7 @@ class _FinPageState extends State<FinPages> {
                   begin: Alignment(2, 1),
                   end: Alignment(-2, -1),
                 )),
-                child: Container(
+                child: SizedBox(
                   height: ScreenUtil().screenHeight,
                   child: Container(
                     margin: EdgeInsets.only(top: 30.h),
@@ -222,8 +213,8 @@ class _FinPageState extends State<FinPages> {
                             SizedBox(
                               width: 10.w,
                             ),
-                            MyCard(),
-                            MyCard1(),
+                            const MyCard(),
+                            const MyCard1(),
                             SizedBox(
                               width: 10.w,
                             ),
@@ -322,13 +313,11 @@ class _FinPageState extends State<FinPages> {
                     controller: _refreshController,
                     onRefresh: _onRefresh,
                     onLoading: _onLoading,
-                    child: Container(
-                      child: SingleChildScrollView(
-                        controller: _scrollControl,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: _buildMyItem(),
-                        ),
+                    child: SingleChildScrollView(
+                      controller: _scrollControl,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: _buildMyItem(),
                       ),
                     )),
               ),
@@ -361,202 +350,190 @@ class _FinPageState extends State<FinPages> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(40.w),
                       topRight: Radius.circular(40.w))),
-              child: Container(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.only(left: 40.h),
-                            child: Text(
-                              titles,
-                              style: TextStyle(
-                                  fontSize: 30.sp, color: Colors.black),
-                            ),
-                          ),
-                          Container(
-                            child: IconButton(
-                              icon: Icon(show
-                                  ? Icons.keyboard_arrow_up_outlined
-                                  : Icons.keyboard_arrow_down_outlined),
-                              onPressed: () {
-
-                                setState(() {
-                                  show = !show;
-                                  if (show) {
-                                    heights = 500.h;
-                                    cc = Colors.white;
-                                    opacity = 1;
-                                  } else {
-                                    heights = closeHeights;
-                                    cc = Colors.transparent;
-                                    opacity = 1.0;
-                                  }
-                                });
-                              },
-                            ),
-                          ),
-                        ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(left: 40.h),
+                        child: Text(
+                          titles,
+                          style: TextStyle(
+                              fontSize: 30.sp, color: Colors.black),
+                        ),
                       ),
-                    ),
-                    Visibility(
-                      visible: show,
-                      child: Stack(
-                        children: [
-                          Container(
-                            child: Container(
-                              padding: EdgeInsets.only(left: 40.h, top: 20.h),
-                              child: Column(
-                                children: [
-                                  buildButton(context, groupValues, callback),
-                                  Container(
-                                    padding: EdgeInsets.only(top: 60.h),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.only(
-                                              left: 0.w,
-                                              top: 6.h,
-                                              right: 25.w,
-                                              bottom: 16.h),
-                                          height: 88.h,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: <Widget>[
-                                              GestureDetector(
-                                                onTap: () {
-                                                  setState(() {
-                                                    show = !show;
-                                                    if (show) {
-                                                      heights = 450.h;
-                                                      cc = Colors.white;
-                                                      opacity = 0.1;
-                                                    } else {
-                                                      heights = closeHeights;
-                                                      cc = Colors.transparent;
-                                                      opacity = 1.0;
-                                                    }
-                                                    getData(0);
-                                                    groupValue = -1;
-                                                    myValue = false;
-                                                    myName = "";
-                                                    title = "请选择当前状态";
-                                                  });
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.only(
-                                                      left: 130.w,
-                                                      top: 6.h,
-                                                      right: 130.w,
-                                                      bottom: 6.h),
-                                                  height: 80.h,
-                                                  decoration: BoxDecoration(
-                                                    border: Border(
-                                                      left: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 2.w),
-                                                      top: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 2.w),
-                                                      right: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 2.w),
-                                                      bottom: BorderSide(
-                                                          color: Colors.grey,
-                                                          width: 2.w),
-                                                    ),
-                                                    color: Colors.white,
-                                                    borderRadius:
-                                                        BorderRadius.only(
-                                                      topLeft:
-                                                          Radius.circular(34.w),
-                                                      bottomLeft:
-                                                          Radius.circular(34.w),
-                                                    ),
-                                                  ),
-                                                  child: Container(
-                                                    child: Text(
-                                                      '重置',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 30.sp),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                ),
-                                              ),
-                                              GestureDetector(
-                                                onTap: () async {
-                                                  //var result = await IssuesApi.getErpUser();
-                                                  setState(() {
-                                                    show = !show;
-                                                    if (show) {
-                                                      heights = 450.h;
-                                                      cc = Colors.white;
-                                                      opacity = 0.1;
-                                                    } else {
-                                                      heights = closeHeights;
-                                                      cc = Colors.transparent;
-                                                      opacity = 1.0;
-                                                    }
+                      IconButton(
+                        icon: Icon(show
+                            ? Icons.keyboard_arrow_up_outlined
+                            : Icons.keyboard_arrow_down_outlined),
+                        onPressed: () {
 
-                                                    if (groupValue == -1) {
-                                                      getData(0);
-                                                    }else{
-                                                      getData(groupValue);
-                                                    }
-                                                  });
-                                                  _scrollControl.jumpTo(0);
-                                                },
-                                                child: Container(
-                                                  padding: EdgeInsets.only(
-                                                      left: 130.w,
-                                                      top: 12.h,
-                                                      right: 130.w,
-                                                      bottom: 12.h),
-                                                  height: 80.h,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.blue,
-                                                    borderRadius:
-                                                        BorderRadius.horizontal(
-                                                            right:
-                                                                Radius.circular(
-                                                                    34.w)),
-                                                  ),
-                                                  child: Container(
-                                                    child: Text('确定',
-                                                        style: TextStyle(
-                                                            fontSize: 30.sp,
-                                                            color:
-                                                                Colors.white)),
-                                                  ),
-                                                  alignment:
-                                                      Alignment.centerLeft,
+                          setState(() {
+                            show = !show;
+                            if (show) {
+                              heights = 500.h;
+                              cc = Colors.white;
+                              opacity = 1;
+                            } else {
+                              heights = closeHeights;
+                              cc = Colors.transparent;
+                              opacity = 1.0;
+                            }
+                          });
+                        },
+                      ),
+                    ],
+                  ),
+                  Visibility(
+                    visible: show,
+                    child: Stack(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.only(left: 40.h, top: 20.h),
+                          child: Column(
+                            children: [
+                              buildButton(context, groupValues, callback),
+                              Container(
+                                padding: EdgeInsets.only(top: 60.h),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.only(
+                                          left: 0.w,
+                                          top: 6.h,
+                                          right: 25.w,
+                                          bottom: 16.h),
+                                      height: 88.h,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: <Widget>[
+                                          GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                show = !show;
+                                                if (show) {
+                                                  heights = 450.h;
+                                                  cc = Colors.white;
+                                                  opacity = 0.1;
+                                                } else {
+                                                  heights = closeHeights;
+                                                  cc = Colors.transparent;
+                                                  opacity = 1.0;
+                                                }
+                                                getData(0);
+                                                groupValue = -1;
+                                                myValue = false;
+                                                myName = "";
+                                                title = "请选择当前状态";
+                                              });
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 130.w,
+                                                  top: 6.h,
+                                                  right: 130.w,
+                                                  bottom: 6.h),
+                                              height: 80.h,
+                                              decoration: BoxDecoration(
+                                                border: Border(
+                                                  left: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 2.w),
+                                                  top: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 2.w),
+                                                  right: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 2.w),
+                                                  bottom: BorderSide(
+                                                      color: Colors.grey,
+                                                      width: 2.w),
+                                                ),
+                                                color: Colors.white,
+                                                borderRadius:
+                                                    BorderRadius.only(
+                                                  topLeft:
+                                                      Radius.circular(34.w),
+                                                  bottomLeft:
+                                                      Radius.circular(34.w),
                                                 ),
                                               ),
-                                            ],
+                                              child: Text(
+                                                '重置',
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 30.sp),
+                                                textAlign:
+                                                    TextAlign.center,
+                                              ),
+                                              alignment:
+                                                  Alignment.centerLeft,
+                                            ),
                                           ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                          GestureDetector(
+                                            onTap: () async {
+                                              //var result = await IssuesApi.getErpUser();
+                                              setState(() {
+                                                show = !show;
+                                                if (show) {
+                                                  heights = 450.h;
+                                                  cc = Colors.white;
+                                                  opacity = 0.1;
+                                                } else {
+                                                  heights = closeHeights;
+                                                  cc = Colors.transparent;
+                                                  opacity = 1.0;
+                                                }
+
+                                                if (groupValue == -1) {
+                                                  getData(0);
+                                                }else{
+                                                  getData(groupValue);
+                                                }
+                                              });
+                                              _scrollControl.jumpTo(0);
+                                            },
+                                            child: Container(
+                                              padding: EdgeInsets.only(
+                                                  left: 130.w,
+                                                  top: 12.h,
+                                                  right: 130.w,
+                                                  bottom: 12.h),
+                                              height: 80.h,
+                                              decoration: BoxDecoration(
+                                                color: Colors.blue,
+                                                borderRadius:
+                                                    BorderRadius.horizontal(
+                                                        right:
+                                                            Radius.circular(
+                                                                34.w)),
+                                              ),
+                                              child: Text('确定',
+                                                  style: TextStyle(
+                                                      fontSize: 30.sp,
+                                                      color:
+                                                          Colors.white)),
+                                              alignment:
+                                                  Alignment.centerLeft,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
             ),
           ),
@@ -566,7 +543,7 @@ class _FinPageState extends State<FinPages> {
 
 Widget buildButton(
     BuildContext context, int groupValue, ChangeCallback callback) {
-  bool v1 = false;
+
 
   return Container(
     padding: EdgeInsets.only(left: 0.w, right: 0.w),
@@ -615,11 +592,11 @@ class MButton extends StatefulWidget {
   final int groupValue;
   final ChangeCallback callback;
 
-  const MButton(
-      {required this.name,
+   const MButton(
+      {Key? key, required this.name,
       required this.index,
       required this.groupValue,
-      required this.callback});
+      required this.callback}) : super(key: key);
 
   @override
   _MButtonState createState() => _MButtonState();
@@ -630,8 +607,8 @@ class _MButtonState extends State<MButton> {
   Widget build(BuildContext context) {
     bool selected = widget.groupValue == widget.index;
     return ChoiceChip(
-      backgroundColor: selected ? Colors.white : Color(0xffF5F6F9),
-      selectedColor: selected ? Colors.transparent : Color(0xffF5F6F9),
+      backgroundColor: selected ? Colors.white : const Color(0xffF5F6F9),
+      selectedColor: selected ? Colors.transparent : const Color(0xffF5F6F9),
       side: BorderSide(
           width: 2.w, color: selected ? Colors.blue : Colors.transparent),
       padding:
@@ -660,6 +637,8 @@ class _MButtonState extends State<MButton> {
 }
 
 class MyCard extends StatefulWidget {
+  const MyCard({Key? key}) : super(key: key);
+
   @override
   _MyCardState createState() => _MyCardState();
 }
@@ -670,7 +649,7 @@ class _MyCardState extends State<MyCard> {
     return Container(
       margin: EdgeInsets.only(top: 20.h),
       decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             stops: [0, 1],
             colors: [Color(0xffA4D3FF), Color(0xff1890FF)],
             begin: Alignment(1, -1),
@@ -693,10 +672,9 @@ class _MyCardState extends State<MyCard> {
                         child: Text("共获取客户",
                             style: TextStyle(
                                 color: Colors.white, fontSize: 30.sp))),
-                    Container(
-                        child: Text("4人",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 30.sp))),
+                    Text("4人",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 30.sp)),
                   ],
                 ),
               ),
@@ -710,7 +688,7 @@ class _MyCardState extends State<MyCard> {
           Positioned(
               bottom: 0,
               right: 10.w,
-              child: Container(
+              child: SizedBox(
                   width: 110.w,
                   height: 110.h,
                   child: Image.asset("assets/images/default/customer.png")))
@@ -721,6 +699,8 @@ class _MyCardState extends State<MyCard> {
 }
 
 class MyCard1 extends StatefulWidget {
+  const MyCard1({Key? key}) : super(key: key);
+
   @override
   _MyCard1State createState() => _MyCard1State();
 }
@@ -731,7 +711,7 @@ class _MyCard1State extends State<MyCard1> {
     return Container(
       margin: EdgeInsets.only(top: 20.h),
       decoration: BoxDecoration(
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             stops: [0, 1],
             colors: [Color(0xffFFB83A), Color(0xffFFD58A)],
             begin: Alignment(-1, -1),
@@ -754,10 +734,9 @@ class _MyCard1State extends State<MyCard1> {
                         child: Text("已放款",
                             style: TextStyle(
                                 color: Colors.white, fontSize: 30.sp))),
-                    Container(
-                        child: Text("8人",
-                            style: TextStyle(
-                                color: Colors.white, fontSize: 30.sp))),
+                    Text("8人",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 30.sp)),
                   ],
                 ),
               ),
@@ -771,7 +750,7 @@ class _MyCard1State extends State<MyCard1> {
           Positioned(
               bottom: 0,
               right: 10.w,
-              child: Container(
+              child: SizedBox(
                   width: 110.w,
                   height: 110.h,
                   child: Image.asset("assets/images/default/money.png")))
@@ -790,14 +769,14 @@ class MyContent extends StatefulWidget {
   final String time;
   final Color color;
 
-  const MyContent(
-      {required this.icon,
+   const MyContent(
+      {Key? key, required this.icon,
       required this.name,
       required this.money,
       required this.count,
       required this.status,
       required this.time,
-      required this.color});
+      required this.color}) : super(key: key);
 
   @override
   _MyContentState createState() => _MyContentState();
@@ -817,7 +796,7 @@ class _MyContentState extends State<MyContent> {
             children: [
               Column(
                 children: [
-                  Container(
+                  SizedBox(
                       width: 90.w,
                       height: 90.h,
                       child: Image.asset(widget.icon))
@@ -835,19 +814,17 @@ class _MyContentState extends State<MyContent> {
                                 color: Colors.black,
                                 fontSize: 30.sp,
                                 fontWeight: FontWeight.w600))),
-                    Container(
-                        child: Text(
-                            "贷款金额:  " +
-                                widget.money +
-                                "万 期数:  " +
-                                widget.count +
-                                "期",
-                            style: TextStyle(
-                                color: Colors.black, fontSize: 30.sp))),
-                    Container(
-                        child: Text(widget.time,
-                            style: TextStyle(
-                                color: Colors.grey, fontSize: 25.sp))),
+                    Text(
+                        "贷款金额:  " +
+                            widget.money +
+                            "万 期数:  " +
+                            widget.count +
+                            "期",
+                        style: TextStyle(
+                            color: Colors.black, fontSize: 30.sp)),
+                    Text(widget.time,
+                        style: TextStyle(
+                            color: Colors.grey, fontSize: 25.sp)),
                   ],
                 ),
               ),

@@ -47,7 +47,6 @@ class CommonAPI {
       '/api/GetLoanDetail',
       data: {"loan_id":id},
     );
-    print(response.toString());
     return LoanDetail.fromJson(response);
   }
   /// 登录

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,7 +70,9 @@ class _JhPhotoBrowserState extends State<JhPhotoBrowser> {
     return Theme(
         data: ThemeData(
         appBarTheme: AppBarTheme.of(context).copyWith(
-      brightness: Brightness.light,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.light, // Status bar
+          ),
     ),
     ),
     child:Scaffold(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/utils/iconfont.dart';
 import 'package:flutter_erp/common/values/values.dart';
 import 'package:flutter_erp/common/widgets/unit_bottom_bar.dart';
@@ -75,7 +76,9 @@ class ApplicationPage extends GetView<ApplicationController> {
         child: Theme(
           data: ThemeData(
             appBarTheme: AppBarTheme.of(context).copyWith(
-              brightness: Brightness.light,
+              systemOverlayStyle: const SystemUiOverlayStyle(
+                statusBarBrightness: Brightness.light, // Status bar
+              ),
             ),
           ),
           child: Scaffold(

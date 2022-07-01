@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_erp/pages/home/widget/app_bar_component.dart';
 import 'package:flutter_erp/pages/home/widget/gzx_filter_goods_page.dart';
 import 'package:flutter_erp/pages/home/widget/photo_widget_list_item.dart';
@@ -25,7 +26,9 @@ class HomePage extends StatelessWidget {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: Obx(()=>Scaffold(

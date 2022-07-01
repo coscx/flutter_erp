@@ -24,7 +24,9 @@ class WorkPage extends StatelessWidget {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: GetBuilder<WorkLogic>(builder: (logic) {

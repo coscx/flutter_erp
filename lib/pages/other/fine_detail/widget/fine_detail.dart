@@ -5,12 +5,10 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:timeline_list/timeline.dart';
 import 'package:timeline_list/timeline_model.dart';
-
 import '../../../../common/apis/common.dart';
 import '../../../../common/widgets/chat_picture_preview.dart';
 import '../../../../common/widgets/dy_behavior_null.dart';
 import '../../../../common/widgets/im_util.dart';
-import '../../../../common/widgets/imageview/image_preview_view.dart';
 import 'doodle.dart';
 
 class TimeLinePage extends StatefulWidget {
@@ -179,8 +177,6 @@ class _TimeLinePageState extends State<TimeLinePage>
       itemCount: doodleList.length,
       position: position);
 
-
-
   TimelineModel centerTimelineBuilder(BuildContext context, int i) {
     final doodle = doodleList[i];
     final textTheme = Theme.of(context).textTheme;
@@ -212,8 +208,6 @@ class _TimeLinePageState extends State<TimeLinePage>
              )));
        }
      }
-
-
 
     return TimelineModel(
         Card(
@@ -248,7 +242,7 @@ class _TimeLinePageState extends State<TimeLinePage>
                       SizedBox(height: 8.h),
                       doodle.opUser!=""?Text(doodle.opUser, style: textTheme.caption):Container(),
                       doodle.opUser!=""?SizedBox(height: 8.h):Container(),
-                      doodle.content!=""?Container(padding: EdgeInsets.all(12.w), color: Color(0xFFF4F5F8), child: Text(doodle.content, style: textTheme.subtitle1, textAlign: TextAlign.left)):Container(),
+                      doodle.content!=""?Container(padding: EdgeInsets.all(12.w), color: const Color(0xFFF4F5F8), child: Text(doodle.content, style: textTheme.subtitle1, textAlign: TextAlign.left)):Container(),
                       doodle.content!=""?SizedBox(height: 8.h):Container(),
                       Text(doodle.time, style: textTheme.caption),
                       SizedBox(height: 8.h),

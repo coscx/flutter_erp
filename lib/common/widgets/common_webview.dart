@@ -57,6 +57,12 @@ class _CommonWebViewPageState extends State<CommonWebViewPage> {
             lineProgress =progress /100.0;
           });
         },
+        navigationDelegate: (NavigationRequest request) {
+          if (request.url.startsWith('zhihu://')) {
+            return NavigationDecision.prevent;
+          }
+          return NavigationDecision.navigate;
+        },
       ),
     );
   }
@@ -66,10 +72,7 @@ class _CommonWebViewPageState extends State<CommonWebViewPage> {
         value: lineProgress == 1.0 ? 0 : lineProgress,
         valueColor:  const AlwaysStoppedAnimation<Color>(Colors.blue),
       );
-
-
   }
-
 }
 class NavigationControls extends StatelessWidget {
   const NavigationControls(this._webViewControllerFuture, {Key? key})

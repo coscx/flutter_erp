@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/entities/home/search_erp.dart';
 import 'package:flutter_erp/pages/search/widget/photo_widget_list_item.dart';
 import 'package:flutter_erp/pages/search_appoint/widget/photo_widget_list_item.dart';
@@ -30,7 +31,9 @@ class _SearchPageStateAppoint extends State<SearchPagesAppoint> {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: Scaffold(

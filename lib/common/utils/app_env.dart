@@ -37,7 +37,7 @@ class AppEnv {
       default:
         currentEnv = ENV.PROD;
     }
-    print('当前环境$currentEnv');
+    //print('当前环境$currentEnv');
   }
 
   /// 设置当前环境

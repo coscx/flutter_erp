@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flt_im_plugin/conversion.dart';
 import 'package:flt_im_plugin/message.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_erp/pages/conversion/widget/date.dart';
 import 'package:flutter_erp/pages/conversion/widget/dialog_util.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,9 @@ class ConversionPage extends StatelessWidget {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: Scaffold(

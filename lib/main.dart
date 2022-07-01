@@ -14,10 +14,12 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
 Future<void> main() async {
   await Global.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
         maxOverScrollExtent: 100,
         footerTriggerDistance: 150,
         child: GetMaterialApp(
-          title: '鹊桥缘遇',
+          title: '鹊桥erp',
           theme: AppTheme.light,
           debugShowCheckedModeBanner: false,
           initialRoute: AppPages.INITIAL,
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: ConfigStore.to.languages,
           locale: ConfigStore.to.locale,
           fallbackLocale: const Locale('en', 'US'),
-          enableLog: true,
+          enableLog: false,
           logWriterCallback: Logger.write,
         ),
       ),

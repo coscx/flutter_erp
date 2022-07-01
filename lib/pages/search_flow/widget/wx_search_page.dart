@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_erp/common/apis/common.dart';
 import 'package:flutter_erp/common/entities/home/only_store.dart';
 import 'package:flutter_erp/pages/search_flow/widget/single_choice.dart';
@@ -90,7 +91,9 @@ class _WxSearchPageState extends State<WxSearchPage> {
     return Theme(
         data: ThemeData(
           appBarTheme: AppBarTheme.of(context).copyWith(
-            brightness: Brightness.light,
+            systemOverlayStyle: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.light, // Status bar
+            ),
           ),
         ),
         child: Scaffold(

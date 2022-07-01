@@ -13,7 +13,6 @@ import 'package:flutter_erp/pages/user_detail/widget/share.dart';
 import 'package:fluwx_no_pay/fluwx_no_pay.dart' as fluwx;
 import 'package:get/get.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
-
 import '../../common/apis/common.dart';
 import '../../common/widgets/copy_custom_pop_up_menu.dart';
 import 'state.dart';

@@ -11,7 +11,9 @@ class MainPage extends GetView<MainController> {
     return Theme(
         data: ThemeData(
         appBarTheme: AppBarTheme.of(context).copyWith(
-      systemOverlayStyle: SystemUiOverlayStyle.dark,
+          systemOverlayStyle: const SystemUiOverlayStyle(
+            statusBarBrightness: Brightness.light, // Status bar
+          ),
     ),
     ),
     child:SingleChildScrollView(
